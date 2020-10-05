@@ -1,13 +1,13 @@
 Organisation:
 
- - Projektmanager		(
- - Docu				(
- - Design			(
+ - Projektmanager		(Samuel!?
+ - Docu				(Samuel
+ - Design			(Samuel
  - Architekt			(
  - Programmierer		(Laura
  - Sound			(
  - Kunden			(Laura
- - Test				(
+ - Test				(Samuel
 
 
 Laura, Lukas, Jonas, Philipp, Samuel
