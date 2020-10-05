@@ -2,9 +2,9 @@ Organisation:
 
  - Projektmanager		(Samuel!?
  - Docu				(Samuel
- - Design			(Samuel
+ - Design			(Samuel, Jonas
  - Architekt			(
- - Programmierer		(Laura
+ - Programmierer		(Laura, Jonas
  - Sound			(
  - Kunden			(Laura
  - Test				(Samuel
