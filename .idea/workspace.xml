@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/logic/Interactable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameStabilizer.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameStabilizer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/GraphicsHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/GraphicsHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Slate.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Slate.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Window.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Window.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/logic/LogicHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/logic/LogicHandler.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/frames/FrameHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/frames/FrameHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -121,8 +109,8 @@
       <file leaf-file-name="LogicHandler.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="47" column="50" lean-forward="true" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
+            <state relative-caret-position="990">
+              <caret line="64" column="16" lean-forward="true" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#502#503#0" expanded="true" />
@@ -762,12 +750,20 @@
       <updated>1601898316874</updated>
       <workItem from="1601898325753" duration="5718000" />
       <workItem from="1602151426374" duration="10162000" />
-      <workItem from="1602415448313" duration="8443000" />
+      <workItem from="1602415448313" duration="8637000" />
     </task>
+    <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
+      <created>1602459972969</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1602459972969</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24323000" />
+    <option name="totallyTimeSpent" value="24517000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-10" y="0" width="3860" height="2110" extended-state="0" />
@@ -814,7 +810,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1087,8 +1084,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="47" column="50" lean-forward="true" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
+        <state relative-caret-position="990">
+          <caret line="64" column="16" lean-forward="true" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#502#503#0" expanded="true" />
