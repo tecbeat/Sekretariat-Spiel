@@ -12,14 +12,19 @@ public class FrameHandler {
 
     private boolean running = true;
 
+    //Graphics Handler and according frame stabilizer
     private GraphicsHandler graphicsHandler = new GraphicsHandler();
     private FrameStabilizer graphicsStabilizer = new FrameStabilizer(graphicsHandler);
 
-    private LogicHandler logicHandler = new LogicHandler();
+    //Logic Handler and according frame stabilizer
+    private LogicHandler logicHandler = new LogicHandler(graphicsHandler);
     private FrameStabilizer logictSabilizer = new FrameStabilizer(logicHandler);
 
     public void run() {
+        //start stabilizers
         graphicsStabilizer.start();
+        logictSabilizer.start();
+
         while (running){
             //Keep main thread running
         }
@@ -27,12 +32,14 @@ public class FrameHandler {
     }
 }
 
+//tries to keep execution of tasks aligned with fps target
 class FrameStabilizer extends Thread {
     private SubHandler handler;
-    int target_fps = 120;
+    private int target_fps = 120;
     private boolean DEBUG;
     private long lastFrame = System.currentTimeMillis();
     private AtomicBoolean running = new AtomicBoolean(true);
+
     public FrameStabilizer(SubHandler handler){
         this.handler = handler;
     }
