@@ -1,11 +1,18 @@
 package de.jspll.logic;
 
+import de.jspll.data.ChannelID;
+import de.jspll.data.GameObjectHandler;
+import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.frames.SubHandler;
 import de.jspll.graphics.GraphicsHandler;
 import sun.text.normalizer.Trie;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+import static de.jspll.data.ChannelID.MOUSEUPDATES;
 
 /**
  * Created by reclinarka on 05-Oct-20.
@@ -15,75 +22,38 @@ public class LogicHandler implements SubHandler {
 
     private InputHandler inputHandler = new InputHandler(this);
 
-    private InteractableGroup content = new InteractableGroup();
+    private GameObjectHandler gameObjectHandler;
+
+    boolean test = true;
+
 
     public LogicHandler(GraphicsHandler graphicsHandler){
         graphicsHandler.setInputListener(inputHandler);
     }
 
     public void execute(float elapsedTime){
-
-    }
-
-    public void dispatch(String targetID,Object[] input){
-        if(targetID.contentEquals(ID)){
-
-        } else {
-            content.call(targetID, input);
+        //test
+        if(test){
+            ArrayList<GameObject> objects = new ArrayList<>();
+            for(int x = 0; x < 20; x++){
+                for(int y = 0; y < 10; y++){
+                    objects.add(new GameObject( x + "_" + y,"g.dflt.GameObject",x * 16,y * 32 + (16 * x%2)));
+                }
+            }
+            objects.add(new MouseFollower());
+            gameObjectHandler.loadObjects(objects);
+            test = false;
         }
+        gameObjectHandler.dispatch(MOUSEUPDATES,inputHandler.getMouseInfo());
+
     }
 
-    public void drop(String id){
-        content.drop(id);
-    }
 
-    public void add(String iD, Interactable input){
-        content.add(iD, input);
+    public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
+        this.gameObjectHandler = gameObjectHandler;
     }
 }
 
-class InteractableGroup implements Interactable{
-    String ID;
-    LogicHandler listener;
-    private HashMap<String, Interactable> content;
 
-    @Override
-    public void setListener(LogicHandler listener) {
-        this.listener = listener;
-    }
 
-    @Override
-    public String getID() {
-        return ID;
-    }
 
-    @Override
-    public char call(String targetID, Object[] input) {
-        String[] subID = targetID.split("[.]");
-        if(subID.length > 1){
-            return content.get(subID[0]).call(targetID.substring(subID[0].length()), input);
-        } else {
-            return content.get(targetID).call(targetID,input);
-        }
-
-    }
-
-    public void add(String iD, Interactable input){
-        String[] subID = iD.split("[.]");
-        if(subID.length > 1){
-            ((InteractableGroup) content.get(subID[0]) ).add(iD.substring(subID[0].length()), input);
-        } else {
-            content.put(input.getID(),input);
-        }
-
-    }
-
-    public void drop(String iD){
-        String[] subID = iD.split("[.]");
-        if(subID.length > 1){
-            ((InteractableGroup) content.get(subID[0]) ).drop(iD.substring(subID[0].length()));
-        } else {
-            content.remove(iD);
-        }
-    }
-}

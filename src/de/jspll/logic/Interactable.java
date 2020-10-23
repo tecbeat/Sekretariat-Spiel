@@ -1,5 +1,7 @@
 package de.jspll.logic;
 
+import de.jspll.data.GameObjectHandler;
+
 /**
  * Created by reclinarka on 12-Oct-20.
  */
@@ -9,17 +11,17 @@ public interface Interactable {
     /**
      *@return default return value 0x00
      * **/
-    char call(String targetID, Object[] input);
+    char call( Object[] input);
 
     /**
      * ID follows this form:
-     * <prefix>.<id>
-     * prefix: goup.subgroup.
-     * id: classid.uuid
+     * <objectID>:<id>
+     * objectID: goup.subgroup.Object
+     * id: 1
      * **/
     String getID();
 
-    void setListener(LogicHandler listener);
+    void setListener(GameObjectHandler listener);
 
 
 }

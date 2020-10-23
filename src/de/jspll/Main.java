@@ -1,6 +1,10 @@
 package de.jspll;
 
+import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.GameTrie;
 import de.jspll.frames.FrameHandler;
+
+import java.util.ArrayList;
 
 public class Main {
 
@@ -8,6 +12,8 @@ public class Main {
     private static FrameHandler frameHandler = new FrameHandler();
 
     public static void main(String[] args) {
+
+
         frameHandler.run();
     }
 }

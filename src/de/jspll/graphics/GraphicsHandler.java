@@ -1,11 +1,16 @@
 package de.jspll.graphics;
 
+import de.jspll.data.ChannelID;
+import de.jspll.data.GameObjectHandler;
+import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
 import de.jspll.logic.InputHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static de.jspll.data.ChannelID.BACKGROUND;
 
 /**
  * Created by reclinarka on 05-Oct-20.
@@ -19,6 +24,8 @@ public class GraphicsHandler implements SubHandler {
     private float elapsedTime;
     //keeps track if drawing thread is active
     AtomicBoolean active = new AtomicBoolean();
+    private GameObjectHandler gameObjectHandler;
+
 
     //gets called according to fps target;
     // - elapsedTime is the time in seconds that has passed since the finish of last call
@@ -35,13 +42,15 @@ public class GraphicsHandler implements SubHandler {
 
     //actual drawing call, keeps
     public void drawingRoutine(Graphics g){
-
         //fill background
         g.fillRect(0,0,window.getWidth(),window.getHeight());
 
         //Everything that needs to be drawn goes here...
-
-
+        if(gameObjectHandler != null) {
+            for (GameObject object : gameObjectHandler.getChannel(BACKGROUND).allValues()) {
+                object.paint(g, elapsedTime, 1);
+            }
+        }
         //Signal that frame is finished
         active.set(false);
     }
@@ -51,6 +60,10 @@ public class GraphicsHandler implements SubHandler {
         window.addMouseWheelListener(inputHandler);
         window.addMouseMotionListener(inputHandler);
         window.addKeyListener(inputHandler);
+    }
+
+    public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
+        this.gameObjectHandler = gameObjectHandler;
     }
 }
 
@@ -93,3 +106,4 @@ class Slate extends JPanel {
         parent.drawingRoutine(g);
     }
 }
+

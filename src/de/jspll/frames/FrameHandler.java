@@ -1,5 +1,6 @@
 package de.jspll.frames;
 
+import de.jspll.data.GameObjectHandler;
 import de.jspll.graphics.GraphicsHandler;
 import de.jspll.logic.LogicHandler;
 
@@ -11,19 +12,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class FrameHandler {
 
     private boolean running = true;
+    private GameObjectHandler gameObjectHandler = new GameObjectHandler();
 
     //Graphics Handler and according frame stabilizer
     private GraphicsHandler graphicsHandler = new GraphicsHandler();
-    private FrameStabilizer graphicsStabilizer = new FrameStabilizer(graphicsHandler);
 
     //Logic Handler and according frame stabilizer
     private LogicHandler logicHandler = new LogicHandler(graphicsHandler);
-    private FrameStabilizer logictSabilizer = new FrameStabilizer(logicHandler);
+    private FrameStabilizer frameStabilizer = new FrameStabilizer(new SubHandler[]{logicHandler,graphicsHandler});
 
     public void run() {
         //start stabilizers
-        graphicsStabilizer.start();
-        logictSabilizer.start();
+        graphicsHandler.setGameObjectHandler(gameObjectHandler);
+        logicHandler.setGameObjectHandler(gameObjectHandler);
+        frameStabilizer.start();
 
         while (running){
             //Keep main thread running
@@ -34,14 +36,14 @@ public class FrameHandler {
 
 //tries to keep execution of tasks aligned with fps target
 class FrameStabilizer extends Thread {
-    private SubHandler handler;
+    private SubHandler[] handlers;
     private int target_fps = 120;
     private boolean DEBUG;
     private long lastFrame = System.currentTimeMillis();
     private AtomicBoolean running = new AtomicBoolean(true);
 
-    public FrameStabilizer(SubHandler handler){
-        this.handler = handler;
+    public FrameStabilizer(SubHandler[] handlers){
+        this.handlers = handlers;
     }
     public void stopStabilizer(){
         running.set(false);
@@ -77,7 +79,8 @@ class FrameStabilizer extends Thread {
 
             //System.out.println("FH: starting drawing with elapsed time: " + elapsedTime);
             //start frame routine
-            handler.execute(elapsedTime);
+            for(SubHandler handler: handlers)
+                handler.execute(elapsedTime);
             //System.out.println("FH: finished drawing: " + System.currentTimeMillis());
 
             timeTaken = currTime - System.currentTimeMillis() / 1000;
