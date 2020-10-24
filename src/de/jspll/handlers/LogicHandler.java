@@ -8,7 +8,7 @@ import de.jspll.logic.InputHandler;
 
 import java.util.ArrayList;
 
-import static de.jspll.data.ChannelID.MOUSEUPDATES;
+import static de.jspll.data.ChannelID.INPUT;
 
 /**
  * Created by reclinarka on 05-Oct-20.
@@ -41,7 +41,8 @@ public class LogicHandler implements SubHandler {
             gameObjectHandler.loadObjects(objects);
             test = false;
         }
-        gameObjectHandler.dispatch(MOUSEUPDATES,inputHandler.getMouseInfo());
+
+        gameObjectHandler.dispatch(INPUT,inputHandler.getInputInfo());
 
     }
 

@@ -24,7 +24,7 @@ public class MouseFollower extends GameObject {
         if(input == null || input.length < 1){
             return 0;
         } else if(input[0].getClass() == String.class){
-            if( ((String) input[0]).contentEquals("mouse")){
+            if( ((String) input[0]).contentEquals("input")){
                 if((boolean) input[1]){
                     mousedown = true;
                 } else {
@@ -42,7 +42,7 @@ public class MouseFollower extends GameObject {
         return super.getChannels();
     }
 
-    public void updateMousePos(){
+    private void updateMousePos(){
         Point pos = getParent().getMousePos();
         if(pos != null){
             mousePos[0] = pos.x;

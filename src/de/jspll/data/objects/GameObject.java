@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static de.jspll.data.ChannelID.BACKGROUND;
-import static de.jspll.data.ChannelID.MOUSEUPDATES;
+import static de.jspll.data.ChannelID.INPUT;
 
 /**
  * Created by reclinarka on 21-Oct-20.
@@ -52,10 +52,10 @@ public class GameObject implements Drawable, Interactable {
     }
 
     public ChannelID[] getChannels() {
-        return new ChannelID[]{BACKGROUND, MOUSEUPDATES};
+        return new ChannelID[]{BACKGROUND, INPUT};
     }
 
-    public GameObjectHandler getParent() {
+    protected GameObjectHandler getParent() {
         return parent;
     }
 
