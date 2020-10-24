@@ -20,7 +20,7 @@ public class LogicHandler implements SubHandler {
 
     private GameObjectHandler gameObjectHandler;
 
-    boolean test = true;
+    private boolean test = true;
 
 
     public LogicHandler(GraphicsHandler graphicsHandler){
@@ -33,7 +33,7 @@ public class LogicHandler implements SubHandler {
             ArrayList<GameObject> objects = new ArrayList<>();
             for(int x = 0; x < 20; x++){
                 for(int y = 0; y < 10; y++){
-                    objects.add(new GameObject( x + "_" + y,"g.dflt.GameObject",x * 16,y * 32 + (16 * x%2)));
+                    objects.add(new GameObject( x + "_" + y,"g.dflt.GameObject",x * 16,y * 32 + (16 * (x%2))));
                 }
             }
             objects.add(new MouseFollower());

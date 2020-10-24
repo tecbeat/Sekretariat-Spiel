@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/DisplayMover.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="added another example class and camera system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameStabilizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/frames/FrameStabilizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Drawable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Drawable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/GraphicsHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Slate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/Window.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/logic/LogicHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/data/GameObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/MouseFollower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/MouseFollower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/frames/FrameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/frames/FrameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/graphics/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Drawable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/logic/Interactable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/logic/Interactable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/LogicHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -202,7 +183,7 @@
       <workItem from="1603112763286" duration="1197000" />
       <workItem from="1603209966154" duration="7104000" />
       <workItem from="1603408698231" duration="18015000" />
-      <workItem from="1603495479047" duration="4722000" />
+      <workItem from="1603495479047" duration="4919000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -218,7 +199,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602460102719</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added another example class and camera system">
+      <created>1603500281270</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1603500281270</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +225,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method" />
+    <MESSAGE value="added another example class and camera system" />
+    <option name="LAST_COMMIT_MESSAGE" value="added another example class and camera system" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
