@@ -1,6 +1,6 @@
 package de.jspll.logic;
 
-import de.jspll.data.GameObjectHandler;
+import de.jspll.handlers.GameObjectHandler;
 
 /**
  * Created by reclinarka on 12-Oct-20.

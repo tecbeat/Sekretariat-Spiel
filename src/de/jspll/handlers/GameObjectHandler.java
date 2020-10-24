@@ -1,8 +1,11 @@
-package de.jspll.data;
+package de.jspll.handlers;
 
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
+import de.jspll.graphics.Camera;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
@@ -17,7 +20,27 @@ public class GameObjectHandler {
         }
     }
 
+    public Point getMousePos(){
+        if(graphicsHandler == null)
+            return null;
+        return graphicsHandler.getMousePos();
+    }
+
+    public Camera getSelectedCamera(){
+        return graphicsHandler.getSelectedCamera();
+    }
+
+    public Dimension getScreenDimensions(){
+        return graphicsHandler.getWindow().getSize();
+    }
+
+    private GraphicsHandler graphicsHandler;
+
     private GameTrie[] channels = new GameTrie[20];
+
+    public void setGraphicsHandler(GraphicsHandler graphicsHandler) {
+        this.graphicsHandler = graphicsHandler;
+    }
 
     public void register(GameObject item) {
         channels[INSTANCE_REGISTER.valueOf()].insert(item.getID(), item);

@@ -1,16 +1,12 @@
-package de.jspll.logic;
+package de.jspll.handlers;
 
-import de.jspll.data.ChannelID;
-import de.jspll.data.GameObjectHandler;
 import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.frames.SubHandler;
-import de.jspll.graphics.GraphicsHandler;
-import sun.text.normalizer.Trie;
+import de.jspll.logic.InputHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 import static de.jspll.data.ChannelID.MOUSEUPDATES;
 
@@ -41,6 +37,7 @@ public class LogicHandler implements SubHandler {
                 }
             }
             objects.add(new MouseFollower());
+            objects.add(new DisplayMover());
             gameObjectHandler.loadObjects(objects);
             test = false;
         }

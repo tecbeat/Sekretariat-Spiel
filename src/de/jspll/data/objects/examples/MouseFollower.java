@@ -2,6 +2,7 @@ package de.jspll.data.objects.examples;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
+import de.jspll.graphics.Camera;
 
 import java.awt.*;
 
@@ -15,7 +16,7 @@ public class MouseFollower extends GameObject {
     }
 
     private boolean mousedown;
-    private int[] mpos = new int[]{0,0};
+    private int[] mousePos = new int[]{0,0};
 
     @Override
     public char call(Object[] input) {
@@ -29,8 +30,6 @@ public class MouseFollower extends GameObject {
                 } else {
                     mousedown = false;
                 }
-                mpos[0] = (int) input[4];
-                mpos[1] = (int) input[5];
 
             }
         }
@@ -43,14 +42,23 @@ public class MouseFollower extends GameObject {
         return super.getChannels();
     }
 
+    public void updateMousePos(){
+        Point pos = getParent().getMousePos();
+        if(pos != null){
+            mousePos[0] = pos.x;
+            mousePos[1] = pos.y;
+        }
+    }
+
     @Override
-    public void paint(Graphics g, float elapsedTime, float zoom) {
+    public void paint(Graphics g, float elapsedTime, Camera camera) {
         if (mousedown) {
             g.setColor(Color.red);
         } else {
             g.setColor(Color.PINK);
         }
-        g.drawOval(mpos[0]-8,mpos[1]-8,16,16);
+        updateMousePos();
+        g.drawOval(mousePos[0]-camera.applyZoom(8),mousePos[1]-camera.applyZoom(8),camera.applyZoom(16),camera.applyZoom(16));
 
     }
 }

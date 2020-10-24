@@ -1,5 +1,7 @@
 package de.jspll.logic;
 
+import de.jspll.handlers.LogicHandler;
+
 import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -53,10 +55,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
                 mouse1.set(true);
                 break;
             case 2://middleclick
-                mouse1.set(true);
+                mouse2.set(true);
                 break;
             case 3://rightclick
-                mouse1.set(true);
+                mouse3.set(true);
                 break;
         }
     }
@@ -68,10 +70,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
                 mouse1.set(false);
                 break;
             case 2://middleclick
-                mouse1.set(false);
+                mouse2.set(false);
                 break;
             case 3://rightclick
-                mouse1.set(false);
+                mouse3.set(false);
                 break;
         }
     }

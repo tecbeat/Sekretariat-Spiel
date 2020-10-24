@@ -1,10 +1,10 @@
 package de.jspll.data.objects;
 
 import de.jspll.data.ChannelID;
-import de.jspll.data.GameObjectHandler;
+import de.jspll.handlers.GameObjectHandler;
+import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
 import de.jspll.logic.Interactable;
-import de.jspll.logic.LogicHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -55,13 +55,17 @@ public class GameObject implements Drawable, Interactable {
         return new ChannelID[]{BACKGROUND, MOUSEUPDATES};
     }
 
+    public GameObjectHandler getParent() {
+        return parent;
+    }
+
     @Override
-    public void paint(Graphics g, float elapsedTime, float zoom) {
+    public void paint(Graphics g, float elapsedTime, Camera camera) {
         if (texture == null) {
             g.setColor(Color.PINK);
-            g.fillRect(x, y, width, height);
+            g.fillRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom(width) , camera.applyZoom(height));
         } else {
-            g.drawImage(texture,x,y,null);
+            g.drawImage(texture,camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom(width) , camera.applyZoom(height),null);
         }
     }
 

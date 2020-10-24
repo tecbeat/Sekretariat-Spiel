@@ -1,9 +1,8 @@
-package de.jspll.graphics;
+package de.jspll.handlers;
 
-import de.jspll.data.ChannelID;
-import de.jspll.data.GameObjectHandler;
 import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
+import de.jspll.graphics.Camera;
 import de.jspll.logic.InputHandler;
 
 import javax.swing.*;
@@ -17,6 +16,10 @@ import static de.jspll.data.ChannelID.BACKGROUND;
  */
 public class GraphicsHandler implements SubHandler {
 
+    public GraphicsHandler(){
+        cameras[0] = new Camera(0,0,2);
+    }
+
     private String windowTitle = "Sekreteriat";
     private Slate slate = new Slate(this);
     private Window window = new Window(windowTitle,slate);
@@ -25,6 +28,8 @@ public class GraphicsHandler implements SubHandler {
     //keeps track if drawing thread is active
     AtomicBoolean active = new AtomicBoolean();
     private GameObjectHandler gameObjectHandler;
+    private Camera[] cameras = new Camera[10];
+    int selectedCamera = 0;
 
 
     //gets called according to fps target;
@@ -48,11 +53,21 @@ public class GraphicsHandler implements SubHandler {
         //Everything that needs to be drawn goes here...
         if(gameObjectHandler != null) {
             for (GameObject object : gameObjectHandler.getChannel(BACKGROUND).allValues()) {
-                object.paint(g, elapsedTime, 1);
+                object.paint(g, elapsedTime, cameras[selectedCamera]);
             }
         }
         //Signal that frame is finished
         active.set(false);
+    }
+
+    public Point getMousePos(){
+        if(slate == null)
+            return null;
+        return slate.getMousePosition();
+    }
+
+    public Camera getSelectedCamera() {
+        return cameras[selectedCamera];
     }
 
     public void setInputListener(InputHandler inputHandler){
@@ -65,6 +80,16 @@ public class GraphicsHandler implements SubHandler {
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;
     }
+
+    public Window getWindow() {
+        return window;
+    }
+
+    public Slate getSlate() {
+        return slate;
+    }
+
+
 }
 
 class Window extends JFrame{
@@ -104,6 +129,7 @@ class Slate extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         parent.drawingRoutine(g);
+        System.out.println(getRegisteredKeyStrokes().toString());;
     }
 }
 

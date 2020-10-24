@@ -1,8 +1,8 @@
 package de.jspll.frames;
 
-import de.jspll.data.GameObjectHandler;
-import de.jspll.graphics.GraphicsHandler;
-import de.jspll.logic.LogicHandler;
+import de.jspll.handlers.GameObjectHandler;
+import de.jspll.handlers.GraphicsHandler;
+import de.jspll.handlers.LogicHandler;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -25,6 +25,7 @@ public class FrameHandler {
         //start stabilizers
         graphicsHandler.setGameObjectHandler(gameObjectHandler);
         logicHandler.setGameObjectHandler(gameObjectHandler);
+        gameObjectHandler.setGraphicsHandler(graphicsHandler);
         frameStabilizer.start();
 
         while (running){
