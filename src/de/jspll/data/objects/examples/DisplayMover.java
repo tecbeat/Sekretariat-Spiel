@@ -56,13 +56,14 @@ public class DisplayMover extends GameObject {
         if (plus) {
             continuousPlus++;
             if (continuousPlus % 2 == 0)
-                getParent().getSelectedCamera().zoom *= 1.002f;
+                getParent().getSelectedCamera().increase_zoom(0.002f);
         }
 
         if (minus) {
             continuousMinus++;
-            if (continuousMinus % 2 == 0)
-                getParent().getSelectedCamera().zoom *= 0.998f;
+            if (continuousMinus % 2 == 0) {
+                getParent().getSelectedCamera().increase_zoom(-0.002f);
+            }
         }
 
         Point mousePos = getParent().getMousePos();
@@ -70,8 +71,8 @@ public class DisplayMover extends GameObject {
             framesOn++;
             if (framesOn > 10) {
                 if (mousePos != null && previousMousePos != null) {
-                    getParent().getSelectedCamera().x -= mousePos.x - previousMousePos.x;
-                    getParent().getSelectedCamera().y -= mousePos.y - previousMousePos.y;
+                    getParent().getSelectedCamera().increase_x(-mousePos.x + previousMousePos.x);
+                    getParent().getSelectedCamera().increase_y(-mousePos.y + previousMousePos.y);
                 }
             }
         }

@@ -17,7 +17,7 @@ import static de.jspll.data.ChannelID.BACKGROUND;
 public class GraphicsHandler implements SubHandler {
 
     public GraphicsHandler(){
-        cameras[0] = new Camera(0,0,2);
+        cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2);
     }
 
     private String windowTitle = "Sekreteriat";
@@ -26,10 +26,10 @@ public class GraphicsHandler implements SubHandler {
     //time passed since last drawing call
     private float elapsedTime;
     //keeps track if drawing thread is active
-    AtomicBoolean active = new AtomicBoolean();
+    private AtomicBoolean active = new AtomicBoolean();
     private GameObjectHandler gameObjectHandler;
     private Camera[] cameras = new Camera[10];
-    int selectedCamera = 0;
+    private int selectedCamera = 0;
 
 
     //gets called according to fps target;
@@ -129,7 +129,6 @@ class Slate extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         parent.drawingRoutine(g);
-        System.out.println(getRegisteredKeyStrokes().toString());;
     }
 }
 
