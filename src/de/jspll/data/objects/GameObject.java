@@ -5,6 +5,7 @@ import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
 import de.jspll.logic.Interactable;
+import sun.security.util.ArrayUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,12 +22,12 @@ public class GameObject implements Drawable, Interactable {
     private String ID;
     //ID that is specific for this class: i.e g.ntt.Player
     private String objectID;
+
     private boolean active = true;
     private int x = 0;
     private int y = 0;
     private int width = 16;
     private int height = 16;
-    private BufferedImage texture = null;
 
     private GameObjectHandler parent;
 
@@ -59,14 +60,16 @@ public class GameObject implements Drawable, Interactable {
         return parent;
     }
 
+    public char update(float elapsedTime){
+
+        return 0;
+    }
+
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
-        if (texture == null) {
-            g.setColor(Color.PINK);
-            g.fillRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom(width) , camera.applyZoom(height));
-        } else {
-            g.drawImage(texture,camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom(width) , camera.applyZoom(height),null);
-        }
+        g.setColor(Color.PINK);
+        g.fillRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom(width) , camera.applyZoom(height));
+
     }
 
     @Override
@@ -97,5 +100,30 @@ public class GameObject implements Drawable, Interactable {
     @Override
     public void setListener(GameObjectHandler listener) {
         parent = listener;
+    }
+
+    public void dispatchToDifferentObjectHandler(ChannelID channelID, Object[] input){
+        Object[] payload = new Object[input.length + 1];
+        payload[0] = channelID;
+        for(int i = 0; i < input.length;i++){
+            payload[i+1] = input[i];
+        }
+        parent.dispatch(ChannelID.DISPATCH,payload);
+    }
+    public void dispatchToDifferentObjectHandler(ChannelID[] channelIDS, Object[] input){
+        Object[] payload = new Object[input.length + 1];
+        payload[0] = channelIDS;
+        for(int i = 0; i < input.length;i++){
+            payload[i+1] = input[i];
+        }
+        parent.dispatch(ChannelID.DISPATCH,payload);
+    }
+    public void dispatchToDifferentObjectHandler(ChannelID channelID,String scope , Object[] input){
+        Object[] payload = new Object[input.length + 1];
+        payload[0] = channelID;
+        for(int i = 0; i < input.length;i++){
+            payload[i+1] = input[i];
+        }
+        parent.dispatch(ChannelID.DISPATCH,scope,payload);
     }
 }

@@ -6,7 +6,10 @@ package de.jspll.data;
 public enum ChannelID {
     INSTANCE_REGISTER(0),
     INPUT(1),
-    BACKGROUND(2),
+    LOGIC(2),
+    COMM1(3),
+    BACKGROUND(4),
+    DISPATCH(19),
     LAST_CHANNEL(19);
 
     private int id;

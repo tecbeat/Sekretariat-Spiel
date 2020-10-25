@@ -11,8 +11,8 @@ import java.awt.*;
  */
 public class MouseFollower extends GameObject {
 
-    public MouseFollower(){
-        super("0","g.tst.MouseFollower");
+    public MouseFollower(String ID){
+        super(ID,"g.tst.MouseFollower");
     }
 
     private boolean mousedown;
@@ -30,7 +30,9 @@ public class MouseFollower extends GameObject {
                 } else {
                     mousedown = false;
                 }
-
+                int[] pos = (int[]) input[5];
+                mousePos[0] = pos[0];
+                mousePos[1] = pos[1];
             }
         }
 
@@ -57,7 +59,7 @@ public class MouseFollower extends GameObject {
         } else {
             g.setColor(Color.PINK);
         }
-        updateMousePos();
+        //updateMousePos();
         g.drawOval(mousePos[0]-camera.applyZoom(8),mousePos[1]-camera.applyZoom(8),camera.applyZoom(16),camera.applyZoom(16));
 
     }

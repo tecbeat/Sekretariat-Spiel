@@ -3,7 +3,9 @@ package de.jspll.frames;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.GraphicsHandler;
 import de.jspll.handlers.LogicHandler;
+import jdk.nashorn.internal.runtime.ECMAException;
 
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -11,27 +13,47 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class FrameHandler {
 
-    private boolean running = true;
-    private GameObjectHandler gameObjectHandler = new GameObjectHandler();
-
-    //Graphics Handler and according frame stabilizer
-    private GraphicsHandler graphicsHandler = new GraphicsHandler();
-
-    //Logic Handler and according frame stabilizer
-    private LogicHandler logicHandler = new LogicHandler(graphicsHandler);
-    private FrameStabilizer frameStabilizer = new FrameStabilizer(new SubHandler[]{logicHandler,graphicsHandler});
-
-    public void run() {
-        //start stabilizers
+    public FrameHandler(String title, Dimension size) {
+        gameObjectHandler = new GameObjectHandler();
+        graphicsHandler = new GraphicsHandler(title,size);
+        logicHandler = new LogicHandler(graphicsHandler);
+        frameStabilizer = new FrameStabilizer(new SubHandler[]{logicHandler,graphicsHandler});
         graphicsHandler.setGameObjectHandler(gameObjectHandler);
         logicHandler.setGameObjectHandler(gameObjectHandler);
         gameObjectHandler.setGraphicsHandler(graphicsHandler);
+    }
+
+    private boolean running = true;
+    private GameObjectHandler gameObjectHandler;
+
+    //Graphics Handler and according frame stabilizer
+    private GraphicsHandler graphicsHandler;
+
+    //Logic Handler and according frame stabilizer
+    private LogicHandler logicHandler;
+    private FrameStabilizer frameStabilizer;
+
+    public void run() {
+        //start stabilizers
+
         frameStabilizer.start();
 
         while (running){
             //Keep main thread running
         }
 
+    }
+
+    public GameObjectHandler getGameObjectHandler() {
+        return gameObjectHandler;
+    }
+
+    public GraphicsHandler getGraphicsHandler() {
+        return graphicsHandler;
+    }
+
+    public LogicHandler getLogicHandler() {
+        return logicHandler;
     }
 }
 
@@ -80,8 +102,12 @@ class FrameStabilizer extends Thread {
 
             //System.out.println("FH: starting drawing with elapsed time: " + elapsedTime);
             //start frame routine
-            for(SubHandler handler: handlers)
-                handler.execute(elapsedTime);
+            try {
+                for(SubHandler handler: handlers)
+                    handler.execute(elapsedTime);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
             //System.out.println("FH: finished drawing: " + System.currentTimeMillis());
 
             timeTaken = currTime - System.currentTimeMillis() / 1000;

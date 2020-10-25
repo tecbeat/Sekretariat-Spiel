@@ -1,5 +1,6 @@
 package de.jspll.handlers;
 
+import de.jspll.data.*;
 import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
 import de.jspll.graphics.Camera;
@@ -7,6 +8,7 @@ import de.jspll.logic.InputHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.BACKGROUND;
@@ -16,13 +18,16 @@ import static de.jspll.data.ChannelID.BACKGROUND;
  */
 public class GraphicsHandler implements SubHandler {
 
-    public GraphicsHandler(){
+    public GraphicsHandler(String windowTitle, Dimension size){
+        slate = new Slate(this);
+        this.window = new Window(windowTitle,slate,size);
+        this.windowTitle = windowTitle;
         cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2);
     }
 
-    private String windowTitle = "Sekreteriat";
-    private Slate slate = new Slate(this);
-    private Window window = new Window(windowTitle,slate);
+    private String windowTitle;
+    private Slate slate;
+    private Window window;
     //time passed since last drawing call
     private float elapsedTime;
     //keeps track if drawing thread is active
@@ -56,14 +61,18 @@ public class GraphicsHandler implements SubHandler {
                 object.paint(g, elapsedTime, cameras[selectedCamera]);
             }
         }
+
         //Signal that frame is finished
         active.set(false);
     }
 
     public Point getMousePos(){
-        if(slate == null)
+        if(window == null)
             return null;
-        return slate.getMousePosition();
+        //Point global_mouse = MouseInfo.getPointerInfo().getLocation();
+        //return new Point(global_mouse.x - window.getLocation().x,global_mouse.y  - window.getRootPane().getContentPane().getLocation().y);
+        return  slate.getMousePosition(true);
+
     }
 
     public Camera getSelectedCamera() {
@@ -97,10 +106,10 @@ class Window extends JFrame{
 
 
 
-    public Window(String windowTitle, JPanel content) {
+    public Window(String windowTitle, JPanel content, Dimension size) {
         //setting misc. attributes of the window
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setPreferredSize(new Dimension(1920, 1080));
+        getContentPane().setPreferredSize(size);
         setResizable(true);
         setTitle(windowTitle);
         init(content);

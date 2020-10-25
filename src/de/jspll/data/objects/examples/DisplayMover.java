@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static de.jspll.data.ChannelID.INPUT;
 
 public class DisplayMover extends GameObject {
-    public DisplayMover() {
-        super("0", "g.tst.DisplayMover");
+    public DisplayMover(String ID) {
+        super(ID, "g.tst.DisplayMover");
     }
 
     private int framesOn = 0;

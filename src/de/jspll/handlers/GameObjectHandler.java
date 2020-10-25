@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
+import static de.jspll.data.ChannelID.LAST_CHANNEL;
 
 /**
  * Created by reclinarka on 21-Oct-20.
@@ -20,23 +21,23 @@ public class GameObjectHandler {
         }
     }
 
-    public Point getMousePos(){
-        if(graphicsHandler == null)
+    public Point getMousePos() {
+        if (graphicsHandler == null)
             return null;
         return graphicsHandler.getMousePos();
     }
 
-    public Camera getSelectedCamera(){
+    public Camera getSelectedCamera() {
         return graphicsHandler.getSelectedCamera();
     }
 
-    public Dimension getScreenDimensions(){
+    public Dimension getScreenDimensions() {
         return graphicsHandler.getWindow().getSize();
     }
 
     private GraphicsHandler graphicsHandler;
 
-    private GameTrie[] channels = new GameTrie[20];
+    private GameTrie[] channels = new GameTrie[LAST_CHANNEL.valueOf() + 1];
 
     public void setGraphicsHandler(GraphicsHandler graphicsHandler) {
         this.graphicsHandler = graphicsHandler;
@@ -57,13 +58,13 @@ public class GameObjectHandler {
         }
     }
 
-    public void subsribe(GameObject item, ChannelID channel) {
+    public void subscribe(GameObject item, ChannelID channel) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].insert(item.getID(), item);
     }
 
-    public void subsribe(GameObject item, ChannelID channel, String id) {
+    public void subscribe(GameObject item, ChannelID channel, String id) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].insert(id, item);
@@ -77,13 +78,13 @@ public class GameObjectHandler {
         }
     }
 
-    public void unsubsribe(GameObject item, ChannelID channel) {
+    public void unsubscribe(GameObject item, ChannelID channel) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].delete(item.getID());
     }
 
-    public void unsubsribe(ChannelID channel, String id) {
+    public void unsubscribe(ChannelID channel, String id) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].delete(id);
@@ -121,6 +122,11 @@ public class GameObjectHandler {
             register(object);
             subscribe(object);
         }
+    }
+
+    public void loadObject(GameObject object) {
+        register(object);
+        subscribe(object);
     }
 
 
