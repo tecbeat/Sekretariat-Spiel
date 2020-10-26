@@ -15,7 +15,7 @@ public class FrameHandler {
 
     public FrameHandler(String title, Dimension size) {
         gameObjectHandler = new GameObjectHandler();
-        graphicsHandler = new GraphicsHandler(title,size);
+        graphicsHandler = new GraphicsHandler(title,size, GraphicsHandler.HandlerMode.MAIN);
         logicHandler = new LogicHandler(graphicsHandler);
         frameStabilizer = new FrameStabilizer(new SubHandler[]{logicHandler,graphicsHandler});
         graphicsHandler.setGameObjectHandler(gameObjectHandler);

@@ -35,6 +35,12 @@ public class GameObjectHandler {
         return graphicsHandler.getWindow().getSize();
     }
 
+    public GraphicsHandler getGraphicsHandler() {
+        return graphicsHandler;
+    }
+
+
+
     private GraphicsHandler graphicsHandler;
 
     private GameTrie[] channels = new GameTrie[LAST_CHANNEL.valueOf() + 1];

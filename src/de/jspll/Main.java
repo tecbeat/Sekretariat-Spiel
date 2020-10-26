@@ -2,6 +2,7 @@ package de.jspll;
 
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
+import de.jspll.data.objects.examples.Counter;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.dev.EditorHandler;
@@ -25,21 +26,10 @@ public class Main {
         }
         objects.add(new MouseFollower("test1"));
         objects.add(new DisplayMover("test1"));
+        objects.add(new Counter("test"));
         frameHandler.getGameObjectHandler().loadObjects(objects);
         EditorHandler test = new EditorHandler("dev1");
         frameHandler.getGameObjectHandler().loadObject(test);
-
-        ArrayList<GameObject> objects2 = new ArrayList<>();
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 5; y++) {
-                objects2.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2))));
-            }
-        }
-        objects2.add(new MouseFollower("test2"));
-        objects2.add(new DisplayMover("test2"));
-        test.getFrameHandler().getGameObjectHandler().loadObjects(objects2);
-
         frameHandler.run();
-        test.getFrameHandler().run();
     }
 }

@@ -97,6 +97,7 @@ public class GameObject implements Drawable, Interactable {
         return objectID + ":" + ID;
     }
 
+
     @Override
     public void setListener(GameObjectHandler listener) {
         parent = listener;

@@ -1,9 +1,8 @@
 package de.jspll.handlers;
 
-import de.jspll.data.*;
 import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
-import de.jspll.graphics.Camera;
+import de.jspll.graphics.*;
 import de.jspll.logic.InputHandler;
 
 import javax.swing.*;
@@ -12,22 +11,38 @@ import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.BACKGROUND;
+import static de.jspll.data.ChannelID.FOREGROUND;
 
 /**
  * Created by reclinarka on 05-Oct-20.
  */
 public class GraphicsHandler implements SubHandler {
 
-    public GraphicsHandler(String windowTitle, Dimension size){
+    public GraphicsHandler(String windowTitle, Dimension size, HandlerMode mode){
         slate = new Slate(this);
-        this.window = new Window(windowTitle,slate,size);
-        this.windowTitle = windowTitle;
+        this.mode = mode;
         cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2);
+        switch (mode){
+            case DIALOG:
+                dialog = new Secondary_window(windowTitle,slate,size);
+                break;
+            case MAIN:
+                this.window = new de.jspll.graphics.Window(windowTitle,slate,size);
+                this.windowTitle = windowTitle;
+                break;
+        }
     }
 
+    private HandlerMode mode;
     private String windowTitle;
+
+    //Main mode
     private Slate slate;
-    private Window window;
+    private de.jspll.graphics.Window window;
+
+    //Dialog mode
+    private Secondary_window dialog;
+
     //time passed since last drawing call
     private float elapsedTime;
     //keeps track if drawing thread is active
@@ -40,9 +55,17 @@ public class GraphicsHandler implements SubHandler {
     //gets called according to fps target;
     // - elapsedTime is the time in seconds that has passed since the finish of last call
     public void execute(float elapsedTime){
-        active.set(true);
         this.elapsedTime = elapsedTime;
-        this.window.repaint();
+        switch (mode){
+            case MAIN:
+                active.set(true);
+                this.window.repaint();
+                break;
+            case DIALOG:
+                active.set(true);
+                this.dialog.repaint();
+                break;
+        }
         while(active.get()){
             //lock thread until drawing has finished
         }
@@ -52,15 +75,28 @@ public class GraphicsHandler implements SubHandler {
 
     //actual drawing call, keeps
     public void drawingRoutine(Graphics g){
+        if(g == null){
+            return;
+        }
         //fill background
-        g.fillRect(0,0,window.getWidth(),window.getHeight());
+        g.fillRect(0,0,slate.getWidth(),slate.getHeight());
 
-        //Everything that needs to be drawn goes here...
         if(gameObjectHandler != null) {
             for (GameObject object : gameObjectHandler.getChannel(BACKGROUND).allValues()) {
                 object.paint(g, elapsedTime, cameras[selectedCamera]);
             }
+            for (GameObject object : gameObjectHandler.getChannel(FOREGROUND).allValues()) {
+                object.paint(g, elapsedTime, cameras[selectedCamera]);
+            }
         }
+        switch (mode){
+            case MAIN:
+                break;
+            case DIALOG:
+                break;
+        }
+
+        //Everything that needs to be drawn goes here...
 
         //Signal that frame is finished
         active.set(false);
@@ -80,17 +116,17 @@ public class GraphicsHandler implements SubHandler {
     }
 
     public void setInputListener(InputHandler inputHandler){
-        window.addMouseListener(inputHandler);
-        window.addMouseWheelListener(inputHandler);
-        window.addMouseMotionListener(inputHandler);
-        window.addKeyListener(inputHandler);
+        slate.addMouseListener(inputHandler);
+        slate.addMouseWheelListener(inputHandler);
+        slate.addMouseMotionListener(inputHandler);
+        slate.addKeyListener(inputHandler);
     }
 
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;
     }
 
-    public Window getWindow() {
+    public de.jspll.graphics.Window getWindow() {
         return window;
     }
 
@@ -99,16 +135,18 @@ public class GraphicsHandler implements SubHandler {
     }
 
 
+    public enum HandlerMode{
+        MAIN,
+        DIALOG
+    }
+
 }
 
-class Window extends JFrame{
-
-
-
-
-    public Window(String windowTitle, JPanel content, Dimension size) {
+class Secondary_window extends JDialog
+{
+    public Secondary_window(String windowTitle, JPanel content, Dimension size) {
         //setting misc. attributes of the window
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         getContentPane().setPreferredSize(size);
         setResizable(true);
         setTitle(windowTitle);
@@ -128,16 +166,3 @@ class Window extends JFrame{
         setVisible(true);
     }
 }
-
-//used for rerouting drawing method
-class Slate extends JPanel {
-    private GraphicsHandler parent;
-    public Slate(GraphicsHandler parent){
-        this.parent = parent;
-    }
-    @Override
-    protected void paintComponent(Graphics g) {
-        parent.drawingRoutine(g);
-    }
-}
-

@@ -9,6 +9,7 @@ public enum ChannelID {
     LOGIC(2),
     COMM1(3),
     BACKGROUND(4),
+    FOREGROUND(5),
     DISPATCH(19),
     LAST_CHANNEL(19);
 
