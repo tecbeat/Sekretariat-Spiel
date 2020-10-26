@@ -8,6 +8,8 @@ import de.jspll.logic.Interactable;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.BACKGROUND;
 import static de.jspll.data.ChannelID.INPUT;
@@ -29,6 +31,8 @@ public class GameObject implements Drawable, Interactable {
     private BufferedImage texture = null;
 
     private GameObjectHandler parent;
+
+    private HashMap<String, AtomicBoolean> keyPressedMap = new HashMap<>(100);
 
 
     public GameObject() {
@@ -97,5 +101,32 @@ public class GameObject implements Drawable, Interactable {
     @Override
     public void setListener(GameObjectHandler listener) {
         parent = listener;
+    }
+
+    protected boolean wasKeyPressed(String key, HashMap<String, AtomicBoolean> keyMap){
+        if(keyMap.get(key).get()){
+
+            if(!keyPressedMap.containsKey(key))
+                keyPressedMap.put(key, new AtomicBoolean(true));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    protected boolean wasKeyReleased(String key, HashMap<String, AtomicBoolean> keyMap){
+
+        if(keyPressedMap.containsKey(key) && !keyMap.get(key).get()){
+            keyPressedMap.remove(key);
+            return true;
+        }
+
+        if(keyMap.get(key).get()){
+            keyPressedMap.put(key, new AtomicBoolean(true));
+            return false;
+        }
+
+        return false;
     }
 }
