@@ -5,6 +5,8 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by reclinarka on 23-Oct-20.
@@ -17,6 +19,8 @@ public class MouseFollower extends GameObject {
 
     private boolean mousedown;
     private int[] mousePos = new int[]{0,0};
+    private String[] keys;
+    private HashMap<String,AtomicBoolean> keyMap;
 
     @Override
     public char call(Object[] input) {
@@ -33,6 +37,8 @@ public class MouseFollower extends GameObject {
                 int[] pos = (int[]) input[5];
                 mousePos[0] = pos[0];
                 mousePos[1] = pos[1];
+                keys = (String[]) input[6];
+                keyMap = (HashMap<String, AtomicBoolean>) input[4];
             }
         }
 
@@ -44,13 +50,6 @@ public class MouseFollower extends GameObject {
         return super.getChannels();
     }
 
-    private void updateMousePos(){
-        Point pos = getParent().getMousePos();
-        if(pos != null){
-            mousePos[0] = pos.x;
-            mousePos[1] = pos.y;
-        }
-    }
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
@@ -61,6 +60,14 @@ public class MouseFollower extends GameObject {
         }
         //updateMousePos();
         g.drawOval(mousePos[0]-camera.applyZoom(8),mousePos[1]-camera.applyZoom(8),camera.applyZoom(16),camera.applyZoom(16));
-
+        if(keyMap != null && null != keys){
+            String toolTip = "x:" + mousePos[0] + " | y:" + mousePos[1] + "; keys: ";
+            for(String key :keys){
+                if(keyMap.get(key).get()){
+                    toolTip += key + " ";
+                }
+            }
+            g.drawString(toolTip,mousePos[0],mousePos[1]);
+        }
     }
 }

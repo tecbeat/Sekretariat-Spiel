@@ -28,7 +28,7 @@ public class Main {
         objects.add(new DisplayMover("test1"));
         objects.add(new Counter("test"));
         frameHandler.getGameObjectHandler().loadObjects(objects);
-        EditorHandler test = new EditorHandler("dev1");
+        EditorHandler test = new EditorHandler("dev1","devtools",new Dimension(200,700));
         frameHandler.getGameObjectHandler().loadObject(test);
         frameHandler.run();
     }

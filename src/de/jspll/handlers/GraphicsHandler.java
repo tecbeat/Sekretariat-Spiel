@@ -5,7 +5,6 @@ import de.jspll.frames.SubHandler;
 import de.jspll.graphics.*;
 import de.jspll.logic.InputHandler;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,14 +20,15 @@ public class GraphicsHandler implements SubHandler {
     public GraphicsHandler(String windowTitle, Dimension size, HandlerMode mode){
         slate = new Slate(this);
         this.mode = mode;
-        cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2);
         switch (mode){
             case DIALOG:
                 dialog = new Secondary_window(windowTitle,slate,size);
+                cameras[0] = new Camera(0,0,(int) size.getWidth(),(int) size.getHeight(),2);
                 break;
             case MAIN:
                 this.window = new de.jspll.graphics.Window(windowTitle,slate,size);
                 this.windowTitle = windowTitle;
+                cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2);
                 break;
         }
     }
@@ -119,7 +119,14 @@ public class GraphicsHandler implements SubHandler {
         slate.addMouseListener(inputHandler);
         slate.addMouseWheelListener(inputHandler);
         slate.addMouseMotionListener(inputHandler);
-        slate.addKeyListener(inputHandler);
+        switch (mode){
+            case MAIN:
+                window.addKeyListener(inputHandler);
+                break;
+            case DIALOG:
+                dialog.addKeyListener(inputHandler);
+                break;
+        }
     }
 
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
@@ -142,27 +149,3 @@ public class GraphicsHandler implements SubHandler {
 
 }
 
-class Secondary_window extends JDialog
-{
-    public Secondary_window(String windowTitle, JPanel content, Dimension size) {
-        //setting misc. attributes of the window
-        setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        getContentPane().setPreferredSize(size);
-        setResizable(true);
-        setTitle(windowTitle);
-        init(content);
-
-
-    }
-
-    private void init(JPanel content) {
-        //setLocationRelativeTo(null);
-
-        //I wrote this like 6 years ago, I have no clue what it does. I only know that I needed it...
-        setLayout(new GridLayout(1, 1, 0, 0));
-
-        getContentPane().add(content);
-        pack();
-        setVisible(true);
-    }
-}

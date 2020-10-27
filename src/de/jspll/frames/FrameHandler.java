@@ -83,7 +83,6 @@ class FrameStabilizer extends Thread {
 
         long timeTaken;
         while (running.get()){
-            //System.out.println("FH: Frame routine started");
             if(delayActive){
                 long delayStart = System.currentTimeMillis();
                 System.out.println("FH: Started delay, current time: " + delayStart + "\n Waiting for " + (long) (elapsedTime * 1000) + " Milliseconds");
@@ -96,11 +95,9 @@ class FrameStabilizer extends Thread {
             }
             //start calculating elapsed time
             currTime = System.currentTimeMillis();
-            //System.out.println("FH: current time: " + System.currentTimeMillis());
             elapsedTime = ((float)(currTime - lastFrame)) / 1000;
             lastFrame = currTime;
 
-            //System.out.println("FH: starting drawing with elapsed time: " + elapsedTime);
             //start frame routine
             try {
                 for(SubHandler handler: handlers)
@@ -108,7 +105,6 @@ class FrameStabilizer extends Thread {
             } catch (Exception e){
                 e.printStackTrace();
             }
-            //System.out.println("FH: finished drawing: " + System.currentTimeMillis());
 
             timeTaken = currTime - System.currentTimeMillis() / 1000;
             timesTaken[currentCell] = timeTaken;

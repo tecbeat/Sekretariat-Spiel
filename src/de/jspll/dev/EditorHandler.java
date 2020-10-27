@@ -1,17 +1,15 @@
 package de.jspll.dev;
 
-import de.jspll.data.ChannelID;
+import de.jspll.data.*;
 import de.jspll.data.objects.GameObject;
-import de.jspll.data.objects.Repeater;
+import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
-import de.jspll.frames.FrameHandler;
-import de.jspll.graphics.Slate;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.GraphicsHandler;
 import de.jspll.handlers.LogicHandler;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.Dimension;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,24 +23,31 @@ public class EditorHandler extends GameObject{
 
     private boolean test = true;
 
-    private GraphicsHandler graphicsHandler = new GraphicsHandler("test",new Dimension(200, 600), GraphicsHandler.HandlerMode.DIALOG);
-    private GameObjectHandler gameObjectHandler = new GameObjectHandler();
-    private LogicHandler logicHandler = new LogicHandler(graphicsHandler);
+    private GraphicsHandler graphicsHandler;
+    private GameObjectHandler gameObjectHandler;
+    private LogicHandler logicHandler;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Runnable task;
 
 
-    public EditorHandler(String ID) {
+    public EditorHandler(String ID , String windowTitle, Dimension size) {
         super(ID,"g.dev.EditorHandler");
+        graphicsHandler = new GraphicsHandler(windowTitle,size, GraphicsHandler.HandlerMode.DIALOG);
+        gameObjectHandler = new GameObjectHandler();
+        logicHandler = new LogicHandler(graphicsHandler);
 
     }
 
     public void init(){
-        gameObjectHandler.loadObject(new MouseFollower("test"));
 
         logicHandler.setGameObjectHandler(gameObjectHandler);
         graphicsHandler.setGameObjectHandler(gameObjectHandler);
+        gameObjectHandler.setGraphicsHandler(graphicsHandler);
 
+
+        gameObjectHandler.loadObject(new MouseFollower("test"));
+        gameObjectHandler.loadObject(new DisplayMover("test1"));
+        gameObjectHandler.loadObject(new GameObject("test","g.test.GameObject"));
         //getParent().loadObject(new Repeater("0",frameHandler.getGameObjectHandler()));
 
 
@@ -59,7 +64,10 @@ public class EditorHandler extends GameObject{
         if(test){
             init();
             test = false;
-            task = () -> graphicsHandler.execute(elapsedTime);
+            task = () -> {
+                logicHandler.execute(elapsedTime);
+                graphicsHandler.execute(elapsedTime);
+            };
         } else {
             executorService.submit(task);
 
