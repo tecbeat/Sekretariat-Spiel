@@ -1,7 +1,7 @@
 package de.jspll.data;
 
 import de.jspll.data.objects.GameObject;
-import de.jspll.data.objects.Player;
+import de.jspll.data.objects.game.player.Player;
 
 /**
  * Created by reclinarka on 21-Oct-20.

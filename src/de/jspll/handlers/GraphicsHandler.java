@@ -1,5 +1,6 @@
 package de.jspll.handlers;
 
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
 import de.jspll.graphics.*;
@@ -9,8 +10,7 @@ import java.awt.*;
 import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static de.jspll.data.ChannelID.BACKGROUND;
-import static de.jspll.data.ChannelID.FOREGROUND;
+import static de.jspll.data.ChannelID.*;
 
 /**
  * Created by reclinarka on 05-Oct-20.
@@ -82,12 +82,12 @@ public class GraphicsHandler implements SubHandler {
         g.fillRect(0,0,slate.getWidth(),slate.getHeight());
 
         if(gameObjectHandler != null) {
-            for (GameObject object : gameObjectHandler.getChannel(BACKGROUND).allValues()) {
-                object.paint(g, elapsedTime, cameras[selectedCamera]);
+            for(int i = FIRST_LAYER.valueOf(); i <= LAST_LAYER.valueOf(); i++){
+                for (GameObject object : gameObjectHandler.getChannel(ChannelID.getbyID(i)).allValues()) {
+                    object.paint(g, elapsedTime, cameras[selectedCamera]);
+                }
             }
-            for (GameObject object : gameObjectHandler.getChannel(FOREGROUND).allValues()) {
-                object.paint(g, elapsedTime, cameras[selectedCamera]);
-            }
+
         }
         switch (mode){
             case MAIN:

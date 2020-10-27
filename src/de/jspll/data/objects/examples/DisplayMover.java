@@ -2,6 +2,7 @@ package de.jspll.data.objects.examples;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
+import de.jspll.graphics.Camera;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -29,18 +30,23 @@ public class DisplayMover extends GameObject {
             return 0;
         } else if (input[0].getClass() == String.class) {
             if (((String) input[0]).contentEquals("input")) {
-                if ((boolean) input[1]) {
-                    mousedown = true;
-                } else {
-                    framesOn = 0;
-                    mousedown = false;
-                }
-                int[] pos = (int[]) input[5];
-                currMousePos[0] = pos[0];
-                currMousePos[1] = pos[1];
+
 
                 if(input[4].getClass() == HashMap.class) {
                     HashMap<String, AtomicBoolean> keyMap = (HashMap<String, AtomicBoolean>) input[4];
+                    Camera cam = getParent().getSelectedCamera();
+                    if (keyMap.get("w").get()) {
+                        cam.increase_y(-2);
+                    }
+                    if (keyMap.get("a").get()){
+                        cam.increase_x(-2);
+                    }
+                    if (keyMap.get("s").get()){
+                        cam.increase_y(2);
+                    }
+                    if (keyMap.get("d").get()){
+                        cam.increase_x(2);
+                    }
                     if (keyMap.get("+").get()) {
                         plus = true;
                     } else {
@@ -70,18 +76,7 @@ public class DisplayMover extends GameObject {
             }
         }
 
-        //if(true)return 0;
-        if (mousedown) {
-            framesOn++;
-            if (framesOn > 10) {
-                if (currMousePos != null && previousMousePos != null) {
-                    getParent().getSelectedCamera().increase_x(-currMousePos[0] + previousMousePos[0]);
-                    getParent().getSelectedCamera().increase_y(-currMousePos[1] + previousMousePos[1]);
-                }
-            }
-        }
-        previousMousePos[0] = currMousePos[0];
-        previousMousePos[1] = currMousePos[1];
+
 
         return 0;
     }

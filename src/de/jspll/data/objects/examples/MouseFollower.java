@@ -15,6 +15,7 @@ public class MouseFollower extends GameObject {
 
     public MouseFollower(String ID){
         super(ID,"g.tst.MouseFollower");
+        channels = new ChannelID[]{ChannelID.INPUT,ChannelID.OVERLAY};
     }
 
     private boolean mousedown;
@@ -45,10 +46,6 @@ public class MouseFollower extends GameObject {
         return 0;
     }
 
-    @Override
-    public ChannelID[] getChannels() {
-        return super.getChannels();
-    }
 
 
     @Override

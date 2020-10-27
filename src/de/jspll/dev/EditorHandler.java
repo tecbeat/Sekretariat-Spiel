@@ -2,6 +2,7 @@ package de.jspll.dev;
 
 import de.jspll.data.*;
 import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.Repeater;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.handlers.GameObjectHandler;
@@ -47,8 +48,8 @@ public class EditorHandler extends GameObject{
 
         gameObjectHandler.loadObject(new MouseFollower("test"));
         gameObjectHandler.loadObject(new DisplayMover("test1"));
-        gameObjectHandler.loadObject(new GameObject("test","g.test.GameObject"));
-        //getParent().loadObject(new Repeater("0",frameHandler.getGameObjectHandler()));
+        gameObjectHandler.loadObject(new GameObject("test","g.test.GameObject",0,0,new Dimension(16,16)));
+        getParent().loadObject(new Repeater("0",gameObjectHandler));
 
 
     }

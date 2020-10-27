@@ -1,6 +1,6 @@
 package de.jspll.data.objects;
 
-import de.jspll.data.ChannelID;
+import de.jspll.data.*;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
@@ -8,6 +8,7 @@ import de.jspll.logic.Interactable;
 import sun.security.util.ArrayUtil;
 
 import java.awt.*;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import static de.jspll.data.ChannelID.BACKGROUND;
@@ -24,10 +25,10 @@ public class GameObject implements Drawable, Interactable {
     private String objectID;
 
     private boolean active = true;
-    private int x = 0;
-    private int y = 0;
-    private int width = 16;
-    private int height = 16;
+    protected int x = 0;
+    protected int y = 0;
+    protected Dimension dimension;
+    protected ChannelID[] channels;
 
     private GameObjectHandler parent;
 
@@ -41,11 +42,20 @@ public class GameObject implements Drawable, Interactable {
         this.objectID = objectID;
     }
 
-    public GameObject(String ID, String objectID, int x, int y) {
+    public GameObject(String ID, String objectID, int x, int y, Dimension dimension) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.objectID = objectID;
+        this.dimension = dimension;
+    }
+
+    public GameObject(String ID, String objectID, int x, int y, Dimension dimension, ChannelID channels) {
+        this.x = x;
+        this.y = y;
+        this.ID = ID;
+        this.objectID = objectID;
+        this.dimension = dimension;
     }
 
     private void setID(String ID) {
@@ -53,7 +63,10 @@ public class GameObject implements Drawable, Interactable {
     }
 
     public ChannelID[] getChannels() {
-        return new ChannelID[]{BACKGROUND, INPUT};
+        if(channels == null){
+            return new ChannelID[]{ INPUT,BACKGROUND};
+        }
+        return channels;
     }
 
     protected GameObjectHandler getParent() {
@@ -67,8 +80,11 @@ public class GameObject implements Drawable, Interactable {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
-        g.setColor(Color.PINK);
-        g.fillRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom(width) , camera.applyZoom(height));
+        if(dimension == null)
+            return;
+        if(elapsedTime != 0)
+            g.setColor(Color.PINK);
+        g.drawRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()) , camera.applyZoom((int) dimension.getHeight()));
 
     }
 
@@ -97,6 +113,25 @@ public class GameObject implements Drawable, Interactable {
         return objectID + ":" + ID;
     }
 
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     @Override
     public void setListener(GameObjectHandler listener) {

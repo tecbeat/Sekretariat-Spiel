@@ -38,6 +38,14 @@ public class Camera {
         updateXY();
     }
 
+    public int revertXTransform(int in){
+        return (int)((in + x) / zoom);
+    }
+
+    public int revertYTransform(int in){
+        return (int)((in + y) / zoom);
+    }
+
     public int applyZoom(int in){
         return (int)((float)in * zoom);
     }
