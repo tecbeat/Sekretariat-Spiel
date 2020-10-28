@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 /**
  * Created by reclinarka on 23-Oct-20.
+ *
+ * Data structure to store game objects in
  */
 public class GameTrie {
 
@@ -15,6 +17,10 @@ public class GameTrie {
 
     private ArrayList<GameTrie> tries = new ArrayList<>();
 
+    /**
+     * @param key parameters to search trie by
+     * @return found game object
+     */
     public GameObject find(String key){
         if(key.contentEquals("")){
             return value;
@@ -27,6 +33,10 @@ public class GameTrie {
         }
     }
 
+    /**
+     * @param key parameters to search trie by
+     * @return found trie
+     */
     public GameTrie findTrie(String key){
         if(key.contentEquals("")){
             return this;
@@ -39,6 +49,11 @@ public class GameTrie {
         }
     }
 
+    /**
+     * @param key key to insert by
+     * @param value value to insert
+     * @return new trie
+     */
     public GameTrie insert(String key, GameObject value){
         if(key.contentEquals("")){
             this.value = value;
@@ -55,10 +70,17 @@ public class GameTrie {
         return this;
     }
 
+    /**
+     * @return status
+     */
     public boolean isEmpty(){
         return value == null && chars.size() == 0 && tries.size() == 0;
     }
 
+    /**
+     * @param key key to delete
+     * @return new trie
+     */
     public GameTrie delete(String key){
         if(key.contentEquals("")){
             this.value = null;
@@ -78,6 +100,9 @@ public class GameTrie {
         return this;
     }
 
+    /**
+     * @param collector Array list to insert values into
+     */
     private void _allValues(ArrayList<GameObject> collector){
         if(value != null){
             collector.add(value);
@@ -87,6 +112,9 @@ public class GameTrie {
         }
     }
 
+    /**
+     * @return ArrayList with all game objects
+     */
     public ArrayList<GameObject> allValues(){
         ArrayList<GameObject> values = new ArrayList<>();
         _allValues(values);
@@ -94,7 +122,10 @@ public class GameTrie {
     }
 
 
-
+    /**
+     * @param prefix to search by
+     * @return all values following the prefix
+     */
     public ArrayList<GameObject> allValuesAfter( String prefix){
         return findTrie(prefix).allValues();
     }

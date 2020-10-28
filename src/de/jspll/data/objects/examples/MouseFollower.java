@@ -14,16 +14,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class MouseFollower extends GameObject {
 
+    /**
+     * Constructor, returns object
+     * @param ID Object id
+     */
     public MouseFollower(String ID){
         super(ID,"g.tst.MouseFollower");
         channels = new ChannelID[]{ChannelID.INPUT,ChannelID.OVERLAY};
     }
 
+    //inital variable declarations
     private boolean mousedown;
     private int[] mousePos = new int[]{0,0};
     private String[] keys;
     private HashMap<String,AtomicBoolean> keyMap;
 
+    /**
+     * gets called in the game loop
+     * @param input user input
+     * @return status
+     */
     @Override
     public char call(Object[] input) {
         super.call(input);
@@ -48,7 +58,12 @@ public class MouseFollower extends GameObject {
     }
 
 
-
+    /**
+     * Draws a circle around the users mouse and shows pressed keys
+     * @param g graphics object
+     * @param elapsedTime time since last draw
+     * @param camera camera object
+     */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         if (mousedown) {
@@ -59,6 +74,7 @@ public class MouseFollower extends GameObject {
         //updateMousePos();
         g.drawOval(mousePos[0]-camera.applyZoom(8),mousePos[1]-camera.applyZoom(8),camera.applyZoom(16),camera.applyZoom(16));
         if(keyMap != null && null != keys){
+            //Show pressed keys
             String toolTip = "x:" + mousePos[0] + " | y:" + mousePos[1] + "; keys: ";
             for(String key :keys){
                 if(keyMap.get(key).get()){

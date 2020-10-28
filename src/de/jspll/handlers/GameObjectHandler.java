@@ -28,6 +28,7 @@ public class GameObjectHandler {
         return graphicsHandler.getMousePos();
     }
 
+    //Initializing / updating handlers
     public Camera getSelectedCamera() {
         return graphicsHandler.getSelectedCamera();
     }
@@ -56,11 +57,19 @@ public class GameObjectHandler {
         this.graphicsHandler = graphicsHandler;
     }
 
+    /**
+     * Register item in instance register
+     * @param item
+     */
     public void register(GameObject item) {
         channels[INSTANCE_REGISTER.valueOf()].insert(item.getID(), item);
         item.setListener(this);
     }
 
+    /**
+     * Subscribe item to channels listet in object
+     * @param item
+     */
     public void subscribe(GameObject item) {
         if (item.getChannels() != null && item.getChannels().length > 0) {
             for (ChannelID id : item.getChannels()) {
@@ -71,18 +80,33 @@ public class GameObjectHandler {
         }
     }
 
+    /**
+     * Subscribe item to channel
+     * @param item
+     * @param channel
+     */
     public void subscribe(GameObject item, ChannelID channel) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].insert(item.getID(), item);
     }
 
+    /**
+     * Subscribe item to channel
+     * @param item
+     * @param channel
+     * @param id
+     */
     public void subscribe(GameObject item, ChannelID channel, String id) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].insert(id, item);
     }
 
+    /**
+     * Unsibscribe item from everything except the instance register
+     * @param item
+     */
     public void unsubscribe(GameObject item) {
         for (ChannelID id : item.getChannels()) {
             if (id == INSTANCE_REGISTER)
@@ -91,35 +115,66 @@ public class GameObjectHandler {
         }
     }
 
+    /**
+     * Unsubscribe item from channel
+     * @param item
+     * @param channel
+     */
     public void unsubscribe(GameObject item, ChannelID channel) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].delete(item.getID());
     }
 
+    /**
+     * Unsubscribe item (by id) from channel
+     * @param channel
+     * @param id
+     */
     public void unsubscribe(ChannelID channel, String id) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].delete(id);
     }
 
+    /**
+     * Remove item from instance channel
+     * @param item item to delete
+     */
     public void delete(GameObject item) {
         unsubscribe(item);
         channels[INSTANCE_REGISTER.valueOf()].delete(item.getID());
     }
 
+    /**
+     * Call all objects in submitted channel list
+     * @param targets channel array
+     * @param scope
+     * @param input
+     */
     public void dispatch(ChannelID[] targets, String scope, Object[] input) {
         for (ChannelID target : targets) {
             dispatch(target, scope, input);
         }
     }
 
+    /**
+     * Call all objects in target channel, fitting scope
+     * @param target channel
+     * @param scope scope
+     * @param input user input
+     */
     public void dispatch(ChannelID target, String scope, Object[] input) {
         for (GameObject object : channels[target.valueOf()].allValuesAfter(scope)) {
             object.call(input);
         }
     }
 
+    /**
+     * Call all objects in target channel
+     * @param target channel
+     * @param input user input
+     */
     public void dispatch(ChannelID target, Object[] input) {
         for (GameObject object : channels[target.valueOf()].allValues()) {
             object.call(input);
@@ -130,6 +185,9 @@ public class GameObjectHandler {
         return channels[channel.valueOf()];
     }
 
+    /**
+     * @param objects list of objects to load
+     */
     public void loadObjects(ArrayList<GameObject> objects) {
         for (GameObject object : objects) {
             register(object);
@@ -137,6 +195,9 @@ public class GameObjectHandler {
         }
     }
 
+    /**
+     * @param object object to load
+     */
     public void loadObject(GameObject object) {
         register(object);
         subscribe(object);

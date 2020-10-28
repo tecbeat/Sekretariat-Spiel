@@ -15,6 +15,9 @@ public class Player extends GameObject {
         super("default","g.ntt.Player");
     }
 
+    /**
+     * @return subscribed channels
+     */
     @Override
     public ChannelID[] getChannels() {
 
@@ -22,12 +25,22 @@ public class Player extends GameObject {
     }
 
 
+    /**
+     * gets called during game loop
+     * @param elapsedTime time since last update
+     * @return status
+     */
     @Override
     public char update(float elapsedTime) {
         return super.update(elapsedTime);
 
     }
 
+    /**
+     * gets called during game loop
+     * @param input user input
+     * @return status
+     */
     @Override
     public char call(Object[] input) {
         return super.call(input);

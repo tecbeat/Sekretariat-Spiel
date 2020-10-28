@@ -13,11 +13,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by reclinarka on 27-Oct-20.
  */
 public class PaperList extends GameObject {
+    /**
+     * Constructor
+     * @param ID object id
+     * @param size initial size
+     * @param pos initial position
+     */
     public PaperList(String ID, Dimension size, Point pos) {
         super(ID, "g.ui.PaperList", pos.x, pos.y, size);
         channels = new ChannelID[]{ChannelID.UI, ChannelID.INPUT};
     }
 
+    //initial variable delclarations
     private static BufferedImage texture;
     private HashMap<String, AtomicBoolean> keyMap;
     private int framesOn = 0;
@@ -31,20 +38,31 @@ public class PaperList extends GameObject {
         return super.update(elapsedTime);
     }
 
+    /**
+     * Draws paper.png at the designated position
+     * @param g graphics object
+     * @param elapsedTime time since last draw
+     * @param camera camera object
+     */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         if(framesOn > 10)
             g.setColor(Color.RED);
         super.paint(g, 0, camera);
-        if (texture == null) {
+        if (texture == null) { //load texture
             texture = getParent().getTextureHandler().getTexture("paper.png");
-        } else {
+        } else { //draw texture
             g.drawImage(texture, camera.applyXTransform(x), camera.applyYTransform(y),
                     camera.applyZoom((int) dimension.getWidth()), camera.applyZoom((int) dimension.getHeight()),
                     null);
         }
     }
 
+    /**
+     * called during game loop, updates variables
+     * @param input user input
+     * @return status
+     */
     @Override
     public char call(Object[] input) {
         super.call(input);
