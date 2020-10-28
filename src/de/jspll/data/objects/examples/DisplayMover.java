@@ -28,11 +28,11 @@ public class DisplayMover extends GameObject {
         super.call(input);
         if (input == null || input.length < 1) {
             return 0;
-        } else if (input[0].getClass() == String.class) {
+        } else if (input[0] instanceof String) {
             if (((String) input[0]).contentEquals("input")) {
 
 
-                if(input[4].getClass() == HashMap.class) {
+                if(input[4] instanceof HashMap) {
                     HashMap<String, AtomicBoolean> keyMap = (HashMap<String, AtomicBoolean>) input[4];
                     Camera cam = getParent().getSelectedCamera();
                     if (keyMap.get("w").get()) {

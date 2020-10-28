@@ -30,4 +30,14 @@ public class TextureHandler {
         }
 
     }
+
+    public BufferedImage[] getTextures(String[] textures){
+        BufferedImage[] out = new BufferedImage[textures.length];
+        for(int i = 0; i < textures.length; i++) {
+            out[i] = getTexture(textures[i]);
+        }
+        return out;
+
+
+    }
 }

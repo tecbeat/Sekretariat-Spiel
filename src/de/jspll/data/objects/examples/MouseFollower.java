@@ -6,6 +6,7 @@ import de.jspll.graphics.Camera;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -28,7 +29,7 @@ public class MouseFollower extends GameObject {
         super.call(input);
         if(input == null || input.length < 1){
             return 0;
-        } else if(input[0].getClass() == String.class){
+        } else if(input[0] instanceof String){
             if( ((String) input[0]).contentEquals("input")){
                 if((boolean) input[1]){
                     mousedown = true;

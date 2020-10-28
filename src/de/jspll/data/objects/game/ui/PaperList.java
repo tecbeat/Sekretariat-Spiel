@@ -25,6 +25,7 @@ public class PaperList extends GameObject {
     private int[] currMousePos = new int[]{0, 0};
     private int[] previousMousePos = new int[]{0, 0};
 
+
     @Override
     public char update(float elapsedTime) {
         return super.update(elapsedTime);
@@ -49,7 +50,7 @@ public class PaperList extends GameObject {
         super.call(input);
         if (input == null || input.length < 1) {
             return 0;
-        } else if (input[0].getClass() == String.class) {
+        } else if (input[0] instanceof String) {
             if (((String) input[0]).contentEquals("input")) {
                 if ((boolean) input[3]) {
                     mousedown = true;
@@ -61,7 +62,7 @@ public class PaperList extends GameObject {
                 currMousePos[0] = pos[0];
                 currMousePos[1] = pos[1];
 
-                if (input[4].getClass() == HashMap.class) {
+                if (input[4] instanceof HashMap) {
                     this.keyMap = (HashMap<String, AtomicBoolean>) input[4];
                 }
 

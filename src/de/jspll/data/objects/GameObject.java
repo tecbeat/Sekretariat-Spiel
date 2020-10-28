@@ -5,7 +5,6 @@ import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
 import de.jspll.logic.Interactable;
-import sun.security.util.ArrayUtil;
 
 import java.awt.*;
 import java.awt.Dimension;
@@ -24,11 +23,13 @@ public class GameObject implements Drawable, Interactable {
     //ID that is specific for this class: i.e g.ntt.Player
     private String objectID;
 
-    private boolean active = true;
+
+    protected boolean active = true;
     protected int x = 0;
     protected int y = 0;
     protected Dimension dimension;
     protected ChannelID[] channels;
+
 
     private GameObjectHandler parent;
 
@@ -73,6 +74,14 @@ public class GameObject implements Drawable, Interactable {
         return parent;
     }
 
+    public void subscribeToChannel(ChannelID channel){
+        parent.subscribe(this,channel);
+    }
+
+    public void unsubscribeChannel(ChannelID channel){
+        parent.unsubscribe(channel,getID());
+    }
+
     public char update(float elapsedTime){
 
         return 0;
@@ -80,6 +89,8 @@ public class GameObject implements Drawable, Interactable {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
+        if(!GameObjectHandler.DEBUG)
+            return;
         if(dimension == null)
             return;
         if(elapsedTime != 0)
@@ -88,11 +99,27 @@ public class GameObject implements Drawable, Interactable {
 
     }
 
+    protected GameObject createInstance(Object[] data){
+        if(data == null)
+            return null;
+        switch (data.length){
+            case 0:
+                return new GameObject();
+            case 2:
+                return new GameObject((String)data[0],(String)data[1]);
+            case 5:
+                return new GameObject((String)data[0],(String)data[1],(int)data[2],(int)data[3],(Dimension) data[4]);
+            case 6:
+                return new GameObject((String)data[0],(String)data[1],(int)data[2],(int)data[3],(Dimension) data[4],(ChannelID) data[5]);
+        }
+        return null;
+    }
+
     @Override
     public char call(Object[] input) {
         if (input == null || input.length < 1) {
             return 0;
-        } else if (input[0].getClass() == String.class) {
+        } else if (input[0] instanceof String) {
             if (((String) input[0]).contentEquals("pause")) {
                 active = false;
             } else if (((String) input[0]).contentEquals("continue")) {

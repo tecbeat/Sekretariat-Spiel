@@ -48,6 +48,8 @@ public class GameObjectHandler {
 
     private GraphicsHandler graphicsHandler;
 
+    public static boolean DEBUG = true;
+
     private GameTrie[] channels = new GameTrie[LAST_CHANNEL.valueOf() + 1];
 
     public void setGraphicsHandler(GraphicsHandler graphicsHandler) {
