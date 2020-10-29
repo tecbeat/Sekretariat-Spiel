@@ -2,27 +2,215 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/LayeredTexture.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/AnimatedGameObject.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/paper.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/GameObject.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/GameObject.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/examples/MouseFollower.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/examples/MouseFollower.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GraphicsHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GraphicsHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/logic/InputHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/logic/InputHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00000.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00001.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00002.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00003.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00004.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00005.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00006.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00007.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00008.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00009.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00010.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00011.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00012.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00013.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00014.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00015.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00016.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00017.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00018.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00019.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00020.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00021.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00022.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00023.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00024.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00025.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00026.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00027.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00028.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00029.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00030.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00031.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00032.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00033.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00034.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00035.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00036.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00037.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00038.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00039.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00040.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00041.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00042.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00043.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00044.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00045.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00046.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00047.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00048.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00049.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00050.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00051.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00052.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00053.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00054.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00055.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00056.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00057.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00058.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00059.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00060.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00061.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00062.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00063.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00064.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00065.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00066.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00067.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00068.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00069.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00070.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00071.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00072.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00073.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00074.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00075.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00076.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00077.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00078.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00079.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00080.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00081.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00082.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00083.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00084.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00085.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00086.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00087.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00088.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00089.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00090.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00091.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00092.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00093.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00094.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00095.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00096.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00097.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00098.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00099.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00100.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00101.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00102.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00103.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00104.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00105.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00106.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00107.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00108.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00109.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00110.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00111.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00112.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00113.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00114.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00115.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00116.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00117.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00118.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00119.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00120.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00121.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00122.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00123.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00124.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00125.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00126.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00127.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00128.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00129.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00130.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00131.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00132.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00133.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00134.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00135.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00136.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00137.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00138.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00139.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00140.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00141.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00142.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00143.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00144.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00145.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00146.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00147.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00148.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00149.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00150.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00151.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00152.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00153.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00154.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00155.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00156.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00157.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00158.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00159.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00160.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00161.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00162.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00163.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00164.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00165.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00166.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00167.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00168.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00169.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00170.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00171.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00172.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00173.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00174.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00175.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00176.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00177.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00178.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00179.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00180.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00181.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00182.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00183.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00184.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00185.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00186.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00187.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00188.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00189.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00190.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00191.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00192.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00193.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00194.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00195.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00196.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/chair_animation/Streming_00197.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_000.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_001.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_002.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_003.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_004.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_005.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_006.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_007.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_008.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/clipboard/clipboard_009.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/MouseFollower.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/MouseFollower.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/ui/PaperList.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/ui/PaperList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/AnimatedGameObject.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/Animation.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/TextureHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,7 +232,7 @@
         <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -53,7 +241,7 @@
       <file leaf-file-name="TexturedObject.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
+            <state relative-caret-position="810">
               <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -64,15 +252,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Animation.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Animation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/Animation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="91" column="8" lean-forward="false" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="31" />
+            <state relative-caret-position="910">
+              <caret line="59" column="21" lean-forward="false" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2524#2525#0" expanded="true" />
-                <element signature="e#2562#2563#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,7 +267,7 @@
       <file leaf-file-name="ResourceHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
+            <state relative-caret-position="390">
               <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -104,8 +290,8 @@
       <file leaf-file-name="Texture.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="757">
-              <caret line="43" column="130" lean-forward="true" selection-start-line="43" selection-start-column="130" selection-end-line="43" selection-end-column="130" />
+            <state relative-caret-position="1140">
+              <caret line="43" column="130" lean-forward="false" selection-start-line="43" selection-start-column="130" selection-end-line="43" selection-end-column="130" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,8 +302,8 @@
       <file leaf-file-name="GameObject.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
-              <caret line="102" column="41" lean-forward="true" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
+            <state relative-caret-position="2550">
+              <caret line="102" column="41" lean-forward="false" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1880#1881#0" expanded="true" />
@@ -133,7 +319,7 @@
       <file leaf-file-name="GraphicsHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
+            <state relative-caret-position="2400">
               <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -142,11 +328,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnimatedGameObject.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AnimatedGameObject.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/examples/AnimatedGameObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="910">
-              <caret line="38" column="13" lean-forward="true" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+            <state relative-caret-position="900">
+              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -157,7 +343,7 @@
       <file leaf-file-name="LayeredTexture.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/LayeredTexture.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-407">
+            <state relative-caret-position="210">
               <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -181,6 +367,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -246,9 +437,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -409,8 +597,68 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="graphics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sekretariat-Spiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sekretariat-Spiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jspll" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="frames" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sekretariat-Spiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sekretariat-Spiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jspll" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrameHandler.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -641,6 +889,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1074,6 +1325,7 @@
       <workItem from="1603209966154" duration="7104000" />
       <workItem from="1603408698231" duration="18015000" />
       <workItem from="1603495479047" duration="9167000" />
+      <workItem from="1604003125779" duration="656000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -1138,11 +1390,18 @@
       <option name="project" value="LOCAL" />
       <updated>1603897518517</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="implemented Layered Textures and Animations">
+      <created>1603935447415</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1603935447415</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66141000" />
+    <option name="totallyTimeSpent" value="68054000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="3862" height="2122" extended-state="6" />
@@ -1164,24 +1423,27 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34617388" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899532" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32899532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299735" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899532" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26498672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951587" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.267374" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899532" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299735" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951587" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -1210,7 +1472,8 @@
     <MESSAGE value="Switched to JDialog for second window" />
     <MESSAGE value="fixed some input problems and reworked some stuff" />
     <MESSAGE value="implemented first texture utils" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented first texture utils" />
+    <MESSAGE value="implemented Layered Textures and Animations" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented Layered Textures and Animations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1231,25 +1494,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/de/jspll/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1269,30 +1522,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/de/jspll/audio/AudioHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="7" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_241/jre/lib/rt.jar!/sun/java2d/d3d/D3DRenderQueue.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="931">
@@ -1312,7 +1550,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1333,30 +1570,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
-          <caret line="42" column="45" lean-forward="false" selection-start-line="42" selection-start-column="45" selection-end-line="42" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/GameObjectHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1650">
-          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/LogicHandler.java" />
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/GraphicsHandler.java" />
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/GameObjectHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/ObjectRegister.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -1385,9 +1601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="406">
           <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding>
-            <element signature="e#1852#1853#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1395,7 +1608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="888" column="0" lean-forward="false" selection-start-line="888" selection-start-column="0" selection-end-line="888" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1579,7 +1791,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/LayeredTexture.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-407">
+        <state relative-caret-position="210">
           <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1591,8 +1803,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="757">
-          <caret line="43" column="130" lean-forward="true" selection-start-line="43" selection-start-column="130" selection-end-line="43" selection-end-column="130" />
+        <state relative-caret-position="1140">
+          <caret line="43" column="130" lean-forward="false" selection-start-line="43" selection-start-column="130" selection-end-line="43" selection-end-column="130" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1601,8 +1813,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="102" column="41" lean-forward="true" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
+        <state relative-caret-position="2550">
+          <caret line="102" column="41" lean-forward="false" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1880#1881#0" expanded="true" />
@@ -1616,7 +1828,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
+        <state relative-caret-position="2400">
           <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1626,23 +1838,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
+        <state relative-caret-position="390">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="class#FileType#0;class#ResourceHandler#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/Animation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="91" column="8" lean-forward="false" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2524#2525#0" expanded="true" />
-            <element signature="e#2562#2563#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1657,7 +1857,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
+        <state relative-caret-position="810">
           <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1670,15 +1870,25 @@
     <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/examples/AnimatedGameObject.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/Animation.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="910">
-          <caret line="38" column="13" lean-forward="true" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <caret line="59" column="21" lean-forward="false" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
