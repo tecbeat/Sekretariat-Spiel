@@ -2,6 +2,7 @@ package de.jspll;
 
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
+import de.jspll.data.objects.examples.AnimatedGameObject;
 import de.jspll.data.objects.examples.Counter;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
@@ -19,6 +20,11 @@ public class Main {
 
     public static void main(String[] args) {
 
+
+
+
+
+
         ArrayList<GameObject> objects = new ArrayList<>();
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 5; y++) {
@@ -26,6 +32,7 @@ public class Main {
             }
         }
         objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
+        objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900)));
         objects.add(new MouseFollower("test1"));
         objects.add(new DisplayMover("test1"));
         objects.add(new Counter("test"));

@@ -9,6 +9,8 @@ import de.jspll.logic.Interactable;
 import java.awt.*;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.BACKGROUND;
 import static de.jspll.data.ChannelID.INPUT;
@@ -29,7 +31,7 @@ public class GameObject implements Drawable, Interactable {
     protected int y = 0;
     protected Dimension dimension;
     protected ChannelID[] channels;
-
+    private HashMap<String, Integer> keyPressedMap = new HashMap<>(100);
 
     private GameObjectHandler parent;
 
@@ -70,8 +72,64 @@ public class GameObject implements Drawable, Interactable {
         return channels;
     }
 
-    protected GameObjectHandler getParent() {
+    public GameObjectHandler getParent() {
         return parent;
+    }
+
+    protected boolean wasKeyPressed(String key, HashMap<String, AtomicBoolean> keyMap){
+        if(keyMap.get(key).get()){
+
+            if(!keyPressedMap.containsKey(key))
+                keyPressedMap.put(key, 0);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    protected boolean wasKeyTyped(String key, HashMap<String,AtomicBoolean> keyMap){
+        if(!keyMap.get(key).get()){
+            if(keyPressedMap.containsKey(key)){
+                if( 60 > keyPressedMap.get(key)){
+                    keyPressedMap.remove(key);
+                    return true;
+                }
+            }
+        } else {
+            if(keyPressedMap.containsKey(key)){
+                keyPressedMap.put(key,keyPressedMap.get(key) + 1);
+            } else {
+                keyPressedMap.put(key,0);
+            }
+        }
+        return false;
+    }
+
+    protected boolean wasKeyReleased(String key, HashMap<String, AtomicBoolean> keyMap){
+
+        if(keyPressedMap.containsKey(key) && !keyMap.get(key).get()){
+            keyPressedMap.remove(key);
+            return true;
+        }
+
+        if(keyMap.get(key).get()){
+            keyPressedMap.put(key, 0);
+            return false;
+        }
+
+        return false;
+    }
+
+    protected boolean mouseOver(int[] mousePos){
+        int[] mouseMapped = new int[2];
+        mouseMapped[0] = getParent().getSelectedCamera().revertXTransform(mousePos[0]);
+        mouseMapped[1] = getParent().getSelectedCamera().revertYTransform(mousePos[1]);
+
+        if(mouseMapped[0] >= x && mouseMapped[0] <= x + dimension.width && mouseMapped[1] >= y && mouseMapped[1] < y + dimension.height)
+            return true;
+        else
+            return false;
     }
 
     public void subscribeToChannel(ChannelID channel){

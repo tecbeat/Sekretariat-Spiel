@@ -45,7 +45,7 @@ public class GraphicsHandler implements SubHandler {
 
     //time passed since last drawing call
     private float elapsedTime;
-    //keeps track if drawing thread is active
+    //keeps track if drawing thread is layerSelection
     private AtomicBoolean active = new AtomicBoolean();
     private GameObjectHandler gameObjectHandler;
     private Camera[] cameras = new Camera[10];
@@ -78,13 +78,22 @@ public class GraphicsHandler implements SubHandler {
         if(g == null){
             return;
         }
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         //fill background
         g.fillRect(0,0,slate.getWidth(),slate.getHeight());
 
         if(gameObjectHandler != null) {
             for(int i = FIRST_LAYER.valueOf(); i <= LAST_LAYER.valueOf(); i++){
                 for (GameObject object : gameObjectHandler.getChannel(ChannelID.getbyID(i)).allValues()) {
-                    object.paint(g, elapsedTime, cameras[selectedCamera]);
+                    try {
+                        object.paint(g, elapsedTime, cameras[selectedCamera]);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             }
 

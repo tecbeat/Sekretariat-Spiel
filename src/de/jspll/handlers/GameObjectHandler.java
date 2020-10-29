@@ -4,7 +4,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
 import de.jspll.graphics.Camera;
-import de.jspll.graphics.TextureHandler;
+import de.jspll.graphics.ResourceHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,11 +40,11 @@ public class GameObjectHandler {
         return graphicsHandler;
     }
 
-    public TextureHandler getTextureHandler() {
-        return textureHandler;
+    public ResourceHandler getResourceHandler() {
+        return resourceHandler;
     }
 
-    private TextureHandler textureHandler = new TextureHandler(this);
+    private ResourceHandler resourceHandler = new ResourceHandler(this);
 
     private GraphicsHandler graphicsHandler;
 

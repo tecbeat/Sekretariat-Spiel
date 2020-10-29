@@ -1,26 +1,27 @@
 package de.jspll.data.objects.game.ui;
 
 import de.jspll.data.ChannelID;
-import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.TexturedObject;
+import de.jspll.data.objects.LayeredTexture;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by reclinarka on 27-Oct-20.
  */
-public class PaperList extends GameObject {
+public class PaperList extends TexturedObject {
     public PaperList(String ID, Dimension size, Point pos) {
-        super(ID, "g.ui.PaperList", pos.x, pos.y, size);
+        super(ID, "g.ui.PaperList", pos.x, pos.y, size,new LayeredTexture("assets\\clipboard\\clipboard_",3,10,pos,size,null));
+        this.texture.setParent(this);
         channels = new ChannelID[]{ChannelID.UI, ChannelID.INPUT};
     }
 
-    private static BufferedImage texture;
     private HashMap<String, AtomicBoolean> keyMap;
     private int framesOn = 0;
+    private int[] number_cooldowns = new int[10];
     private boolean mousedown;
     private int[] currMousePos = new int[]{0, 0};
     private int[] previousMousePos = new int[]{0, 0};
@@ -29,20 +30,13 @@ public class PaperList extends GameObject {
     @Override
     public char update(float elapsedTime) {
         return super.update(elapsedTime);
+
     }
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
-        if(framesOn > 10)
-            g.setColor(Color.RED);
-        super.paint(g, 0, camera);
-        if (texture == null) {
-            texture = getParent().getTextureHandler().getTexture("paper.png");
-        } else {
-            g.drawImage(texture, camera.applyXTransform(x), camera.applyYTransform(y),
-                    camera.applyZoom((int) dimension.getWidth()), camera.applyZoom((int) dimension.getHeight()),
-                    null);
-        }
+        super.paint(g, elapsedTime, camera);
+
     }
 
     @Override
@@ -75,7 +69,28 @@ public class PaperList extends GameObject {
                 if (currMousePos != null && previousMousePos != null) {
                     x -= - getParent().getSelectedCamera().revertXTransform(currMousePos[0]) + getParent().getSelectedCamera().revertXTransform(previousMousePos[0]);
                     y -= - getParent().getSelectedCamera().revertXTransform(currMousePos[1]) + getParent().getSelectedCamera().revertXTransform(previousMousePos[1]);
+                    texture.getPos().x = x;
+                    texture.getPos().y = y;
                     }
+            }
+        }
+        if(mouseOver(currMousePos)){
+            for(int i = 0; i < 10; i++ ){
+                if(keyMap.get(String.format("%d",i)).get() ) {
+                    if(number_cooldowns[i] < 1){
+
+                        ((LayeredTexture) texture).toggleLayer(i);
+                    } else {
+                        if(number_cooldowns[i] > 30){
+                            number_cooldowns[i] = 0;
+                        }
+                    }
+                    number_cooldowns[i]++;
+
+                } else {
+                    number_cooldowns[i] = 0;
+                }
+
             }
         }
         previousMousePos[0] = currMousePos[0];
@@ -85,4 +100,5 @@ public class PaperList extends GameObject {
         return 0;
 
     }
+
 }

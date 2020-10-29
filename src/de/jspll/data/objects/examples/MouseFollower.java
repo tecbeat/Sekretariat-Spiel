@@ -67,5 +67,7 @@ public class MouseFollower extends GameObject {
             }
             g.drawString(toolTip,mousePos[0],mousePos[1]);
         }
+        g.setColor(Color.CYAN);
+        g.drawOval(camera.applyXTransform(camera.revertXTransform(mousePos[0]))-20,camera.applyYTransform(camera.revertYTransform(mousePos[1]))-20,40,40);
     }
 }
