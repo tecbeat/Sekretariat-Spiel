@@ -19,6 +19,8 @@ import static de.jspll.data.ChannelID.LOGIC;
 
 /**
  * Created by reclinarka on 25-Oct-20.
+ *
+ * Represents the dev tools
  */
 public class EditorHandler extends GameObject{
 

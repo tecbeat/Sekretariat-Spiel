@@ -28,8 +28,11 @@ public class LogicHandler implements SubHandler {
         graphicsHandler.setInputListener(inputHandler);
     }
 
+    /**
+     * Calls all objects in the input and logic channels
+     * @param elapsedTime
+     */
     public void execute(float elapsedTime){
-        //test
 
 
         gameObjectHandler.dispatch(INPUT,inputHandler.getInputInfo());
@@ -43,6 +46,9 @@ public class LogicHandler implements SubHandler {
     }
 
 
+    /** Set game object handler
+     * @param gameObjectHandler
+     */
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;
     }

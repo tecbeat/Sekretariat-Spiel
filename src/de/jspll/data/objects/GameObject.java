@@ -17,6 +17,8 @@ import static de.jspll.data.ChannelID.INPUT;
 
 /**
  * Created by reclinarka on 21-Oct-20.
+ *
+ * class all game objects inherit from
  */
 public class GameObject implements Drawable, Interactable {
 
@@ -24,7 +26,6 @@ public class GameObject implements Drawable, Interactable {
     private String ID;
     //ID that is specific for this class: i.e g.ntt.Player
     private String objectID;
-
 
     protected boolean active = true;
     protected int x = 0;
@@ -67,6 +68,9 @@ public class GameObject implements Drawable, Interactable {
         this.ID = ID;
     }
 
+    /**
+     * @return channels, the object is subscribed to
+     */
     public ChannelID[] getChannels() {
         if(channels == null){
             return new ChannelID[]{ INPUT,BACKGROUND};
@@ -78,19 +82,36 @@ public class GameObject implements Drawable, Interactable {
         return parent;
     }
 
+    /**
+     * @param channel channel to subscribe to
+     */
     public void subscribeToChannel(ChannelID channel){
         parent.subscribe(this,channel);
     }
 
+    /**
+     * @param channel channel to unsubscribe from
+     */
     public void unsubscribeChannel(ChannelID channel){
         parent.unsubscribe(channel,getID());
     }
 
+    /**
+     * method to update object
+     * @param elapsedTime time since lase update
+     * @return status
+     */
     public char update(float elapsedTime){
 
         return 0;
     }
 
+    /**
+     * method that paints the game objects. draws a rectangle by default.
+     * @param g graphics object
+     * @param elapsedTime time since last drawing
+     * @param camera camera object
+     */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         if(!GameObjectHandler.DEBUG)
@@ -119,6 +140,11 @@ public class GameObject implements Drawable, Interactable {
         return null;
     }
 
+    /**
+     * gets called during game loop
+     * @param input user input
+     * @return status
+     */
     @Override
     public char call(Object[] input) {
         if (input == null || input.length < 1) {

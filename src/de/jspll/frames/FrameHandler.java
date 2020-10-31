@@ -72,6 +72,9 @@ class FrameStabilizer extends Thread {
         running.set(false);
     }
 
+    /**
+     * Represents the game loop
+     */
     @Override
     public void run() {
         boolean delayActive = false;
@@ -83,6 +86,7 @@ class FrameStabilizer extends Thread {
 
         long timeTaken;
         while (running.get()){
+            //if the game runs to "fast"
             if(delayActive){
                 long delayStart = System.currentTimeMillis();
                 System.out.println("FH: Started delay, current time: " + delayStart + "\n Waiting for " + (long) (elapsedTime * 1000) + " Milliseconds");
@@ -106,6 +110,7 @@ class FrameStabilizer extends Thread {
                 e.printStackTrace();
             }
 
+            //check speed and if delay is needed
             timeTaken = currTime - System.currentTimeMillis() / 1000;
             timesTaken[currentCell] = timeTaken;
             currentCell++;

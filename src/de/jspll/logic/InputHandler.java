@@ -12,20 +12,28 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * Created by reclinarka on 11-Oct-20.
  */
 public class InputHandler implements MouseInputListener, MouseWheelListener, KeyListener {
+    //Keys the game will register
     private String[] keyList = new String[]{"w","a","s","d","q","e","+","-","ESC", "CTRL", "SHIFT", "ALT", "TAB","CAPS"};
     private LogicHandler parent;
+    //variables for mouse presses
     private AtomicBoolean mouse1 = new AtomicBoolean(false);
     private AtomicBoolean mouse2 = new AtomicBoolean(false);
     private AtomicBoolean mouse3 = new AtomicBoolean(false);
     private AtomicIntegerArray mousePos = new AtomicIntegerArray( new int[]{0,0} );
     private HashMap<String,AtomicBoolean> keyMap = new HashMap<>(100);
 
+    /**
+     * fill the keyMap HashMap with all Keys the game should register
+     */
     private void init(){
         for (String s: keyList){
             keyMap.put(s,new AtomicBoolean(false));
         }
     }
 
+    /**
+     * @param parent set input handler
+     */
     public InputHandler(LogicHandler parent){
         this.parent = parent;
         init();
@@ -34,10 +42,17 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     //Mouse
 
+    /**
+     * @return current user input
+     */
     public Object[] getInputInfo(){
         return new Object[]{"input",mouse1.get(),mouse2.get(),mouse3.get(),keyMap, new int[]{mousePos.get(0),mousePos.get(1)},keyList};
     }
 
+    /**
+     * Updates the stored mouse position, when the user moves the mouse
+     * @param e
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
         mousePos.set(0,e.getX());
@@ -45,6 +60,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     }
 
+    /**
+     * Updates the stored mouse position, when the user moves the mouse
+     * @param e
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         mousePos.set(0,e.getX());
@@ -56,6 +75,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     }
 
+    /**
+     * Register and store mouse presses
+     * @param e
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
@@ -77,6 +100,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
         }
     }
 
+    /**
+     * Register and store mouse releases
+     * @param e
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         switch (e.getButton()) {
@@ -120,6 +147,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     }
 
+    /**
+     * Register and store key presses
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
@@ -130,6 +161,11 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
         setKey(e.getKeyCode(),true);
     }
 
+    /**
+     * Update keyMap values for keys not represented by their name (not a,b,c etc.)
+     * @param keyCode
+     * @param val
+     */
     private void setKey(int keyCode, boolean val){
         switch (keyCode){
             case KeyEvent.VK_ESCAPE:
@@ -159,6 +195,10 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
         }
     }
 
+    /**
+     * Register and store key releases
+     * @param e
+     */
     @Override
     public void keyReleased(KeyEvent e) {
 

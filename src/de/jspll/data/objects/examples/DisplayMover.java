@@ -14,6 +14,7 @@ public class DisplayMover extends GameObject {
         super(ID, "g.tst.DisplayMover");
     }
 
+    //Variable declarations
     private int framesOn = 0;
     private boolean mousedown;
     private int[] currMousePos = new int[]{0,0};
@@ -23,15 +24,22 @@ public class DisplayMover extends GameObject {
     private boolean plus = false;
     private boolean minus = false;
 
+
+    /**
+     * gets called in the game loop
+     * @param input user input
+     * @return status
+     */
     @Override
     public char call(Object[] input) {
         super.call(input);
+        //If there was no input this loop iteration
         if (input == null || input.length < 1) {
             return 0;
-        } else if (input[0] instanceof String) {
+        } else if (input[0] instanceof String) { //if there was input
             if (((String) input[0]).contentEquals("input")) {
 
-
+                //handle user input
                 if(input[4] instanceof HashMap) {
                     HashMap<String, AtomicBoolean> keyMap = (HashMap<String, AtomicBoolean>) input[4];
                     Camera cam = getParent().getSelectedCamera();
@@ -63,6 +71,7 @@ public class DisplayMover extends GameObject {
 
             }
         }
+        //Increase or decrease size
         if (plus) {
             continuousPlus++;
             if (continuousPlus % 2 == 0)
@@ -81,6 +90,9 @@ public class DisplayMover extends GameObject {
         return 0;
     }
 
+    /**
+     * @return subscribed channels
+     */
     @Override
     public ChannelID[] getChannels() {
         return new ChannelID[]{INPUT};

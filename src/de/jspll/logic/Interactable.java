@@ -4,6 +4,8 @@ import de.jspll.handlers.GameObjectHandler;
 
 /**
  * Created by reclinarka on 12-Oct-20.
+ *
+ * Objects implement this if the user needs to be able to interact with them.
  */
 
 

@@ -20,6 +20,11 @@ public class TextureHandler {
         this.parent = parent;
     }
 
+    /**
+     * Returns single texture
+     * @param texture
+     * @return Image object
+     */
     public BufferedImage getTexture(String texture){
         try {
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
@@ -31,6 +36,10 @@ public class TextureHandler {
 
     }
 
+    /**
+     * @param textures String array of textures to load
+     * @return Array of images
+     */
     public BufferedImage[] getTextures(String[] textures){
         BufferedImage[] out = new BufferedImage[textures.length];
         for(int i = 0; i < textures.length; i++) {

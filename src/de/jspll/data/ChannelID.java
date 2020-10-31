@@ -2,6 +2,7 @@ package de.jspll.data;
 
 /**
  * Created by reclinarka on 23-Oct-20.
+ * Enum to hold channel names
  */
 public enum ChannelID {
     INSTANCE_REGISTER(0),
