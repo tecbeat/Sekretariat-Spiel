@@ -19,6 +19,10 @@ public enum ChannelID {
     OVERLAY(10),
     LAST_LAYER(10),
 
+    COLLISION(11),
+
+
+
 
     DISPATCH(19),
     LAST_CHANNEL(19);

@@ -1,5 +1,6 @@
 package de.jspll;
 
+import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
 import de.jspll.data.objects.examples.AnimatedGameObject;
@@ -32,7 +33,7 @@ public class Main {
             }
         }
         objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
-        objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900)));
+        //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\chair_animation\\Streming_", 198, new Point(0, 0), new Dimension(1600,900), null, 12)));
         objects.add(new MouseFollower("test1"));
         objects.add(new DisplayMover("test1"));
         objects.add(new Counter("test"));

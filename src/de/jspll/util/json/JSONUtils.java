@@ -1,0 +1,423 @@
+package de.jspll.util.json;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Stack;
+
+/**
+ * Created by reclinarka on 02-Nov-20.
+ */
+public class JSONUtils {
+
+    private JSONUtils(){
+
+    }
+
+    public JSONUtils singleton = new JSONUtils();
+
+    public JSONObject readJSON(String file){
+        JSONObject out = new JSONObject();
+        InputStream inputStream = this.getClass().getResourceAsStream(file);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = null;
+        String buffer = "";
+        String string = null;
+        JSONValue value = null;
+        short cache = 0;
+        Stack<JSONArray> arrayBuilder = new Stack<>();
+        Stack<HashMap<String,JSONValue>> jsonBuilder = new Stack<>();
+        Stack<JSONObject> readObjects = new Stack<>();
+        Stack<Mode> modeStack = new Stack<>();
+        Stack<SyntaxState> stateStack = new Stack<>();
+        SyntaxState state = SyntaxState.NULL;
+        Mode mode = Mode.START;
+        do {
+
+            for (int i = 0; i < line.length(); i++) {
+
+                switch (mode) {
+                    case START:
+                        switch (line.charAt(i)){
+                            case '{':
+                                state = SyntaxState.NULL;
+                                mode = Mode.OBJECT;
+                                i--;
+                                break;
+                            case '[':
+                                mode = Mode.ARRAY;
+                                i--;
+                                break;
+                            case '"':
+                                mode = Mode.STRING;
+                                i--;
+                                break;
+                            case '-':
+                            case '0':
+                            case '1':
+                            case '2':
+                            case '3':
+                            case '4':
+                            case '5':
+                            case '6':
+                            case '7':
+                            case '8':
+                            case '9':
+                                mode = Mode.NUMBER;
+                                i--;
+                                break;
+                        }
+                        break;
+                    case OBJECT:
+                        switch (state){
+
+                            case NULL:
+                                switch (line.charAt(i)){
+                                    case '{':
+                                        jsonBuilder.push(new HashMap<>());
+                                        state = SyntaxState.CURLY_OPEN;
+                                        break;
+                                }
+                                break;
+                            case CURLY_OPEN:
+                                switch (line.charAt(i)){
+                                    case ' ':
+                                        state = SyntaxState.WHITESPACE;
+                                        break;
+                                }
+                                break;
+                            case WHITESPACE:
+                                switch (line.charAt(i)) {
+                                    case '}':
+                                        jsonBuilder.peek().put(string,value);
+                                        readObjects.push( new JSONObject().setObject( jsonBuilder.pop() ) );
+                                        state = SyntaxState.CURLY_CLOSED;
+
+                                        break;
+                                    case '"':
+                                        stateStack.push(SyntaxState.STRING);
+                                        modeStack.push(mode);
+                                        mode = Mode.STRING;
+                                        break;
+                                    case ':':
+                                        state = SyntaxState.COLON;
+                                        break;
+
+
+                                }
+                                break;
+                            case STRING:
+                                switch (line.charAt(i)){
+                                    case ' ':
+                                        state = SyntaxState.WHITESPACE;
+                                        break;
+                                }
+                                break;
+                            case COLON:
+                                switch (line.charAt(i)){
+                                    case '"':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        mode = Mode.STRING;
+                                        break;
+                                    case '-':
+                                    case '0':
+                                    case '1':
+                                    case '2':
+                                    case '3':
+                                    case '4':
+                                    case '5':
+                                    case '6':
+                                    case '7':
+                                    case '8':
+                                    case '9':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.NUMBER;
+                                        i--;
+                                        break;
+                                    case 't':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.TRUE;
+                                        i--;
+                                        break;
+                                    case 'f':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.FALSE;
+                                        i--;
+                                        break;
+                                    case 'n':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.NULL;
+                                        i--;
+                                        break;
+                                    case '[':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        state = SyntaxState.SQUARE_OPEN;
+                                        arrayBuilder.push(new JSONArray());
+                                        mode = Mode.ARRAY;
+                                        break;
+
+                                }
+                                break;
+                            case VALUE:
+                                switch (line.charAt(i)){
+                                    case ',':
+                                        jsonBuilder.peek().put(string,value);
+                                        state = SyntaxState.COMMA;
+                                        break;
+                                    case '}':
+                                        jsonBuilder.peek().put(string,value);
+                                        readObjects.push( new JSONObject().setObject( jsonBuilder.pop() ) );
+                                        state = SyntaxState.CURLY_CLOSED;
+
+                                        break;
+                                }
+                                break;
+                            case COMMA:
+                                switch (line.charAt(i)){
+                                    case ' ':
+                                        state = SyntaxState.WHITESPACE;
+                                        break;
+                                }
+                                break;
+                            case CURLY_CLOSED:
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                }
+                                i--;
+                                break;
+                        }
+                        break;
+                    case ARRAY:
+                        //ARRAY NEEDS TO GO HERE
+                        switch (state){
+
+                            case WHITESPACE:
+                                break;
+                            case VALUE:
+                                switch (line.charAt(i)){
+                                    case ',':
+                                        arrayBuilder.peek().values.add(value);
+                                        state = SyntaxState.COMMA;
+                                        break;
+                                    case ']':
+                                        arrayBuilder.peek().values.add(value);
+                                        state = SyntaxState.SQUARE_CLOSED;
+                                        i--;
+                                        break;
+                                }
+                                break;
+                            case COMMA:
+                                break;
+                            case SQUARE_OPEN:
+                                switch (line.charAt(i)){
+                                    case ' ':
+                                        state = SyntaxState.WHITESPACE;
+                                        break;
+                                    case '"':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        mode = Mode.STRING;
+                                        break;
+                                    case '-':
+                                    case '0':
+                                    case '1':
+                                    case '2':
+                                    case '3':
+                                    case '4':
+                                    case '5':
+                                    case '6':
+                                    case '7':
+                                    case '8':
+                                    case '9':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.NUMBER;
+                                        i--;
+                                        break;
+                                    case 't':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.TRUE;
+                                        i--;
+                                        break;
+                                    case 'f':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.FALSE;
+                                        i--;
+                                        break;
+                                    case 'n':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        mode = Mode.NULL;
+                                        i--;
+                                        break;
+                                    case '[':
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
+                                        state = SyntaxState.SQUARE_OPEN;
+                                        arrayBuilder.push(new JSONArray());
+                                        mode = Mode.ARRAY;
+                                        break;
+
+                                }
+                                break;
+                            case SQUARE_CLOSED:
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                    if(stateStack.size() > 0){
+                                        state = stateStack.pop();
+                                    }
+                                }
+                                break;
+                        }
+
+                        break;
+                    case STRING:
+                        switch (line.charAt(i)){
+                            case '\"':
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                    state = stateStack.pop();
+                                    string = buffer;
+                                    buffer = "";
+                                } else {
+                                    mode = Mode.END;
+                                }
+                                break;
+                            default:
+                                buffer += line.charAt(i);
+                                break;
+                        }
+                        break;
+                    case NUMBER:
+                        switch (line.charAt(i)){
+                            case '}':
+                            case ',':
+                            case ' ':
+                                value = getNumber(buffer);
+                                buffer = "";
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                    if(stateStack.size() > 0){
+                                        state = stateStack.pop();
+                                    }
+                                }
+
+                                i--;
+                                break;
+                            default:
+                                buffer += line.charAt(i);
+                                break;
+                        }
+                        break;
+                    case END:
+                        break;
+
+                    case TRUE:
+                        switch (line.charAt(i)){
+                            case '}':
+                            case ',':
+                            case ' ':
+                                value = new JSONValue<>(true);
+                                buffer = "";
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                    if(stateStack.size() > 0){
+                                        state = stateStack.pop();
+                                    }
+                                }
+
+                                i--;
+                                break;
+                        }
+                        break;
+                    case FALSE:
+                        switch (line.charAt(i)){
+                            case '}':
+                            case ',':
+                            case ' ':
+                                value = new JSONValue<>(false);
+                                buffer = "";
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                    if(stateStack.size() > 0){
+                                        state = stateStack.pop();
+                                    }
+                                }
+
+                                i--;
+                                break;
+                        }
+                        break;
+                    case NULL:
+                        switch (line.charAt(i)){
+                            case '}':
+                            case ',':
+                            case ' ':
+                                value = null;
+                                buffer = "";
+                                if(modeStack.size() > 0){
+                                    mode = modeStack.pop();
+                                    if(stateStack.size() > 0){
+                                        state = stateStack.pop();
+                                    }
+                                }
+
+                                i--;
+                                break;
+                        }
+                        break;
+                }
+
+            }
+
+            try {
+                line = reader.readLine();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } while (line != null);
+
+        return out;
+    }
+
+    private JSONValue getNumber(String number){
+        return null;
+    }
+
+    private enum SyntaxState{
+        NULL,
+        CURLY_OPEN,
+        WHITESPACE,
+        STRING,
+        COLON,
+        VALUE,
+        COMMA,
+        CURLY_CLOSED,
+        SQUARE_OPEN,
+        SQUARE_CLOSED
+
+    }
+
+
+    private enum Mode{
+        START,
+        OBJECT,
+        ARRAY,
+        STRING,
+        NUMBER,
+        END,
+        TRUE,
+        FALSE,
+        NULL
+
+    }
+
+}
+

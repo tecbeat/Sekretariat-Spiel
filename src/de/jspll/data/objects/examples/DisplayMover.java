@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.INPUT;
+import static de.jspll.data.ChannelID.LOGIC;
 
 public class DisplayMover extends GameObject {
     public DisplayMover(String ID) {
@@ -22,6 +23,54 @@ public class DisplayMover extends GameObject {
     private int continuousMinus = 0;
     private boolean plus = false;
     private boolean minus = false;
+    HashMap<String, AtomicBoolean> keyMap;
+
+    @Override
+    public char update(float elapsedTime) {
+        super.update(elapsedTime);
+        if(keyMap != null) {
+            float displacement = 20f;
+            Camera cam = getParent().getSelectedCamera();
+            if (keyMap.get("w").get()) {
+                cam.increase_y(-displacement * elapsedTime);
+            }
+            if (keyMap.get("a").get()) {
+                cam.increase_x(-displacement * elapsedTime);
+            }
+            if (keyMap.get("s").get()) {
+                cam.increase_y(displacement * elapsedTime);
+            }
+            if (keyMap.get("d").get()) {
+                cam.increase_x(displacement * elapsedTime);
+            }
+            if (keyMap.get("+").get()) {
+                plus = true;
+            } else {
+                continuousPlus = 0;
+                plus = false;
+            }
+            if (keyMap.get("-").get()) {
+                minus = true;
+            } else {
+                continuousMinus = 0;
+                minus = false;
+            }
+
+        }
+        if (plus) {
+            continuousPlus++;
+            if (continuousPlus % 2 == 0)
+                getParent().getSelectedCamera().increase_zoom(0.2f * elapsedTime);
+        }
+
+        if (minus) {
+            continuousMinus++;
+            if (continuousMinus % 2 == 0) {
+                getParent().getSelectedCamera().increase_zoom(-0.2f * elapsedTime);
+            }
+        }
+        return 0;
+    }
 
     @Override
     public char call(Object[] input) {
@@ -30,51 +79,13 @@ public class DisplayMover extends GameObject {
             return 0;
         } else if (input[0] instanceof String) {
             if (((String) input[0]).contentEquals("input")) {
-
-
                 if(input[4] instanceof HashMap) {
-                    HashMap<String, AtomicBoolean> keyMap = (HashMap<String, AtomicBoolean>) input[4];
-                    Camera cam = getParent().getSelectedCamera();
-                    if (keyMap.get("w").get()) {
-                        cam.increase_y(-2);
-                    }
-                    if (keyMap.get("a").get()){
-                        cam.increase_x(-2);
-                    }
-                    if (keyMap.get("s").get()){
-                        cam.increase_y(2);
-                    }
-                    if (keyMap.get("d").get()){
-                        cam.increase_x(2);
-                    }
-                    if (keyMap.get("+").get()) {
-                        plus = true;
-                    } else {
-                        continuousPlus = 0;
-                        plus = false;
-                    }
-                    if (keyMap.get("-").get()) {
-                        minus = true;
-                    } else {
-                        continuousMinus = 0;
-                        minus = false;
-                    }
+                    this.keyMap = (HashMap<String, AtomicBoolean>) input[4];
                 }
 
             }
         }
-        if (plus) {
-            continuousPlus++;
-            if (continuousPlus % 2 == 0)
-                getParent().getSelectedCamera().increase_zoom(0.002f);
-        }
 
-        if (minus) {
-            continuousMinus++;
-            if (continuousMinus % 2 == 0) {
-                getParent().getSelectedCamera().increase_zoom(-0.002f);
-            }
-        }
 
 
 
@@ -83,6 +94,6 @@ public class DisplayMover extends GameObject {
 
     @Override
     public ChannelID[] getChannels() {
-        return new ChannelID[]{INPUT};
+        return new ChannelID[]{INPUT, LOGIC};
     }
 }

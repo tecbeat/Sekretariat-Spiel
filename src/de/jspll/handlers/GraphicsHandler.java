@@ -8,6 +8,7 @@ import de.jspll.logic.InputHandler;
 
 import java.awt.*;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.*;
@@ -83,14 +84,16 @@ public class GraphicsHandler implements SubHandler {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        //BufferedImage frame = new BufferedImage((int)g.getClipBounds().getWidth(),(int)g.getClipBounds().getHeight(),BufferedImage.TYPE_INT_ARGB);
         //fill background
         g.fillRect(0,0,slate.getWidth(),slate.getHeight());
+        //Graphics fg = frame.createGraphics();
 
         if(gameObjectHandler != null) {
             for(int i = FIRST_LAYER.valueOf(); i <= LAST_LAYER.valueOf(); i++){
                 for (GameObject object : gameObjectHandler.getChannel(ChannelID.getbyID(i)).allValues()) {
                     try {
-                        object.paint(g, elapsedTime, cameras[selectedCamera]);
+                        object.paint(g2d, elapsedTime, cameras[selectedCamera]);
                     } catch (Exception e){
                         e.printStackTrace();
                     }

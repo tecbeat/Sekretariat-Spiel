@@ -1,5 +1,6 @@
 package de.jspll.handlers;
 
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
@@ -8,8 +9,7 @@ import de.jspll.logic.InputHandler;
 
 import java.util.ArrayList;
 
-import static de.jspll.data.ChannelID.INPUT;
-import static de.jspll.data.ChannelID.LOGIC;
+import static de.jspll.data.ChannelID.*;
 
 /**
  * Created by reclinarka on 05-Oct-20.

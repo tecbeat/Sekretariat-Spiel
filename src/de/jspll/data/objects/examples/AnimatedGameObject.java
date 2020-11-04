@@ -13,8 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by reclinarka on 29-Oct-20.
  */
 public class AnimatedGameObject extends TexturedObject {
-    public AnimatedGameObject(String ID, int x, int y, Dimension dimension) {
-        super(ID, "g.tst.Animated", x, y, dimension, new Animation("assets\\chair_animation\\Streming_", 198, new Point(x, y), dimension, null, 12));
+    public AnimatedGameObject(String ID, int x, int y, Dimension dimension, Animation animation) {
+        super(ID, "g.tst.Animated", x, y, dimension, animation);
         texture.setParent(this);
         ((Animation) texture).setLooping(true);
         channels = new ChannelID[]{ChannelID.INPUT,ChannelID.UI};

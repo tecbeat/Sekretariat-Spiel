@@ -22,11 +22,11 @@ public class Camera {
         y = yCenter - (height / 2f);
     }
 
-    public void increase_x(int amount){
+    public void increase_x(float amount){
         xCenter += amount;
         updateXY();
     }
-    public void increase_y(int amount){
+    public void increase_y(float amount){
         yCenter += amount;
         updateXY();
     }
@@ -36,6 +36,22 @@ public class Camera {
         yCenter = (yCenter/zoom) * (amount+zoom);
         zoom += amount;
         updateXY();
+    }
+
+    public int[] revertTransform(int[] in){
+        return new int[]{revertXTransform(in[0]),revertYTransform(in[1])};
+    }
+
+    public int[] transform(int[] in){
+        return new int[]{applyXTransform(in[0]),applyYTransform(in[1])};
+    }
+
+    public int[] applyZoom(int[] in){
+        int[] out = new int[in.length];
+        for(int i = 0;i < in.length; i++){
+            out[i] = applyZoom(in[i]);
+        }
+        return out;
     }
 
     public int revertXTransform(int in){
