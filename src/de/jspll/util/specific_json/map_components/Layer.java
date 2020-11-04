@@ -1,24 +1,11 @@
 package de.jspll.util.specific_json.map_components;
 
 /**
+ * Represents a Layer.
+ *
  * @author Laura Schmidt
  */
 public class Layer {
-    /*
-        "__type": "Tiles",
-        "identifier": "Ausstattung2",
-        "type": "Tiles",
-        "uid": 7,
-        "gridSize": 32,
-        "displayOpacity": 1,
-        "intGridValues": [ { "identifier": null, "color": "#000000" } ],
-        "autoTilesetDefUid": null,
-        "autoRuleGroups": [],
-        "autoSourceLayerDefUid": null,
-        "tilesetDefUid": 17,
-        "tilePivotX": 0,
-        "tilePivotY": 0
-     */
     private String identifier;
     private String type;
     private String uid;

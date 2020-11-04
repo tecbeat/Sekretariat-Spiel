@@ -1,17 +1,11 @@
 package de.jspll.util.specific_json.map_components;
 
 /**
+ * Represents a GridTile.
+ *
  * @author Laura Schmidt
  */
 public class GridTile {
-    /*
-        "coordId": 783,
-        "tileId": 10,
-        "__x": 416,
-        "__y": 224,
-        "__srcX": 0,
-        "__srcY": 32
-     */
     private Integer coordId;
     private Integer tileId;
     private Coordinate coords;

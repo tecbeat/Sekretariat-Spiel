@@ -1,20 +1,11 @@
 package de.jspll.util.specific_json.map_components;
 
 /**
+ * Represents a Tileset.
+ *
  * @author Laura Schmidt
  */
 public class Tileset {
-    /*
-        "identifier": "Street",
-        "uid": 10,
-        "relPath": "Tileset/Street.png",
-        "pxWid": 821,
-        "pxHei": 489,
-        "tileGridSize": 32,
-        "spacing": 0,
-        "padding": 0,
-        "savedSelections": []
-     */
     private String identifier;
     private Integer uid;
     private String relPath;

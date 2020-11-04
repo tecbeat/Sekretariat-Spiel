@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Represents a LayerInstance.
+ *
  * @author Laura Schmidt
  */
 public class LayerInstance {

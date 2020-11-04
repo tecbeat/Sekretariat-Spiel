@@ -3,16 +3,11 @@ package de.jspll.util.specific_json.map_components;
 import java.util.List;
 
 /**
+ * Represents a Level.
+ *
  * @author Laura Schmidt
  */
 public class Level {
-    /*
-        "identifier": "Level",
-		"uid": 0,
-		"pxWid": 3520,
-		"pxHei": 3136,
-		"layerInstances": [...]
-     */
     private String identifier;
     private Integer uid;
     private Integer pxWidth;

@@ -1,6 +1,8 @@
 package de.jspll.util.specific_json.map_components;
 
 /**
+ * Represents a Coordinate.
+ *
  * @author Laura Schmidt
  */
 public class Coordinate {

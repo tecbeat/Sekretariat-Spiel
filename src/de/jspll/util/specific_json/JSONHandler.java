@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Handler for the map file. Content of file is converted into matching java objects.
+ *
  * @author Laura Schmidt
  */
 public class JSONHandler {
@@ -31,11 +33,18 @@ public class JSONHandler {
     private static List<LayerInstance> layerInstances = new ArrayList<>();
     private static List<GridTile> gridTiles = new ArrayList<>();
 
+    /**
+     * Reads the JSON-File line for line and evaluates which object the line matches.
+     *
+     * @param path path to map file
+     */
     public static void readJSONFile(String path){
+        /* start time measurement */
         long timeStart = System.currentTimeMillis();
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             String zeile;
             while ((zeile = in.readLine()) != null) {
+                /* evaluation */
                 if(zeile.contains("layers") || isLayers) {
                     isLayers = true;
                     layersList.add(zeile/*.trim()*/);
@@ -66,6 +75,7 @@ public class JSONHandler {
                     isGridTiles = false;
                 }
             }
+            /* turning the String lists into the java objects */
             turnStringsIntoObjects("layers", layersList);
             turnStringsIntoObjects("tilesets", tilesetsList);
             turnStringsIntoObjects("levels", levelsList);
@@ -76,18 +86,26 @@ public class JSONHandler {
             System.err.println("Something went wrong while reading the file.");
             e.printStackTrace();
         }
+        /* print statements for debugging */
         layers.forEach(layer -> System.out.println(layer.toString()));
         tilesets.forEach(tileset -> System.out.println(tileset.toString()));
         levels.forEach(level -> System.out.println(level.toString()));
         layerInstances.forEach(layerInstance -> System.out.println(layerInstance.toString()));
         gridTiles.forEach(gridTile -> System.out.println(gridTile.toString()));
+        /* end time measurement */
         long timeEnd = System.currentTimeMillis();
         System.out.println("Time needed: " + (timeEnd - timeStart) + " Millisek.");
     }
 
+    /**
+     * Turns a given list of Strings into a list of objects.
+     *
+     * @param kontext specifies the object that get created
+     * @param strings given list of Strings
+     * @throws IOException occurs when the context can't be mapped
+     */
     private static void turnStringsIntoObjects(String kontext, List<String> strings) throws IOException {
         int count = 0;
-
         List<String> content = new ArrayList<>();
         for(String curr : strings){
             if(curr.contains("{")){
@@ -118,6 +136,13 @@ public class JSONHandler {
         }
     }
 
+    /**
+     * Creates Layer obejcts.
+     *
+     * @param content list of Strings that need to be converted to Layer objects
+     * @return list of Layer objects
+     * @see Layer
+     */
     private static List<Layer> createLayerObjects(List<String> content){
         List<Layer> layerObjects = new ArrayList<>();
         for(int i = 0; i < content.size(); i += 14){
@@ -133,6 +158,13 @@ public class JSONHandler {
         return layerObjects;
     }
 
+    /**
+     * Creates Tileset objects.
+     *
+     * @param content list of Strings that need to be converted to Tileset object
+     * @return list of Tileset objects
+     * @see Tileset
+     */
     private static List<Tileset> createTilesetObjects(List<String> content) {
         List<Tileset> tilesetObjects = new ArrayList<>();
         for (int i = 0; i < content.size(); i += 10) {
@@ -148,6 +180,13 @@ public class JSONHandler {
         return tilesetObjects;
     }
 
+    /**
+     * Creates Level objects
+     *
+     * @param content list of Strings that need to be converted to Level objects
+     * @return list of Level objects
+     * @see Level
+     */
     private static List<Level> createLevelObjects(List<String> content) {
         List<Level> levelObjects = new ArrayList<>();
         for(int i = 0; i < content.size(); i += content.size()) {
@@ -160,6 +199,13 @@ public class JSONHandler {
         return levelObjects;
     }
 
+    /**
+     * Creates LayerInstance objects.
+     *
+     * @param content list of String that need to be converted to LayerInstance objects
+     * @return list of LayerInstance objects
+     * @see LayerInstance
+     */
     private static List<LayerInstance> createLayerInstanceObjects(List<String> content) {
         List<LayerInstance> layerInstances = new ArrayList<>();
         int countLayerInstances = 0;
