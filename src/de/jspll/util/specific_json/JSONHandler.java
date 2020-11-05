@@ -286,4 +286,24 @@ public class JSONHandler {
                 return "";
         }
     }
+
+    public static List<Layer> getLayers() {
+        return layers;
+    }
+
+    public static List<Tileset> getTilesets() {
+        return tilesets;
+    }
+
+    public static List<Level> getLevels() {
+        return levels;
+    }
+
+    public static List<LayerInstance> getLayerInstances() {
+        return layerInstances;
+    }
+
+    public static List<GridTile> getGridTiles() {
+        return gridTiles;
+    }
 }
