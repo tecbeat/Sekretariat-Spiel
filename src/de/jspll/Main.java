@@ -1,5 +1,6 @@
 package de.jspll;
 
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
@@ -10,6 +11,8 @@ import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.data.objects.game.ui.PaperList;
 import de.jspll.dev.EditorHandler;
 import de.jspll.frames.FrameHandler;
+import de.jspll.util.json.JSONObject;
+import de.jspll.util.json.JSONUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,7 +24,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        if(true){
+            JSONUtils jsonReader = JSONUtils.singleton;
+            JSONObject obj = jsonReader.readJSON("test.json");
+            System.out.printf("finished");
+            return;
+        }
 
 
 
@@ -37,6 +45,7 @@ public class Main {
         objects.add(new MouseFollower("test1"));
         objects.add(new DisplayMover("test1"));
         objects.add(new Counter("test"));
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_0,objects);
         frameHandler.getGameObjectHandler().loadObjects(objects);
         EditorHandler test = new EditorHandler("dev1","devtools",new Dimension(200,700));
         frameHandler.getGameObjectHandler().loadObject(test);

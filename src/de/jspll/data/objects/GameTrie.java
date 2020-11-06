@@ -94,6 +94,11 @@ public class GameTrie {
     }
 
 
+    public void dropAll(){
+        value = null;
+        chars = new ArrayList<>();
+        tries = new ArrayList<>();
+    }
 
     public ArrayList<GameObject> allValuesAfter( String prefix){
         return findTrie(prefix).allValues();

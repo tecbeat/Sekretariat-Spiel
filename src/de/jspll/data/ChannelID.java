@@ -9,6 +9,7 @@ public enum ChannelID {
     LOGIC(2),
     COMM1(3),
 
+    //GRAPHICS CHANNELS
     FIRST_LAYER(4),
     BACKGROUND(4),
     FOREGROUND(5),
@@ -19,10 +20,16 @@ public enum ChannelID {
     OVERLAY(10),
     LAST_LAYER(10),
 
+    //LOGIC CHANNELS
     COLLISION(11),
 
 
-
+    //SCENES
+    SCENE_0(15),
+    SCENE_1(16),
+    SCENE_2(17),
+    SCENE_3(18),
+    SCENE_LOADING(19),
 
     DISPATCH(19),
     LAST_CHANNEL(19);

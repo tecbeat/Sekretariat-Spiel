@@ -247,4 +247,15 @@ public class GameObject implements Drawable, Interactable {
         }
         parent.dispatch(ChannelID.DISPATCH,scope,payload);
     }
+
+    private HashMap<String,Object> serializationReferences = new HashMap<>();
+
+    public String toJSON(){
+        String json = "{ ";
+        for(String key: serializationReferences.keySet()){
+            json += "\"" + key + "\":";
+        }
+        json += "}";
+        return json;
+    }
 }

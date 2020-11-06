@@ -3,6 +3,7 @@ package de.jspll.handlers;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
+import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
 import static de.jspll.data.ChannelID.LAST_CHANNEL;
+import static de.jspll.data.ChannelID.SCENE_LOADING;
 
 /**
  * Created by reclinarka on 21-Oct-20.
@@ -20,6 +22,8 @@ public class GameObjectHandler {
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
+        ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
+        loadingSceneBuilder.add(new LoadingCircle());
     }
 
     public Point getMousePos() {
@@ -30,6 +34,46 @@ public class GameObjectHandler {
 
     public Camera getSelectedCamera() {
         return graphicsHandler.getSelectedCamera();
+    }
+
+    public void loadScene(ChannelID scene, ArrayList<GameObject> objects){
+        for(GameObject obj: objects){
+            loadObject(obj);
+            subscribe(obj,scene);
+        }
+    }
+
+    public void switchScene(ChannelID newScene){
+        unsubscribeScene(activeScene);
+        subscribeScene(newScene);
+        activeScene = newScene;
+    }
+
+    public void subscribeScene(ChannelID scene){
+        for(GameObject obj: channels[scene.valueOf()].allValues()){
+            subscribe(obj);
+        }
+    }
+
+    public void unsubscribeScene(ChannelID scene){
+        for(GameObject obj: channels[scene.valueOf()].allValues()){
+            unsubscribe(obj);
+        }
+    }
+
+    public void deleteScene(ChannelID scene){
+        for(GameObject obj: channels[scene.valueOf()].allValues()){
+            delete(obj);
+        }
+    }
+
+    public boolean emptyScene(ChannelID scene){
+        if(scene == activeScene || channels[scene.valueOf()].isEmpty()){
+            return false;
+        }
+        deleteScene(scene);
+        channels[scene.valueOf()].dropAll();
+        return true;
     }
 
     public Dimension getScreenDimensions() {
@@ -48,7 +92,19 @@ public class GameObjectHandler {
 
     private GraphicsHandler graphicsHandler;
 
+    private LogicHandler logicHandler;
+
+    public LogicHandler getLogicHandler() {
+        return logicHandler;
+    }
+
+    public void setLogicHandler(LogicHandler logicHandler) {
+        this.logicHandler = logicHandler;
+    }
+
     public static boolean DEBUG = true;
+
+    private ChannelID activeScene = SCENE_LOADING;
 
     private GameTrie[] channels = new GameTrie[LAST_CHANNEL.valueOf() + 1];
 

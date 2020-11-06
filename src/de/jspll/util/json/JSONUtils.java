@@ -1,10 +1,12 @@
 package de.jspll.util.json;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Stack;
+
 
 /**
  * Created by reclinarka on 02-Nov-20.
@@ -15,7 +17,7 @@ public class JSONUtils {
 
     }
 
-    public JSONUtils singleton = new JSONUtils();
+    public static JSONUtils singleton = new JSONUtils();
 
     public JSONObject readJSON(String file){
         JSONObject out = new JSONObject();
@@ -26,6 +28,8 @@ public class JSONUtils {
         String string = null;
         JSONValue value = null;
         short cache = 0;
+        boolean stringValue = false;
+        Stack<String> stringStack = new Stack<>();
         Stack<JSONArray> arrayBuilder = new Stack<>();
         Stack<HashMap<String,JSONValue>> jsonBuilder = new Stack<>();
         Stack<JSONObject> readObjects = new Stack<>();
@@ -33,10 +37,18 @@ public class JSONUtils {
         Stack<SyntaxState> stateStack = new Stack<>();
         SyntaxState state = SyntaxState.NULL;
         Mode mode = Mode.START;
+
+        try {
+            line = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         do {
 
             for (int i = 0; i < line.length(); i++) {
-
+                if(i == 50){
+                    int breakpoint = 0;
+                }
                 switch (mode) {
                     case START:
                         switch (line.charAt(i)){
@@ -112,12 +124,23 @@ public class JSONUtils {
                                     case ' ':
                                         state = SyntaxState.WHITESPACE;
                                         break;
+                                    case ':':
+                                        state = SyntaxState.COLON;
+                                        break;
                                 }
                                 break;
                             case COLON:
                                 switch (line.charAt(i)){
-                                    case '"':
+                                    case '{':
+                                        modeStack.push(mode);
                                         stateStack.push(SyntaxState.VALUE);
+                                        state = SyntaxState.NULL;
+                                        i--;
+                                        break;
+                                    case '"':
+                                        stringValue = true;
+                                        stateStack.push(SyntaxState.VALUE);
+                                        modeStack.push(mode);
                                         mode = Mode.STRING;
                                         break;
                                     case '-':
@@ -167,14 +190,26 @@ public class JSONUtils {
                             case VALUE:
                                 switch (line.charAt(i)){
                                     case ',':
-                                        jsonBuilder.peek().put(string,value);
+                                        if(stringValue){
+                                            String val = stringStack.pop();
+                                            String key = stringStack.pop();
+                                            jsonBuilder.peek().put(key,new JSONValue(val));
+                                            stringValue = false;
+                                        } else {
+                                            jsonBuilder.peek().put(stringStack.pop(),value);
+                                        }
                                         state = SyntaxState.COMMA;
                                         break;
                                     case '}':
-                                        jsonBuilder.peek().put(string,value);
-                                        readObjects.push( new JSONObject().setObject( jsonBuilder.pop() ) );
+                                        if(stringValue){
+                                            String val = stringStack.pop();
+                                            String key = stringStack.pop();
+                                            jsonBuilder.peek().put(key,new JSONValue(val));
+                                            stringValue = false;
+                                        } else {
+                                            jsonBuilder.peek().put(stringStack.pop(),value);
+                                        }
                                         state = SyntaxState.CURLY_CLOSED;
-
                                         break;
                                 }
                                 break;
@@ -186,8 +221,15 @@ public class JSONUtils {
                                 }
                                 break;
                             case CURLY_CLOSED:
+                                readObjects.push( new JSONObject().setObject( jsonBuilder.pop() ) );
                                 if(modeStack.size() > 0){
                                     mode = modeStack.pop();
+                                    if(stateStack.size() > 0){
+                                        state = stateStack.pop();
+                                        if(state == SyntaxState.VALUE){
+                                            value = new JSONValue(readObjects.pop());
+                                        }
+                                    }
                                 }
                                 i--;
                                 break;
@@ -284,7 +326,7 @@ public class JSONUtils {
                                 if(modeStack.size() > 0){
                                     mode = modeStack.pop();
                                     state = stateStack.pop();
-                                    string = buffer;
+                                    stringStack.push("" + buffer);
                                     buffer = "";
                                 } else {
                                     mode = Mode.END;
@@ -317,6 +359,9 @@ public class JSONUtils {
                         }
                         break;
                     case END:
+                        if(readObjects.size() == 1){
+                            out = readObjects.pop();
+                        }
                         break;
 
                     case TRUE:
@@ -384,11 +429,18 @@ public class JSONUtils {
             }
         } while (line != null);
 
+        if(state == SyntaxState.CURLY_CLOSED && jsonBuilder.size() == 1){
+            readObjects.push( new JSONObject().setObject( jsonBuilder.pop() ) );
+        }
+
+        if(readObjects.size() == 1)
+            return readObjects.pop();
         return out;
     }
 
     private JSONValue getNumber(String number){
-        return null;
+        if(number.contains(".")) return new JSONValue(Float.parseFloat(number));
+        return new JSONValue(Integer.parseInt(number));
     }
 
     private enum SyntaxState{

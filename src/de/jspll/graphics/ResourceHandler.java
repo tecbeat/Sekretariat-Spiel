@@ -1,16 +1,24 @@
 package de.jspll.graphics;
 
+import de.jspll.data.objects.TexturedObject;
 import de.jspll.handlers.GameObjectHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Stack;
 
 /**
  * Created by reclinarka on 27-Oct-20.
  */
 public class ResourceHandler {
     private GameObjectHandler parent;
+    private Stack<TexturedObject> loadingQueue = new Stack<>();
+
+    public Stack<TexturedObject> getLoadingQueue() {
+        return loadingQueue;
+    }
+
     public ResourceHandler(GameObjectHandler parent){
         this.parent = parent;
     }

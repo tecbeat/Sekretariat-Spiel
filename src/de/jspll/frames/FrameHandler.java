@@ -21,6 +21,7 @@ public class FrameHandler {
         graphicsHandler.setGameObjectHandler(gameObjectHandler);
         logicHandler.setGameObjectHandler(gameObjectHandler);
         gameObjectHandler.setGraphicsHandler(graphicsHandler);
+        gameObjectHandler.setLogicHandler(logicHandler);
     }
 
     private boolean running = true;
