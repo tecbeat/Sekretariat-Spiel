@@ -1,11 +1,11 @@
 package de.jspll.data.objects;
 
 import de.jspll.graphics.Camera;
-import de.jspll.graphics.ResourceHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.graphics.ResourceHandler.FileType.PNG;
 
@@ -17,6 +17,7 @@ public class Animation extends Texture{
 
 
 
+    protected AtomicBoolean textureInitialized = new AtomicBoolean(false);
     protected boolean looping = false;
     protected boolean active = false;
     protected float duration = 0;
@@ -42,22 +43,30 @@ public class Animation extends Texture{
     }
 
     protected void loadTextures(){
-        BufferedImage[] images = parent.getParent().getResourceHandler().getImageGroup(baseFile,cLength,frames, PNG);
+        if(!getParent().getParent().getResourceHandler().isAvailable(baseFile,cLength,frames, PNG))
+            return;
+        BufferedImage[] images = parent.getParent().getResourceHandler().getTextureGroup(baseFile,cLength,frames, PNG);
+        if( images == null){
+            return;
+        }
         textures = new Texture[frames];
         for(int i = 0; i < textures.length; i++){
             textures[i] = new Texture(images[i],pos,dimension,parent);
         }
     }
 
+    @Override
+    protected void requestTextures() {
+        getParent().getParent().getResourceHandler().requestTextureGroup(baseFile,cLength,frames, PNG);
+    }
 
     @Override
     public void draw(Graphics2D g2d, float elapsedTime, Camera camera) {
         super.draw(g2d, elapsedTime, camera);
         if(!loaded){
             loadTextures();
-            loaded = true;
         }
-        if(!active) {
+        if(!active){
             return;
         }
         if(textures == null)

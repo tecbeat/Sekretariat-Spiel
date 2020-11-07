@@ -10,4 +10,8 @@ public class JSONValue<T> {
     public JSONValue(T value){
         this.value = value;
     }
+
+    public T getValue() {
+        return value;
+    }
 }

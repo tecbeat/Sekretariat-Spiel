@@ -3,6 +3,8 @@ package de.jspll.handlers;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
+import de.jspll.data.objects.Texture;
+import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
@@ -24,6 +26,7 @@ public class GameObjectHandler {
         }
         ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
         loadingSceneBuilder.add(new LoadingCircle());
+        resourceHandler.start();
     }
 
     public Point getMousePos() {
@@ -188,6 +191,10 @@ public class GameObjectHandler {
 
     public void loadObjects(ArrayList<GameObject> objects) {
         for (GameObject object : objects) {
+            if(object instanceof TexturedObject){
+                TexturedObject obj = (TexturedObject) object;
+                obj.requestTexture();
+            }
             register(object);
             subscribe(object);
         }

@@ -1,7 +1,5 @@
 package de.jspll.data.objects;
 
-import de.jspll.data.objects.Texture;
-import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
@@ -50,7 +48,20 @@ public class LayeredTexture extends Texture{
 
     @Override
     protected void loadTextures() {
-        textures = getParent().getParent().getResourceHandler().getImageGroup(baseFile,cLength,textures.length, PNG);
+        if(!getParent().getParent().getResourceHandler().isAvailable(baseFile,cLength,textures.length, PNG))
+            return;
+        textures = getParent().getParent().getResourceHandler().getTextureGroup(baseFile,cLength,textures.length, PNG);
+        for(int i = 0; i < textures.length; i++){
+            if( textures[i] == null){
+                textures = null;
+                return;
+            }
+        }
+    }
+
+    @Override
+    protected void requestTextures() {
+        getParent().getParent().getResourceHandler().requestTextureGroup(baseFile,cLength,textures.length, PNG);
     }
 
     @Override

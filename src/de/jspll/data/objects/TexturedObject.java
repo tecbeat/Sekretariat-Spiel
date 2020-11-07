@@ -27,6 +27,9 @@ public class TexturedObject extends GameObject {
 
     protected Texture texture;
 
+    public void requestTexture(){
+        texture.requestTextures();
+    }
 
 
     @Override
@@ -47,7 +50,15 @@ public class TexturedObject extends GameObject {
 
     @Override
     public char call(Object[] input) {
-        return super.call(input);
+        super.call(input);
+        if(input == null || input.length < 1 ){
+            if(input[0] instanceof String){
+                if( ((String) input[0]).contentEquals("getTexture")){
+                    texture.requestTextures();
+                }
+            }
+        }
+        return 0;
     }
 
 

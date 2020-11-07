@@ -1,21 +1,25 @@
 package de.jspll.graphics;
 
-import de.jspll.data.objects.TexturedObject;
 import de.jspll.handlers.GameObjectHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by reclinarka on 27-Oct-20.
  */
-public class ResourceHandler {
+public class ResourceHandler extends Thread {
     private GameObjectHandler parent;
-    private Stack<TexturedObject> loadingQueue = new Stack<>();
+    private AtomicBoolean running = new AtomicBoolean(true);
+    private LinkedBlockingQueue<String> loadingQueue = new LinkedBlockingQueue<>(500);
+    private ConcurrentHashMap<String, BufferedImage> textures = new ConcurrentHashMap<>();
 
-    public Stack<TexturedObject> getLoadingQueue() {
+    public LinkedBlockingQueue<String> getLoadingQueue() {
         return loadingQueue;
     }
 
@@ -23,7 +27,46 @@ public class ResourceHandler {
         this.parent = parent;
     }
 
-    public BufferedImage getImage(String texture){
+    public boolean isAvailable(String key){
+        return textures.containsKey(key);
+    }
+
+    public boolean isAvailable(String baseFile, int cLength, int count, FileType fileType){
+        for (int i = 0; i < count; i++){
+            String key = baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf();
+            if(!this.textures.containsKey(key))
+                return false;
+        }
+
+        return true;
+    }
+
+    public BufferedImage getTexture(String textureKey){
+        if(textures.containsKey(textureKey)){
+            return textures.get(textureKey);
+        }
+        try {
+            loadingQueue.put(textureKey);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public BufferedImage[] getTextureGroup(String baseFile, int cLength, int count, FileType fileType) {
+        BufferedImage[] textures = new BufferedImage[count];
+        for (int i = 0; i < count; i++){
+            String key = baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf();
+            if(this.textures.containsKey(key))
+                textures[i] = this.textures.get(key);
+        }
+
+        return textures;
+    }
+
+
+
+    public BufferedImage loadImage(String texture){
         try {
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
             return image;
@@ -37,22 +80,66 @@ public class ResourceHandler {
     public BufferedImage[] getImages(String[] textures){
         BufferedImage[] out = new BufferedImage[textures.length];
         for(int i = 0; i < textures.length; i++) {
-            out[i] = getImage(textures[i]);
+            out[i] = loadImage(textures[i]);
         }
         return out;
 
 
     }
-     public BufferedImage[] getImageGroup(String baseFile, int cLength, int count, FileType fileType) {
+
+    //cLength represents the length of the longest number in the group
+    //i.e for chair0001.jpg the cLength would be 4 (because 1 number + 3 zeros = 4 total)
+     public BufferedImage[] loadImageGroup(String baseFile, int cLength, int count, FileType fileType) {
         BufferedImage[] textures = new BufferedImage[count];
         for (int i = 0; i < count; i++){
-            textures[i] = getImage(baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf());
+            textures[i] = loadImage(baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf());
         }
 
         return textures;
      }
 
-     public enum FileType{
+
+    @Override
+    public void run() {
+        super.run();
+        while(running.get()){
+            Stack<String> loadingQueue = new Stack<>();
+            while(this.loadingQueue.size() > 0){
+                try {
+                    loadingQueue.push(this.loadingQueue.take());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(loadingQueue.size() > 0){
+                while(loadingQueue.size() > 0){
+                    String key = loadingQueue.pop();
+                    textures.put(key,loadImage(key));
+                }
+            }
+
+        }
+    }
+
+    public void requestTexture(String key){
+        if(!textures.containsKey(key))
+            try {
+                loadingQueue.put(key);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    public void requestTextureGroup(String baseFile, int cLength, int count, FileType fileType) {
+        for (int i = 0; i < count; i++){
+            String key = baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf();
+            if(!this.textures.containsKey(key))
+                requestTexture(key);
+        }
+    }
+
+    public enum FileType{
          PNG(".png");
          FileType(String fileEnding){
              this.fileEnding = fileEnding;
