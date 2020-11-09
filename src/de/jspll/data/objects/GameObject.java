@@ -4,6 +4,7 @@ import de.jspll.data.*;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
+import de.jspll.handlers.JSONSupport;
 import de.jspll.logic.Interactable;
 import de.jspll.util.json.JSONObject;
 

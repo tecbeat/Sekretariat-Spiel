@@ -1,15 +1,13 @@
 package de.jspll.handlers;
 
+import com.google.gson.*;
 import de.jspll.data.ChannelID;
-import de.jspll.data.ObjectRegister;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
-import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
-import de.jspll.util.json.JSONArray;
 import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
@@ -24,6 +22,7 @@ import static de.jspll.data.ChannelID.SCENE_LOADING;
  */
 public class GameObjectHandler {
     public GameObjectHandler() {
+
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
@@ -210,12 +209,32 @@ public class GameObjectHandler {
 
     public void loadScene(ChannelID scene, JSONObject[] objects){
         ArrayList<GameObject> out = new ArrayList<>();
+
+        Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();
+
+        //For testing purposes only
+        //String JsonTestStr = "{\"type\": \"GameObject\",\"object\": {\"active\": true,\"x\": 0,\"y\": 0,\"keyPressedMap\": {},\"serializationReferences\": {}}}";
+        //JsonObject jsonObject = new JsonParser().parse(JsonTestStr).getAsJsonObject();
+
+
         for(JSONObject jsonObject: objects){
+
+            String type = jsonObject.getObject().get("type").toString();
+            Class<? extends GameObject> cl = JSONSupport.getObjectByType(type);
+            GameObject obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
+            out.add(obj);
+
+            /*
+            String type = jsonObject.getObject().get("type").getValue().toString();
+            out.add(gson.fromJson(jsonObject.getObject().get("object").toString(), ObjectTypes.getObjectByType(type)));
+
+
             for (ObjectRegister reg: ObjectRegister.values()){
                 if(reg.isType((String) jsonObject.getObject().get("type").getValue())){
-                    out.add( reg.getObject().parseJSON(jsonObject) );
+                    out.add(reg.getObject().parseJSON(jsonObject) );
                 }
-            }
+
+            }*/
         }
         loadScene(scene, out);
 
