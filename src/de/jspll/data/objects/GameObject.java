@@ -5,6 +5,7 @@ import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
 import de.jspll.logic.Interactable;
+import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
 import java.awt.Dimension;
@@ -249,6 +250,10 @@ public class GameObject implements Drawable, Interactable {
     }
 
     private HashMap<String,Object> serializationReferences = new HashMap<>();
+
+    public GameObject parseJSON(JSONObject jsonObject){
+        return null;
+    }
 
     public String toJSON(){
         String json = "{ ";

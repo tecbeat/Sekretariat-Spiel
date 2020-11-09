@@ -23,13 +23,15 @@ public class Main {
     private static FrameHandler frameHandler = new FrameHandler("Sekreteriat Spiel", new Dimension(1920, 1080));
 
     public static void main(String[] args) {
-/**
-        if(true){
+
+        /**if(true){
             JSONUtils jsonReader = JSONUtils.singleton;
             JSONObject obj = jsonReader.readJSON("test.json");
             System.out.printf("finished");
+            frameHandler.getGraphicsHandler().getWindow().setVisible(false);
             return;
         }**/
+
 
 
 
@@ -40,8 +42,8 @@ public class Main {
                 objects.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2)),new Dimension(16,16)));
             }
         }
-        objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
-        objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\chair_animation\\Streming_", 198, new Point(0, 0), new Dimension(1600,900), null, 12)));
+        //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
+        //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\chair_animation\\Streming_", 198, new Point(0, 0), new Dimension(1600,900), null, 12)));
         objects.add(new MouseFollower("test1"));
         objects.add(new DisplayMover("test1"));
         objects.add(new Counter("test"));

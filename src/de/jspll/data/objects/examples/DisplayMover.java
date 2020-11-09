@@ -29,7 +29,7 @@ public class DisplayMover extends GameObject {
     public char update(float elapsedTime) {
         super.update(elapsedTime);
         if(keyMap != null) {
-            float displacement = 20f;
+            float displacement = 40f;
             Camera cam = getParent().getSelectedCamera();
             if (keyMap.get("w").get()) {
                 cam.increase_y(-displacement * elapsedTime);
@@ -57,16 +57,17 @@ public class DisplayMover extends GameObject {
             }
 
         }
+        float zoomIncrement = 0.5f;
         if (plus) {
             continuousPlus++;
             if (continuousPlus % 2 == 0)
-                getParent().getSelectedCamera().increase_zoom(0.2f * elapsedTime);
+                getParent().getSelectedCamera().increase_zoom(zoomIncrement * elapsedTime);
         }
 
         if (minus) {
             continuousMinus++;
             if (continuousMinus % 2 == 0) {
-                getParent().getSelectedCamera().increase_zoom(-0.2f * elapsedTime);
+                getParent().getSelectedCamera().increase_zoom(-zoomIncrement * elapsedTime);
             }
         }
         return 0;

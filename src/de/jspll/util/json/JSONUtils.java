@@ -53,13 +53,13 @@ public class JSONUtils {
                     case START:
                         switch (line.charAt(i)){
                             case '{':
+                                arrayBuilder.add(new JSONArray());
                                 state = SyntaxState.NULL;
                                 mode = Mode.OBJECT;
                                 i--;
                                 break;
                             case '[':
                                 mode = Mode.ARRAY;
-                                i--;
                                 break;
                             case '"':
                                 mode = Mode.STRING;
@@ -239,8 +239,7 @@ public class JSONUtils {
                         //ARRAY NEEDS TO GO HERE
                         switch (state){
 
-                            case WHITESPACE:
-                                break;
+
                             case VALUE:
                                 switch (line.charAt(i)){
                                     case ',':
@@ -255,13 +254,15 @@ public class JSONUtils {
                                 }
                                 break;
                             case COMMA:
-                                break;
+                            case NULL:
+                            case WHITESPACE:
                             case SQUARE_OPEN:
                                 switch (line.charAt(i)){
                                     case ' ':
                                         state = SyntaxState.WHITESPACE;
                                         break;
                                     case '"':
+                                        modeStack.push(mode);
                                         stateStack.push(SyntaxState.VALUE);
                                         mode = Mode.STRING;
                                         break;
@@ -306,16 +307,33 @@ public class JSONUtils {
                                         arrayBuilder.push(new JSONArray());
                                         mode = Mode.ARRAY;
                                         break;
+                                    case ']':
+                                        state = SyntaxState.SQUARE_CLOSED;
+                                        i--;
+                                        break;
+                                    case '{':
+                                        modeStack.push(mode);
+                                        mode = Mode.OBJECT;
+                                        stateStack.push(SyntaxState.VALUE);
+                                        state = SyntaxState.NULL;
+                                        i--;
+                                        break;
+
 
                                 }
                                 break;
                             case SQUARE_CLOSED:
+                                readObjects.push( arrayBuilder.pop() );
                                 if(modeStack.size() > 0){
                                     mode = modeStack.pop();
                                     if(stateStack.size() > 0){
                                         state = stateStack.pop();
+                                        if(state == SyntaxState.VALUE){
+                                            value = new JSONValue(readObjects.pop());
+                                        }
                                     }
                                 }
+                                i--;
                                 break;
                         }
 
