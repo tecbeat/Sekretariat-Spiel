@@ -252,6 +252,7 @@ public class GameObject implements Drawable, Interactable {
     private HashMap<String,Object> serializationReferences = new HashMap<>();
 
     public GameObject parseJSON(JSONObject jsonObject){
+
         return null;
     }
 
