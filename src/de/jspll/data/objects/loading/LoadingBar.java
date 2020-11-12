@@ -18,7 +18,7 @@ public class LoadingBar extends GameObject {
 
     @Override
     public char update(float elapsedTime) {
-
+        getParent().switchScene(null /**next scene**/);
         return 0;
     }
 

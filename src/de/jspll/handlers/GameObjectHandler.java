@@ -217,6 +217,7 @@ public class GameObjectHandler {
                 }
             }
         }
+
         loadScene(scene, out);
 
     }
