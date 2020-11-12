@@ -1,7 +1,9 @@
 package de.jspll.handlers;
 
 import com.google.gson.*;
+import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.util.json.JSONObject;
@@ -13,7 +15,13 @@ public class JSONSupport {
     private static Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();;
 
     public static Class getClassByType(String type){
-        int SUBSTRING_START = 6; // remove "class " from type
+        int SUBSTRING_START;
+
+        if(type.startsWith("class ")){
+            SUBSTRING_START = 6; // remove "class " from type
+        } else  {
+            SUBSTRING_START = 0;
+        }
 
         try {
             return Class.forName(type.substring(SUBSTRING_START));
@@ -71,6 +79,13 @@ public class JSONSupport {
         String type = jsonObject.getObject().get("type").toString();
         Class<? extends GameObject> cl = getClassByType(type);
         GameObject obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
+        return obj;
+    }
+
+    public static Texture fromJsonToTexture(JSONObject jsonObject){
+        String type = jsonObject.getObject().get("type").toString();
+        Class<? extends Texture> cl = getClassByType(type);
+        Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
         return obj;
     }
 
