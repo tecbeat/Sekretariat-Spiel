@@ -11,6 +11,7 @@ import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.data.objects.game.ui.PaperList;
 import de.jspll.dev.EditorHandler;
 import de.jspll.frames.FrameHandler;
+import de.jspll.util.Logger;
 import de.jspll.util.json.JSONObject;
 import de.jspll.util.json.JSONUtils;
 
@@ -33,6 +34,8 @@ public class Main {
         }**/
 
 
+        Logger logger = new Logger();
+        logger.start();
 
 
 
@@ -52,5 +55,8 @@ public class Main {
         EditorHandler test = new EditorHandler("dev1","devtools",new Dimension(200,700));
         frameHandler.getGameObjectHandler().loadObject(test);
         frameHandler.run();
+
+
+
     }
 }

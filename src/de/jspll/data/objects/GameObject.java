@@ -154,7 +154,7 @@ public class GameObject implements Drawable, Interactable {
             return;
         if(elapsedTime != 0)
             g.setColor(Color.PINK);
-        g.drawRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()) , camera.applyZoom((int) dimension.getHeight()));
+        g.fillRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()) , camera.applyZoom((int) dimension.getHeight()));
 
     }
 
