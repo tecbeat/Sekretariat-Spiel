@@ -21,10 +21,9 @@ public class Texture {
 
     public Texture(String textureKey,Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
-        this.textureKey = this.textureKey;
+        this.textureKey = textureKey;
         this.pos = pos;
         this.dimension = dimension;
-        this.parent = parent;
     }
 
     public Texture(BufferedImage image,Point pos, Dimension dimension, GameObject parent){
@@ -32,7 +31,6 @@ public class Texture {
         this.image = image;
         this.pos = pos;
         this.dimension = dimension;
-        this.parent = parent;
     }
 
     public Texture(){
@@ -74,6 +72,10 @@ public class Texture {
         return textureKey;
     }
 
+    public void setTextureKey(String textureKey) {
+        this.textureKey = textureKey;
+    }
+
     public Point getPos() {
         return pos;
     }
@@ -105,6 +107,7 @@ public class Texture {
     public void setParent(TexturedObject parent) {
         this.parent = parent;
     }
+
 
     public static Texture parseJsonObject(JSONObject jsonObject){
         HashMap<String, JSONValue> object = jsonObject.getObject();

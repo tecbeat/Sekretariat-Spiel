@@ -33,7 +33,6 @@ public class TileMap extends TexturedObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
-        for ()
     }
 }
 
