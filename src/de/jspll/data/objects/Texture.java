@@ -19,15 +19,15 @@ public class Texture {
     protected Dimension dimension;
     protected GameObject parent;
 
-    public Texture(String textureKey,Point pos, Dimension dimension, GameObject parent){
+    public Texture(String textureKey, Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
-        this.textureKey = this.textureKey;
+        this.textureKey = textureKey;
         this.pos = pos;
         this.dimension = dimension;
         this.parent = parent;
     }
 
-    public Texture(BufferedImage image,Point pos, Dimension dimension, GameObject parent){
+    public Texture(BufferedImage image, Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
         this.image = image;
         this.pos = pos;
@@ -48,7 +48,7 @@ public class Texture {
         getParent().getParent().getResourceHandler().requestTexture(textureKey);
     }
 
-    public void draw(Graphics2D g2d,float elapsedTime,Camera camera){
+    public void draw(Graphics2D g2d, float elapsedTime, Camera camera){
         if(image == null){
             loadTextures();
             if(image == null){
@@ -59,7 +59,7 @@ public class Texture {
 
     }
 
-    public void draw(Graphics2D g2d,float elapsedTime,Camera camera, int[] offset){
+    public void draw(Graphics2D g2d, float elapsedTime, Camera camera, int[] offset){
         if(image == null){
             loadTextures();
             if(image == null){
