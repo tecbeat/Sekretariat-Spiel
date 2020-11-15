@@ -194,18 +194,21 @@ public class GameObjectHandler {
 
     public void loadObjects(ArrayList<GameObject> objects) {
         for (GameObject object : objects) {
-            if(object instanceof TexturedObject){
-                TexturedObject obj = (TexturedObject) object;
-                obj.requestTexture();
-            }
-            register(object);
-            subscribe(object);
+            loadObject(object);
         }
     }
 
     public void loadObject(GameObject object) {
         register(object);
         subscribe(object);
+        if(object instanceof TexturedObject){
+            TexturedObject obj = (TexturedObject) object;
+            try {
+                obj.requestTexture();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void loadScene(ChannelID scene, JSONObject[] objects){

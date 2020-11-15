@@ -56,7 +56,7 @@ public class Animation extends Texture{
     }
 
     @Override
-    protected void requestTextures() {
+    public void requestTextures() {
         getParent().getParent().getResourceHandler().requestTextureGroup(baseFile,cLength,frames, PNG);
     }
 
