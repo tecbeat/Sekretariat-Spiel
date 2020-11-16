@@ -15,13 +15,12 @@ public class AnimatedGameObject extends TexturedObject {
     public AnimatedGameObject(String ID, int x, int y, Dimension dimension, Animation animation) {
         super(ID, "g.tst.Animated", x, y, dimension, animation);
         texture.setParent(this);
-        ((Animation) texture).setLooping(true);
-        channels = new ChannelID[]{ChannelID.INPUT,ChannelID.UI};
+        ((Animation)texture).setLooping(true);
     }
 
     @Override
     public char call(Object[] input) {
-        HashMap<String,AtomicBoolean> keyMap;
+        HashMap<String, AtomicBoolean> keyMap;
         super.call(input);
         if (input == null || input.length < 1) {
             return 0;
@@ -30,11 +29,10 @@ public class AnimatedGameObject extends TexturedObject {
 
                 if (input[4] instanceof HashMap) {
                     keyMap = (HashMap<String, AtomicBoolean>) input[4];
-                    if(keyMap.get("ENTER").get()){
+                    if (keyMap.get("ENTER").get()){
                         ((Animation) texture).startAnimation();
                     }
                 }
-
             }
         }
         return 0;
