@@ -2,10 +2,8 @@ package de.jspll.data.objects.game.player;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
-import de.jspll.data.objects.GameObject;
-import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
-import de.jspll.handlers.GameObjectHandler;
+import de.jspll.graphics.Camera;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,41 +16,27 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Player extends TexturedObject {
 
 
-    private int colorScheme;   //Possible
+    private int colorScheme;   //Possible 0 - 4
 
-
-    private Animation[] animations = {new Animation("assets\\player_animation\\forward0_", 6, new Point(0, 0), new Dimension(32, 64), this, 1F),
-            new Animation("assets\\player_animation\\backward0_", 6, new Point(0, 0), new Dimension(32, 64), this, 1F),
-            new Animation("assets\\player_animation\\left0_", 6, new Point(0, 0), new Dimension(32, 64), this, 1F),
-            new Animation("assets\\player_animation\\right0_", 6, new Point(0, 0), new Dimension(32, 64), this, 1F)};
     //[0] = Forward (W), [1] = Backwards (S), [2] = Left(L), [3] = Right(R)
+    private final ArrayList<Animation> movementAnimationList = new ArrayList<>();
 
-    Movement[] MovementAnimations = {
-            new Movement("MovementForward",  0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\forward0_",  6, new Point(0, 0), new Dimension(32, 64), null, 1F), "w"),
-            new Movement("MovementBackward", 0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\backward0_", 6, new Point(0, 0), new Dimension(32, 64), null, 1F), "s"),
-            new Movement("MovementLeft",     0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\left0_",     6, new Point(0, 0), new Dimension(32, 64), null, 1F), "a"),
-            new Movement("MovementRight",    0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\right0_",    6, new Point(0, 0), new Dimension(32, 64), null, 1F), "d"),
-            new Movement("MovementIdle",     0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\idle0_",     1, new Point(0, 0), new Dimension(32, 64), null, 1F), "")
-    };
-    private ArrayList<GameObject> movementArrayList = new ArrayList<>();
+    private String lastPressedKey = "";
+    private boolean start = true;
 
-    private Animation idleAnimation;
-    private String ID;
-    private Texture parent;
-
-    public Player(String ID, int x, int y, Dimension dimension, Animation animation) {
-        super(ID, "g.ntt.Player", x, y, dimension, animation);
-        texture.setParent(this);
-        ((Animation) texture).setLooping(true);
+    public Player(String ID, int x, int y, Dimension dimension, int colorScheme) {
+        super(ID, "g.ntt.OwnPlayer", x, y, dimension);
+        this.colorScheme = colorScheme;
         channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER};
 
-
-        movementArrayList.add(new Movement("MovementForward",  0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\forward0_",  6, new Point(0, 0), new Dimension(32, 64), null, 1F), "w"));
-        movementArrayList.add(new Movement("MovementBackward", 0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\backward0_", 6, new Point(0, 0), new Dimension(32, 64), null, 1F), "s"));
-        movementArrayList.add(new Movement("MovementLeft",     0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\left0_",     6, new Point(0, 0), new Dimension(32, 64), null, 1F), "a"));
-        movementArrayList.add(new Movement("MovementIdle",     0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\idle0_",     1, new Point(0, 0), new Dimension(32, 64), null, 1F), ""));
-
-
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\left_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\right_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle0_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle1_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle2_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle3_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
 
 
     }
@@ -60,13 +44,34 @@ public class Player extends TexturedObject {
     public Player() {
     }
 
-    @Override
-    public GameObjectHandler getParent() {
-        return super.getParent();
-    }
 
     public int getColorScheme() {
         return colorScheme;
+    }
+
+    @Override
+    public void requestTexture() {
+        for (Animation animation : movementAnimationList) {
+            animation.setLooping(true);
+            animation.requestTextures();
+        }
+    }
+
+    @Override
+    public void paint(Graphics g, float elapsedTime, Camera camera) {
+        super.paint(g, elapsedTime, camera);
+    }
+
+    @Override
+    public char update(float elapsedTime) {
+        return super.update(elapsedTime);
+    }
+
+    @Override
+    protected void drawFrame(Graphics g, float elapsedTime, Camera camera) {
+        for (Animation animation : movementAnimationList) {
+            animation.draw((Graphics2D) g, elapsedTime, camera);
+        }
     }
 
     @Override
@@ -80,32 +85,22 @@ public class Player extends TexturedObject {
 
                 if (input[4] instanceof HashMap) {
                     keyMap = (HashMap<String, AtomicBoolean>) input[4];
-                    if (keyMap.get("w").get()) {
-                        ((Animation) texture).startAnimation();
-//                        ((Animation) texture).stopAnimation();
-//                        ((Animation) test.getTexture()).setLooping(true);
-//                        ((Animation) test.getTexture()).startAnimation();
-//                        (movementArrayList.get(0)).call(input);
-
-                    } else if (keyMap.get("s").get()) {
-                        ((Animation) texture).stopAnimation();
-//                        animations[1].loadTextures();
-//                        animations[1].startAnimation();
-
-
-                    } else if (keyMap.get("a").get()) {
-                        ((Animation) texture).stopAnimation();
-//                        animations[2].loadTextures();
-//                        animations[2].startAnimation();
-
-                    } else if (keyMap.get("d").get()) {
-                        ((Animation) texture).stopAnimation();
-//                        animations[3].loadTextures();
-//                        animations[3].startAnimation();
-
+                    if (keyMap.get("w").get() && keyMap.get("s").get() || keyMap.get("a").get() && keyMap.get("d").get()) {
+                        idleAnimation();
+                        return 0;
                     }
 
-
+                    if (keyMap.get("w").get()) {
+                        moveForward();
+                    } else if (keyMap.get("s").get()) {
+                        moveBackward();
+                    } else if (keyMap.get("a").get()) {
+                        moveLeft();
+                    } else if (keyMap.get("d").get()) {
+                        moveRight();
+                    } else {
+                        idleAnimation();
+                    }
                 }
 
             }
@@ -114,6 +109,58 @@ public class Player extends TexturedObject {
     }
     //BufferedImage[] images = this.getParent().getResourceHandler().getTextureGroup();
     // Animation PlayerAnimation = new Animation();
+
+    public void stopAllAnimation() {
+        for (Animation animation : movementAnimationList) {
+            animation.stopAnimation();
+        }
+    }
+
+    public void idleAnimation() {
+        stopAllAnimation();
+        switch (lastPressedKey) {
+            case "w":
+                movementAnimationList.get(4).startAnimation(start);
+                break;
+            case "s":
+                movementAnimationList.get(5).startAnimation(start);
+                break;
+            case "a":
+                movementAnimationList.get(6).startAnimation(start);
+                break;
+            case "d":
+                movementAnimationList.get(7).startAnimation(start);
+                break;
+        }
+    }
+
+    public void moveForward() {
+        stopAllAnimation();
+        movementAnimationList.get(0).startAnimation(start);
+        start = false;
+        lastPressedKey = "w";
+    }
+
+    public void moveBackward() {
+        stopAllAnimation();
+        movementAnimationList.get(1).startAnimation(start);
+        start = false;
+        lastPressedKey = "s";
+    }
+
+    public void moveLeft() {
+        stopAllAnimation();
+        movementAnimationList.get(2).startAnimation(start);
+        start = false;
+        lastPressedKey = "a";
+    }
+
+    public void moveRight() {
+        stopAllAnimation();
+        movementAnimationList.get(3).startAnimation(start);
+        start = false;
+        lastPressedKey = "d";
+    }
 
 
 }
