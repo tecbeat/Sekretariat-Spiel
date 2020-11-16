@@ -5,8 +5,14 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.examples.Counter;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
+
+import de.jspll.data.objects.game.map.TileMap;
+import de.jspll.data.objects.game.ui.PaperList;
 import de.jspll.dev.EditorHandler;
 import de.jspll.frames.FrameHandler;
+import de.jspll.util.Logger;
+import de.jspll.util.json.JSONObject;
+import de.jspll.util.json.JSONUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,6 +33,8 @@ public class Main {
         }**/
 
 
+        Logger logger = new Logger();
+        logger.start();
 
 
 
@@ -34,9 +42,10 @@ public class Main {
         ArrayList<GameObject> objects = new ArrayList<>();
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 5; y++) {
-                objects.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2)),new Dimension(16,16)));
+                //objects.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2)),new Dimension(16,16)));
             }
         }
+        objects.add(new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0, new Dimension(500, 500), 20, 20));
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
         //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\chair_animation\\Streming_", 198, new Point(0, 0), new Dimension(1600,900), null, 12)));
         objects.add(new MouseFollower("test1"));
@@ -47,5 +56,8 @@ public class Main {
         EditorHandler test = new EditorHandler("dev1","devtools",new Dimension(200,700));
         frameHandler.getGameObjectHandler().loadObject(test);
         frameHandler.run();
+
+
+
     }
 }

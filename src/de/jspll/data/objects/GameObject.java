@@ -155,7 +155,8 @@ public class GameObject implements Drawable, Interactable {
             return;
         if(elapsedTime != 0)
             g.setColor(Color.PINK);
-        g.drawRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()) , camera.applyZoom((int) dimension.getHeight()));
+        g.drawRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
+                camera.applyZoom((int) dimension.getHeight()));
 
     }
 
@@ -253,6 +254,7 @@ public class GameObject implements Drawable, Interactable {
     private HashMap<String,Object> serializationReferences = new HashMap<>();
 
     public GameObject parseJSON(JSONObject jsonObject){
+
         return null;
     }
 

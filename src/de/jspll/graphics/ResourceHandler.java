@@ -53,6 +53,19 @@ public class ResourceHandler extends Thread {
         return null;
     }
 
+    public BufferedImage getTexture(String textureKey, FileType type){
+
+        if(textures.containsKey(textureKey)){
+            return textures.get(textureKey + type.fileEnding);
+        }
+        try {
+            loadingQueue.put(textureKey + type.fileEnding);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public BufferedImage[] getTextureGroup(String baseFile, int cLength, int count, FileType fileType) {
         BufferedImage[] textures = new BufferedImage[count];
         for (int i = 0; i < count; i++){
@@ -64,7 +77,15 @@ public class ResourceHandler extends Thread {
         return textures;
     }
 
-
+    public void requestTexture(String key, FileType type){
+        if(!textures.containsKey(key)) {
+            try {
+                loadingQueue.put(key + type.fileEnding);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public BufferedImage loadImage(String texture){
         try {
@@ -131,6 +152,16 @@ public class ResourceHandler extends Thread {
 
     }
 
+    public void requestTexture(String key, FileType type){
+        if(!textures.containsKey(key))
+            try {
+                loadingQueue.put(key + type.fileEnding);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+    }
+
     public void requestTextureGroup(String baseFile, int cLength, int count, FileType fileType) {
         for (int i = 0; i < count; i++){
             String key = baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf();
@@ -148,5 +179,9 @@ public class ResourceHandler extends Thread {
          public String valueOf(){
              return fileEnding;
          }
-     }
+
+        public String getFileEnding() {
+            return fileEnding;
+        }
+    }
 }
