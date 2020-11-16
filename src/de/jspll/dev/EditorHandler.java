@@ -46,6 +46,7 @@ public class EditorHandler extends GameObject{
         gameObjectHandler.setGraphicsHandler(graphicsHandler);
 
 
+
         gameObjectHandler.loadObject(new MouseFollower("test"));
         gameObjectHandler.loadObject(new DisplayMover("test1"));
         gameObjectHandler.loadObject(new GameObject("test","g.test.GameObject",0,0,new Dimension(16,16)));

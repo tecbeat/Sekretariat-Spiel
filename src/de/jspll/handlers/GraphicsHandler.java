@@ -117,6 +117,7 @@ public class GraphicsHandler implements SubHandler {
         //Everything that needs to be drawn goes here...
 
         //Signal that frame is finished
+        g.dispose();
         active.set(false);
     }
 

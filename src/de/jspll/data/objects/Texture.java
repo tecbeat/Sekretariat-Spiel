@@ -1,6 +1,7 @@
 package de.jspll.data.objects;
 
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
 import de.jspll.util.json.JSONObject;
 import de.jspll.util.json.JSONValue;
 
@@ -41,11 +42,11 @@ public class Texture {
 
     protected void loadTextures(){
         if(getParent().getParent().getResourceHandler().isAvailable(textureKey))
-            image = parent.getParent().getResourceHandler().getTexture(textureKey);
+            image = parent.getParent().getResourceHandler().getTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 
     protected void requestTextures(){
-        getParent().getParent().getResourceHandler().requestTexture(textureKey);
+        getParent().getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 
     public void draw(Graphics2D g2d,float elapsedTime,Camera camera){
