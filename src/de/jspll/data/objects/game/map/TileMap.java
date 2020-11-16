@@ -29,20 +29,32 @@ public class TileMap extends TexturedObject {
         debugInit();
     }
 
+    /**
+     * Initializes the {@code tileMap} with the value -1 at each position. -1 is the undefined value. That
+     * means that there is no {@code Tile} set at the position.
+     */
     private void initTileMap() {
-        for(int xCoord = 0; xCoord < tileMap.length; xCoord++) {
-            for(int yCoord = 0; yCoord < tileMap[xCoord].length; yCoord++) {
-                tileMap[xCoord][yCoord] = -1;
-            }
+        for (int[] ints : tileMap) {
+            Arrays.fill(ints, -1);
         }
     }
 
+    /**
+     * Only for debug purposes.
+     */
     private void debugInit() {
         tiles = new Tile[1];
         tiles[0] = new Tile(true, new Texture("assets\\map\\testTexture", pos, defaultTileDimension, this));
         setTileToMap(tiles[0], 0, 0);
     }
 
+    /**
+     * Sets a {@code Tile} to a specified position (xCoord, yCoord) in {@code tileMap}.
+     *
+     * @param tile {@code Tile} to set at a specific position in the tileMap
+     * @param xCoord x-coordinate
+     * @param yCoord y-coordinate
+     */
     public void setTileToMap(Tile tile, int xCoord, int yCoord) {
         for(int i = 0; i < tiles.length; i++) {
             if(tiles[i] != null && tiles[i].equals(tile)) {
@@ -51,28 +63,45 @@ public class TileMap extends TexturedObject {
         }
     }
 
+    /**
+     * Sets a {@code Tile} to the {@code tileMap} given the index where the {@code Tile}
+     * is in the array {@code tiles}. The coordinates where the {@code Tile} are specified
+     * by xCoord and yCoord.
+     *
+     * @param tilePosInArray position where {@code Tile} is in the array {@code tiles}
+     * @param xCoord x-coordinate
+     * @param yCoord y-coordinate
+     */
     public void setTileToMap(int tilePosInArray, int xCoord, int yCoord) {
         if(tiles[tilePosInArray] != null) {
             tileMap[xCoord][yCoord] = tilePosInArray;
         }
     }
 
+    /**
+     * Sets the value at (xCoord, yCoord) to -1 which means that the value at the position
+     * (xCoord, yCoord) isn't set/undefinied.
+     *
+     * @param xCoord x-coordinate
+     * @param yCoord y-coordinate
+     */
     public void removeTileFromMap(int xCoord, int yCoord) {
         tileMap[xCoord][yCoord] = -1;
     }
 
     /**
-     * Adds Tile to array of tiles.
+     * Adds a {@code Tile} to array {@code tiles}.
      *
-     * @param tileToAdd Tile to add
+     * @param tileToAdd {@code Tile} to add
      */
     public void addTile(Tile tileToAdd) {
         Tile[] updatedTilesArray = Arrays.copyOf(tiles, tiles.length + 1);
         updatedTilesArray[updatedTilesArray.length - 1] = tileToAdd;
+        tiles = updatedTilesArray;
     }
 
     /**
-     * Removes Tile from array of tiles.
+     * Removes {@code Tile} from array {@code tiles} based on the given index.
      *
      * @param index position of Tile that gets removed
      */
@@ -81,7 +110,7 @@ public class TileMap extends TexturedObject {
     }
 
     /**
-     * Removes Tile from array of tiles.
+     * Removes {@code Tile} from array {@code tiles} based on the given {@code Tile}-object.
      *
      * @param tile Tile that gets removed
      */
