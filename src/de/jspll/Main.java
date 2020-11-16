@@ -41,7 +41,7 @@ public class Main {
 
 
         ArrayList<GameObject> objects = new ArrayList<>();
-        /*for (int x = 0; x < 10; x++) {
+        for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 5; y++) {
                 //objects.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2)),new Dimension(16,16)));
             }
