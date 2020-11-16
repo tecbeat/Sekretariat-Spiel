@@ -1,11 +1,25 @@
 package de.jspll;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.examples.Counter;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
-
+import de.jspll.data.objects.loading.LoadingBar;
+import de.jspll.data.objects.loading.Report;
+import de.jspll.dev.EditorHandler;
+import de.jspll.frames.FrameHandler;
+import de.jspll.handlers.JSONSupport;
+import de.jspll.util.json.JSONArray;
+import de.jspll.util.json.JSONObject;
+import de.jspll.util.json.JSONValue;
+import jdk.nashorn.internal.objects.Global;
+import jdk.nashorn.internal.parser.JSONParser;
+import jdk.nashorn.internal.runtime.Context;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.ui.PaperList;
 import de.jspll.data.objects.game.player.Player;
@@ -71,6 +85,13 @@ public class Main {
         frameHandler.getGameObjectHandler().loadObjects(objects);
         EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));
         frameHandler.getGameObjectHandler().loadObject(test);
+
+        String strJSON = "[{\"type\": \"class de.jspll.data.objects.examples.MouseFollower\", \"object\": {\"mousedown\":false,\"mousePos\":[0,0],\"ID\":\"1234\",\"objectID\":\"g.tst.MouseFollower\",\"active\":true,\"x\":0,\"y\":0,\"channels\":[\"INPUT\",\"OVERLAY\"],\"keyPressedMap\":{},\"serializationReferences\":{}}},{\"type\": \"class de.jspll.data.objects.examples.MouseFollower\", \"object\": {\"mousedown\":false,\"mousePos\":[0,0],\"ID\":\"12345\",\"objectID\":\"g.tst.MouseFollower\",\"active\":true,\"x\":0,\"y\":0,\"channels\":[\"INPUT\",\"OVERLAY\"],\"keyPressedMap\":{},\"serializationReferences\":{}}},{\"type\": \"class de.jspll.data.objects.examples.MouseFollower\", \"object\": {\"mousedown\":false,\"mousePos\":[0,0],\"ID\":\"123456\",\"objectID\":\"g.tst.MouseFollower\",\"active\":true,\"x\":0,\"y\":0,\"channels\":[\"INPUT\",\"OVERLAY\"],\"keyPressedMap\":{},\"serializationReferences\":{}}}]";
+
+        JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
+
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
+
         frameHandler.run();
 
 

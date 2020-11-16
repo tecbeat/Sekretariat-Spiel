@@ -16,16 +16,23 @@ public class JSONSupport {
 
     public static Class getClassByType(String type){
         int SUBSTRING_START;
+        int SUBSTRING_END = type.length();
 
-        if(type.startsWith("class ")){
-            SUBSTRING_START = 6; // remove "class " from type
+        if(type.startsWith("\"class ")){
+            SUBSTRING_START = 7; // remove "class " from type
         } else  {
             SUBSTRING_START = 0;
         }
 
+        if(type.endsWith("\"")){
+            SUBSTRING_END = type.length()-1;
+        }
+
+
         try {
-            return Class.forName(type.substring(SUBSTRING_START));
+            return Class.forName(type.substring(SUBSTRING_START,SUBSTRING_END));
         } catch (ClassNotFoundException e) {
+            System.out.println("ERROR:");
             e.printStackTrace();
             return null;
         }
@@ -67,25 +74,26 @@ public class JSONSupport {
         }
 
         object.append("}");
-        return "{\"type\": \""+type+"\", \"object:\": "+object+"}";
+        return "{\"type\": \""+type+"\", \"object\": "+object+"}";
     }
 
     /**
      * Converts JSONObject to GameObject
-     * @param jsonObject
+     * @param jsonElement
      * @return Game Object
      */
-    public static GameObject fromJsonToGameObject(JSONObject jsonObject){
-        String type = jsonObject.getObject().get("type").toString();
+    public static GameObject fromJsonToGameObject(JsonElement jsonElement){
+        String type = jsonElement.getAsJsonObject().get("type").toString();
         Class<? extends GameObject> cl = getClassByType(type);
-        GameObject obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
+        GameObject obj = cl.cast(gson.fromJson(jsonElement.getAsJsonObject().get("object"), cl)); // this returns null
+        System.out.println(obj.toString());
         return obj;
     }
 
     public static Texture fromJsonToTexture(JSONObject jsonObject){
         String type = jsonObject.getObject().get("type").toString();
         Class<? extends Texture> cl = getClassByType(type);
-        Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
+        Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl)); // this returns null
         return obj;
     }
 
@@ -105,4 +113,6 @@ class GsonExclusionStrategy implements ExclusionStrategy {
         return false;
     }
 }
+
+
 
