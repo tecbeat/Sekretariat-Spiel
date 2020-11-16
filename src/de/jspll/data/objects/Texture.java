@@ -40,6 +40,7 @@ public class Texture {
 
     }
 
+
     protected void loadTextures() {
         if (getParent().getParent().getResourceHandler().isAvailable(textureKey + ResourceHandler.FileType.PNG.getFileEnding())) {
             image = parent.getParent().getResourceHandler().getTexture(textureKey + ResourceHandler.FileType.PNG.getFileEnding());
@@ -47,6 +48,7 @@ public class Texture {
     }
 
     public void requestTextures(){
+
         getParent().getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 

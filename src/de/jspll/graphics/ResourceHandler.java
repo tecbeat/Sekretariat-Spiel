@@ -54,6 +54,7 @@ public class ResourceHandler extends Thread {
     }
 
     public BufferedImage getTexture(String textureKey, FileType type){
+
         if(textures.containsKey(textureKey)){
             return textures.get(textureKey + type.fileEnding);
         }
@@ -145,6 +146,16 @@ public class ResourceHandler extends Thread {
         if(!textures.containsKey(key))
             try {
                 loadingQueue.put(key);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    public void requestTexture(String key, FileType type){
+        if(!textures.containsKey(key))
+            try {
+                loadingQueue.put(key + type.fileEnding);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
