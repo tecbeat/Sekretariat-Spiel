@@ -1,6 +1,5 @@
 package de.jspll.data.objects;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
@@ -56,7 +55,7 @@ public class Animation extends Texture {
     }
 
     @Override
-    protected void requestTextures() {
+    public void requestTextures() {
         getParent().getParent().getResourceHandler().requestTextureGroup(baseFile, cLength, frames, PNG);
     }
 
@@ -98,13 +97,14 @@ public class Animation extends Texture {
             selectedTexture = 0;
         }
     }
-    public void startAnimation(){
+
+    public void startAnimation() {
         active = true;
         current_time = 0;
         selectedTexture = 0;
     }
 
-    public void stopAnimation(){
+    public void stopAnimation() {
         active = false;
     }
 

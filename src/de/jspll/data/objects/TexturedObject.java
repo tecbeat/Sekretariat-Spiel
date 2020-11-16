@@ -2,6 +2,7 @@ package de.jspll.data.objects;
 
 import de.jspll.data.ChannelID;
 import de.jspll.graphics.Camera;
+import de.jspll.handlers.GameObjectHandler;
 
 import java.awt.*;
 
@@ -41,6 +42,11 @@ public class TexturedObject extends GameObject {
 
     public void setTexture(Texture texture) {
         this.texture = texture;
+    }
+
+    @Override
+    public GameObjectHandler getParent() {
+        return super.getParent();
     }
 
     @Override

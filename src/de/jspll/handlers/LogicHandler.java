@@ -30,8 +30,6 @@ public class LogicHandler implements SubHandler {
 
     public void execute(float elapsedTime){
         //test
-
-
         gameObjectHandler.dispatch(INPUT,inputHandler.getInputInfo());
 
         if(gameObjectHandler != null) {

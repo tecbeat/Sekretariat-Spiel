@@ -3,6 +3,7 @@ package de.jspll.data.objects.game.player;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.handlers.GameObjectHandler;
 
@@ -37,14 +38,12 @@ public class Player extends TexturedObject {
 
     private Animation idleAnimation;
     private String ID;
+    private Texture parent;
 
     public Player(String ID, int x, int y, Dimension dimension, Animation animation) {
         super(ID, "g.ntt.Player", x, y, dimension, animation);
-        this.idleAnimation = animation;
         texture.setParent(this);
-        this.ID = ID;
         ((Animation) texture).setLooping(true);
-        ((Animation) texture).startAnimation();
         channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER};
 
 
@@ -54,11 +53,17 @@ public class Player extends TexturedObject {
         movementArrayList.add(new Movement("MovementIdle",     0, 0, new Dimension(1600, 900), new Animation("assets\\player_animation\\idle0_",     1, new Point(0, 0), new Dimension(32, 64), null, 1F), ""));
 
 
+
+
     }
 
     public Player() {
     }
 
+    @Override
+    public GameObjectHandler getParent() {
+        return super.getParent();
+    }
 
     public int getColorScheme() {
         return colorScheme;
@@ -76,10 +81,11 @@ public class Player extends TexturedObject {
                 if (input[4] instanceof HashMap) {
                     keyMap = (HashMap<String, AtomicBoolean>) input[4];
                     if (keyMap.get("w").get()) {
-                        ((Animation) texture).stopAnimation();
+                        ((Animation) texture).startAnimation();
+//                        ((Animation) texture).stopAnimation();
 //                        ((Animation) test.getTexture()).setLooping(true);
 //                        ((Animation) test.getTexture()).startAnimation();
-                        (movementArrayList.get(0)).call(input);
+//                        (movementArrayList.get(0)).call(input);
 
                     } else if (keyMap.get("s").get()) {
                         ((Animation) texture).stopAnimation();
@@ -97,8 +103,6 @@ public class Player extends TexturedObject {
 //                        animations[3].loadTextures();
 //                        animations[3].startAnimation();
 
-                    } else {
-                        ((Animation) texture).startAnimation();
                     }
 
 
