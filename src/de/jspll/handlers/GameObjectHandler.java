@@ -227,11 +227,11 @@ public class GameObjectHandler{
 
                     out.add(JSONSupport.fromJsonToGameObject(jsonObject));
                     pRpt.update();
-                    try {
-                        Thread.sleep(100);
+/*                    try {
+                        //Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
                 }
 

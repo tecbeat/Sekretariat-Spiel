@@ -16,14 +16,23 @@ public class LoadingBar extends GameObject {
 
     protected ProgressReporter progressReporter;
 
+    float progress = 0;
+
     @Override
     public char update(float elapsedTime) {
-
+        if(progress == -1){
+            getParent().delete(this);
+//            getParent().unsubscribe(this);
+            progressReporter = null;
+        }
         return 0;
     }
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
+        if(progress == -1){
+            return;
+        }
         super.paint(g, elapsedTime, camera);
         Graphics2D g2d = (Graphics2D) g;
         int screenWidth = (int) g2d.getClipBounds().getWidth();
@@ -32,13 +41,7 @@ public class LoadingBar extends GameObject {
         int y = screenHeight / 2 - screenHeight / 10;
         int height = 50;
         int fullWidth = screenWidth / 2;
-        float progress = progressReporter.getProgress();
-        System.out.println("Still alive");
-        if(progress == -1){
-            getParent().unsubscribe(this);
-            progressReporter = null;
-            return;
-        }
+        progress = progressReporter.getProgress();
         int width = (int) ((fullWidth - 20) * progress);
         g2d.setColor(Color.gray);
         g2d.fillRoundRect(x,y,fullWidth,height,height/2,height/2);
