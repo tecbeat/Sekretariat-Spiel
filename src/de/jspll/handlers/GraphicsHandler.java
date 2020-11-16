@@ -23,6 +23,7 @@ public class GraphicsHandler implements SubHandler {
         slate = new Slate(this);
         frame = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_ARGB);
         frame_graphics = frame.createGraphics();
+        frame_graphics.setClip(0,0,size.width,size.height);
         this.mode = mode;
         switch (mode){
             case DIALOG:

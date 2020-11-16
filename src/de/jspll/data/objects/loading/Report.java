@@ -1,5 +1,7 @@
 package de.jspll.data.objects.loading;
 
+import de.jspll.data.ChannelID;
+
 public class Report implements ProgressReporter {
     private float count;
     private float initalCount;
@@ -17,6 +19,11 @@ public class Report implements ProgressReporter {
     public void setCount(int count){
         this.initalCount = count;
         this.count = count;
+    }
+
+    @Override
+    public ChannelID getNextScene() {
+        return null;
     }
 
     public void update(){
