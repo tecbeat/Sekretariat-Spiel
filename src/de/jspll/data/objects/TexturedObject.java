@@ -14,6 +14,10 @@ public class TexturedObject extends GameObject {
         super();
     }
 
+    public TexturedObject(String ID, String objectID, int x, int y, Dimension dimension ) {
+        super(ID, objectID, x, y, dimension);
+    }
+
     public TexturedObject(String ID, String objectID, int x, int y, Dimension dimension, Texture texture) {
         super(ID, objectID, x, y, dimension);
         this.texture = texture;
@@ -31,6 +35,13 @@ public class TexturedObject extends GameObject {
         texture.requestTextures();
     }
 
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
 
     @Override
     public char update(float elapsedTime) {
@@ -40,7 +51,7 @@ public class TexturedObject extends GameObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         super.paint(g, elapsedTime, camera);
-        drawFrame(g,elapsedTime,camera);
+     drawFrame(g,elapsedTime,camera);
     }
 
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera){

@@ -39,9 +39,9 @@ public class FrameHandler {
 
         frameStabilizer.start();
 
-        while (running){
+        //while (running){
             //Keep main thread running
-        }
+        //}
 
     }
 
@@ -88,10 +88,10 @@ class FrameStabilizer extends Thread {
                 long delayStart = System.currentTimeMillis();
                 System.out.println("FH: Started delay, current time: " + delayStart + "\n Waiting for " + (long) (elapsedTime * 1000) + " Milliseconds");
                 long currentTime = System.currentTimeMillis();
-                while(currentTime - delayStart < elapsedTime * 1000){
+                //while(currentTime - delayStart < elapsedTime * 1000){
                     currentTime = System.currentTimeMillis();
                     System.out.println("FH: current Time: " + currentTime);
-                }
+                //}
                 System.out.println("FH: finished delay");
             }
             //start calculating elapsed time

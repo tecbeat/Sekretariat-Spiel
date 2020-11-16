@@ -31,8 +31,6 @@ public class GameObjectHandler{
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
-        ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
-        loadingSceneBuilder.add(new LoadingCircle());
         resourceHandler.start();
     }
 
@@ -51,6 +49,17 @@ public class GameObjectHandler{
             loadObject(obj);
             subscribe(obj,scene);
         }
+    }
+
+    public void setup(){
+        ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
+        loadingSceneBuilder.add(new LoadingCircle("LdC","system.loading",
+                getGraphicsHandler().getWindow().getWidth() / 2,
+                getGraphicsHandler().getWindow().getHeight() / 2,
+                20, 150,new Dimension(40,40)));
+
+
+        loadScene(SCENE_LOADING,loadingSceneBuilder);
     }
 
     public void switchScene(ChannelID newScene){
@@ -196,20 +205,29 @@ public class GameObjectHandler{
         return channels[channel.valueOf()];
     }
 
+    public ChannelID getActiveScene() {
+        return activeScene;
+    }
+
     public void loadObjects(ArrayList<GameObject> objects) {
         for (GameObject object : objects) {
-            if(object instanceof TexturedObject){
-                TexturedObject obj = (TexturedObject) object;
-                obj.requestTexture();
-            }
-            register(object);
-            subscribe(object);
+            loadObject(object);
         }
     }
 
     public void loadObject(GameObject object) {
         register(object);
         subscribe(object);
+        if(object instanceof TexturedObject){
+            TexturedObject obj = (TexturedObject) object;
+
+            try {
+                obj.requestTexture();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     public void loadScene(ChannelID scene, JsonArray objects){

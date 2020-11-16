@@ -5,6 +5,7 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
 import de.jspll.graphics.*;
 import de.jspll.logic.InputHandler;
+import de.jspll.util.ColorStorage;
 
 import java.awt.*;
 import java.awt.Dimension;
@@ -20,6 +21,8 @@ public class GraphicsHandler implements SubHandler {
 
     public GraphicsHandler(String windowTitle, Dimension size, HandlerMode mode){
         slate = new Slate(this);
+        frame = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_ARGB);
+        frame_graphics = frame.createGraphics();
         this.mode = mode;
         switch (mode){
             case DIALOG:
@@ -50,6 +53,8 @@ public class GraphicsHandler implements SubHandler {
     private AtomicBoolean active = new AtomicBoolean();
     private GameObjectHandler gameObjectHandler;
     private Camera[] cameras = new Camera[10];
+    private BufferedImage frame = null;
+    private Graphics2D frame_graphics;
     private int selectedCamera = 0;
 
 
@@ -76,30 +81,36 @@ public class GraphicsHandler implements SubHandler {
 
     //actual drawing call, keeps
     public void drawingRoutine(Graphics g){
-        if(g == null){
+        if(g == null || frame == null){
             return;
         }
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        //BufferedImage frame = new BufferedImage((int)g.getClipBounds().getWidth(),(int)g.getClipBounds().getHeight(),BufferedImage.TYPE_INT_ARGB);
+
+        frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);
+        //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        frame_graphics.setColor(ColorStorage.BACKGROUND_COLOR);
+
         //fill background
-        g.fillRect(0,0,slate.getWidth(),slate.getHeight());
-        //Graphics fg = frame.createGraphics();
+        frame_graphics.fillRect(0,0,slate.getWidth(),slate.getHeight());
 
         if(gameObjectHandler != null) {
             for(int i = FIRST_LAYER.valueOf(); i <= LAST_LAYER.valueOf(); i++){
                 for (GameObject object : gameObjectHandler.getChannel(ChannelID.getbyID(i)).allValues()) {
                     try {
-                        object.paint(g2d, elapsedTime, cameras[selectedCamera]);
+                        object.paint(frame_graphics, elapsedTime, cameras[selectedCamera]);
                     } catch (Exception e){
                         e.printStackTrace();
                     }
                 }
             }
 
+        }
+
+        try {
+            g.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         switch (mode){
             case MAIN:
@@ -111,6 +122,7 @@ public class GraphicsHandler implements SubHandler {
         //Everything that needs to be drawn goes here...
 
         //Signal that frame is finished
+        g.dispose();
         active.set(false);
     }
 

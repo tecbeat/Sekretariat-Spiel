@@ -1,8 +1,10 @@
 package de.jspll.data.objects.examples;
 
+import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
+import de.jspll.util.Logger;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,19 +19,20 @@ public class DisplayMover extends GameObject {
 
     private int framesOn = 0;
     private boolean mousedown;
-    private int[] currMousePos = new int[]{0,0};
-    private int[] previousMousePos = new int[]{0,0};
+    private int[] currMousePos = new int[]{0, 0};
+    private int[] previousMousePos = new int[]{0, 0};
     private int continuousPlus = 0;
     private int continuousMinus = 0;
     private boolean plus = false;
     private boolean minus = false;
+    private float mwMovement = 0;
     HashMap<String, AtomicBoolean> keyMap;
 
     @Override
     public char update(float elapsedTime) {
         super.update(elapsedTime);
-        if(keyMap != null) {
-            float displacement = 40f;
+        if (keyMap != null) {
+            float displacement = 100f;
             Camera cam = getParent().getSelectedCamera();
             if (keyMap.get("w").get()) {
                 cam.increase_y(-displacement * elapsedTime);
@@ -70,6 +73,13 @@ public class DisplayMover extends GameObject {
                 getParent().getSelectedCamera().increase_zoom(-zoomIncrement * elapsedTime);
             }
         }
+
+        if(mwMovement != 0) {
+
+            getParent().getSelectedCamera().increase_zoom(mwMovement * 0.1f );
+            mwMovement = 0;
+        }
+
         return 0;
     }
 
@@ -80,14 +90,15 @@ public class DisplayMover extends GameObject {
             return 0;
         } else if (input[0] instanceof String) {
             if (((String) input[0]).contentEquals("input")) {
-                if(input[4] instanceof HashMap) {
+                if (input[4] instanceof HashMap) {
                     this.keyMap = (HashMap<String, AtomicBoolean>) input[4];
+                }
+                if (input[7] instanceof Number) {
+                    mwMovement = ((Number) input[7]).floatValue();
                 }
 
             }
         }
-
-
 
 
         return 0;

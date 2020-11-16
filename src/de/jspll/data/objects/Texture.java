@@ -1,6 +1,7 @@
 package de.jspll.data.objects;
 
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
 import de.jspll.util.json.JSONObject;
 import de.jspll.util.json.JSONValue;
 
@@ -19,59 +20,66 @@ public class Texture {
     protected Dimension dimension;
     protected GameObject parent;
 
-    public Texture(String textureKey,Point pos, Dimension dimension, GameObject parent){
+    public Texture(String textureKey, Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
-        this.textureKey = this.textureKey;
+        this.textureKey = textureKey;
         this.pos = pos;
         this.dimension = dimension;
-        this.parent = parent;
     }
 
-    public Texture(BufferedImage image,Point pos, Dimension dimension, GameObject parent){
+    public Texture(BufferedImage image, Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
         this.image = image;
         this.pos = pos;
         this.dimension = dimension;
-        this.parent = parent;
     }
 
     public Texture(){
 
     }
 
-    protected void loadTextures(){
-        if(getParent().getParent().getResourceHandler().isAvailable(textureKey))
-            image = parent.getParent().getResourceHandler().getTexture(textureKey);
+
+    protected void loadTextures() {
+        if (getParent().getParent().getResourceHandler().isAvailable(textureKey + ResourceHandler.FileType.PNG.getFileEnding())) {
+            image = parent.getParent().getResourceHandler().getTexture(textureKey + ResourceHandler.FileType.PNG.getFileEnding());
+        }
     }
 
-    protected void requestTextures(){
-        getParent().getParent().getResourceHandler().requestTexture(textureKey);
+    public void requestTextures(){
+
+        getParent().getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 
-    public void draw(Graphics2D g2d,float elapsedTime,Camera camera){
+    public void draw(Graphics2D g2d, float elapsedTime, Camera camera){
         if(image == null){
             loadTextures();
             if(image == null){
                 return;
             }
         }
-        g2d.drawImage(image,camera.applyXTransform(pos.x),camera.applyYTransform(pos.y),camera.applyZoom(dimension.width),camera.applyZoom(dimension.height),null);
+        g2d.drawImage(image,camera.applyXTransform(pos.x),camera.applyYTransform(pos.y),camera.applyZoom(dimension.width),
+                camera.applyZoom(dimension.height),null);
 
     }
 
-    public void draw(Graphics2D g2d,float elapsedTime,Camera camera, int[] offset){
+    public void draw(Graphics2D g2d, float elapsedTime, Camera camera, int xOffset, int yOffset){
         if(image == null){
             loadTextures();
             if(image == null){
                 return;
             }
         }
-        g2d.drawImage(image,camera.applyXTransform(pos.x + offset[0]),camera.applyYTransform(pos.y + offset[1]),camera.applyZoom(dimension.width),camera.applyZoom(dimension.height),null);
+        g2d.drawImage(image,camera.applyXTransform(pos.x + xOffset),camera.applyYTransform(pos.y + yOffset),
+                camera.applyZoom(dimension.width),camera.applyZoom(dimension.height),null);
 
     }
 
     public String getTextureKey() {
         return textureKey;
+    }
+
+    public void setTextureKey(String textureKey) {
+        this.textureKey = textureKey;
     }
 
     public Point getPos() {
@@ -105,6 +113,7 @@ public class Texture {
     public void setParent(TexturedObject parent) {
         this.parent = parent;
     }
+
 
     public static Texture parseJsonObject(JSONObject jsonObject){
         HashMap<String, JSONValue> object = jsonObject.getObject();
