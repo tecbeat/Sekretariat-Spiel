@@ -65,7 +65,7 @@ public class Main {
 
 
         objects.add(new MouseFollower("test1"));
-        //objects.add(new DisplayMover("test1"));
+        objects.add(new DisplayMover("test1"));
         //objects.add(new Counter("test"));
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_0, objects);
         frameHandler.getGameObjectHandler().loadObjects(objects);

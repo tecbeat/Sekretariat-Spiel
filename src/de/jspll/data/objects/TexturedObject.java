@@ -51,7 +51,7 @@ public class TexturedObject extends GameObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         super.paint(g, elapsedTime, camera);
-//        drawFrame(g,elapsedTime,camera);
+     drawFrame(g,elapsedTime,camera);
     }
 
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera){

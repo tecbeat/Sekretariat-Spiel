@@ -55,7 +55,7 @@ public class ResourceHandler extends Thread {
 
     public BufferedImage getTexture(String textureKey, FileType type){
 
-        if(textures.containsKey(textureKey)){
+        if(textures.containsKey(textureKey + type.fileEnding)){
             return textures.get(textureKey + type.fileEnding);
         }
         try {
@@ -76,6 +76,7 @@ public class ResourceHandler extends Thread {
 
         return textures;
     }
+
 
     public BufferedImage loadImage(String texture){
         try {

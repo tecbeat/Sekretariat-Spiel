@@ -215,6 +215,10 @@ public class TileMap extends TexturedObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         super.paint(g, elapsedTime, camera);
+    }
+
+    @Override
+    protected void drawFrame(Graphics g, float elapsedTime, Camera camera) {
         for (int xCoord = 0; xCoord < tileMap.length; xCoord++) {
             for (int yCoord = 0; yCoord < tileMap[xCoord].length; yCoord++) {
                 if (tileMap[xCoord][yCoord] != -1) {
