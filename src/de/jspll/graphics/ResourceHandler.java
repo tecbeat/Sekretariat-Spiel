@@ -77,7 +77,15 @@ public class ResourceHandler extends Thread {
         return textures;
     }
 
-
+    public void requestTexture(String key, FileType type){
+        if(!textures.containsKey(key)) {
+            try {
+                loadingQueue.put(key + type.fileEnding);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public BufferedImage loadImage(String texture){
         try {
@@ -171,5 +179,9 @@ public class ResourceHandler extends Thread {
          public String valueOf(){
              return fileEnding;
          }
-     }
+
+        public String getFileEnding() {
+            return fileEnding;
+        }
+    }
 }

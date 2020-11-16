@@ -216,7 +216,13 @@ public class GameObjectHandler {
         subscribe(object);
         if(object instanceof TexturedObject){
             TexturedObject obj = (TexturedObject) object;
-            obj.requestTexture();
+
+            try {
+                obj.requestTexture();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
