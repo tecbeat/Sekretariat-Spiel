@@ -1,13 +1,18 @@
 package de.jspll.handlers;
 
 import com.google.gson.*;
+import com.google.gson.internal.$Gson$Preconditions;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
 import de.jspll.data.objects.TexturedObject;
+import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
+import de.jspll.data.objects.loading.ProgressReporter;
+import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
+import de.jspll.util.json.JSONArray;
 import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
@@ -20,7 +25,7 @@ import static de.jspll.data.ChannelID.SCENE_LOADING;
 /**
  * Created by reclinarka on 21-Oct-20.
  */
-public class GameObjectHandler {
+public class GameObjectHandler{
     public GameObjectHandler() {
 
         for (int i = 0; i < channels.length; i++) {
@@ -207,17 +212,41 @@ public class GameObjectHandler {
         subscribe(object);
     }
 
-    public void loadScene(ChannelID scene, JSONObject[] objects){
+    public void loadScene(ChannelID scene, JsonArray objects){
         ArrayList<GameObject> out = new ArrayList<>();
+        boolean[] finished = new boolean[1];
+        ProgressReporter pRpt = new Report();
+        pRpt.setCount(objects.size());
+        LoadingBar lb = new LoadingBar(pRpt);
+        this.subscribe(lb);
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(JsonElement jsonObject: objects){
+
+                    out.add(JSONSupport.fromJsonToGameObject(jsonObject));
+                    pRpt.update();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                loadScene(scene, out);
+                finished[0] = true;
+            }
 
 
-        for(JSONObject jsonObject: objects){
+        });
+        t1.start();
 
-            out.add(JSONSupport.fromJsonToGameObject(jsonObject));
 
-        }
 
-        loadScene(scene, out);
+
+
 
     }
 

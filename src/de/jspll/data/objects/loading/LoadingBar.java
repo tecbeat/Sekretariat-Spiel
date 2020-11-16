@@ -32,7 +32,14 @@ public class LoadingBar extends GameObject {
         int y = screenHeight / 2 - screenHeight / 10;
         int height = 50;
         int fullWidth = screenWidth / 2;
-        int width = (int) ((fullWidth - 20) * progressReporter.getProgress());
+        float progress = progressReporter.getProgress();
+        System.out.println("Still alive");
+        if(progress == -1){
+            getParent().unsubscribe(this);
+            progressReporter = null;
+            return;
+        }
+        int width = (int) ((fullWidth - 20) * progress);
         g2d.setColor(Color.gray);
         g2d.fillRoundRect(x,y,fullWidth,height,height/2,height/2);
         x += 10;

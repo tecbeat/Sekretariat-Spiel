@@ -5,4 +5,6 @@ package de.jspll.data.objects.loading;
  */
 public interface ProgressReporter {
     float getProgress();
+    void update();
+    void setCount(int count);
 }
