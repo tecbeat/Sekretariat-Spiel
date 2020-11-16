@@ -106,7 +106,7 @@ public class GraphicsHandler implements SubHandler {
             }
 
         }
-        g.drawImage(frame,0,0,window.getWidth(),window.getHeight(),null);
+        g.drawImage(frame,0,0,frame.getWidth(),frame.getHeight(),null);
         switch (mode){
             case MAIN:
                 break;
