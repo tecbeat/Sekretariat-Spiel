@@ -1,13 +1,11 @@
 package de.jspll;
 
 import de.jspll.data.ChannelID;
-import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.GameObject;
-import de.jspll.data.objects.GameTrie;
-import de.jspll.data.objects.examples.AnimatedGameObject;
 import de.jspll.data.objects.examples.Counter;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
+
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.ui.PaperList;
 import de.jspll.dev.EditorHandler;
@@ -37,6 +35,7 @@ public class Main {
 
         Logger logger = new Logger();
         logger.start();
+
 
 
 

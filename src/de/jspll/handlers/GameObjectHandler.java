@@ -1,15 +1,13 @@
 package de.jspll.handlers;
 
+import com.google.gson.*;
 import de.jspll.data.ChannelID;
-import de.jspll.data.ObjectRegister;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
-import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
-import de.jspll.util.json.JSONArray;
 import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
@@ -24,6 +22,7 @@ import static de.jspll.data.ChannelID.SCENE_LOADING;
  */
 public class GameObjectHandler {
     public GameObjectHandler() {
+
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
@@ -228,12 +227,12 @@ public class GameObjectHandler {
 
     public void loadScene(ChannelID scene, JSONObject[] objects){
         ArrayList<GameObject> out = new ArrayList<>();
+
+
         for(JSONObject jsonObject: objects){
-            for (ObjectRegister reg: ObjectRegister.values()){
-                if(reg.isType((String) jsonObject.getObject().get("type").getValue())){
-                    out.add( reg.getObject().parseJSON(jsonObject) );
-                }
-            }
+
+            out.add(JSONSupport.fromJsonToGameObject(jsonObject));
+
         }
 
         loadScene(scene, out);
