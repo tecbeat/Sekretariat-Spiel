@@ -31,7 +31,7 @@ public class LoadingBar extends GameObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         if(progress == -1){
-            return;
+            //return;
         }
         super.paint(g, elapsedTime, camera);
         Graphics2D g2d = (Graphics2D) g;
@@ -41,7 +41,8 @@ public class LoadingBar extends GameObject {
         int y = screenHeight / 2 - screenHeight / 10;
         int height = 50;
         int fullWidth = screenWidth / 2;
-        progress = progressReporter.getProgress();
+        if(progressReporter != null)
+            progress = progressReporter.getProgress();
         int width = (int) ((fullWidth - 20) * progress);
         g2d.setColor(Color.gray);
         g2d.fillRoundRect(x,y,fullWidth,height,height/2,height/2);
