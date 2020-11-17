@@ -31,7 +31,7 @@ public class LoadingBar extends GameObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         if(progress == -1){
-            //return;
+            return;
         }
         super.paint(g, elapsedTime, camera);
         Graphics2D g2d = (Graphics2D) g;

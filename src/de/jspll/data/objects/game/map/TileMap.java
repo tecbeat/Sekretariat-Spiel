@@ -1,6 +1,7 @@
 package de.jspll.data.objects.game.map;
 
 import com.google.gson.annotations.Expose;
+import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
@@ -248,7 +249,7 @@ public class TileMap extends TexturedObject {
                         continue;
                     }
                     Graphics2D g2d = (Graphics2D) g;
-                    g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(),
+                    g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(this),
                             camera.applyXTransform(x + xCoord * defaultTileDimension.width),
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),
                             camera.applyZoom(defaultTileDimension.width),
@@ -261,7 +262,7 @@ public class TileMap extends TexturedObject {
 }
 
 class Tile {
-    private TileMap parent;
+    private transient TileMap parent;
     private final boolean collidable;
     private final int[] textureReference;
 
@@ -282,7 +283,9 @@ class Tile {
         return collidable;
     }
 
-    public BufferedImage getTexture() {
+    public BufferedImage getTexture(TileMap gO) {
+        if(parent == null)
+            parent = gO;
         if(cache == null){
            cache = parent.tileSets[textureReference[4]].getSubimage(textureReference[0],textureReference[1],textureReference[2],textureReference[3]);
         }

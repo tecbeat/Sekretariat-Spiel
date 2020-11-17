@@ -31,7 +31,7 @@ public class Report implements ProgressReporter {
         percentage = (1-(count/initalCount));
 
         if(count<=0) {
-            percentage = 1;
+            percentage = -1;
         }
 
         System.out.println(count);
