@@ -50,6 +50,11 @@ public class Player extends TexturedObject {
     }
 
     @Override
+    public boolean isTextureLoaded() {
+        return true;
+    }
+
+    @Override
     public void requestTexture() {
         for (Animation animation : movementAnimationList) {
             animation.setLooping(true);

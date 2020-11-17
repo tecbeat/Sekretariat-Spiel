@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by reclinarka on 27-Oct-20.
  */
 public class ResourceHandler extends Thread {
+
     private GameObjectHandler parent;
     private AtomicBoolean running = new AtomicBoolean(true);
     private LinkedBlockingQueue<String> loadingQueue = new LinkedBlockingQueue<>(Integer.MAX_VALUE);

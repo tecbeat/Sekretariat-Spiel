@@ -147,6 +147,8 @@ public class TileMap extends TexturedObject {
         return false;
     }
 
+
+
     @Override
     public void requestTexture() {
         for( String textureKey: textureKeys)
@@ -221,7 +223,9 @@ public class TileMap extends TexturedObject {
     }
 
     @Override
-    protected void loadTexture() {
+    public void loadTexture() {
+        if(isTextureLoaded())
+            return;
         BufferedImage[] builder = new BufferedImage[textureKeys.length];
         for(int i = 0; i < textureKeys.length; i++){
             if(!getParent().getResourceHandler().isAvailable(textureKeys[i], ResourceHandler.FileType.PNG) ||

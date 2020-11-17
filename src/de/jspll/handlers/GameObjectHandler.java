@@ -234,21 +234,25 @@ public class GameObjectHandler{
     public void loadScene(ChannelID scene, JsonArray objects){
         ArrayList<GameObject> out = new ArrayList<>();
         ProgressReporter pRpt = new Report();
-        pRpt.setCount(objects.size());
+        pRpt.setCount(objects.size() + 1);
+        pRpt.setNextScene(scene);
         LoadingBar lb = new LoadingBar(pRpt);
         this.subscribe(lb);
+        final GameObjectHandler goh = this;
 
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(JsonElement jsonObject: objects){
-                    out.add(JSONSupport.fromJsonToGameObject(jsonObject));
+                    GameObject go = JSONSupport.fromJsonToGameObject(jsonObject);
+                    out.add(go);
+                    go.setListener(goh);
+                    if(go instanceof TexturedObject){
+                        TexturedObject to = (TexturedObject) go;
+                        to.requestTexture();
+                    }
                     pRpt.update();
-/*                    try {
-                        //Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }*/
+
 
                 }
                 boolean waitingForTexture = true;
@@ -257,12 +261,15 @@ public class GameObjectHandler{
                     for(GameObject obj: out){
                         if(obj instanceof TexturedObject){
                             if(!((TexturedObject) obj).isTextureLoaded()){
+                                ((TexturedObject) obj).loadTexture();
                                 waitingForTexture = true;
                                 break;
                             }
                         }
                     }
                 }
+                pRpt.setPayload(out);
+                pRpt.update();
 
                 loadScene(scene, out);
             }

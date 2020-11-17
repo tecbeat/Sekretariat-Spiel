@@ -41,6 +41,8 @@ public class Texture {
 
 
     protected void loadTextures() {
+        if(loaded)
+            return;
         if (getParent().getParent().getResourceHandler().isAvailable(textureKey + ResourceHandler.FileType.PNG.getFileEnding())) {
             image = parent.getParent().getResourceHandler().getTexture(textureKey + ResourceHandler.FileType.PNG.getFileEnding());
             loaded = true;
@@ -70,18 +72,6 @@ public class Texture {
         }
         g2d.drawImage(image,camera.applyXTransform(pos.x),camera.applyYTransform(pos.y),camera.applyZoom(dimension.width),
                 camera.applyZoom(dimension.height),null);
-
-    }
-
-    public void draw(Graphics2D g2d, float elapsedTime, Camera camera, int xOffset, int yOffset){
-        if(image == null){
-            loadTextures();
-            if(image == null){
-                return;
-            }
-        }
-        g2d.drawImage(image,camera.applyXTransform(pos.x + xOffset),camera.applyYTransform(pos.y + yOffset),
-                camera.applyZoom(dimension.width),camera.applyZoom(dimension.height),null);
 
     }
 

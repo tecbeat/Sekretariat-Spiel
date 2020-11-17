@@ -102,8 +102,8 @@ public class Main {
         JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
 
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
-
         frameHandler.run();
+
 
 
 

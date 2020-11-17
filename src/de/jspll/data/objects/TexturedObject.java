@@ -52,7 +52,15 @@ public class TexturedObject extends GameObject {
         this.texture = texture;
     }
 
-    protected void loadTexture(){
+    public void loadTexture(){
+        if(texture == null)
+            return;
+
+        if(texture.isLoaded()){
+            textureLoaded = true;
+            return;
+        }
+
         texture.loadTextures();
         if(texture.isLoaded())
             textureLoaded = true;

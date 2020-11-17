@@ -22,7 +22,7 @@ public class LoadingBar extends GameObject {
     public char update(float elapsedTime) {
         if(progress == -1){
             getParent().delete(this);
-//            getParent().unsubscribe(this);
+
             progressReporter = null;
         }
         return 0;

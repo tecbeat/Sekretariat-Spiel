@@ -1,8 +1,10 @@
 package de.jspll.data;
 
+import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.loading.ProgressReporter;
 import de.jspll.handlers.JSONSupport;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -35,6 +37,21 @@ public class SceneLoader extends Thread implements ProgressReporter{
     @Override
     public void setCount(int count) {
 
+    }
+
+    @Override
+    public void setNextScene(ChannelID scene) {
+
+    }
+
+    @Override
+    public void setPayload(ArrayList<GameObject> payload) {
+
+    }
+
+    @Override
+    public ArrayList<GameObject> getPayload() {
+        return null;
     }
 
     @Override
