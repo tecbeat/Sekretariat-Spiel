@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ResourceHandler extends Thread {
     private GameObjectHandler parent;
     private AtomicBoolean running = new AtomicBoolean(true);
-    private LinkedBlockingQueue<String> loadingQueue = new LinkedBlockingQueue<>(500);
+    private LinkedBlockingQueue<String> loadingQueue = new LinkedBlockingQueue<>(Integer.MAX_VALUE);
     private ConcurrentHashMap<String, BufferedImage> textures = new ConcurrentHashMap<>();
 
     public LinkedBlockingQueue<String> getLoadingQueue() {
@@ -29,6 +29,10 @@ public class ResourceHandler extends Thread {
 
     public boolean isAvailable(String key){
         return textures.containsKey(key);
+    }
+
+    public boolean isAvailable(String key, FileType type){
+        return textures.containsKey(key + type.fileEnding);
     }
 
     public boolean isAvailable(String baseFile, int cLength, int count, FileType fileType){
@@ -116,9 +120,10 @@ public class ResourceHandler extends Thread {
         super.run();
         while(running.get()){
             Stack<String> loadingQueue = new Stack<>();
-            while(this.loadingQueue.size() > 0){
+            while(this.loadingQueue.size() > 0 && loadingQueue.size() < 50){
                 try {
                     loadingQueue.push(this.loadingQueue.take());
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -60,7 +60,9 @@ public class Main {
                 //objects.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2)),new Dimension(16,16)));
             }
         }
-        objects.add(new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0, new Dimension(500, 500), 20, 20));
+        objects.add(new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
+                new Dimension(500, 500), 20, 20,
+                new String[]{"assets\\map\\Floors_only_32x32"}));
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
         //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\player_animation\\forward0_", 6, new Point(0, 0), new Dimension(32,64), null, .1F)));
 

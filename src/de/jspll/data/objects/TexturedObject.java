@@ -30,6 +30,15 @@ public class TexturedObject extends GameObject {
 
 
     protected Texture texture;
+    private boolean textureLoaded;
+
+    public boolean isTextureLoaded() {
+        return textureLoaded;
+    }
+
+    public void setTextureLoaded(boolean textureLoaded) {
+        this.textureLoaded = textureLoaded;
+    }
 
     public void requestTexture(){
         texture.requestTextures();
@@ -43,6 +52,10 @@ public class TexturedObject extends GameObject {
         this.texture = texture;
     }
 
+    protected void loadTexture(){
+
+    }
+
     @Override
     public char update(float elapsedTime) {
         return super.update(elapsedTime);
@@ -51,6 +64,9 @@ public class TexturedObject extends GameObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         super.paint(g, elapsedTime, camera);
+        if(!textureLoaded){
+            loadTexture();
+        }
      drawFrame(g,elapsedTime,camera);
     }
 

@@ -1,10 +1,11 @@
 package de.jspll.data.objects.game.map;
 
-import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 /**
@@ -19,10 +20,13 @@ public class TileMap extends TexturedObject {
     private Tile[] tiles;
     private Point pos;
     private Dimension defaultTileDimension;
+    protected BufferedImage[] tileSets;
+    private String[] textureKeys;
 
-    public TileMap(String ID, String objectID, Point playerPos, int x, int y , Dimension dimension, int tileRowCount, int tileColCount){
+    public TileMap(String ID, String objectID, Point playerPos, int x, int y , Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys){
         super(ID, objectID, x, y, dimension,null);
         pos = new Point(x, y);
+        this.textureKeys = textureKeys;
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
         tileMap = new int[tileColCount][tileRowCount];
         initTileMap();
@@ -44,8 +48,8 @@ public class TileMap extends TexturedObject {
      */
     private void debugInit() {
         tiles = new Tile[1];
-        tiles[0] = new Tile(true, new Texture("assets\\map\\testTexture", pos, defaultTileDimension, this));
-        setTileToMap(tiles[0], 0, 0);
+        tiles[0] = new Tile(true, new int[]{32*5,32*6,32,32,0}, this);
+        setTileToMap(0, 0, 0);
     }
 
     /**
@@ -140,9 +144,8 @@ public class TileMap extends TexturedObject {
 
     @Override
     public void requestTexture() {
-        for (Tile t : tiles) {
-            t.getTexture().requestTextures();
-        }
+        for( String textureKey: textureKeys)
+            getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 
     @Override
@@ -213,8 +216,21 @@ public class TileMap extends TexturedObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
-        super.paint(g, elapsedTime, camera);
+    protected void loadTexture() {
+        BufferedImage[] builder = new BufferedImage[textureKeys.length];
+        for(int i = 0; i < textureKeys.length; i++){
+            if(!getParent().getResourceHandler().isAvailable(textureKeys[i], ResourceHandler.FileType.PNG) ||
+                    getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG) == null){
+                if(!getParent().getResourceHandler().getLoadingQueue().contains(textureKeys[i])){
+                    getParent().getResourceHandler().requestTexture(textureKeys[i], ResourceHandler.FileType.PNG);
+
+                }
+                return;
+            }
+            builder[i] = getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG);
+        }
+        tileSets = builder;
+        setTextureLoaded(true);
     }
 
     @Override
@@ -226,9 +242,16 @@ public class TileMap extends TexturedObject {
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),
                             camera.applyZoom(defaultTileDimension.width),
                             camera.applyZoom(defaultTileDimension.height));
-                    tiles[tileMap[xCoord][yCoord]].getTexture().draw((Graphics2D) g, elapsedTime, camera,
-                            xCoord * (int) tiles[tileMap[xCoord][yCoord]].getTexture().getDimension().getWidth(),
-                            yCoord * (int) tiles[tileMap[xCoord][yCoord]].getTexture().getDimension().getWidth());
+                    if(!isTextureLoaded()){
+                        continue;
+                    }
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(),
+                            camera.applyXTransform(x + xCoord * defaultTileDimension.width),
+                            camera.applyYTransform(y + yCoord * defaultTileDimension.height),
+                            camera.applyZoom(defaultTileDimension.width),
+                            camera.applyZoom(defaultTileDimension.height),null);
+
                 }
             }
         }
@@ -236,19 +259,31 @@ public class TileMap extends TexturedObject {
 }
 
 class Tile {
+    private TileMap parent;
     private final boolean collidable;
-    private final Texture texture;
+    private final int[] textureReference;
 
-    public Tile(boolean collidable, Texture texture) {
+    //Can Be Excluded
+    private BufferedImage cache;
+
+    public Tile(boolean collidable, int[] textureReference, TileMap parent) {
         this.collidable = collidable;
-        this.texture = texture;
+        this.textureReference = textureReference;
+        this.parent = parent;
+    }
+
+    public void setParent(TileMap parent) {
+        this.parent = parent;
     }
 
     public boolean isCollidable() {
         return collidable;
     }
 
-    public Texture getTexture() {
-        return texture;
+    public BufferedImage getTexture() {
+        if(cache == null){
+           cache = parent.tileSets[textureReference[4]].getSubimage(textureReference[0],textureReference[1],textureReference[2],textureReference[3]);
+        }
+        return cache;
     }
 }

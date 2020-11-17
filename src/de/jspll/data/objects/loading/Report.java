@@ -1,5 +1,7 @@
 package de.jspll.data.objects.loading;
 
+import de.jspll.data.ChannelID;
+
 public class Report implements ProgressReporter {
     private float count;
     private float initalCount;
@@ -19,12 +21,17 @@ public class Report implements ProgressReporter {
         this.count = count;
     }
 
+    @Override
+    public ChannelID getNextScene() {
+        return null;
+    }
+
     public void update(){
         this.count--;
         percentage = (1-(count/initalCount));
 
         if(count<=0) {
-            percentage = -1;
+            percentage = 1;
         }
 
         System.out.println(count);

@@ -17,6 +17,7 @@ import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
 import static de.jspll.data.ChannelID.LAST_CHANNEL;
@@ -108,10 +109,9 @@ public class GameObjectHandler{
     }
 
     private ResourceHandler resourceHandler = new ResourceHandler(this);
-
     private GraphicsHandler graphicsHandler;
-
     private LogicHandler logicHandler;
+    private AtomicBoolean loadingScene = new AtomicBoolean(false);
 
     public LogicHandler getLogicHandler() {
         return logicHandler;
