@@ -18,7 +18,7 @@ public class Texture {
     protected String textureKey;
     protected BufferedImage image;
     protected Dimension dimension;
-    protected GameObject parent;
+    protected transient GameObject parent;
 
     public Texture(String textureKey, Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
@@ -48,6 +48,11 @@ public class Texture {
     public void requestTextures(){
 
         getParent().getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
+    }
+
+    public void requestTextures(GameObject gO){
+
+        getParent(gO).getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 
     public void draw(Graphics2D g2d, float elapsedTime, Camera camera){
@@ -95,6 +100,11 @@ public class Texture {
     }
 
     public GameObject getParent() {
+        return parent;
+    }
+
+    public GameObject getParent(GameObject gO) {
+        parent = gO;
         return parent;
     }
 

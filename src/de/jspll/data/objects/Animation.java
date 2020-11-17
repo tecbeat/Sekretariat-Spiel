@@ -60,6 +60,11 @@ public class Animation extends Texture {
     }
 
     @Override
+    public void requestTextures(GameObject gO) {
+        getParent(gO).getParent().getResourceHandler().requestTextureGroup(baseFile, cLength, frames, PNG);
+    }
+
+    @Override
     public void draw(Graphics2D g2d, float elapsedTime, Camera camera) {
         super.draw(g2d, elapsedTime, camera);
         if (!loaded) {

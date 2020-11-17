@@ -1,5 +1,6 @@
 package de.jspll.data.objects.game.map;
 
+import com.google.gson.annotations.Expose;
 import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
@@ -141,7 +142,7 @@ public class TileMap extends TexturedObject {
     @Override
     public void requestTexture() {
         for (Tile t : tiles) {
-            t.getTexture().requestTextures();
+            t.getTexture().requestTextures(this);
         }
     }
 
@@ -235,20 +236,4 @@ public class TileMap extends TexturedObject {
     }
 }
 
-class Tile {
-    private final boolean collidable;
-    private final Texture texture;
 
-    public Tile(boolean collidable, Texture texture) {
-        this.collidable = collidable;
-        this.texture = texture;
-    }
-
-    public boolean isCollidable() {
-        return collidable;
-    }
-
-    public Texture getTexture() {
-        return texture;
-    }
-}

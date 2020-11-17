@@ -44,7 +44,7 @@ public class JSONSupport {
         Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();
         String object = gson.toJson(o);
 
-        String res = "{\"type\": \""+type+"\", \"object:\": "+object+"}";
+        String res = "{\"type\": \""+type+"\", \"object\": "+object+"}";
 
         return res;
     }
@@ -93,7 +93,7 @@ public class JSONSupport {
     public static Texture fromJsonToTexture(JSONObject jsonObject){
         String type = jsonObject.getObject().get("type").toString();
         Class<? extends Texture> cl = getClassByType(type);
-        Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl)); // this returns null
+        Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
         return obj;
     }
 

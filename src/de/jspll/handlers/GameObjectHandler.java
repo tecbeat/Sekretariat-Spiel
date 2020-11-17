@@ -232,7 +232,6 @@ public class GameObjectHandler{
 
     public void loadScene(ChannelID scene, JsonArray objects){
         ArrayList<GameObject> out = new ArrayList<>();
-        boolean[] finished = new boolean[1];
         ProgressReporter pRpt = new Report();
         pRpt.setCount(objects.size());
         LoadingBar lb = new LoadingBar(pRpt);
@@ -242,7 +241,6 @@ public class GameObjectHandler{
             @Override
             public void run() {
                 for(JsonElement jsonObject: objects){
-
                     out.add(JSONSupport.fromJsonToGameObject(jsonObject));
                     pRpt.update();
 /*                    try {
@@ -254,7 +252,6 @@ public class GameObjectHandler{
                 }
 
                 loadScene(scene, out);
-                finished[0] = true;
             }
 
 

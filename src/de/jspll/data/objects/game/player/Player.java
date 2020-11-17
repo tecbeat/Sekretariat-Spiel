@@ -53,7 +53,7 @@ public class Player extends TexturedObject {
     public void requestTexture() {
         for (Animation animation : movementAnimationList) {
             animation.setLooping(true);
-            animation.requestTextures();
+            animation.requestTextures(this);
         }
     }
 
