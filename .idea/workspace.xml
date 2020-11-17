@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/SceneLoader.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/SceneLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/ProgressReporter.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/ProgressReporter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/Report.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/Report.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,8 +24,8 @@
       <file leaf-file-name="GameObjectHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="919">
-              <caret line="271" column="0" lean-forward="false" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
+            <state relative-caret-position="769">
+              <caret line="233" column="62" lean-forward="true" selection-start-line="233" selection-start-column="62" selection-end-line="233" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoadingBar.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LoadingBar.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+            <state relative-caret-position="266">
+              <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -114,7 +102,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TileMap.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TileMap.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="740">
@@ -226,9 +214,9 @@
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/Main.java" />
-        <option value="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java" />
+        <option value="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java" />
       </list>
     </option>
   </component>
@@ -1307,7 +1295,7 @@
       <workItem from="1605112573405" duration="10696000" />
       <workItem from="1605401441941" duration="1965000" />
       <workItem from="1605465994716" duration="32236000" />
-      <workItem from="1605635563155" duration="1589000" />
+      <workItem from="1605635563155" duration="1721000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -1463,11 +1451,18 @@
       <option name="project" value="LOCAL" />
       <updated>1605633547528</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fixed loading errors">
+      <created>1605637194004</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1605637194004</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173590000" />
+    <option name="totallyTimeSpent" value="173722000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="3862" height="2122" extended-state="6" />
@@ -1545,7 +1540,8 @@
     <MESSAGE value="implemented some things&#10;" />
     <MESSAGE value="reworked TileMap" />
     <MESSAGE value="implemented loading status for all textures" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented loading status for all textures" />
+    <MESSAGE value="fixed loading errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed loading errors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1923,14 +1919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" column="45" lean-forward="false" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1991,24 +1979,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="919">
-          <caret line="271" column="0" lean-forward="false" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="740">
@@ -2017,6 +1987,32 @@
             <element signature="imports" expanded="true" />
             <marker date="1605637104175" expanded="true" signature="10421:10428" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="15" column="45" lean-forward="false" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="769">
+          <caret line="233" column="62" lean-forward="true" selection-start-line="233" selection-start-column="62" selection-end-line="233" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -45,14 +45,14 @@ public class LoadingBar extends GameObject {
             progress = progressReporter.getProgress();
         int width = (int) ((fullWidth - 20) * progress);
         g2d.setColor(Color.gray);
-        g2d.fillRoundRect(x,y,fullWidth,height,height/2,height/2);
+        g2d.fillRoundRect(x,y ,fullWidth,height,height/2,height/2);
         x += 10;
         if(width + 5 > fullWidth - 20) {
             g2d.setColor(Color.DARK_GRAY);
             g2d.fillRoundRect(x,y,width + 5,height,height / 2, height / 2);
         }
         g2d.setColor(Color.BLACK);
-        g2d.fillRoundRect(x,y,width,height,height / 2, height / 2);
+        g2d.fillRoundRect(x,y + 2,width,height - 4,height / 2, height / 2);
 
     }
 }
