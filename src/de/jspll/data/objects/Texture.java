@@ -19,6 +19,7 @@ public class Texture {
     protected BufferedImage image;
     protected Dimension dimension;
     protected transient GameObject parent;
+    protected boolean loaded = false;
 
     public Texture(String textureKey, Point pos, Dimension dimension, GameObject parent){
         this.parent = parent;
@@ -42,7 +43,12 @@ public class Texture {
     protected void loadTextures() {
         if (getParent().getParent().getResourceHandler().isAvailable(textureKey + ResourceHandler.FileType.PNG.getFileEnding())) {
             image = parent.getParent().getResourceHandler().getTexture(textureKey + ResourceHandler.FileType.PNG.getFileEnding());
+            loaded = true;
         }
+    }
+
+    public boolean isLoaded() {
+        return loaded;
     }
 
     public void requestTextures(){

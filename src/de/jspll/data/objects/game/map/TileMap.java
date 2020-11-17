@@ -1,6 +1,7 @@
 package de.jspll.data.objects.game.map;
 
 import com.google.gson.annotations.Expose;
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
@@ -28,6 +29,7 @@ public class TileMap extends TexturedObject {
 
     public TileMap(String ID, String objectID, Point playerPos, int x, int y , Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys){
         super(ID, objectID, x, y, dimension,null);
+        this.channels = new ChannelID[]{ChannelID.INPUT,ChannelID.BACKGROUND};
         pos = new Point(x, y);
         this.textureKeys = textureKeys;
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);

@@ -5,6 +5,7 @@ import com.google.gson.internal.$Gson$Preconditions;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
+import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
@@ -249,6 +250,18 @@ public class GameObjectHandler{
                         e.printStackTrace();
                     }*/
 
+                }
+                boolean waitingForTexture = true;
+                while(waitingForTexture){
+                    waitingForTexture = false;
+                    for(GameObject obj: out){
+                        if(obj instanceof TexturedObject){
+                            if(!((TexturedObject) obj).isTextureLoaded()){
+                                waitingForTexture = true;
+                                break;
+                            }
+                        }
+                    }
                 }
 
                 loadScene(scene, out);

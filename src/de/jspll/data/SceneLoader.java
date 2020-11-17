@@ -1,13 +1,14 @@
 package de.jspll.data;
 
 import de.jspll.data.objects.loading.ProgressReporter;
+import de.jspll.handlers.JSONSupport;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by reclinarka on 17-Nov-20.
  */
-public class SceneLoader implements ProgressReporter{
+public class SceneLoader extends Thread implements ProgressReporter{
     private AtomicInteger objectTotal = new AtomicInteger(),
             texturesTotal = new AtomicInteger(),
             objectsLoaded = new AtomicInteger(),
@@ -16,7 +17,8 @@ public class SceneLoader implements ProgressReporter{
 
     private ChannelID targetScene;
 
-    public SceneLoader(){
+    public SceneLoader(ChannelID targetScene, String json){
+
 
     }
 
@@ -37,6 +39,11 @@ public class SceneLoader implements ProgressReporter{
 
     @Override
     public ChannelID getNextScene() {
-        return null;
+        return targetScene;
+    }
+
+    @Override
+    public void run() {
+
     }
 }

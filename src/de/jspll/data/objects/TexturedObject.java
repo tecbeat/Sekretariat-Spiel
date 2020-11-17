@@ -53,7 +53,9 @@ public class TexturedObject extends GameObject {
     }
 
     protected void loadTexture(){
-
+        texture.loadTextures();
+        if(texture.isLoaded())
+            textureLoaded = true;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class TexturedObject extends GameObject {
         if(!textureLoaded){
             loadTexture();
         }
-     drawFrame(g,elapsedTime,camera);
+        drawFrame(g,elapsedTime,camera);
     }
 
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera){

@@ -27,7 +27,6 @@ public class Animation extends Texture {
     protected int selectedTexture = 0;
     protected Texture[] textures;
     protected ArrayList<KeyPoint> path;
-    private boolean loaded = false;
 
     public Animation(String baseFile, int frames, Point pos, Dimension dimension, TexturedObject parent, float duration) {
         super(baseFile, pos, dimension, parent);
@@ -108,6 +107,8 @@ public class Animation extends Texture {
         current_time = 0;
         selectedTexture = 0;
     }
+
+
 
     public void stopAnimation() {
         active = false;
