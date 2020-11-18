@@ -92,6 +92,7 @@ public class ResourceHandler extends Thread {
 
 
     public BufferedImage loadImage(String texture){
+        //TODO: REMOVE
         if(texture == null)
             return new BufferedImage(0,0,0);
         try {
@@ -160,6 +161,7 @@ public class ResourceHandler extends Thread {
     }
 
     public void requestTexture(String key, FileType type){
+        //TODO: Remove!!
         if(key == null)
             return;
         if(!textures.containsKey(key))
