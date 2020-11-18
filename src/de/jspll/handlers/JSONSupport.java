@@ -102,7 +102,6 @@ public class JSONSupport {
         String type = jsonElement.getAsJsonObject().get("type").toString();
         Class<? extends GameObject> cl = getClassByType(type);
         GameObject obj = cl.cast(gson.fromJson(jsonElement.getAsJsonObject().get("object"), cl)); // this returns null
-        System.out.println(obj.toString());
         return obj;
     }
 

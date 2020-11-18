@@ -288,6 +288,7 @@ public class GameObjectHandler{
 
     public TileMap[] loadMap(String mapJson){
         try {
+
             Map<String,?> json = (Map<String, ?>) resourceHandler.readJsonFromFile(mapJson); //complete json
             Map<String,?> levels =  ((ArrayList<Map<String,?>>)json.get("levels")).get(0);
             Map<String,?> defs =  (Map<String,?>) json.get("defs"); //defs -> get the png filenames
@@ -295,12 +296,38 @@ public class GameObjectHandler{
 
             TileMap[] tileMaps = new TileMap[layerInstances.size()];
 
-            for(Map<String, ?> layer: layerInstances){
+            ArrayList<layer> layerList = new ArrayList<>();
+
+            for(Map<String, ?> layerI: layerInstances){
+
+                de.jspll.handlers.layer l = new layer();
+
+                l.setId((String) layerI.get("__identifier"));
+
+                ArrayList<Map<String,?>> temp = (ArrayList<Map<String, ?>>) layerI.get("gridTiles");
+                ArrayList<gridTiles> gT = new ArrayList<>();
+
+                for(Map<String,?> o : temp){
+                    gridTiles t = new gridTiles();
+                    t.setPx(((ArrayList<Double>) o.get("px")));
+                    t.setSrc((ArrayList<Double>) o.get("src"));
+                    Double f = (Double) o.get("f");
+                    if(f != null){
+                        t.setF(((Double) o.get("f")));
+                    }
+
+                    t.setD((ArrayList<Double>) o.get("d"));
+
+                    gT.add(t);
+                }
+
+                l.setgT(gT);
+
+                layerList.add(l);
+
 
                 // -> get tiles for tilemap for each layer (position and source)
             }
-
-
 
             return tileMaps;
         } catch (Exception e){
@@ -309,5 +336,107 @@ public class GameObjectHandler{
         }
     }
 
+}
+
+class layer {
+    String id;
+    ArrayList<gridTiles> gT = new ArrayList<>();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ArrayList<gridTiles> getgT() {
+        return gT;
+    }
+
+    public void setgT(ArrayList<gridTiles> gT) {
+        this.gT = gT;
+    }
+
+    @Override
+    public String toString() {
+        return "layers{" +
+                "id='" + id + '\'' +
+                ", gT=" + gT +
+                '}';
+    }
+}
+
+class gridTiles{
+    ArrayList<Double> px = new ArrayList<>();
+    ArrayList<Double> src = new ArrayList<>();
+    double f;
+    ArrayList<Double> d = new ArrayList<>();
+
+    public ArrayList<Double> getPx() {
+        return px;
+    }
+
+    public int[] getPxArr(){
+        int[] res = new int[px.size()];
+        for(int i = 0; i< px.size(); i++){
+            res[i] = px.get(i).intValue();
+        }
+        return res;
+    }
+
+    public int[] getSrcArr(){
+        int[] res = new int[src.size()];
+        for(int i = 0; i< src.size(); i++){
+            res[i] = src.get(i).intValue();
+        }
+        return res;
+    }
+
+    public int[] getDArr(){
+        int[] res = new int[d.size()];
+        for(int i = 0; i< d.size(); i++){
+            res[i] = d.get(i).intValue();
+        }
+        return res;
+    }
+
+    public void setPx(ArrayList<Double> px) {
+        this.px = px;
+    }
+
+    public ArrayList<Double> getSrc() {
+        return src;
+    }
+
+    public void setSrc(ArrayList<Double> src) {
+        this.src = src;
+    }
+
+    public double getF() {
+        return f;
+    }
+
+    public void setF(double f) {
+        this.f = f;
+    }
+
+    public ArrayList<Double> getD() {
+        return d;
+    }
+
+    public void setD(ArrayList<Double> d) {
+        this.d = d;
+    }
+
+    @Override
+    public String toString() {
+        return "gridTiles{" +
+                "px=" + px +
+                ", src=" + src +
+                ", f=" + f +
+                ", d=" + d +
+                '}';
+    }
 }
 

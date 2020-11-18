@@ -52,9 +52,6 @@ public class Report implements ProgressReporter {
         if(count<=0) {
             percentage = -1;
         }
-
-        System.out.println(count);
-        System.out.println(percentage);
     }
 
     @Override

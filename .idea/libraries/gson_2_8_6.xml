@@ -2,6 +2,7 @@
   <library name="gson-2.8.6">
     <CLASSES>
       <root url="jar://P:/Downloads/gson-2.8.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gson-2.8.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

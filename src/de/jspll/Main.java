@@ -98,7 +98,7 @@ public class Main {
         
         //String strJSON = "[" + JSONSupport.convertObjectToJson(m) + "," + JSONSupport.convertObjectToJson(d) + "," +  JSONSupport.convertObjectToJson(p) + "," +  JSONSupport.convertObjectToJson(tm) + "]";
         String strJSON = JSONSupport.convertObjectsToJson(objects);
-        System.out.println(strJSON);
+//        System.out.println(strJSON);
         JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
 
 
