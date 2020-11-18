@@ -62,7 +62,7 @@ public class Main {
         }
 
         TileMap tm = new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
-                new Dimension(500, 500), 20, 20,
+                new Dimension(1000, 1000), 40, 40,
                 new String[]{"assets\\map\\Floors_only_32x32"});
         objects.add(tm);
 
@@ -73,12 +73,12 @@ public class Main {
          *  aktuelles Primärproblem:
          *  - getParent return null -> komme nicht an den GameObjectHandler ran umd neue Objekte hinzuzufügen um keine hard-coded animationen in der Main erstellen zu müssen
          */
-        Player p = new Player("OwnPlayer", 0,0, new Dimension(1600,900), 1);
+        Player p = new Player("OwnPlayer", new Point(0,0), new Dimension(32, 64), 1);
         objects.add(p);
-        objects.add(new Player("testColor0", 0,0, new Dimension(1600,900), 2));
-        objects.add(new Player("testColor1", 0,0, new Dimension(1600,900), 3));
-        objects.add(new Player("testColor2", 0,0, new Dimension(1600,900), 4));
-        objects.add(new Player("testColor3", 0,0, new Dimension(1600,900), 5));
+        //objects.add(new Player("testColor0", 0,0, new Dimension(1600,900), 2));
+        //objects.add(new Player("testColor1", 0,0, new Dimension(1600,900), 3));
+        //objects.add(new Player("testColor2", 0,0, new Dimension(1600,900), 4));
+        //objects.add(new Player("testColor3", 0,0, new Dimension(1600,900), 5));
 
         //System.out.println(JSONSupport.convertObjectToJson(p));
 

@@ -24,7 +24,7 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
     private AtomicIntegerArray mousePos = new AtomicIntegerArray( new int[]{0,0} );
     private HashMap<String,AtomicBoolean> keyMap = new HashMap<>(100);
     private ConcurrentLinkedQueue<String> typingQueue = new ConcurrentLinkedQueue<>();
-    private ConcurrentLinkedQueue<Long> clicks = new ConcurrentLinkedQueue<>();
+    private ConcurrentLinkedQueue<MouseEvent> clicks = new ConcurrentLinkedQueue<>();
 
     private void init(){
         for (String s: keyList){
@@ -40,9 +40,21 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     //Mouse
 
+    //returns Array in form :
+    // [
+    //0 String "input",                       //identifyer
+    //1 boolean mouse1,                       //true if mouse 1 down
+    //2 boolean mouse2,                       //true if mouse 2 down
+    //3 boolean mouse3,                       //true if mouse 3 down
+    //4 HashMap<String,AtomicBoolean> keyMap, //HashMap for all keys
+    //5 int[] mousePos,                       // Array in form of [ int x, int y] pos of Mouse
+    //6 double mousewheelMovement,            // Double indicating the amount of wheel movement
+    //7 String[] keystrokes,                  // Array containing key presses in order
+    //8 MouseEvent[] clicks                   // Array containing all MouseEvents of all Clicks in order
+    // ]
     public Object[] getInputInfo(){
-        Object[] keyStrokes = typingQueue.toArray();
-        Object[] clicks = this.clicks.toArray();
+        String[] keyStrokes = typingQueue.toArray(new String[typingQueue.size()]);
+        MouseEvent[] clicks = this.clicks.toArray(new MouseEvent[this.clicks.size()]);
         double mousewheelMovement = Double.longBitsToDouble(wheelMovement.get());
         typingQueue.clear();
         this.clicks.clear();
@@ -65,7 +77,7 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        clicks.add(System.currentTimeMillis());
+        clicks.add(e);
     }
 
     @Override

@@ -1,14 +1,17 @@
 package de.jspll.data.objects.game.map;
 
 import com.google.gson.annotations.Expose;
+import com.sun.prism.impl.paint.PaintUtil;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
+import de.jspll.util.PaintingUtil;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
@@ -26,10 +29,14 @@ public class TileMap extends TexturedObject {
     private Dimension defaultTileDimension;
     protected BufferedImage[] tileSets;
     private String[] textureKeys;
+    private String[] keystrokes;
+    private int[] mousePos = new int[]{0, 0};
+    private int selectedTile = 0;
+    private boolean m1 = false;
 
-    public TileMap(String ID, String objectID, Point playerPos, int x, int y , Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys){
-        super(ID, objectID, x, y, dimension,null);
-        this.channels = new ChannelID[]{ChannelID.INPUT,ChannelID.BACKGROUND};
+    public TileMap(String ID, String objectID, Point playerPos, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
+        super(ID, objectID, x, y, dimension, null);
+        this.channels = new ChannelID[]{ChannelID.INPUT, ChannelID.BACKGROUND, ChannelID.LOGIC};
         pos = new Point(x, y);
         this.textureKeys = textureKeys;
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
@@ -53,20 +60,20 @@ public class TileMap extends TexturedObject {
      */
     private void debugInit() {
         tiles = new Tile[1];
-        tiles[0] = new Tile(true, new int[]{32*5,32*6,32,32,0}, this);
+        tiles[0] = new Tile(true, new int[]{32 * 5, 32 * 6, 32, 32, 0}, this);
         setTileToMap(0, 0, 0);
     }
 
     /**
      * Sets a {@code Tile} to a specified position (xCoord, yCoord) in {@code tileMap}.
      *
-     * @param tile {@code Tile} to set at a specific position in the tileMap
+     * @param tile   {@code Tile} to set at a specific position in the tileMap
      * @param xCoord x-coordinate
      * @param yCoord y-coordinate
      */
     public void setTileToMap(Tile tile, int xCoord, int yCoord) {
-        for(int i = 0; i < tiles.length; i++) {
-            if(tiles[i] != null && tiles[i].equals(tile)) {
+        for (int i = 0; i < tiles.length; i++) {
+            if (tiles[i] != null && tiles[i].equals(tile)) {
                 tileMap[xCoord][yCoord] = i;
             }
         }
@@ -78,11 +85,11 @@ public class TileMap extends TexturedObject {
      * by xCoord and yCoord.
      *
      * @param tilePosInArray position where {@code Tile} is in the array {@code tiles}
-     * @param xCoord x-coordinate
-     * @param yCoord y-coordinate
+     * @param xCoord         x-coordinate
+     * @param yCoord         y-coordinate
      */
     public void setTileToMap(int tilePosInArray, int xCoord, int yCoord) {
-        if(tiles[tilePosInArray] != null) {
+        if (tiles[tilePosInArray] != null) {
             tileMap[xCoord][yCoord] = tilePosInArray;
         }
     }
@@ -124,8 +131,8 @@ public class TileMap extends TexturedObject {
      * @param tile Tile that gets removed
      */
     public void removeTileFromTileArray(Tile tile) {
-        for(int i = 0; i < tiles.length; i++) {
-            if(tiles[i] != null && tiles[i].equals(tile)) {
+        for (int i = 0; i < tiles.length; i++) {
+            if (tiles[i] != null && tiles[i].equals(tile)) {
                 tiles[i] = null;
             }
         }
@@ -140,7 +147,7 @@ public class TileMap extends TexturedObject {
      * @see Tile#isCollidable()
      */
     public boolean isTileCollidable(int xCoord, int yCoord) {
-        if(tileMap[xCoord][yCoord] != -1) {
+        if (tileMap[xCoord][yCoord] != -1) {
             int tileIndexInArray = tileMap[xCoord][yCoord];
             return tiles[tileIndexInArray].isCollidable();
         }
@@ -148,19 +155,18 @@ public class TileMap extends TexturedObject {
     }
 
 
-
     @Override
     public void requestTexture() {
-        for( String textureKey: textureKeys)
+        for (String textureKey : textureKeys)
             getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
     }
 
     @Override
     public char call(Object[] input) {
-        if(input == null || input.length < 1) {
+        if (input == null || input.length < 1) {
             return 0;
         } else if (input[0] instanceof String && ((String) input[0]).contentEquals("tilemap")) {
-            if(input[1] instanceof String){
+            if (input[1] instanceof String) {
                 switch ((String) input[1]) {
                     case "add":
                         callAdd(input);
@@ -175,26 +181,34 @@ public class TileMap extends TexturedObject {
                         return 0;
                 }
             }
+        } else if (input[0] instanceof String && ((String) input[0]).contentEquals("input")) {
+            if (input[5] instanceof int[])
+                mousePos = (int[]) input[5];
+
+            if (input[7] instanceof String[])
+                keystrokes = (String[]) input[7];
+            if (input[1] instanceof Boolean)
+                m1 = (boolean) input[1];
         }
         return 0;
     }
 
     private void callAdd(Object[] input) {
-        if(input[2] instanceof Tile) {
+        if (input[2] instanceof Tile) {
             addTile((Tile) input[2]);
         }
     }
 
     private void callSet(Object[] input) {
-        if(input[2] instanceof String) {
+        if (input[2] instanceof String) {
             switch ((String) input[2]) {
                 case "index":
-                    if(input[3] instanceof Integer && input[4] instanceof Integer && input[5] instanceof Integer) {
+                    if (input[3] instanceof Integer && input[4] instanceof Integer && input[5] instanceof Integer) {
                         setTileToMap((Integer) input[3], (Integer) input[4], (Integer) input[5]);
                     }
                     break;
                 case "tile":
-                    if(input[3] instanceof Tile && input[4] instanceof Integer && input[5] instanceof Integer) {
+                    if (input[3] instanceof Tile && input[4] instanceof Integer && input[5] instanceof Integer) {
                         setTileToMap((Tile) input[3], (Integer) input[4], (Integer) input[5]);
                     }
                     break;
@@ -203,18 +217,18 @@ public class TileMap extends TexturedObject {
     }
 
     private void callRemove(Object[] input) {
-        if(input[2] instanceof String) {
+        if (input[2] instanceof String) {
             switch ((String) input[2]) {
                 case "map":
-                    if(input[3] instanceof Integer && input[4] instanceof Integer) {
+                    if (input[3] instanceof Integer && input[4] instanceof Integer) {
                         removeTileFromMap((Integer) input[3], (Integer) input[4]);
                     }
                     break;
                 case "array":
-                    if(input[3] instanceof Tile) {
+                    if (input[3] instanceof Tile) {
                         removeTileFromTileArray((Tile) input[3]);
                     }
-                    if(input[3] instanceof Integer) {
+                    if (input[3] instanceof Integer) {
                         removeTileFromTileArray((Integer) input[3]);
                     }
                     break;
@@ -224,13 +238,13 @@ public class TileMap extends TexturedObject {
 
     @Override
     public void loadTexture() {
-        if(isTextureLoaded())
+        if (isTextureLoaded())
             return;
         BufferedImage[] builder = new BufferedImage[textureKeys.length];
-        for(int i = 0; i < textureKeys.length; i++){
-            if(!getParent().getResourceHandler().isAvailable(textureKeys[i], ResourceHandler.FileType.PNG) ||
-                    getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG) == null){
-                if(!getParent().getResourceHandler().getLoadingQueue().contains(textureKeys[i])){
+        for (int i = 0; i < textureKeys.length; i++) {
+            if (!getParent().getResourceHandler().isAvailable(textureKeys[i], ResourceHandler.FileType.PNG) ||
+                    getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG) == null) {
+                if (!getParent().getResourceHandler().getLoadingQueue().contains(textureKeys[i])) {
                     getParent().getResourceHandler().requestTexture(textureKeys[i], ResourceHandler.FileType.PNG);
 
                 }
@@ -243,7 +257,44 @@ public class TileMap extends TexturedObject {
     }
 
     @Override
+    public char update(float elapsedTime) {
+        super.update(elapsedTime);
+
+        if (keystrokes != null) {
+            for (int i = 0; i < keystrokes.length; i++) {
+                if (keystrokes[i].contains("+")) {
+                    selectedTile++;
+                    if (selectedTile > tiles.length) {
+                        selectedTile = tiles.length - 1;
+                    }
+                }
+            }
+        }
+
+        int[] clickpos = getParent().getSelectedCamera().revertTransform(mousePos);
+        if (clickpos[0] >= x && clickpos[0] < x + dimension.getWidth() &&
+                clickpos[1] >= y && clickpos[1] < y + dimension.getHeight()) {
+            int rx = clickpos[0] - x;
+            rx /= defaultTileDimension.getWidth();
+            int ry = clickpos[1] - y;
+            ry /= defaultTileDimension.getHeight();
+            if(tileMap[rx][ry] == -1){
+                tileMap[rx][ry] = -2;
+            }
+            if(m1){
+                tileMap[rx][ry] = selectedTile;
+            }
+
+        }
+
+
+        return 0;
+    }
+
+    @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera) {
+        int tileWidth = camera.applyZoom(defaultTileDimension.width);
+        int tileHeight = camera.applyZoom(defaultTileDimension.height);
         for (int xCoord = 0; xCoord < tileMap.length; xCoord++) {
             for (int yCoord = 0; yCoord < tileMap[xCoord].length; yCoord++) {
                 if (tileMap[xCoord][yCoord] != -1) {
@@ -251,15 +302,18 @@ public class TileMap extends TexturedObject {
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),
                             camera.applyZoom(defaultTileDimension.width),
                             camera.applyZoom(defaultTileDimension.height));
-                    if(!isTextureLoaded()){
+                    if (tileMap[xCoord][yCoord] < 0) {
+                        tileMap[xCoord][yCoord] = -1;
+                        continue;
+                    }
+                    if (!isTextureLoaded()) {
                         continue;
                     }
                     Graphics2D g2d = (Graphics2D) g;
-                    g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(this),
+                    g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(this, tileWidth, tileHeight),
                             camera.applyXTransform(x + xCoord * defaultTileDimension.width),
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),
-                            camera.applyZoom(defaultTileDimension.width),
-                            camera.applyZoom(defaultTileDimension.height),null);
+                            null);
 
                 }
             }
@@ -289,11 +343,11 @@ class Tile {
         return collidable;
     }
 
-    public BufferedImage getTexture(TileMap gO) {
-        if(parent == null)
+    public BufferedImage getTexture(TileMap gO, int width, int height) {
+        if (parent == null)
             parent = gO;
-        if(cache == null){
-           cache = parent.tileSets[textureReference[4]].getSubimage(textureReference[0],textureReference[1],textureReference[2],textureReference[3]);
+        if (cache == null || cache.getWidth() != width || cache.getHeight() != height) {
+            cache = PaintingUtil.resize(parent.tileSets[textureReference[4]].getSubimage(textureReference[0], textureReference[1], textureReference[2], textureReference[3]), width, height);
         }
         return cache;
     }

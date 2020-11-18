@@ -23,20 +23,22 @@ public class Player extends TexturedObject {
 
     private String lastPressedKey = "";
     private boolean start = true;
+    private Point pos;
 
-    public Player(String ID, int x, int y, Dimension dimension, int colorScheme) {
-        super(ID, "g.ntt.OwnPlayer", x, y, dimension);
+    public Player(String ID, Point pos, Dimension dimension, int colorScheme) {
+        super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
+        this.pos = pos;
         this.colorScheme = colorScheme;
         channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER};
 
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\left_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\right_", 6, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle0_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle1_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle2_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle3_", 1, new Point(32 * colorScheme, 0), new Dimension(32, 64), this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\left_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\right_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle0_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle1_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle2_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle3_", 1, pos, dimension, this, 1F));
 
 
     }

@@ -1,5 +1,7 @@
 package de.jspll.graphics;
 
+import de.jspll.util.Logger;
+
 public class Camera {
     public Camera(int x, int y, int width, int height, float zoom){
         this.xCenter = x;
@@ -35,6 +37,10 @@ public class Camera {
         xCenter = (xCenter/zoom) * (amount+zoom);
         yCenter = (yCenter/zoom) * (amount+zoom);
         zoom += amount;
+        Logger.d.add("curr zoom: " + zoom);
+        if(zoom < 0.1f){
+            zoom = 0.1f;
+        }
         updateXY();
     }
 

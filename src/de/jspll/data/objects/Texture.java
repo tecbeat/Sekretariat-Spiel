@@ -2,6 +2,7 @@ package de.jspll.data.objects;
 
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
+import de.jspll.util.PaintingUtil;
 import de.jspll.util.json.JSONObject;
 import de.jspll.util.json.JSONValue;
 
@@ -17,6 +18,7 @@ public class Texture {
     protected Point pos;
     protected String textureKey;
     protected BufferedImage image;
+    private BufferedImage scaledImage;
     protected Dimension dimension;
     protected transient GameObject parent;
     protected boolean loaded = false;
@@ -70,8 +72,12 @@ public class Texture {
                 return;
             }
         }
-        g2d.drawImage(image,camera.applyXTransform(pos.x),camera.applyYTransform(pos.y),camera.applyZoom(dimension.width),
-                camera.applyZoom(dimension.height),null);
+        int imgW = camera.applyZoom(dimension.width);
+        int imgH = camera.applyZoom(dimension.height);
+        if(scaledImage == null || scaledImage.getWidth() != imgW || scaledImage.getHeight() != imgH){
+            scaledImage = PaintingUtil.resize(image,imgW,imgH);
+        }
+        g2d.drawImage(scaledImage,camera.applyXTransform(pos.x),camera.applyYTransform(pos.y),null);
 
     }
 
