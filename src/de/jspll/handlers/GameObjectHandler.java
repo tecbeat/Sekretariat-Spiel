@@ -5,6 +5,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
 import de.jspll.data.objects.TexturedObject;
+import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
@@ -31,7 +32,12 @@ public class GameObjectHandler{
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
-        loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
+
+        for(TileMap tm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
+            loadObject(tm);
+        }
+
+        //loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
         resourceHandler.start();
     }
 
@@ -294,39 +300,108 @@ public class GameObjectHandler{
             Map<String,?> defs =  (Map<String,?>) json.get("defs"); //defs -> get the png filenames
             ArrayList<Map<String,?>> layerInstances = (ArrayList<Map<String,?>>) levels.get("layerInstances"); //layer instances
 
+            //Map sizing
+            int mapWidth = ((Double) levels.get("pxWid")).intValue();
+            int mapHeight = ((Double) levels.get("pxWid")).intValue();
+
             TileMap[] tileMaps = new TileMap[layerInstances.size()];
 
+            //layers
             ArrayList<layer> layerList = new ArrayList<>();
+
+            //Lists for Texture finding
+            ArrayList<Map<String,?>> defsLayers =  (ArrayList<Map<String,?>>)defs.get("layers");
+            ArrayList<Map<String,?>> tilesets =  (ArrayList<Map<String,?>>)defs.get("tilesets");
 
             for(Map<String, ?> layerI: layerInstances){
 
+                //create layer
                 de.jspll.handlers.layer l = new layer();
 
+                //id
                 l.setId((String) layerI.get("__identifier"));
 
+                //sizing
+                l.setWidth(((Double) layerI.get("__cWid")).intValue());
+                l.setHeight(((Double) layerI.get("__cHei")).intValue());
+
+                //get gridTiles
                 ArrayList<Map<String,?>> temp = (ArrayList<Map<String, ?>>) layerI.get("gridTiles");
+
+                //List for converted Grid Tiles
                 ArrayList<gridTiles> gT = new ArrayList<>();
 
+                //Automatic conversion did not seem to work
                 for(Map<String,?> o : temp){
+                    //create grid tile
                     gridTiles t = new gridTiles();
+
+                    //get values
                     t.setPx(((ArrayList<Double>) o.get("px")));
                     t.setSrc((ArrayList<Double>) o.get("src"));
                     Double f = (Double) o.get("f");
                     if(f != null){
                         t.setF(((Double) o.get("f")));
                     }
-
                     t.setD((ArrayList<Double>) o.get("d"));
 
+                    //add to list
                     gT.add(t);
                 }
 
+                //add gridTile list to layer
                 l.setgT(gT);
 
+
+                //loop over layer lists
+                for(Map<String,?> defLayer : defsLayers){
+
+                    //if current layer is the one referenced in the gridTile layer
+                    if(((Double)defLayer.get("uid")).intValue() == ((Double)layerI.get("layerDefUid")).intValue()){
+
+                        //find matching tileset
+                        for(Map<String,?> tileset : tilesets){
+                            int tilesetID = ((Double)tileset.get("uid")).intValue();
+
+                            if(defLayer.get("tilesetDefUid") != null){
+                                Integer layerTilesetUid = ((Double)defLayer.get("tilesetDefUid")).intValue();
+                                if(tilesetID == layerTilesetUid){
+                                    //get texture source
+                                    String src = ((String) tileset.get("relPath"));
+                                    l.textures[0] = "assets\\map\\" + src.substring(0,src.length()-4); //-4 to cut off the .png ending
+                                    System.out.println(l.textures[0]);
+
+                                    //Because these files do not exist
+                                    if(src.equals("Anwesenheit") || src.equals("Street"))
+                                        continue;
+
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+
                 layerList.add(l);
+            }
 
 
-                // -> get tiles for tilemap for each layer (position and source)
+
+            for(int i = 0; i < layerList.size(); i++){
+                layer l = layerList.get(i);
+                TileMap tm = new TileMap(l.id, "g.dflt.TileMap", 0,0,new Dimension(mapWidth*32, mapHeight*32), l.height*32, l.width*32, l.textures);
+
+
+
+                for(gridTiles gt : l.getgT()){
+                    Tile t = new Tile(false, gt.getSrcArr(), tm);
+                    tm.addTile(t);
+                    int[] cord = gt.getPxArr();
+                    tm.setTileToMap(t, cord[0], cord[1]);
+                }
+
+                tileMaps[i] = tm;
             }
 
             return tileMaps;
@@ -340,6 +415,9 @@ public class GameObjectHandler{
 
 class layer {
     String id;
+    String[] textures = new String[1];
+    int width;
+    int height;
     ArrayList<gridTiles> gT = new ArrayList<>();
 
     public String getId() {
@@ -358,6 +436,22 @@ class layer {
         this.gT = gT;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     @Override
     public String toString() {
         return "layers{" +
@@ -370,7 +464,7 @@ class layer {
 class gridTiles{
     ArrayList<Double> px = new ArrayList<>();
     ArrayList<Double> src = new ArrayList<>();
-    double f;
+    Double f;
     ArrayList<Double> d = new ArrayList<>();
 
     public ArrayList<Double> getPx() {
@@ -382,14 +476,19 @@ class gridTiles{
         for(int i = 0; i< px.size(); i++){
             res[i] = px.get(i).intValue();
         }
+
         return res;
     }
 
     public int[] getSrcArr(){
-        int[] res = new int[src.size()];
-        for(int i = 0; i< src.size(); i++){
+        int[] res = new int[src.size()+3];
+        int i;
+        for(i = 0; i< src.size(); i++){
             res[i] = src.get(i).intValue();
         }
+        res[i] = 32;
+        res[i+1] = 32;
+        res[i+2] = 0;
         return res;
     }
 
@@ -399,6 +498,10 @@ class gridTiles{
             res[i] = d.get(i).intValue();
         }
         return res;
+    }
+
+    public int getFInt(){
+        return f.intValue();
     }
 
     public void setPx(ArrayList<Double> px) {

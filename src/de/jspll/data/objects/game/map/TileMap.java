@@ -45,6 +45,16 @@ public class TileMap extends TexturedObject {
         debugInit();
     }
 
+    public TileMap(String ID, String objectID, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys){
+        super(ID, objectID, x, y, dimension, null);
+        this.channels = new ChannelID[]{ChannelID.INPUT, ChannelID.BACKGROUND, ChannelID.LOGIC};
+        pos = new Point(x, y);
+        defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
+        tileMap = new int[tileColCount][tileRowCount];
+        tiles = new Tile[0];
+        this.textureKeys = textureKeys;
+    }
+
     /**
      * Initializes the {@code tileMap} with the value -1 at each position. -1 is the undefined value. That
      * means that there is no {@code Tile} set at the position.
@@ -157,8 +167,9 @@ public class TileMap extends TexturedObject {
 
     @Override
     public void requestTexture() {
-        for (String textureKey : textureKeys)
+        for (String textureKey : textureKeys) {
             getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
+        }
     }
 
     @Override
@@ -321,45 +332,4 @@ public class TileMap extends TexturedObject {
     }
 }
 
-class Tile {
-    private transient TileMap parent;
-    private boolean collidable;
-    private int[] textureReference;
 
-    //Can Be Excluded
-    private BufferedImage cache;
-
-    public Tile(){
-    }
-
-    public Tile(boolean collidable, int[] textureReference, TileMap parent) {
-        this.collidable = collidable;
-        this.textureReference = textureReference;
-        this.parent = parent;
-    }
-
-    public void setTextureReference(int[] textureReference) {
-        this.textureReference = textureReference;
-    }
-
-    public void setCollidable(boolean collidable) {
-        this.collidable = collidable;
-    }
-
-    public void setParent(TileMap parent) {
-        this.parent = parent;
-    }
-
-    public boolean isCollidable() {
-        return collidable;
-    }
-
-    public BufferedImage getTexture(TileMap gO, int width, int height) {
-        if (parent == null)
-            parent = gO;
-        if (cache == null || cache.getWidth() != width || cache.getHeight() != height) {
-            cache = PaintingUtil.resize(parent.tileSets[textureReference[4]].getSubimage(textureReference[0], textureReference[1], textureReference[2], textureReference[3]), width, height);
-        }
-        return cache;
-    }
-}
