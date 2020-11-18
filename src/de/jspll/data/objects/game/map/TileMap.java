@@ -323,16 +323,27 @@ public class TileMap extends TexturedObject {
 
 class Tile {
     private transient TileMap parent;
-    private final boolean collidable;
-    private final int[] textureReference;
+    private boolean collidable;
+    private int[] textureReference;
 
     //Can Be Excluded
     private BufferedImage cache;
+
+    public Tile(){
+    }
 
     public Tile(boolean collidable, int[] textureReference, TileMap parent) {
         this.collidable = collidable;
         this.textureReference = textureReference;
         this.parent = parent;
+    }
+
+    public void setTextureReference(int[] textureReference) {
+        this.textureReference = textureReference;
+    }
+
+    public void setCollidable(boolean collidable) {
+        this.collidable = collidable;
     }
 
     public void setParent(TileMap parent) {

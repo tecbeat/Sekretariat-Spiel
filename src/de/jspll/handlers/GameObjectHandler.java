@@ -1,23 +1,21 @@
 package de.jspll.handlers;
 
 import com.google.gson.*;
-import com.google.gson.internal.$Gson$Preconditions;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
-import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
+import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
 import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
-import de.jspll.util.json.JSONArray;
-import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
@@ -33,6 +31,7 @@ public class GameObjectHandler{
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
+        loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
         resourceHandler.start();
     }
 
@@ -237,6 +236,7 @@ public class GameObjectHandler{
         pRpt.setCount(objects.size() + 1);
         pRpt.setNextScene(scene);
         LoadingBar lb = new LoadingBar(pRpt);
+        lb.setMessage("loading objects...");
         this.subscribe(lb);
         final GameObjectHandler goh = this;
 
@@ -255,6 +255,7 @@ public class GameObjectHandler{
 
 
                 }
+                lb.setMessage("loading textures...");
                 boolean waitingForTexture = true;
                 while(waitingForTexture){
                     waitingForTexture = false;
@@ -285,6 +286,28 @@ public class GameObjectHandler{
 
     }
 
+    public TileMap[] loadMap(String mapJson){
+        try {
+            Map<String,?> json = (Map<String, ?>) resourceHandler.readJsonFromFile(mapJson); //complete json
+            Map<String,?> levels =  ((ArrayList<Map<String,?>>)json.get("levels")).get(0);
+            Map<String,?> defs =  (Map<String,?>) json.get("defs"); //defs -> get the png filenames
+            ArrayList<Map<String,?>> layerInstances = (ArrayList<Map<String,?>>) levels.get("layerInstances"); //layer instances
+
+            TileMap[] tileMaps = new TileMap[layerInstances.size()];
+
+            for(Map<String, ?> layer: layerInstances){
+
+                // -> get tiles for tilemap for each layer (position and source)
+            }
+
+
+
+            return tileMaps;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
 

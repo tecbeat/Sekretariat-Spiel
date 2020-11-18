@@ -1,10 +1,17 @@
 package de.jspll.graphics;
 
+import com.google.gson.Gson;
 import de.jspll.handlers.GameObjectHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -156,6 +163,24 @@ public class ResourceHandler extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+    }
+
+    public Map<?,?> readJsonFromFile(String file){
+        Gson gson = new Gson();
+
+        // create a reader
+        Reader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(file)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // convert JSON file to map
+        Map<?, ?> map = gson.fromJson(reader, Map.class);
+        return map;
 
     }
 

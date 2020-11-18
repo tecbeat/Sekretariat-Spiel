@@ -21,7 +21,7 @@ public class Player extends TexturedObject {
     //[0] = Forward (W), [1] = Backwards (S), [2] = Left(L), [3] = Right(R)
     private final ArrayList<Animation> movementAnimationList = new ArrayList<>();
 
-    private String lastPressedKey = "";
+    private String lastPressedKey = "s";
     private boolean start = true;
     private Point pos;
 
@@ -53,6 +53,12 @@ public class Player extends TexturedObject {
 
     @Override
     public boolean isTextureLoaded() {
+        for(Animation an: movementAnimationList){
+            if(!an.isLoaded()){
+                an.loadTextures();
+                return false;
+            }
+        }
         return true;
     }
 

@@ -4,6 +4,7 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by reclinarka on 05-Nov-20.
@@ -15,6 +16,7 @@ public class LoadingBar extends GameObject {
     }
 
     protected ProgressReporter progressReporter;
+    private AtomicReference<String> message = new AtomicReference<>(null);
 
     float progress = 0;
 
@@ -26,6 +28,10 @@ public class LoadingBar extends GameObject {
             progressReporter = null;
         }
         return 0;
+    }
+
+    public void setMessage(String message) {
+        this.message.set(message);
     }
 
     @Override
@@ -53,6 +59,10 @@ public class LoadingBar extends GameObject {
         }
         g2d.setColor(Color.BLACK);
         g2d.fillRoundRect(x,y + 2,width,height - 4,height / 2, height / 2);
+        if(message.get() != null){
+            g2d.setColor(Color.CYAN);
+            g2d.drawString(message.get(),x + 5,y+(height * 3/5));
+        }
 
     }
 }
