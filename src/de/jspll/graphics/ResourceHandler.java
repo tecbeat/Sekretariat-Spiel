@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import de.jspll.handlers.GameObjectHandler;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -91,6 +92,8 @@ public class ResourceHandler extends Thread {
 
 
     public BufferedImage loadImage(String texture){
+        if(texture == null)
+            return new BufferedImage(0,0,0);
         try {
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
             return image;
@@ -157,6 +160,8 @@ public class ResourceHandler extends Thread {
     }
 
     public void requestTexture(String key, FileType type){
+        if(key == null)
+            return;
         if(!textures.containsKey(key))
             try {
                 loadingQueue.put(key + type.fileEnding);

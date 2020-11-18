@@ -304,7 +304,8 @@ public class GameObjectHandler{
             int mapWidth = ((Double) levels.get("pxWid")).intValue();
             int mapHeight = ((Double) levels.get("pxWid")).intValue();
 
-            TileMap[] tileMaps = new TileMap[layerInstances.size()];
+            ArrayList<TileMap> tileMapsList = new ArrayList<>();
+            //TileMap[] tileMaps = new TileMap[layerInstances.size()-3]; //because of missing files
 
             //layers
             ArrayList<layer> layerList = new ArrayList<>();
@@ -313,7 +314,10 @@ public class GameObjectHandler{
             ArrayList<Map<String,?>> defsLayers =  (ArrayList<Map<String,?>>)defs.get("layers");
             ArrayList<Map<String,?>> tilesets =  (ArrayList<Map<String,?>>)defs.get("tilesets");
 
+            boolean b = false;
+
             for(Map<String, ?> layerI: layerInstances){
+                b = false;
 
                 //create layer
                 de.jspll.handlers.layer l = new layer();
@@ -351,9 +355,8 @@ public class GameObjectHandler{
 
                 //add gridTile list to layer
                 l.setgT(gT);
-
-
                 //loop over layer lists
+
                 for(Map<String,?> defLayer : defsLayers){
 
                     //if current layer is the one referenced in the gridTile layer
@@ -366,29 +369,44 @@ public class GameObjectHandler{
                             if(defLayer.get("tilesetDefUid") != null){
                                 Integer layerTilesetUid = ((Double)defLayer.get("tilesetDefUid")).intValue();
                                 if(tilesetID == layerTilesetUid){
+
                                     //get texture source
                                     String src = ((String) tileset.get("relPath"));
-                                    l.textures[0] = "assets\\map\\" + src.substring(0,src.length()-4); //-4 to cut off the .png ending
-                                    System.out.println(l.textures[0]);
 
                                     //Because these files do not exist
-                                    if(src.equals("Anwesenheit") || src.equals("Street"))
+                                    if(src.equals("Anwesenheit.png") || src.equals("Street.png")){
+                                        b = true;
                                         continue;
+
+                                    }
+
+                                    l.textures[0] = "assets\\map\\" + src.substring(0,src.length()-4); //-4 to cut off the .png ending
+
+
+                                    System.out.println(l.textures[0]);
 
                                 }
                             }
 
                         }
+
+                        if(b)
+                            continue;
                     }
                 }
+
+                if(b)
+                    continue;
 
 
                 layerList.add(l);
             }
 
+            TileMap[] tileMaps = (TileMap[]) tileMapsList.toArray(new TileMap[tileMapsList.size()]);
 
 
-            for(int i = 0; i < layerList.size(); i++){
+
+            for(int i = 0; i < tileMapsList.size(); i++){
                 layer l = layerList.get(i);
                 TileMap tm = new TileMap(l.id, "g.dflt.TileMap", 0,0,new Dimension(mapWidth*32, mapHeight*32), l.height*32, l.width*32, l.textures);
 

@@ -53,6 +53,7 @@ public class TileMap extends TexturedObject {
         tileMap = new int[tileColCount][tileRowCount];
         tiles = new Tile[0];
         this.textureKeys = textureKeys;
+        initTileMap();
     }
 
     /**
