@@ -196,7 +196,7 @@ public class TileMap extends TexturedObject {
                         return 0;
                 }
             }
-        } else if (input[0] instanceof String && ((String) input[0]).contentEquals("input")) {
+        }/* else if (input[0] instanceof String && ((String) input[0]).contentEquals("input")) {
             if (input[5] instanceof int[])
                 mousePos = (int[]) input[5];
 
@@ -204,7 +204,7 @@ public class TileMap extends TexturedObject {
                 keystrokes = (String[]) input[7];
             if (input[1] instanceof Boolean)
                 m1 = (boolean) input[1];
-        }
+        }*/
         return 0;
     }
 
@@ -277,9 +277,12 @@ public class TileMap extends TexturedObject {
 
     @Override
     public char update(float elapsedTime) {
+
         super.update(elapsedTime);
 
-        if (keystrokes != null) {
+        return 0;
+
+        /*if (keystrokes != null) {
             for (int i = 0; i < keystrokes.length; i++) {
                 if (keystrokes[i].contains("+")) {
                     selectedTile++;
@@ -307,7 +310,7 @@ public class TileMap extends TexturedObject {
         }
 
 
-        return 0;
+        return 0;*/
     }
 
 
@@ -318,10 +321,10 @@ public class TileMap extends TexturedObject {
         for (int xCoord = 0; xCoord < tileMap.length; xCoord++) {
             for (int yCoord = 0; yCoord < tileMap[xCoord].length; yCoord++) {
                 if (tileMap[xCoord][yCoord] != -1) {
-                    g.drawRect(camera.applyXTransform(x + xCoord * defaultTileDimension.width),
+                    /*g.drawRect(camera.applyXTransform(x + xCoord * defaultTileDimension.width),
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),
                             camera.applyZoom(defaultTileDimension.width),
-                            camera.applyZoom(defaultTileDimension.height));
+                            camera.applyZoom(defaultTileDimension.height));*/
                     if (tileMap[xCoord][yCoord] < 0) {
                         tileMap[xCoord][yCoord] = -1;
                         continue;

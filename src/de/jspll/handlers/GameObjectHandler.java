@@ -18,7 +18,6 @@ import de.jspll.graphics.ResourceHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -319,7 +318,7 @@ public class GameObjectHandler{
 
             //Map sizing
             int mapWidth = ((Double) levels.get("pxWid")).intValue();
-            int mapHeight = ((Double) levels.get("pxWid")).intValue();
+            int mapHeight = ((Double) levels.get("pxHei")).intValue();
 
             ArrayList<TileMap> tileMapsList = new ArrayList<>();
             //TileMap[] tileMaps = new TileMap[layerInstances.size()-3]; //because of missing files

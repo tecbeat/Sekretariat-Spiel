@@ -74,7 +74,7 @@ public class Main {
          *  aktuelles Primärproblem:
          *  - getParent return null -> komme nicht an den GameObjectHandler ran umd neue Objekte hinzuzufügen um keine hard-coded animationen in der Main erstellen zu müssen
          */
-        Player p = new Player("OwnPlayer", new Point(0,0), new Dimension(32, 64), 1);
+        Player p = new Player("OwnPlayer", new Point(640,685), new Dimension(32, 64), 1);
         objects.add(p);
         //objects.add(new Player("testColor0", 0,0, new Dimension(1600,900), 2));
         //objects.add(new Player("testColor1", 0,0, new Dimension(1600,900), 3));
