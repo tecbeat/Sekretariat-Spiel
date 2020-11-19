@@ -45,4 +45,28 @@ public class Tile {
         }
         return cache;
     }
+
+    public int[] getTextureReference() {
+        return textureReference;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Tile){
+            if( ((Tile) obj).getTextureReference() != null ){
+                if( ((Tile) obj).isCollidable() != collidable )
+                    return false;
+                int[] arr = ((Tile) obj).getTextureReference();
+                if(arr.length != textureReference.length)
+                    return false;
+                for(int i = 0; i < arr.length; i++){
+                    if( arr[i] != textureReference[i]){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 }

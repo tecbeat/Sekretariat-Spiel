@@ -31,6 +31,7 @@ import de.jspll.util.json.JSONUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -64,7 +65,7 @@ public class Main {
         TileMap tm = new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
                 new Dimension(1000, 1000), 40, 40,
                 new String[]{"assets\\map\\Floors_only_32x32"});
-        objects.add(tm);
+        //objects.add(tm);
 
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
         //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\player_animation\\forward0_", 6, new Point(0, 0), new Dimension(32,64), null, .1F)));
@@ -101,7 +102,7 @@ public class Main {
 //        System.out.println(strJSON);
         JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
 
-
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, new ArrayList<GameObject>(Arrays.asList(frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))));
 
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
         frameHandler.run();
