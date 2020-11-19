@@ -426,7 +426,7 @@ public class GameObjectHandler{
                 if(l.getTextures() == null || l.getTextures()[0] == null){
                     System.out.println("Error");
                 }
-                TileMap tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth*32, mapHeight*32), l.getHeight()*32, l.getWidth()*32, l.getTextures());
+                TileMap tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());
 
 
 
