@@ -16,6 +16,7 @@ import de.jspll.graphics.ResourceHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -33,12 +34,10 @@ public class GameObjectHandler{
             channels[i] = new GameTrie();
         }
 
-        for(TileMap tm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
-            loadObject(tm);
-        }
+        resourceHandler.start();
+
 
         //loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
-        resourceHandler.start();
     }
 
     public Point getMousePos() {
@@ -138,11 +137,15 @@ public class GameObjectHandler{
     }
 
     public void register(GameObject item) {
+        if(item == null){
+            return;
+        }
         channels[INSTANCE_REGISTER.valueOf()].insert(item.getID(), item);
         item.setListener(this);
     }
 
     public void subscribe(GameObject item) {
+        if(item == null) return;
         if (item.getChannels() != null && item.getChannels().length > 0) {
             for (ChannelID id : item.getChannels()) {
                 if (id == INSTANCE_REGISTER)
@@ -261,6 +264,9 @@ public class GameObjectHandler{
 
 
                 }
+                //for(TileMap ttm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
+                //    out.add(ttm);
+                //}
                 lb.setMessage("loading textures...");
                 boolean waitingForTexture = true;
                 while(waitingForTexture){
@@ -374,13 +380,13 @@ public class GameObjectHandler{
                                     String src = ((String) tileset.get("relPath"));
 
                                     //Because these files do not exist
-                                    if(src.equals("Anwesenheit.png") || src.equals("Street.png")){
+                                    if(src.equals("Anwesenheit.png") || src.equals("Street.png") || src == null){
                                         b = true;
                                         continue;
 
                                     }
 
-                                    l.textures[0] = "assets\\map\\" + src.substring(0,src.length()-4); //-4 to cut off the .png ending
+                                    l.textures[0] = "assets\\map\\" + src.substring(0,src.length()); //-4 to cut off the .png ending
 
 
                                     System.out.println(l.textures[0]);
@@ -402,21 +408,26 @@ public class GameObjectHandler{
                 layerList.add(l);
             }
 
-            TileMap[] tileMaps = (TileMap[]) tileMapsList.toArray(new TileMap[tileMapsList.size()]);
+            TileMap[] tileMaps = new TileMap[layerInstances.size()];
 
 
 
-            for(int i = 0; i < tileMapsList.size(); i++){
+            for(int i = 0; i < layerList.size(); i++){
                 layer l = layerList.get(i);
-                TileMap tm = new TileMap(l.id, "g.dflt.TileMap", 0,0,new Dimension(mapWidth*32, mapHeight*32), l.height*32, l.width*32, l.textures);
+                TileMap tm = new TileMap(l.id, "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.height, l.width, l.textures);
 
-
+                HashMap<String, Tile> tileCache = new HashMap<>();
 
                 for(gridTiles gt : l.getgT()){
-                    Tile t = new Tile(false, gt.getSrcArr(), tm);
-                    tm.addTile(t);
+                    int[] arr = gt.getSrcArr();
+                    String key = arr[0] + "|" + arr[1];
+                    if(!tileCache.containsKey(key)) {
+                        Tile t = new Tile(false, arr, tm);
+                        tileCache.put(key, t);
+                        tm.addTile(t);
+                    }
                     int[] cord = gt.getPxArr();
-                    tm.setTileToMap(t, cord[0], cord[1]);
+                    tm.setTileToMap(tileCache.get(key), cord[0]/l.width, cord[1]/l.height);
                 }
 
                 tileMaps[i] = tm;

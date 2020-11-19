@@ -63,7 +63,7 @@ public class Main {
 
         TileMap tm = new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
                 new Dimension(1000, 1000), 40, 40,
-                new String[]{"assets\\map\\Floors_only_32x32"});
+                new String[]{"assets\\map\\Floors_only_32x32.png"});
         objects.add(tm);
 
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
@@ -106,6 +106,10 @@ public class Main {
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
         frameHandler.run();
 
+
+        for(TileMap ttm : frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
+            frameHandler.getGameObjectHandler().loadObject(ttm);
+        }
 
 
 

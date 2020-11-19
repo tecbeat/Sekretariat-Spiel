@@ -12,7 +12,7 @@ public class Window extends JFrame {
         //setting misc. attributes of the window
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setPreferredSize(size);
-        setResizable(true);
+        setResizable(false);
         setTitle(windowTitle);
         init(content);
 
