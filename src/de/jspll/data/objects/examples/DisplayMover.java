@@ -32,7 +32,7 @@ public class DisplayMover extends GameObject {
     public char update(float elapsedTime) {
         super.update(elapsedTime);
         if (keyMap != null) {
-            float displacement = 100f;
+            float displacement = 160f;
             Camera cam = getParent().getSelectedCamera();
             if (keyMap.get("w").get()) {
                 cam.increase_y(-displacement * elapsedTime);

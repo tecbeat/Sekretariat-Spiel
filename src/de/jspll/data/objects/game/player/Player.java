@@ -81,7 +81,7 @@ public class Player extends TexturedObject {
     public char update(float elapsedTime) {
 
         if (keyMap != null) {
-            float displacement = 65f;
+            float displacement = 95f;
             Camera cam = getParent().getSelectedCamera();
             if (keyMap.get("w").get()) {
                 pos.translate(0, ((Float)(-displacement*elapsedTime)).intValue());
