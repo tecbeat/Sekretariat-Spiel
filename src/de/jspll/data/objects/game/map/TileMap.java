@@ -169,7 +169,7 @@ public class TileMap extends TexturedObject {
     @Override
     public void requestTexture() {
         for (String textureKey : textureKeys) {
-            getParent().getResourceHandler().requestTexture(textureKey, ResourceHandler.FileType.PNG);
+            getParent().getResourceHandler().requestTexture(textureKey);
         }
     }
 
@@ -254,15 +254,15 @@ public class TileMap extends TexturedObject {
             return;
         BufferedImage[] builder = new BufferedImage[textureKeys.length];
         for (int i = 0; i < textureKeys.length; i++) {
-            if (!getParent().getResourceHandler().isAvailable(textureKeys[i], ResourceHandler.FileType.PNG) ||
-                    getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG) == null) {
+            if (!getParent().getResourceHandler().isAvailable(textureKeys[i]) ||
+                    getParent().getResourceHandler().getTexture(textureKeys[i]) == null) {
                 if (!getParent().getResourceHandler().getLoadingQueue().contains(textureKeys[i])) {
-                    getParent().getResourceHandler().requestTexture(textureKeys[i], ResourceHandler.FileType.PNG);
+                    getParent().getResourceHandler().requestTexture(textureKeys[i]);
 
                 }
                 return;
             }
-            builder[i] = getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG);
+            builder[i] = getParent().getResourceHandler().getTexture(textureKeys[i]);
         }
         tileSets = builder;
         setTextureLoaded(true);
@@ -303,6 +303,7 @@ public class TileMap extends TexturedObject {
         return 0;
     }
 
+
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera) {
         int tileWidth = camera.applyZoom(defaultTileDimension.width);
@@ -331,6 +332,8 @@ public class TileMap extends TexturedObject {
             }
         }
     }
+
+
 }
 
 

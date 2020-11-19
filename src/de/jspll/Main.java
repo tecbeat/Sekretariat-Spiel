@@ -108,6 +108,10 @@ public class Main {
         frameHandler.run();
 
 
+        for(TileMap ttm : frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
+            frameHandler.getGameObjectHandler().loadObject(ttm);
+        }
+
 
 
     }

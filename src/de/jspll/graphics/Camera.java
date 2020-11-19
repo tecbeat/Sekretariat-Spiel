@@ -34,13 +34,16 @@ public class Camera {
     }
 
     public void increase_zoom(float amount){
-        xCenter = (xCenter/zoom) * (amount+zoom);
-        yCenter = (yCenter/zoom) * (amount+zoom);
-        zoom += amount;
+        double xCenter = (this.xCenter/this.zoom) * (amount+this.zoom);
+        double yCenter = (this.yCenter/this.zoom) * (amount+this.zoom);
+        float zoom = this.zoom + amount;
         Logger.d.add("curr zoom: " + zoom);
-        if(zoom < 0.1f){
-            zoom = 0.1f;
+        if(zoom < 0.01f){
+            return;
         }
+        this.xCenter = xCenter;
+        this.yCenter = yCenter;
+        this.zoom = zoom;
         updateXY();
     }
 

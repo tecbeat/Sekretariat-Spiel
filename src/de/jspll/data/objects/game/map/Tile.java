@@ -3,6 +3,7 @@ package de.jspll.data.objects.game.map;
 import de.jspll.util.PaintingUtil;
 
 import java.awt.image.BufferedImage;
+import java.lang.management.GarbageCollectorMXBean;
 
 public class Tile {
     private transient TileMap parent;

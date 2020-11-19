@@ -2,6 +2,7 @@ package de.jspll.graphics;
 
 import com.google.gson.Gson;
 import de.jspll.handlers.GameObjectHandler;
+import de.jspll.util.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -37,6 +38,7 @@ public class ResourceHandler extends Thread {
     }
 
     public boolean isAvailable(String key){
+        if(key == null)return false;
         return textures.containsKey(key);
     }
 
@@ -96,6 +98,7 @@ public class ResourceHandler extends Thread {
 //        if(texture == null)
 //            return new BufferedImage(0,0,0);
         try {
+            Logger.d.add("loading: " + texture);
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
             return image;
         } catch (IOException e) {
@@ -151,6 +154,8 @@ public class ResourceHandler extends Thread {
     }
 
     public void requestTexture(String key){
+        if(key == null)
+            return;
         if(!textures.containsKey(key))
             try {
                 loadingQueue.put(key);
