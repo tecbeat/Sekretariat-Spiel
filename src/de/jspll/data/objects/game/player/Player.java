@@ -25,11 +25,13 @@ public class Player extends TexturedObject {
     private boolean start = true;
     private Point pos;
 
+    HashMap<String, AtomicBoolean> keyMap;
+
     public Player(String ID, Point pos, Dimension dimension, int colorScheme) {
         super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
         this.pos = pos;
         this.colorScheme = colorScheme;
-        channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER};
+        channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER, ChannelID.LOGIC};
 
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, pos, dimension, this, 1F));
@@ -77,6 +79,25 @@ public class Player extends TexturedObject {
 
     @Override
     public char update(float elapsedTime) {
+
+        if (keyMap != null) {
+            float displacement = 65f;
+            Camera cam = getParent().getSelectedCamera();
+            if (keyMap.get("w").get()) {
+                pos.translate(0, ((Float)(-displacement*elapsedTime)).intValue());
+            }
+            if (keyMap.get("a").get()) {
+                pos.translate(((Float)(-displacement*elapsedTime)).intValue(), 0);
+            }
+            if (keyMap.get("s").get()) {
+                pos.translate(0, ((Float)(displacement*elapsedTime)).intValue());
+            }
+            if (keyMap.get("d").get()) {
+                pos.translate(((Float)(displacement*elapsedTime)).intValue(),0);
+            }
+        }
+
+
         return super.update(elapsedTime);
     }
 
@@ -89,7 +110,6 @@ public class Player extends TexturedObject {
 
     @Override
     public char call(Object[] input) {
-        HashMap<String, AtomicBoolean> keyMap;
         super.call(input);
         if (input == null || input.length < 1) {
             return 0;
@@ -118,6 +138,11 @@ public class Player extends TexturedObject {
 
             }
         }
+
+
+
+
+
         return 0;
     }
     //BufferedImage[] images = this.getParent().getResourceHandler().getTextureGroup();
@@ -133,15 +158,19 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         switch (lastPressedKey) {
             case "w":
+                movementAnimationList.get(4).setPos(pos);
                 movementAnimationList.get(4).startAnimation(start);
                 break;
             case "s":
+                movementAnimationList.get(5).setPos(pos);
                 movementAnimationList.get(5).startAnimation(start);
                 break;
             case "a":
+                movementAnimationList.get(6).setPos(pos);
                 movementAnimationList.get(6).startAnimation(start);
                 break;
             case "d":
+                movementAnimationList.get(7).setPos(pos);
                 movementAnimationList.get(7).startAnimation(start);
                 break;
         }
@@ -149,6 +178,7 @@ public class Player extends TexturedObject {
 
     public void moveForward() {
         stopAllAnimation();
+        movementAnimationList.get(0).setPos(pos);
         movementAnimationList.get(0).startAnimation(start);
         start = false;
         lastPressedKey = "w";
@@ -156,6 +186,7 @@ public class Player extends TexturedObject {
 
     public void moveBackward() {
         stopAllAnimation();
+        movementAnimationList.get(1).setPos(pos);
         movementAnimationList.get(1).startAnimation(start);
         start = false;
         lastPressedKey = "s";
@@ -163,6 +194,7 @@ public class Player extends TexturedObject {
 
     public void moveLeft() {
         stopAllAnimation();
+        movementAnimationList.get(2).setPos(pos);
         movementAnimationList.get(2).startAnimation(start);
         start = false;
         lastPressedKey = "a";
@@ -170,6 +202,7 @@ public class Player extends TexturedObject {
 
     public void moveRight() {
         stopAllAnimation();
+        movementAnimationList.get(3).setPos(pos);
         movementAnimationList.get(3).startAnimation(start);
         start = false;
         lastPressedKey = "d";

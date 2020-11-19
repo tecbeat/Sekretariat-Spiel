@@ -395,7 +395,7 @@ public class GameObjectHandler{
                                     String src = ((String) tileset.get("relPath"));
 
                                     //Because these files do not exist
-                                    if(src.equals("Anwesenheit.png") || src.equals("Street.png") || src == null){
+                                    if(src == null || src.equals("Anwesenheit.png")){
                                         b = true;
                                         continue;
 
