@@ -4,6 +4,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.util.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class Player extends TexturedObject {
     private String lastPressedKey = "s";
     private boolean start = true;
     private Point pos;
+
+    private Vector2D velocity = new Vector2D(0,0);
 
     HashMap<String, AtomicBoolean> keyMap;
 
@@ -79,24 +82,43 @@ public class Player extends TexturedObject {
 
     @Override
     public char update(float elapsedTime) {
+        velocity.instanceScale(0.1);
+
+
 
         if (keyMap != null) {
-            float displacement = 95f;
-            Camera cam = getParent().getSelectedCamera();
-            if (keyMap.get("w").get()) {
-                pos.translate(0, ((Float)(-displacement*elapsedTime)).intValue());
+            float speed = 95f;
+
+            boolean w = keyMap.get("w").get();
+            boolean a = keyMap.get("a").get();
+            boolean s = keyMap.get("s").get();
+            boolean d = keyMap.get("d").get();
+
+            if (w || a || s || d) {
+                velocity.setY(0);
+                velocity.setX(1);
+                velocity.instanceScale(speed);
             }
-            if (keyMap.get("a").get()) {
-                pos.translate(((Float)(-displacement*elapsedTime)).intValue(), 0);
-            }
-            if (keyMap.get("s").get()) {
-                pos.translate(0, ((Float)(displacement*elapsedTime)).intValue());
-            }
-            if (keyMap.get("d").get()) {
-                pos.translate(((Float)(displacement*elapsedTime)).intValue(),0);
+
+            if (w && a) {
+                velocity.instanceRotate(1.25 * Math.PI);
+            } else if (w && d) {
+                velocity.instanceRotate(1.75 * Math.PI);
+            } else if (s && a) {
+                velocity.instanceRotate(0.75 * Math.PI);
+            } else if (s && d) {
+                velocity.instanceRotate(0.25 * Math.PI);
+            } else if (w) {
+                velocity.instanceRotate(1.5 * Math.PI);
+            } else if (a) {
+                velocity.instanceRotate(Math.PI);
+            } else if (s) {
+                velocity.instanceRotate(0.5 * Math.PI);
             }
         }
 
+        Vector2D scaledVelocity = velocity.scale(elapsedTime);
+        scaledVelocity.updatePos(pos);
 
         return super.update(elapsedTime);
     }

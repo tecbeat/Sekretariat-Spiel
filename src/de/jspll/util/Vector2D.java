@@ -40,13 +40,27 @@ public class Vector2D {
         return new Vector2D(vec.x * d, vec.y * d);
     }
 
-
+    public Vector2D instanceScale(double d){
+        x *= d;
+        y *= d;
+        return this;
+    }
 
     public Vector2D rotate(double rotation){
 
         double rx = (x * Math.cos(rotation)) - (y * Math.sin(rotation));
         double ry = (x * Math.sin(rotation)) + (y * Math.cos(rotation));
         return new Vector2D(rx,ry);
+
+    }
+
+    public Vector2D instanceRotate(double rotation){
+
+        double rx = (x * Math.cos(rotation)) - (y * Math.sin(rotation));
+        double ry = (x * Math.sin(rotation)) + (y * Math.cos(rotation));
+        this.x = rx;
+        this.y = ry;
+        return this;
 
     }
 
@@ -75,4 +89,18 @@ public class Vector2D {
         return bellCurveConstant * Math.exp(exponent);
     }
 
+    public void updatePos(Point pos){
+        Double x = pos.getX(), y = pos.getY();
+        x += this.x;
+        y += this.y;
+        pos.move(x.intValue(),y.intValue());
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 }
