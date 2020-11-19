@@ -266,6 +266,7 @@ public class GameObjectHandler{
                     GameObject go = JSONSupport.fromJsonToGameObject(jsonObject);
                     out.add(go);
                     go.setListener(goh);
+                    go.updateReferences();
                     if(go instanceof TexturedObject){
                         TexturedObject to = (TexturedObject) go;
                         to.requestTexture();

@@ -158,19 +158,19 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         switch (lastPressedKey) {
             case "w":
-                movementAnimationList.get(4).setPos(pos);
+                //movementAnimationList.get(4).setPos(pos);
                 movementAnimationList.get(4).startAnimation(start);
                 break;
             case "s":
-                movementAnimationList.get(5).setPos(pos);
+                //movementAnimationList.get(5).setPos(pos);
                 movementAnimationList.get(5).startAnimation(start);
                 break;
             case "a":
-                movementAnimationList.get(6).setPos(pos);
+                //movementAnimationList.get(6).setPos(pos);
                 movementAnimationList.get(6).startAnimation(start);
                 break;
             case "d":
-                movementAnimationList.get(7).setPos(pos);
+                //movementAnimationList.get(7).setPos(pos);
                 movementAnimationList.get(7).startAnimation(start);
                 break;
         }
@@ -178,7 +178,7 @@ public class Player extends TexturedObject {
 
     public void moveForward() {
         stopAllAnimation();
-        movementAnimationList.get(0).setPos(pos);
+        //movementAnimationList.get(0).setPos(pos);
         movementAnimationList.get(0).startAnimation(start);
         start = false;
         lastPressedKey = "w";
@@ -186,7 +186,7 @@ public class Player extends TexturedObject {
 
     public void moveBackward() {
         stopAllAnimation();
-        movementAnimationList.get(1).setPos(pos);
+        //movementAnimationList.get(1).setPos(pos);
         movementAnimationList.get(1).startAnimation(start);
         start = false;
         lastPressedKey = "s";
@@ -194,7 +194,7 @@ public class Player extends TexturedObject {
 
     public void moveLeft() {
         stopAllAnimation();
-        movementAnimationList.get(2).setPos(pos);
+        //movementAnimationList.get(2).setPos(pos);
         movementAnimationList.get(2).startAnimation(start);
         start = false;
         lastPressedKey = "a";
@@ -202,11 +202,17 @@ public class Player extends TexturedObject {
 
     public void moveRight() {
         stopAllAnimation();
-        movementAnimationList.get(3).setPos(pos);
+        //movementAnimationList.get(3).setPos(pos);
         movementAnimationList.get(3).startAnimation(start);
         start = false;
         lastPressedKey = "d";
     }
 
+    @Override
+    public void updateReferences() {
+        super.updateReferences();
 
+        for(Animation a:movementAnimationList)
+            a.setPos(pos);
+    }
 }

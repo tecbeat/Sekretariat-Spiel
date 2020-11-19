@@ -266,4 +266,8 @@ public class GameObject implements Drawable, Interactable {
         json += "}";
         return json;
     }
+
+    public void updateReferences(){
+
+    }
 }
