@@ -80,4 +80,23 @@ public class Camera {
     public int applyYTransform(int in){
         return (int) ((in * zoom) - y);
     }
+
+    public int[] getRevertedBounds(){
+        int[] out = new int[4];
+
+        int[] origin = new int[]{0,0};
+        int[] maxCoords = new int[]{width,height};
+
+        origin = revertTransform(origin);
+        maxCoords = revertTransform(maxCoords);
+
+        out[0] = origin[0] - 10;
+        out[1] = origin[1] - 10;
+        out[2] = maxCoords[0] + 10;
+        out[3] = maxCoords[1] + 10;
+
+
+        return out;
+    }
+
 }

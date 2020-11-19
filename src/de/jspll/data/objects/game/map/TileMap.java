@@ -8,6 +8,7 @@ import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
+import de.jspll.util.Logger;
 import de.jspll.util.PaintingUtil;
 
 import java.awt.*;
@@ -53,6 +54,7 @@ public class TileMap extends TexturedObject {
         this.channels = new ChannelID[]{ChannelID.INPUT, ChannelID.BACKGROUND, ChannelID.LOGIC};
         pos = new Point(x, y);
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
+        Logger.d.add("Tilemap: " + ID + " tileWidth=" + defaultTileDimension.width + " tileHeight=" + defaultTileDimension.height);
         tileMap = new int[tileColCount][tileRowCount];
         tiles = new Tile[0];
         this.textureKeys = textureKeys;
@@ -316,10 +318,16 @@ public class TileMap extends TexturedObject {
 
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera) {
+        int[] bounds = camera.getRevertedBounds();
+
+
+
+
+
         int tileWidth = camera.applyZoom(defaultTileDimension.width);
         int tileHeight = camera.applyZoom(defaultTileDimension.height);
-        for (int xCoord = 0; xCoord < tileMap.length; xCoord++) {
-            for (int yCoord = 0; yCoord < tileMap[xCoord].length; yCoord++) {
+        for (int xCoord = Math.max(bounds[0] / defaultTileDimension.width,0); xCoord < tileMap.length && xCoord * defaultTileDimension.width < bounds[2]; xCoord++) {
+            for (int yCoord = Math.max(bounds[1] / defaultTileDimension.height,0); yCoord < tileMap[xCoord].length && yCoord * defaultTileDimension.height < bounds[3]; yCoord++) {
                 if (tileMap[xCoord][yCoord] != -1) {
                     /*g.drawRect(camera.applyXTransform(x + xCoord * defaultTileDimension.width),
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),

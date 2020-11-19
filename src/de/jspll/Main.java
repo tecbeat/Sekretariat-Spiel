@@ -94,8 +94,8 @@ public class Main {
         //objects.add(new Counter("test"));
         //frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_0, objects);
         //frameHandler.getGameObjectHandler().loadObjects(objects);
-        EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));
-        frameHandler.getGameObjectHandler().loadObject(test);
+        //EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));
+        //frameHandler.getGameObjectHandler().loadObject(test);
 
         for(TileMap tileMap: frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))
             objects.add(tileMap);
