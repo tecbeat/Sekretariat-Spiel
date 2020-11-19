@@ -332,7 +332,7 @@ public class TileMap extends TexturedObject {
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(this, tileWidth, tileHeight),
                             camera.applyXTransform(x + xCoord * defaultTileDimension.width),
-                            camera.applyYTransform(y + yCoord * defaultTileDimension.height),
+                            camera.applyYTransform(y + yCoord * defaultTileDimension.height),tileWidth,tileHeight,
                             null);
 
                 }

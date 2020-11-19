@@ -96,22 +96,26 @@ public class Main {
         //frameHandler.getGameObjectHandler().loadObjects(objects);
         EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));
         frameHandler.getGameObjectHandler().loadObject(test);
+
+        for(TileMap tileMap: frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))
+            objects.add(tileMap);
         
         //String strJSON = "[" + JSONSupport.convertObjectToJson(m) + "," + JSONSupport.convertObjectToJson(d) + "," +  JSONSupport.convertObjectToJson(p) + "," +  JSONSupport.convertObjectToJson(tm) + "]";
         String strJSON = JSONSupport.convertObjectsToJson(objects);
+        //String strJSON = JSONSupport.convertObjectsToJson(new ArrayList<Object>(Arrays.asList(frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))));
+
 //        System.out.println(strJSON);
         JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
 
-        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, new ArrayList<GameObject>(Arrays.asList(frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))));
-
+        //frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2,
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
         frameHandler.run();
 
 
-        for(TileMap ttm : frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
+        /*for(TileMap ttm : frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
             frameHandler.getGameObjectHandler().loadObject(ttm);
         }
-
+*/
 
 
     }
