@@ -4,6 +4,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.util.Logger;
 import de.jspll.util.Vector2D;
 
 import java.awt.*;
@@ -25,6 +26,8 @@ public class Player extends TexturedObject {
     private String lastPressedKey = "s";
     private boolean start = true;
     private Point pos;
+
+    Point halfResolution;
 
     private Vector2D velocity = new Vector2D(0,0);
 
@@ -84,7 +87,18 @@ public class Player extends TexturedObject {
     public char update(float elapsedTime) {
         velocity.instanceScale(0.1);
 
+        Camera c = getParent().getSelectedCamera();
+        if (halfResolution == null){
+            halfResolution = new Point(c.getWidth()/2, c.getHeight()/2);
+            Logger.d.add("Res / 2: " + halfResolution);
+        }
+        int[] transform = c.transform(new int[]{pos.x, pos.y});
+        Point transformedPos = new Point(transform[0], transform[1]);
 
+        Vector2D vec = new Vector2D(transformedPos, halfResolution);
+
+        c.increase_y((float) - vec.y);
+        c.increase_x((float) - vec.x);
 
         if (keyMap != null) {
             float speed = 95f;

@@ -84,9 +84,9 @@ public class Main {
         //System.out.println(JSONSupport.convertObjectToJson(p));
 
         MouseFollower m = new MouseFollower("test1");
-        DisplayMover d = new DisplayMover("test1");
+        //DisplayMover d = new DisplayMover("test1");
         objects.add(m);
-        objects.add(d);
+        //objects.add(d);
 
         /*System.out.println(JSONSupport.convertObjectToJson(m));
         System.out.println(JSONSupport.convertObjectToJson(d));*/
