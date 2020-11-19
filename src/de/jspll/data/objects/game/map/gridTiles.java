@@ -1,5 +1,6 @@
 package de.jspll.data.objects.game.map;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class gridTiles{
@@ -21,15 +22,15 @@ public class gridTiles{
         return res;
     }
 
-    public int[] getSrcArr(){
+    public int[] getSrcArr(Dimension d){
         int[] res = new int[src.size()+3];
         int i;
         for(i = 0; i< src.size(); i++){
             res[i] = src.get(i).intValue();
         }
-        res[i] = 32;
-        res[i+1] = 32;
-        res[i+2] = 0;
+        res[i] = d.width; //Tile height
+        res[i+1] = d.height; //Tile width
+        res[i+2] = 0; //0, because there is only one texture per layer
         return res;
     }
 

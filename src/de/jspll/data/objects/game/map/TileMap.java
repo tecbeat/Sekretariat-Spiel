@@ -26,6 +26,9 @@ public class TileMap extends TexturedObject {
     private int[][] tileMap;
     private Tile[] tiles;
     private Point pos;
+
+
+
     private Dimension defaultTileDimension;
     protected BufferedImage[] tileSets;
     private String[] textureKeys;
@@ -266,6 +269,10 @@ public class TileMap extends TexturedObject {
         }
         tileSets = builder;
         setTextureLoaded(true);
+    }
+
+    public Dimension getDefaultTileDimension() {
+        return defaultTileDimension;
     }
 
     @Override

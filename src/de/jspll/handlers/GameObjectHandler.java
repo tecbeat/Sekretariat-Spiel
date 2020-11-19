@@ -402,7 +402,7 @@ public class GameObjectHandler{
 
                                     }
 
-                                    tex[0] = "assets\\map\\" + src.substring(0,src.length()-4); //-4 to cut off the .png ending
+                                    tex[0] = "assets\\map\\" + src; //.substring(0,src.length()-4); //-4 to cut off the .png ending
 
                                     l.setTextures(tex);
 
@@ -429,7 +429,6 @@ public class GameObjectHandler{
             TileMap[] tileMaps = new TileMap[layerList.size()];
 
 
-
             for(int i = 0; i < layerList.size(); i++){
                 layer l = layerList.get(i);
                 if(l.getTextures() == null || l.getTextures()[0] == null){
@@ -440,7 +439,7 @@ public class GameObjectHandler{
                 HashMap<String, Tile> tileCache = new HashMap<>();
 
                 for(gridTiles gt : l.getgT()){
-                    int[] arr = gt.getSrcArr();
+                    int[] arr = gt.getSrcArr(tm.getDefaultTileDimension());
                     String key = arr[0] + "|" + arr[1];
                     if(!tileCache.containsKey(key)) {
                         Tile t = new Tile(false, arr, tm);
@@ -448,13 +447,19 @@ public class GameObjectHandler{
                         tm.addTile(t);
                     }
                     int[] cord = gt.getPxArr();
-                    tm.setTileToMap(tileCache.get(key), cord[0]/l.width, cord[1]/l.height);
+                    tm.setTileToMap(tileCache.get(key), cord[0]/tm.getDefaultTileDimension().width, cord[1]/tm.getDefaultTileDimension().height);
                 }
 
                 tileMaps[i] = tm;
             }
 
-            return tileMaps;
+            TileMap[] returnArr = new TileMap[tileMaps.length];
+
+            for(int i = 0; i<tileMaps.length; i++){
+                returnArr[tileMaps.length-1-i] = tileMaps[i];
+            }
+
+            return returnArr;
         } catch (Exception e){
             e.printStackTrace();
             return null;
