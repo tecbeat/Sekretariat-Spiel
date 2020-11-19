@@ -4,11 +4,16 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.util.Logger;
+import de.jspll.util.Vector2D;
+
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static de.jspll.data.ChannelID.*;
 
 /**
  * Created by reclinarka on 23-Oct-20.
@@ -25,13 +30,11 @@ public class Player extends TexturedObject {
     private boolean start = true;
     private Point pos;
 
-    HashMap<String, AtomicBoolean> keyMap;
-
     public Player(String ID, Point pos, Dimension dimension, int colorScheme) {
         super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
         this.pos = pos;
         this.colorScheme = colorScheme;
-        channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER, ChannelID.LOGIC};
+        channels = new ChannelID[]{INPUT, PLAYER, LOGIC};
 
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, pos, dimension, this, 1F));
@@ -72,33 +75,32 @@ public class Player extends TexturedObject {
         }
     }
 
+
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera) {
         super.paint(g, elapsedTime, camera);
     }
 
+
+    Point lastPos = new Point(0,0);
+    Point halfResolution;
+
     @Override
     public char update(float elapsedTime) {
-
-        if (keyMap != null) {
-            float displacement = 95f;
-            Camera cam = getParent().getSelectedCamera();
-            if (keyMap.get("w").get()) {
-                pos.translate(0, ((Float)(-displacement*elapsedTime)).intValue());
-            }
-            if (keyMap.get("a").get()) {
-                pos.translate(((Float)(-displacement*elapsedTime)).intValue(), 0);
-            }
-            if (keyMap.get("s").get()) {
-                pos.translate(0, ((Float)(displacement*elapsedTime)).intValue());
-            }
-            if (keyMap.get("d").get()) {
-                pos.translate(((Float)(displacement*elapsedTime)).intValue(),0);
-            }
+        super.update(elapsedTime);
+        Camera c = getParent().getSelectedCamera();
+        if (halfResolution == null){
+            halfResolution = new Point(c.getWidth()/2, c.getHeight()/2);
+            Logger.d.add("Res / 2: " + halfResolution);
         }
 
+        c.centerToObject(this);
 
-        return super.update(elapsedTime);
+        setX(pos.x);
+        setY(pos.y);
+
+
+        return 0;
     }
 
     @Override
@@ -110,6 +112,7 @@ public class Player extends TexturedObject {
 
     @Override
     public char call(Object[] input) {
+        HashMap<String, AtomicBoolean> keyMap;
         super.call(input);
         if (input == null || input.length < 1) {
             return 0;
@@ -118,6 +121,10 @@ public class Player extends TexturedObject {
 
                 if (input[4] instanceof HashMap) {
                     keyMap = (HashMap<String, AtomicBoolean>) input[4];
+                    for (Animation a : movementAnimationList){
+                        a.setPos(pos);
+                    }
+
                     if (keyMap.get("w").get() && keyMap.get("s").get() || keyMap.get("a").get() && keyMap.get("d").get()) {
                         idleAnimation();
                         return 0;
@@ -138,15 +145,8 @@ public class Player extends TexturedObject {
 
             }
         }
-
-
-
-
-
         return 0;
     }
-    //BufferedImage[] images = this.getParent().getResourceHandler().getTextureGroup();
-    // Animation PlayerAnimation = new Animation();
 
     public void stopAllAnimation() {
         for (Animation animation : movementAnimationList) {
@@ -156,55 +156,60 @@ public class Player extends TexturedObject {
 
     public void idleAnimation() {
         stopAllAnimation();
+
         switch (lastPressedKey) {
             case "w":
-                //movementAnimationList.get(4).setPos(pos);
                 movementAnimationList.get(4).startAnimation(start);
                 break;
             case "s":
-                //movementAnimationList.get(5).setPos(pos);
                 movementAnimationList.get(5).startAnimation(start);
                 break;
             case "a":
-                //movementAnimationList.get(6).setPos(pos);
                 movementAnimationList.get(6).startAnimation(start);
                 break;
             case "d":
-                //movementAnimationList.get(7).setPos(pos);
                 movementAnimationList.get(7).startAnimation(start);
                 break;
         }
     }
 
+
     public void moveForward() {
         stopAllAnimation();
-        //movementAnimationList.get(0).setPos(pos);
         movementAnimationList.get(0).startAnimation(start);
         start = false;
+        if (pos.y-10 >= 0  && pos.y-10 < 3136-64) pos.y -= 10;
+
         lastPressedKey = "w";
     }
 
     public void moveBackward() {
         stopAllAnimation();
-        //movementAnimationList.get(1).setPos(pos);
         movementAnimationList.get(1).startAnimation(start);
         start = false;
+        if (pos.y+10 >= 0 && pos.y+10 < 3136-64) pos.y += 10;
+
         lastPressedKey = "s";
     }
 
     public void moveLeft() {
         stopAllAnimation();
-        //movementAnimationList.get(2).setPos(pos);
+
         movementAnimationList.get(2).startAnimation(start);
         start = false;
+        if (pos.x-10 >= 0 && pos.x-10 <= 3552-32) pos.x -= 10;
+
         lastPressedKey = "a";
     }
 
     public void moveRight() {
         stopAllAnimation();
-        //movementAnimationList.get(3).setPos(pos);
+
         movementAnimationList.get(3).startAnimation(start);
         start = false;
+
+        if (pos.x+10 >= 0 && pos.x+10 <= 3552-32) pos.x += 10;
+
         lastPressedKey = "d";
     }
 
@@ -215,4 +220,8 @@ public class Player extends TexturedObject {
         for(Animation a:movementAnimationList)
             a.setPos(pos);
     }
+
+
+
+
 }

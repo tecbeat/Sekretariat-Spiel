@@ -36,7 +36,7 @@ public class LogicHandler implements SubHandler {
             for (GameObject object : gameObjectHandler.getChannel(LOGIC).allValues()) {
                 object.update(elapsedTime);
             }
-        };
+        }
 
     }
 
