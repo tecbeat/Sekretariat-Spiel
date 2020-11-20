@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/map/Anwesenheit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/map/Street.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/map/Main-Map.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/GameObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/examples/DisplayMover.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/examples/DisplayMover.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GraphicsHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GraphicsHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/de/jspll/handlers/JSONSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/JSONSupport.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +68,7 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Lukas\Documents\a_Studium\3. Semester\Software Engineering\Repo\out\production\2d-game-engine\de\jspll\graphics\assets\map" />
       <recent name="C:\Users\Lukas\Documents\a_Studium\3. Semester\Software Engineering\Repo\src\de\jspll\graphics\assets\map" />
+      <recent name="C:\Users\Lukas\Documents\a_Studium\3. Semester\Software Engineering\Repo\src\de\jspll\graphics\assets" />
     </key>
   </component>
   <component name="RunManager">
@@ -238,7 +240,9 @@
       <workItem from="1605465994716" duration="32236000" />
       <workItem from="1605635563155" duration="3610000" />
       <workItem from="1605700957799" duration="27907000" />
-      <workItem from="1605814291678" duration="2158000" />
+      <workItem from="1605814291678" duration="8890000" />
+      <workItem from="1605823933652" duration="7000" />
+      <workItem from="1605856089777" duration="2453000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -477,6 +481,10 @@
       <screen x="74" y="0" width="2486" height="1080" />
     </state>
     <state x="771" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814178962" />
+    <state x="-1155" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1605821204578">
+      <screen x="-1846" y="0" width="1846" height="1080" />
+    </state>
+    <state x="-1155" y="229" key="#com.intellij.ide.util.MemberChooser/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605821204578" />
     <state x="1046" y="324" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605814166243">
       <screen x="74" y="0" width="2486" height="1080" />
     </state>
@@ -485,41 +493,56 @@
       <screen x="74" y="0" width="2486" height="1080" />
     </state>
     <state x="1097" y="281" key="FileChooserDialogImpl/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814176695" />
-    <state width="1877" height="272" key="GridCell.Tab.0.bottom" timestamp="1605816563276">
-      <screen x="-1846" y="0" width="1846" height="1080" />
-    </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.bottom/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563276" />
-    <state width="2443" height="272" key="GridCell.Tab.0.bottom/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608480" />
-    <state width="1877" height="272" key="GridCell.Tab.0.center" timestamp="1605816563275">
-      <screen x="-1846" y="0" width="1846" height="1080" />
-    </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.center/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563275" />
-    <state width="2443" height="272" key="GridCell.Tab.0.center/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608479" />
-    <state width="1877" height="272" key="GridCell.Tab.0.left" timestamp="1605816563275">
-      <screen x="-1846" y="0" width="1846" height="1080" />
-    </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.left/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563275" />
-    <state width="2443" height="272" key="GridCell.Tab.0.left/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608479" />
-    <state width="1877" height="272" key="GridCell.Tab.0.right" timestamp="1605816563276">
-      <screen x="-1846" y="0" width="1846" height="1080" />
-    </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.right/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563276" />
-    <state width="2443" height="272" key="GridCell.Tab.0.right/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608480" />
-    <state x="1013" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1605814284599">
+    <state width="2443" height="232" key="GridCell.Tab.0.bottom" timestamp="1605858567796">
       <screen x="74" y="0" width="2486" height="1080" />
     </state>
-    <state x="1013" y="364" key="com.intellij.ide.util.TipDialog/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814284599" />
+    <state width="1877" height="104" key="GridCell.Tab.0.bottom/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605822110277" />
+    <state width="2443" height="232" key="GridCell.Tab.0.bottom/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567796" />
+    <state width="2443" height="232" key="GridCell.Tab.0.center" timestamp="1605858567795">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="104" key="GridCell.Tab.0.center/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605822110277" />
+    <state width="2443" height="232" key="GridCell.Tab.0.center/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567795" />
+    <state width="2443" height="232" key="GridCell.Tab.0.left" timestamp="1605858567795">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="104" key="GridCell.Tab.0.left/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605822110277" />
+    <state width="2443" height="232" key="GridCell.Tab.0.left/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567795" />
+    <state width="2443" height="232" key="GridCell.Tab.0.right" timestamp="1605858567796">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="104" key="GridCell.Tab.0.right/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605822110277" />
+    <state width="2443" height="232" key="GridCell.Tab.0.right/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567796" />
+    <state width="2443" height="232" key="GridCell.Tab.1.bottom" timestamp="1605858567796">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="222" key="GridCell.Tab.1.bottom/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605820278555" />
+    <state width="2443" height="232" key="GridCell.Tab.1.bottom/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567796" />
+    <state width="2443" height="232" key="GridCell.Tab.1.center" timestamp="1605858567796">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="222" key="GridCell.Tab.1.center/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605820278554" />
+    <state width="2443" height="232" key="GridCell.Tab.1.center/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567796" />
+    <state width="2443" height="232" key="GridCell.Tab.1.left" timestamp="1605858567796">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="222" key="GridCell.Tab.1.left/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605820278554" />
+    <state width="2443" height="232" key="GridCell.Tab.1.left/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567796" />
+    <state width="2443" height="232" key="GridCell.Tab.1.right" timestamp="1605858567796">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state width="1877" height="222" key="GridCell.Tab.1.right/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605820278555" />
+    <state width="2443" height="232" key="GridCell.Tab.1.right/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858567796" />
+    <state x="1013" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1605856113641">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state x="1013" y="364" key="com.intellij.ide.util.TipDialog/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605856113641" />
+    <state x="973" y="250" width="672" height="677" key="run.anything.popup" timestamp="1605858136349">
+      <screen x="74" y="0" width="2486" height="1080" />
+    </state>
+    <state x="973" y="250" width="672" height="677" key="run.anything.popup/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605858136349" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java</url>
-          <line>453</line>
-          <option name="timeStamp" value="159" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="((TileMap)this).parent" custom="de.jspll.data.objects.game.map.TileMap" />

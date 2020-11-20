@@ -2,18 +2,19 @@ package de.jspll.graphics;
 
 import com.google.gson.Gson;
 import de.jspll.handlers.GameObjectHandler;
+import de.jspll.handlers.JSONSupport;
 import de.jspll.util.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -217,5 +218,65 @@ public class ResourceHandler extends Thread {
         public String getFileEnding() {
             return fileEnding;
         }
+    }
+
+    public void jsonStrToFile(String json, String filepath){
+        boolean created = false;
+
+        if(filepath.endsWith(".json"))
+            filepath = filepath.substring(0,filepath.length()-5);
+
+        filepath = filepath + ".json";
+
+        try {
+            File jsonFile = new File(filepath);
+            if (jsonFile.createNewFile()) {
+                created = true;
+            } else {
+                //How to handle existing files
+                //Overwrite?
+            }
+
+            if(created) {
+                FileWriter jsonWriter = new FileWriter(jsonFile);
+                jsonWriter.write(json);
+                jsonWriter.close();
+                System.out.println("written!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in jsonToFile:");
+            e.printStackTrace();
+        }
+    }
+
+    public void objectToFile(Object o, String filepath){
+        String jsonStr = JSONSupport.convertObjectToJson(o);
+        jsonStrToFile(jsonStr, filepath);
+    }
+
+    public void objectsToFile(ArrayList<Object> oArr, String filepath){
+        String jsonStr = JSONSupport.convertObjectsToJson(oArr);
+        jsonStrToFile(jsonStr, filepath);
+    }
+
+    public String fileToJson(String filepath){
+        StringBuilder result = new StringBuilder();
+        if(!filepath.endsWith(".json"))
+            filepath = filepath + ".json";
+        try {
+            File jsonFile = new File(this.getClass().getResource(filepath).toURI());
+            Scanner jsonReader = new Scanner(jsonFile);
+            while (jsonReader.hasNextLine()) {
+                String data = jsonReader.nextLine();
+                result.append(data);
+            }
+            jsonReader.close();
+            return result.toString();
+        } catch (FileNotFoundException | URISyntaxException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

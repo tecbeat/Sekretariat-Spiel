@@ -13,6 +13,7 @@ import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.Report;
 import de.jspll.dev.EditorHandler;
 import de.jspll.frames.FrameHandler;
+import de.jspll.graphics.ResourceHandler;
 import de.jspll.handlers.JSONSupport;
 import de.jspll.util.json.JSONArray;
 import de.jspll.util.json.JSONObject;
@@ -104,10 +105,12 @@ public class Main {
         String strJSON = JSONSupport.convertObjectsToJson(objects);
         //String strJSON = JSONSupport.convertObjectsToJson(new ArrayList<Object>(Arrays.asList(frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))));
 
-//        System.out.println(strJSON);
+
+        ResourceHandler resH = frameHandler.getGameObjectHandler().getResourceHandler();
+        System.out.println("Map: " + resH.fileToJson("assets\\map\\Main-Map.json"));
+
         JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
 
-        //frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2,
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
         frameHandler.run();
 

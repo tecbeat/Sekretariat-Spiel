@@ -8,9 +8,18 @@ import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.util.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class JSONSupport {
     private static Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();;
@@ -111,8 +120,6 @@ public class JSONSupport {
         Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
         return obj;
     }
-
-
 
 }
 
