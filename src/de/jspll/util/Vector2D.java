@@ -93,7 +93,8 @@ public class Vector2D {
         Double x = pos.getX(), y = pos.getY();
         x += this.x;
         y += this.y;
-        pos.move(x.intValue(),y.intValue());
+
+        pos.move((int)Math.round(x),(int)Math.round(y));
     }
 
     public void setX(double x) {
