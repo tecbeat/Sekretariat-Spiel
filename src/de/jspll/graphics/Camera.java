@@ -1,5 +1,6 @@
 package de.jspll.graphics;
 
+
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.handlers.GameObjectHandler;
@@ -101,10 +102,10 @@ public class Camera {
         return height;
     }
 
-    public void centerToPos(Point objectPos) {
+    public void centerToPos(Point objectPos, Dimension dimension) {
         Point halfResolution = new Point(width / 2, height / 2);
         boolean[] OutSideCheck = checkIfOutside(objectPos);
-        int[] transform = transform(new int[]{objectPos.x, objectPos.y});
+        int[] transform = transform(new int[]{objectPos.x + dimension.width/2, objectPos.y + dimension.height/2});
 
         moveToBound();
         Point transformedPos = new Point(transform[0], transform[1]);
@@ -116,16 +117,16 @@ public class Camera {
     }
 
     public void centerToObject(GameObject object) {
-        centerToPos(new Point(object.getX(), object.getY()));
+        centerToPos(new Point(object.getX(), object.getY()), object.getDimension());
     }
 
     private void moveToBound() {
         while (x < 0) increase_x(1);
         while (y < 0) increase_y(1);
 
-        //TODO Not working properly
-//        while (x > 3552 + width/2) increase_x(-1);
-//        while(y > 3136 + height/2) increase_y(-1);
+        //TODO Use with precaution
+        while (x > 3552 + width) increase_x(-1);
+        while (y > 3136 + width + 128) increase_y(-1);
 
         //Breite 3552
         //Höhe 3136
