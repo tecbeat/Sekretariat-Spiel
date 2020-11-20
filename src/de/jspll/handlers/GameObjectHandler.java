@@ -326,6 +326,7 @@ public class GameObjectHandler{
 
             //layers
             ArrayList<layer> layerList = new ArrayList<>();
+            layer collsions = new layer();
 
             //Lists for Texture finding
             ArrayList<Map<String,?>> defsLayers =  (ArrayList<Map<String,?>>)defs.get("layers");
@@ -397,6 +398,11 @@ public class GameObjectHandler{
 
                                     //Because these files do not exist
                                     if(src == null || src.equals("Anwesenheit.png")){
+                                        if(src.equals("Anwesenheit.png")){
+                                            tex[0] = "assets\\map\\" + src;
+                                            l.setTextures(tex);
+                                            collsions = l;
+                                        }
                                         b = true;
                                         continue;
 
@@ -426,11 +432,19 @@ public class GameObjectHandler{
                 layerList.add(l);
             }
 
-            TileMap[] tileMaps = new TileMap[layerList.size()];
+            TileMap[] tileMaps = new TileMap[layerList.size()+1]; //+1 to add colissions
 
 
-            for(int i = 0; i < layerList.size(); i++){
-                layer l = layerList.get(i);
+            for(int i = 0; i < layerList.size()+1; i++){
+                layer l;
+                boolean collidable;
+                if(i == layerList.size()){
+                    l = collsions;
+                    collidable = true;
+                } else {
+                    l = layerList.get(i);
+                    collidable = false;
+                }
                 if(l.getTextures() == null || l.getTextures()[0] == null){
                     System.out.println("Error");
                 }
@@ -442,7 +456,7 @@ public class GameObjectHandler{
                     int[] arr = gt.getSrcArr(tm.getDefaultTileDimension());
                     String key = arr[0] + "|" + arr[1];
                     if(!tileCache.containsKey(key)) {
-                        Tile t = new Tile(false, arr, tm);
+                        Tile t = new Tile(collidable, arr, tm);
                         tileCache.put(key, t);
                         tm.addTile(t);
                     }
