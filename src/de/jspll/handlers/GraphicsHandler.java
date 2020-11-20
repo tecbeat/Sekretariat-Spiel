@@ -33,7 +33,7 @@ public class GraphicsHandler implements SubHandler {
             case MAIN:
                 this.window = new de.jspll.graphics.Window(windowTitle,slate,size);
                 this.windowTitle = windowTitle;
-                cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2);
+                cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2.5f);
                 break;
         }
     }

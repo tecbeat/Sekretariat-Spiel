@@ -26,6 +26,8 @@ public class Player extends TexturedObject {
     private String lastPressedKey = "s";
     private boolean start = true;
     private Point pos;
+    private float continuous_walking_time = 0f;
+    private boolean sprinted_last = false;
 
     Point halfResolution;
 
@@ -37,7 +39,7 @@ public class Player extends TexturedObject {
         super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
         this.pos = pos;
         this.colorScheme = colorScheme;
-        channels = new ChannelID[]{ChannelID.INPUT, ChannelID.PLAYER, ChannelID.LOGIC};
+        channels = new ChannelID[]{ ChannelID.PLAYER, ChannelID.LOGIC};
 
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, pos, dimension, this, 1F));
@@ -85,36 +87,77 @@ public class Player extends TexturedObject {
 
     @Override
     public char update(float elapsedTime) {
-        velocity.instanceScale(0);
+        super.update(elapsedTime);
+
+        if(sprinted_last){
+            velocity.instanceScale(0.9d);
+            if(velocity.euclideanDistance() < 1){
+                sprinted_last = false;
+            }
+        }else {
+            velocity.instanceScale(0d);
+        }
+
+
 
         if (keyMap != null) {
-            float speed = 95f;
+            double speed = 95d;
 
             boolean w = keyMap.get("w").get();
             boolean a = keyMap.get("a").get();
             boolean s = keyMap.get("s").get();
             boolean d = keyMap.get("d").get();
+            boolean shift = keyMap.get("SHIFT").get();
+
+            if(shift){
+                sprinted_last = true;
+                speed *= 1.7;
+                for(Animation animation: movementAnimationList){
+                    animation.updateDuration(0.5f);
+                }
+            } else {
+                for(Animation animation: movementAnimationList){
+                    animation.updateDuration(1f);
+                }
+            }
 
             if (w || a || s || d) {
+                if(!shift){
+                    sprinted_last = false;
+                }
                 velocity.setY(0);
                 velocity.setX(1);
                 velocity.instanceScale(speed);
             }
 
-            if (w && a) {
+            if(w && s || a && d ){
+                velocity.setX(0);
+                idleAnimation();
+            } else if (w && a) {
                 velocity.instanceRotate(1.25 * Math.PI);
+                moveLeft();
             } else if (w && d) {
                 velocity.instanceRotate(1.75 * Math.PI);
+                moveRight();
             } else if (s && a) {
                 velocity.instanceRotate(0.75 * Math.PI);
+                moveBackward();
             } else if (s && d) {
                 velocity.instanceRotate(0.25 * Math.PI);
+                moveBackward();
             } else if (w) {
                 velocity.instanceRotate(1.5 * Math.PI);
+                moveForward();
             } else if (a) {
                 velocity.instanceRotate(Math.PI);
+                moveLeft();
             } else if (s) {
                 velocity.instanceRotate(0.5 * Math.PI);
+                moveBackward();
+            } else if(d){
+                moveRight();
+            } else {
+                idleAnimation();
             }
         }
 
@@ -144,6 +187,10 @@ public class Player extends TexturedObject {
         for (Animation animation : movementAnimationList) {
             animation.draw((Graphics2D) g, elapsedTime, camera);
         }
+        Point t = new Point(pos);
+        velocity.updatePos(t);
+        g.setColor(Color.MAGENTA);
+        g.drawLine(camera.applyXTransform(pos.x),camera.applyYTransform(pos.y),camera.applyXTransform(t.x),camera.applyYTransform(t.y));
     }
 
     @Override
@@ -156,22 +203,8 @@ public class Player extends TexturedObject {
 
                 if (input[4] instanceof HashMap) {
                     keyMap = (HashMap<String, AtomicBoolean>) input[4];
-                    if (keyMap.get("w").get() && keyMap.get("s").get() || keyMap.get("a").get() && keyMap.get("d").get()) {
-                        idleAnimation();
-                        return 0;
-                    }
 
-                    if (keyMap.get("w").get()) {
-                        moveForward();
-                    } else if (keyMap.get("s").get()) {
-                        moveBackward();
-                    } else if (keyMap.get("a").get()) {
-                        moveLeft();
-                    } else if (keyMap.get("d").get()) {
-                        moveRight();
-                    } else {
-                        idleAnimation();
-                    }
+
                 }
 
             }
@@ -249,6 +282,7 @@ public class Player extends TexturedObject {
     @Override
     public void updateReferences() {
         super.updateReferences();
+        keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
 
         for(Animation a:movementAnimationList)
             a.setPos(pos);

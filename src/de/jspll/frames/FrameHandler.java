@@ -61,7 +61,7 @@ public class FrameHandler {
 //tries to keep execution of tasks aligned with fps target
 class FrameStabilizer extends Thread {
     private SubHandler[] handlers;
-    private int target_fps = 120;
+    private int target_fps = 60;
     private boolean DEBUG;
     private long lastFrame = System.currentTimeMillis();
     private AtomicBoolean running = new AtomicBoolean(true);
@@ -88,10 +88,10 @@ class FrameStabilizer extends Thread {
                 long delayStart = System.currentTimeMillis();
                 System.out.println("FH: Started delay, current time: " + delayStart + "\n Waiting for " + (long) (elapsedTime * 1000) + " Milliseconds");
                 long currentTime = System.currentTimeMillis();
-                //while(currentTime - delayStart < elapsedTime * 1000){
+                while(currentTime - delayStart < elapsedTime * 1000){
                     currentTime = System.currentTimeMillis();
                     System.out.println("FH: current Time: " + currentTime);
-                //}
+                }
                 System.out.println("FH: finished delay");
             }
             //start calculating elapsed time

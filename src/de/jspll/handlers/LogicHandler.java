@@ -40,6 +40,9 @@ public class LogicHandler implements SubHandler {
 
     }
 
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
 
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;

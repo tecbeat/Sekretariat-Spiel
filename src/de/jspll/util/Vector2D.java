@@ -89,6 +89,10 @@ public class Vector2D {
         return bellCurveConstant * Math.exp(exponent);
     }
 
+    public double euclideanDistance(){
+        return Math.sqrt( x*x + y*y );
+    }
+
     public void updatePos(Point pos){
         Double x = pos.getX(), y = pos.getY();
         x += this.x;
