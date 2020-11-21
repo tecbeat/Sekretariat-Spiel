@@ -94,11 +94,43 @@ public class Vector2D {
     }
 
     public void updatePos(Point pos){
+        if(x == 0 && y == 0){
+            return;
+        }
         Double x = pos.getX(), y = pos.getY();
         x += this.x;
         y += this.y;
 
         pos.move((int)Math.round(x),(int)Math.round(y));
+    }
+
+    public void addToX(int amount){
+        this.x += amount;
+    }
+
+    public void addToY(int amount){
+        this.y += amount;
+    }
+
+    public void addToX(double amount){
+        this.x += amount;
+    }
+
+    public void addToY(double amount){
+        this.y += amount;
+    }
+
+    public void normalize(){
+        if(x == 0 && y == 0){
+            return;
+        }
+        double abs = euclideanDistance();
+        this.x /= abs;
+        this.y /= abs;
+    }
+
+    public Vector2D[] splitIntoXY(){
+        return new Vector2D[]{ new Vector2D(x,0), new Vector2D(0,y) };
     }
 
     public void setX(double x) {

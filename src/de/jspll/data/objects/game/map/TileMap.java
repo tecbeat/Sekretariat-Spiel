@@ -29,7 +29,6 @@ public class TileMap extends TexturedObject {
     private Point pos;
 
 
-
     private Dimension defaultTileDimension;
     protected BufferedImage[] tileSets;
     private String[] textureKeys;
@@ -40,7 +39,7 @@ public class TileMap extends TexturedObject {
 
     public TileMap(String ID, String objectID, Point playerPos, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
         super(ID, objectID, x, y, dimension, null);
-        this.channels = new ChannelID[]{ChannelID.INPUT, ChannelID.BACKGROUND, ChannelID.LOGIC};
+        this.channels = new ChannelID[]{ ChannelID.BACKGROUND, ChannelID.LOGIC};
         pos = new Point(x, y);
         this.textureKeys = textureKeys;
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
@@ -49,9 +48,9 @@ public class TileMap extends TexturedObject {
         debugInit();
     }
 
-    public TileMap(String ID, String objectID, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys){
+    public TileMap(String ID, String objectID, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
         super(ID, objectID, x, y, dimension, null);
-        this.channels = new ChannelID[]{ChannelID.INPUT, ChannelID.BACKGROUND, ChannelID.LOGIC};
+        this.channels = new ChannelID[]{ ChannelID.BACKGROUND, ChannelID.LOGIC};
         pos = new Point(x, y);
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
         Logger.d.add("Tilemap: " + ID + " tileWidth=" + defaultTileDimension.width + " tileHeight=" + defaultTileDimension.height);
@@ -180,25 +179,32 @@ public class TileMap extends TexturedObject {
 
     @Override
     public char call(Object[] input) {
+        super.call(input);
         if (input == null || input.length < 1) {
             return 0;
-        } else if (input[0] instanceof String && ((String) input[0]).contentEquals("tilemap")) {
-            if (input[1] instanceof String) {
-                switch ((String) input[1]) {
-                    case "add":
-                        callAdd(input);
-                        break;
-                    case "set":
-                        callSet(input);
-                        break;
-                    case "remove":
-                        callRemove(input);
-                        break;
-                    default:
-                        return 0;
+        } else if (input[0] instanceof String) {
+            String cmd = (String) input[0];
+            if (cmd.contentEquals("tilemap")) {
+                if (input[1] instanceof String) {
+                    switch ((String) input[1]) {
+                        case "add":
+                            callAdd(input);
+                            break;
+                        case "set":
+                            callSet(input);
+                            break;
+                        case "remove":
+                            callRemove(input);
+                            break;
+                        default:
+                            return 0;
+                    }
                 }
+            }else if( cmd.contentEquals("player")){
+                getParent().dispatch(ChannelID.PLAYER, new Object[]{"collision",tileMap,new int[]{pos.x,pos.y,dimension.width,dimension.height,defaultTileDimension.width,defaultTileDimension.height}});
             }
-        }/* else if (input[0] instanceof String && ((String) input[0]).contentEquals("input")) {
+        }
+        /* else if (input[0] instanceof String && ((String) input[0]).contentEquals("input")) {
             if (input[5] instanceof int[])
                 mousePos = (int[]) input[5];
 
@@ -321,13 +327,10 @@ public class TileMap extends TexturedObject {
         int[] bounds = camera.getRevertedBounds();
 
 
-
-
-
         int tileWidth = camera.applyZoom(defaultTileDimension.width);
         int tileHeight = camera.applyZoom(defaultTileDimension.height);
-        for (int xCoord = Math.max(bounds[0] / defaultTileDimension.width,0); xCoord < tileMap.length && xCoord * defaultTileDimension.width < bounds[2]; xCoord++) {
-            for (int yCoord = Math.max(bounds[1] / defaultTileDimension.height,0); yCoord < tileMap[xCoord].length && yCoord * defaultTileDimension.height < bounds[3]; yCoord++) {
+        for (int xCoord = Math.max(bounds[0] / defaultTileDimension.width, 0); xCoord < tileMap.length && xCoord * defaultTileDimension.width < bounds[2]; xCoord++) {
+            for (int yCoord = Math.max(bounds[1] / defaultTileDimension.height, 0); yCoord < tileMap[xCoord].length && yCoord * defaultTileDimension.height < bounds[3]; yCoord++) {
                 if (tileMap[xCoord][yCoord] != -1) {
                     /*g.drawRect(camera.applyXTransform(x + xCoord * defaultTileDimension.width),
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height),
@@ -343,7 +346,7 @@ public class TileMap extends TexturedObject {
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.drawImage(tiles[tileMap[xCoord][yCoord]].getTexture(this, tileWidth, tileHeight),
                             camera.applyXTransform(x + xCoord * defaultTileDimension.width),
-                            camera.applyYTransform(y + yCoord * defaultTileDimension.height),tileWidth,tileHeight,
+                            camera.applyYTransform(y + yCoord * defaultTileDimension.height), tileWidth, tileHeight,
                             null);
 
                 }

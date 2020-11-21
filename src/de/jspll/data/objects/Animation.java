@@ -118,6 +118,16 @@ public class Animation extends Texture {
         this.looping = looping;
     }
 
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
+
+    public void updateDuration(float duration) {
+        current_time *= duration/ this.duration ;
+        setDuration(duration);
+    }
+
+
     protected class KeyPoint {
 
         protected double timestamp;
