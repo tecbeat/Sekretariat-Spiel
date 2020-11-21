@@ -67,7 +67,7 @@ public class Main {
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
         //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\player_animation\\forward0_", 6, new Point(0, 0), new Dimension(32,64), null, .1F)));
 
-        Player p = new Player("OwnPlayer", new Point(0,0), new Dimension(32, 64), 3);
+        Player p = new Player("OwnPlayer", new Point(3000,2500), new Dimension(32, 64), 3);
         objects.add(p);
 
         //System.out.println(JSONSupport.convertObjectToJson(p));

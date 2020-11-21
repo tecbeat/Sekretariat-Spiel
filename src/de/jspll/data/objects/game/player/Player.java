@@ -82,17 +82,10 @@ public class Player extends TexturedObject {
     }
 
 
-    Point lastPos = new Point(0,0);
-    Point halfResolution;
-
     @Override
     public char update(float elapsedTime) {
         super.update(elapsedTime);
         Camera c = getParent().getSelectedCamera();
-        if (halfResolution == null){
-            halfResolution = new Point(c.getWidth()/2, c.getHeight()/2);
-            Logger.d.add("Res / 2: " + halfResolution);
-        }
 
         c.centerToObject(this);
 
@@ -178,7 +171,7 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         movementAnimationList.get(0).startAnimation(start);
         start = false;
-        if (pos.y-10 >= 0  && pos.y-10 < 3136-64) pos.y -= 10;
+        if (pos.y-1 >= 0  && pos.y-1 < 3136-64) pos.y -= 1;
 
         lastPressedKey = "w";
     }
@@ -187,7 +180,7 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         movementAnimationList.get(1).startAnimation(start);
         start = false;
-        if (pos.y+10 >= 0 && pos.y+10 < 3136-64) pos.y += 10;
+        if (pos.y+1 >= 0 && pos.y+1 < 3136-64) pos.y += 1;
 
         lastPressedKey = "s";
     }
@@ -197,7 +190,7 @@ public class Player extends TexturedObject {
 
         movementAnimationList.get(2).startAnimation(start);
         start = false;
-        if (pos.x-10 >= 0 && pos.x-10 <= 3552-32) pos.x -= 10;
+        if (pos.x-1 >= 0 && pos.x-1 <= 3552-32) pos.x -= 1;
 
         lastPressedKey = "a";
     }
@@ -208,7 +201,7 @@ public class Player extends TexturedObject {
         movementAnimationList.get(3).startAnimation(start);
         start = false;
 
-        if (pos.x+10 >= 0 && pos.x+10 <= 3552-32) pos.x += 10;
+        if (pos.x+1 >= 0 && pos.x+1 <= 3552-32) pos.x += 1;
 
         lastPressedKey = "d";
     }

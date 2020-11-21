@@ -2,8 +2,6 @@ package de.jspll.graphics;
 
 
 import de.jspll.data.objects.GameObject;
-import de.jspll.data.objects.game.map.TileMap;
-import de.jspll.handlers.GameObjectHandler;
 import de.jspll.util.Logger;
 import de.jspll.util.Vector2D;
 
@@ -107,6 +105,7 @@ public class Camera {
         boolean[] OutSideCheck = checkIfOutside(objectPos);
         int[] transform = transform(new int[]{objectPos.x + dimension.width/2, objectPos.y + dimension.height/2});
 
+        //Logger.d.add(x + ", " + y);
         moveToBound();
         Point transformedPos = new Point(transform[0], transform[1]);
 
@@ -125,8 +124,8 @@ public class Camera {
         while (y < 0) increase_y(1);
 
         //TODO Use with precaution
-        while (x > 3552 + width) increase_x(-1);
-        while (y > 3136 + width + 128) increase_y(-1);
+//        while (x > 3552 + width) increase_x(-1);
+//        while (y > 3136 + height*2) increase_y(-1);
 
         //Breite 3552
         //Höhe 3136
@@ -134,7 +133,12 @@ public class Camera {
 
     private boolean[] checkIfOutside(Point pos) {
         // TODO remove fixed values: values are realative to zoom
-        return new boolean[]{pos.x < 480 || pos.x > 3072, pos.y < 272 || pos.y > 2864};
+        double numberTilesX = 60 / zoom;
+        double numberTilesY = 40 / zoom;
+        int TileMapWidth = 3552;
+        int TileMapHeight = 3136;
+        return new boolean[]{pos.x < numberTilesX*16 || pos.x > TileMapWidth - numberTilesX*16 - 16,
+                             pos.y < numberTilesY*16 || pos.y > TileMapHeight - numberTilesY*16};
     }
 
 
