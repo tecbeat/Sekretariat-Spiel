@@ -9,6 +9,8 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.gridTiles;
 import de.jspll.data.objects.game.map.layer;
+import de.jspll.data.objects.game.tasks.Task;
+import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
@@ -136,8 +138,6 @@ public class GameObjectHandler{
     public void setLogicHandler(LogicHandler logicHandler) {
         this.logicHandler = logicHandler;
     }
-
-    public static boolean DEBUG = true;
 
     private ChannelID activeScene = SCENE_LOADING;
 
@@ -293,6 +293,12 @@ public class GameObjectHandler{
                         }
                     }
                 }
+                TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
+                        new Point(1280,1088),
+                        new Dimension(32,16),
+                        new Task());
+                th1.setListener(goh);
+                out.add(th1);
                 pRpt.setPayload(out);
                 pRpt.update();
 

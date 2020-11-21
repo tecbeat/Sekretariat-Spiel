@@ -9,6 +9,8 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.examples.Counter;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
+import de.jspll.data.objects.game.tasks.Task;
+import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.Report;
 import de.jspll.dev.EditorHandler;
@@ -76,11 +78,8 @@ public class Main {
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));
         //objects.add(new AnimatedGameObject("test",0,0,new Dimension(1600,900),new Animation("assets\\player_animation\\forward0_", 6, new Point(0, 0), new Dimension(32,64), null, .1F)));
 
-        /** funktioniert nicht
-         *  aktuelles Primärproblem:
-         *  - getParent return null -> komme nicht an den GameObjectHandler ran umd neue Objekte hinzuzufügen um keine hard-coded animationen in der Main erstellen zu müssen
-         */
-        Player p = new Player("OwnPlayer", new Point(1060,360), new Dimension(32, 64), 1);
+
+        Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
         objects.add(p);
         //objects.add(new Player("testColor0", 0,0, new Dimension(1600,900), 2));
         //objects.add(new Player("testColor1", 0,0, new Dimension(1600,900), 3));
@@ -89,6 +88,12 @@ public class Main {
 
         //System.out.println(JSONSupport.convertObjectToJson(p));
 
+
+//        TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
+//                new Point(1280,1088),
+//                new Dimension(32,16),
+//                new Task());
+//        objects.add(th1);
         MouseFollower m = new MouseFollower("test1");
         //DisplayMover d = new DisplayMover("test1");
         objects.add(m);

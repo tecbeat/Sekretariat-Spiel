@@ -6,6 +6,7 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.Texture;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
+import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.util.json.JSONObject;
 
 import java.lang.reflect.Field;

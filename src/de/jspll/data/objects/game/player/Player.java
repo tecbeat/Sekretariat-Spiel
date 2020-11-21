@@ -378,8 +378,8 @@ public class Player extends TexturedObject {
                 if(input[1] instanceof String){
                     String scope = (String) input[1];
                     ChannelID targetChannel = (ChannelID) input[2];
-                    getParent().dispatch(targetChannel,scope, new Object[]{"playerPos", pos});
-                    //sends ["playerPos", pos] to scope
+                    getParent().dispatch(targetChannel,scope, new Object[]{"playerPos", pos, dimension});
+                    //sends ["playerPos", pos, dimension] to scope
                 }
             }
         }
