@@ -99,7 +99,7 @@ public class GraphicsHandler implements SubHandler {
             for(int i = FIRST_LAYER.valueOf(); i <= LAST_LAYER.valueOf(); i++){
                 for (GameObject object : gameObjectHandler.getChannel(ChannelID.getbyID(i)).allValues()) {
                     try {
-                        object.paint(frame_graphics, elapsedTime, cameras[selectedCamera]);
+                        object.paint(frame_graphics, elapsedTime, cameras[selectedCamera], ChannelID.getbyID(i));
                     } catch (Exception e){
                         e.printStackTrace();
                     }

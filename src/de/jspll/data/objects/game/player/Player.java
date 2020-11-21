@@ -1,8 +1,8 @@
 package de.jspll.data.objects.game.player;
 
+import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Collision;
@@ -89,18 +89,92 @@ public class Player extends TexturedObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
-        super.paint(g, elapsedTime, camera);
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        super.paint(g, elapsedTime, camera, currStage);
     }
 
     @Override
     public char update(float elapsedTime) {
         super.update(elapsedTime);
 
-        if (collisionMap == null)
+
+        decayVelocity();
+
+        updateVelocity();
+
+        handleCollision(elapsedTime);
+
+        //maybe move the following code block to different method
+        Camera c = getParent().getSelectedCamera();
+        if (halfResolution == null) {
+            halfResolution = new Point(c.getWidth() / 2, c.getHeight() / 2);
+            Logger.d.add("Res / 2: " + halfResolution);
+        }
+        int[] transform = c.transform(new int[]{pos.x, pos.y});
+        Point transformedPos = new Point(transform[0], transform[1]);
+
+        Vector2D vec = new Vector2D(transformedPos, halfResolution);
+
+
+        c.increase_y((float) -vec.y);
+        c.increase_x((float) -vec.x);
+
+
+        assimilateXY();
+
+        return super.update(elapsedTime);
+    }
+
+    private void assimilateXY() {
+        this.x = pos.x;
+        this.y = pos.y;
+    }
+
+    private void handleCollision(float elapsedTime) {
+        Vector2D scaledVelocity = velocity.scale(elapsedTime);
+
+        if (collisionMap != null) {
+            //Collision
+
+
+            Point newPos = new Point(pos);
+            scaledVelocity.updatePos(newPos);
+
+            if (doesCollisionOccur(newPos)) {
+                //Logger.d.add("Collission occured");
+                //handle collision
+                Vector2D[] vectors = scaledVelocity.splitIntoXY();
+                Vector2D outVec = new Vector2D(0, 0);
+                Point oldPos = new Point(pos);
+                newPos = new Point(pos);
+                vectors[1].updatePos(newPos);
+                if (doesCollisionOccur(newPos)) {
+                    newPos = oldPos;
+                } else {
+                    outVec.setY(vectors[1].getY());
+                }
+                oldPos = new Point(newPos);
+                vectors[0].updatePos(newPos);
+                if (doesCollisionOccur(newPos)) {
+                    newPos = oldPos;
+                } else {
+                    outVec.setX(vectors[0].getX());
+                }
+                outVec.updatePos(pos);
+
+            } else {
+                scaledVelocity.updatePos(pos);
+
+            }
+
+
+        } else {
             getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{"player", "getCollisionArea"});
+            scaledVelocity.updatePos(pos);
+        }
+    }
 
-
+    private void decayVelocity() {
         if (sprinted_last) {
             velocity.instanceScale(0.9d);
             if (velocity.euclideanDistance() < 1) {
@@ -109,8 +183,9 @@ public class Player extends TexturedObject {
         } else {
             velocity.instanceScale(0d);
         }
+    }
 
-
+    private void updateVelocity() {
         if (keyMap != null) {
             double speed = 95d;
 
@@ -179,73 +254,23 @@ public class Player extends TexturedObject {
             }
 
         }
-
-        Vector2D scaledVelocity = velocity.scale(elapsedTime);
-        if (collisionMap != null) {
-            //Collision
-
-
-            Point newPos = new Point(pos);
-            scaledVelocity.updatePos(newPos);
-
-            if (doesCollisionOccur(newPos)) {
-                //Logger.d.add("Collission occured");
-                //handle collision
-                Vector2D[] vectors = scaledVelocity.splitIntoXY();
-                Vector2D outVec = new Vector2D(0, 0);
-                Point oldPos = new Point(pos);
-                newPos = new Point(pos);
-                vectors[1].updatePos(newPos);
-                if (doesCollisionOccur(newPos)) {
-                    newPos = oldPos;
-                } else {
-                    outVec.setY(vectors[1].getY());
-                }
-                oldPos = new Point(newPos);
-                vectors[0].updatePos(newPos);
-                if (doesCollisionOccur(newPos)) {
-                    newPos = oldPos;
-                } else {
-                    outVec.setX(vectors[0].getX());
-                }
-                outVec.updatePos(pos);
-
-            } else {
-                scaledVelocity.updatePos(pos);
-
-            }
-
-
-        }
-
-        Camera c = getParent().getSelectedCamera();
-        if (halfResolution == null) {
-            halfResolution = new Point(c.getWidth() / 2, c.getHeight() / 2);
-            Logger.d.add("Res / 2: " + halfResolution);
-        }
-        int[] transform = c.transform(new int[]{pos.x, pos.y});
-        Point transformedPos = new Point(transform[0], transform[1]);
-
-        Vector2D vec = new Vector2D(transformedPos, halfResolution);
-
-
-        c.increase_y((float) -vec.y);
-        c.increase_x((float) -vec.x);
-
-
-        this.x = pos.x;
-        this.y = pos.y;
-
-        return super.update(elapsedTime);
     }
 
     private boolean doesCollisionOccur(Point newPos) {
+        if (!Main.DEBUG || Main.DEBUG) {
+            if (keyMap != null) {
+                if (keyMap.get("q").get())
+                    return false;
+            }
+        }
+
+
         int mapX = mapPos_and_metaData[0],
                 mapY = mapPos_and_metaData[1],
                 mapWidth = mapPos_and_metaData[2],
                 mapHeight = mapPos_and_metaData[3],
-                playerWidth = dimension.width,
-                playerHeight = dimension.height / 2;
+                playerWidth = dimension.width - 2,
+                playerHeight = dimension.height / 2 - 16;
         if (!(
                 pos.x + playerWidth < mapX || pos.x > mapWidth + mapX ||
                         pos.y + playerHeight < mapY || pos.y > mapY + mapHeight ||
@@ -254,8 +279,8 @@ public class Player extends TexturedObject {
         )) {
             int tileWidth = mapPos_and_metaData[4],
                     tileHeight = mapPos_and_metaData[5],
-                    relX = newPos.x - mapX,
-                    relY = (newPos.y + 32) - mapY,
+                    relX = newPos.x + 1 - mapX,
+                    relY = (newPos.y + 32 + 16) - mapY,
                     leftTile = relX / tileWidth,
                     rightTile = (relX + playerWidth) / tileWidth,
                     topTile = relY / tileHeight,
@@ -288,41 +313,52 @@ public class Player extends TexturedObject {
     }
 
     @Override
-    protected void drawFrame(Graphics g, float elapsedTime, Camera camera) {
+    protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         for (Animation animation : movementAnimationList) {
             animation.draw((Graphics2D) g, elapsedTime, camera);
         }
 
+
         //debugging
-//        Point t = new Point(pos);
-//        velocity.updatePos(t);
-//        g.setColor(Color.MAGENTA);
-//        g.drawLine(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyXTransform(t.x), camera.applyYTransform(t.y));
-//        //Logger.d.add("vector len=" + velocity.euclideanDistance());
-//        if (!sprinted_last)
-//            PaintingUtil.paintCircleFromCenter(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyZoom(95), (Graphics2D) g, false);
-//        else
-//            PaintingUtil.paintCircleFromCenter(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyZoom(95) * 1.7, (Graphics2D) g, false);
-//
-//        int playerX = pos.x,
-//                playerY = pos.y + 32,
-//                playerWidth = dimension.width,
-//                playerHeight = dimension.height / 2;
-//        g.drawRect(camera.applyXTransform(playerX), camera.applyYTransform(playerY), camera.applyZoom(playerWidth), camera.applyZoom(playerHeight));
-//        g.drawString("x=" + pos.x + " y=" + pos.y, camera.applyXTransform(pos.x), camera.applyYTransform(pos.y));
-//
-//        if (collisionMap != null) {
-//            for (int x = 0; x < collisionMap.length; x++) {
-//                for (int y = 0; y < collisionMap[x].length; y++) {
-//                    if (collisionMap[x][y] == 0) {
-//                        g.drawRect(camera.applyXTransform(mapPos_and_metaData[0] + x * mapPos_and_metaData[4]),
-//                                camera.applyYTransform(mapPos_and_metaData[1] + y * mapPos_and_metaData[5]),
-//                                camera.applyZoom(mapPos_and_metaData[4]),
-//                                camera.applyZoom(mapPos_and_metaData[5]));
-//                    }
-//                }
-//            }
-//        }
+        if (!Main.DEBUG)
+            return;
+        Point t = new Point(pos);
+        velocity.updatePos(t);
+        g.setColor(Color.MAGENTA);
+        g.drawLine(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyXTransform(t.x), camera.applyYTransform(t.y));
+        //Logger.d.add("vector len=" + velocity.euclideanDistance());
+        if (!sprinted_last)
+            PaintingUtil.paintCircleFromCenter(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyZoom(95), (Graphics2D) g, false);
+        else
+            PaintingUtil.paintCircleFromCenter(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyZoom(95) * 1.7, (Graphics2D) g, false);
+
+
+        if (keyMap != null) {
+            if (keyMap.get("q").get())
+                g.setColor(Color.red);
+        }
+
+        int playerX = pos.x + 1,
+                playerY = pos.y + 32 + 16,
+                playerWidth = dimension.width - 2,
+                playerHeight = dimension.height / 2 - 16;
+        g.drawRect(camera.applyXTransform(playerX), camera.applyYTransform(playerY), camera.applyZoom(playerWidth), camera.applyZoom(playerHeight));
+        g.drawString("x=" + pos.x + " y=" + pos.y, camera.applyXTransform(pos.x), camera.applyYTransform(pos.y));
+
+
+
+        if (collisionMap != null) {
+            for (int x = 0; x < collisionMap.length; x++) {
+                for (int y = 0; y < collisionMap[x].length; y++) {
+                    if (collisionMap[x][y] == 0) {
+                        g.drawRect(camera.applyXTransform(mapPos_and_metaData[0] + x * mapPos_and_metaData[4]),
+                                camera.applyYTransform(mapPos_and_metaData[1] + y * mapPos_and_metaData[5]),
+                                camera.applyZoom(mapPos_and_metaData[4]),
+                                camera.applyZoom(mapPos_and_metaData[5]));
+                    }
+                }
+            }
+        }
 
     }
 
@@ -333,18 +369,24 @@ public class Player extends TexturedObject {
             return 0;
         } else if (input[0] instanceof String) {
             String cmd = (String) input[0];
-            if (cmd.contentEquals("collision")) {
+            if (cmd.contentEquals("collision") && input[1] instanceof int[][] && input[2] instanceof int[]) {
+                // [ "collision", collisionMap, mapPos_and_Metadata ]
                 collisionMap = (int[][]) input[1];
                 mapPos_and_metaData = (int[]) input[2];
 
+            } else if(cmd.contentEquals("playerPos")){ // [ "playerPos", scope ]
+                if(input[1] instanceof String){
+                    String scope = (String) input[1];
+                    ChannelID targetChannel = (ChannelID) input[2];
+                    getParent().dispatch(targetChannel,scope, new Object[]{"playerPos", pos});
+                    //sends ["playerPos", pos] to scope
+                }
             }
         }
 
 
         return 0;
     }
-    //BufferedImage[] images = this.getParent().getResourceHandler().getTextureGroup();
-    // Animation PlayerAnimation = new Animation();
 
     public void stopAllAnimation() {
         for (Animation animation : movementAnimationList) {

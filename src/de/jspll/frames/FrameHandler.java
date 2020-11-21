@@ -1,5 +1,6 @@
 package de.jspll.frames;
 
+import de.jspll.data.ChannelID;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.GraphicsHandler;
 import de.jspll.handlers.LogicHandler;
@@ -22,6 +23,8 @@ public class FrameHandler {
         logicHandler.setGameObjectHandler(gameObjectHandler);
         gameObjectHandler.setGraphicsHandler(graphicsHandler);
         gameObjectHandler.setLogicHandler(logicHandler);
+        //gameObjectHandler.setup();
+        gameObjectHandler.switchScene(ChannelID.SCENE_LOADING);
     }
 
     private boolean running = true;

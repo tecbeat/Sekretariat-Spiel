@@ -35,10 +35,16 @@ import java.util.Arrays;
 
 public class Main {
 
+    public static boolean DEBUG = false;
+
     //handles Frame Drawing and game logic
     private static FrameHandler frameHandler = new FrameHandler("Sekreteriat Spiel", new Dimension(1920, 1080));
 
     public static void main(String[] args) {
+        for(String s: args){
+            if(s.contentEquals("-Debug") || s.contentEquals("-D"))
+                DEBUG = true;
+        }
 
         /**if(true){
             JSONUtils jsonReader = JSONUtils.singleton;
@@ -62,9 +68,9 @@ public class Main {
             }
         }
 
-        TileMap tm = new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
-                new Dimension(1000, 1000), 40, 40,
-                new String[]{"assets\\map\\Floors_only_32x32"});
+//        TileMap tm = new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
+//                new Dimension(1000, 1000), 40, 40,
+//                new String[]{"assets\\map\\Floors_only_32x32"});
         //objects.add(tm);
 
         //objects.add(new PaperList("test",new Dimension(600,600),new Point(0,0)));

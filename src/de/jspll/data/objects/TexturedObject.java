@@ -72,15 +72,15 @@ public class TexturedObject extends GameObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
-        super.paint(g, elapsedTime, camera);
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        super.paint(g, elapsedTime, camera, currStage);
         if(!textureLoaded){
             loadTexture();
         }
-        drawFrame(g,elapsedTime,camera);
+        drawFrame(g,elapsedTime,camera, currStage );
     }
 
-    protected void drawFrame(Graphics g, float elapsedTime, Camera camera){
+    protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage){
         Graphics2D g2d = (Graphics2D) g;
         texture.draw(g2d,elapsedTime,camera);
     }

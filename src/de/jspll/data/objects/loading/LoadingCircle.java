@@ -1,5 +1,6 @@
 package de.jspll.data.objects.loading;
 
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.PaintingUtil;
@@ -38,8 +39,8 @@ public class LoadingCircle extends GameObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
-        super.paint(g, elapsedTime, camera);
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        super.paint(g, elapsedTime, camera, currStage);
         if(circles == null || circles[0] == null){
             init();
         }
@@ -76,7 +77,7 @@ class RotatingCircle {
 
 
     public void paint(Graphics g, float elapsedTime, Camera camera) {
-        Vector2D circle;
+        Vector2D circle = new Vector2D(0,1).scale(20);
 
         if(offset > 360 || offset < 0){
             if(offset > 360){
@@ -90,7 +91,7 @@ class RotatingCircle {
             g.setColor(Color.MAGENTA);
         }
 
-        //PaintingUtil.paintCircleFromCenter(circle.x,  circle.y, radius,g);
+        PaintingUtil.paintCircleFromCenter(circle.x,  circle.y, radius, (Graphics2D) g);
 
 
     }

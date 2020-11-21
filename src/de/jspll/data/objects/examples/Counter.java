@@ -22,7 +22,7 @@ public class Counter extends GameObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         test += elapsedTime;
         g.setColor(Color.WHITE);
         g.drawString("" + test,50,50);

@@ -1,16 +1,15 @@
 package de.jspll.data.objects;
 
+import de.jspll.Main;
 import de.jspll.data.*;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
-import de.jspll.handlers.JSONSupport;
 import de.jspll.logic.Interactable;
 import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -148,10 +147,12 @@ public class GameObject implements Drawable, Interactable {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         if(!GameObjectHandler.DEBUG)
             return;
         if(dimension == null)
+            return;
+        if(!Main.DEBUG)
             return;
         if(elapsedTime != 0)
             g.setColor(Color.PINK);

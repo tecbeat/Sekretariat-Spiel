@@ -62,7 +62,8 @@ public class GameObjectHandler{
 
     public void loadScene(ChannelID scene, ArrayList<GameObject> objects){
         for(GameObject obj: objects){
-            loadObject(obj);
+            //loadObject(obj);
+            subscribe(obj,INSTANCE_REGISTER);
             subscribe(obj,scene);
         }
     }
@@ -296,6 +297,7 @@ public class GameObjectHandler{
                 pRpt.update();
 
                 loadScene(scene, out);
+                switchScene(scene);
             }
 
 
@@ -448,7 +450,12 @@ public class GameObjectHandler{
                 if(l.getTextures() == null || l.getTextures()[0] == null){
                     System.out.println("Error");
                 }
-                TileMap tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());
+                TileMap tm;
+                if(l.getId().contains("Ausstattung") || l.getId().contentEquals("Boden2")){
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
+                }else {
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());
+                }
 
                 HashMap<String, Tile> tileCache = new HashMap<>();
 

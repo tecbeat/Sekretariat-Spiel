@@ -2,6 +2,7 @@ package de.jspll.data.objects.game.map;
 
 import de.jspll.util.PaintingUtil;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.management.GarbageCollectorMXBean;
 
@@ -45,6 +46,9 @@ public class Tile {
             parent = gO;
         if (cache == null || tW != width || tH != height) {
             cache = PaintingUtil.resize(parent.tileSets[textureReference[4]].getSubimage(textureReference[0], textureReference[1], textureReference[2], textureReference[3]), width, height);
+//            Graphics2D g = cache.createGraphics();
+//            g.setColor(Color.RED);
+//            g.drawString("x=" + textureReference[0] + " y=" + textureReference[1],0,10);
             tW = width;
             tH = height;
         }
