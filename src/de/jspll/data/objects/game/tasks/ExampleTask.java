@@ -63,11 +63,13 @@ public class ExampleTask implements Task{
         return getHolder().getParent().getMousePos();
     }
 
-    public void update(float elapsedTime) {
-        return;
+    public char update(float elapsedTime) {
+        return 0;
     }
 
-    public void call( Object[] input){ // input[0] always = "toTask"
-
+    public char call( Object[] input){ // input[0] always = "toTask"
+        return 0;
     }
+
+
 }

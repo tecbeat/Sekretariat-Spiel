@@ -11,9 +11,9 @@ public interface Task {
 
     boolean isActive();
 
-    void update(float elapsedTime);
+    char update(float elapsedTime);
 
-    void call( Object[] input);
+    char call(Object[] input);
 
     void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage);
 

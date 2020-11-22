@@ -85,6 +85,11 @@ public class TaskHolder extends GameObject {
                 task.call(input);
                 return 0;
             }
+
+            if (((String) input[0]).contentEquals("input")) {
+                task.call(input);
+            }
+
         }
         return 0;
     }
