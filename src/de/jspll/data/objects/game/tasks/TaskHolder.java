@@ -93,14 +93,12 @@ public class TaskHolder extends GameObject {
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         super.paint(g, elapsedTime, camera, currStage);
 
-
         if (task != null) {
             if (currStage == ChannelID.UI && task.isActive()) {
                 task.paint(g, elapsedTime, camera, currStage);
                 return;
             }
         }
-
 
         if (Main.DEBUG) {
             if (inProximity) {
