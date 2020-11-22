@@ -2,6 +2,7 @@ package de.jspll.data.objects.loading;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
+import de.jspll.handlers.GameObjectHandler;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class Report implements ProgressReporter {
     private float percentage;
     private ChannelID nextScene;
     private ArrayList<GameObject> payload;
+    private GameObjectHandler gameObjectHandler;
 
     public Report(int count, ChannelID nextScene){
         this.initalCount = count * 60;
@@ -51,11 +53,21 @@ public class Report implements ProgressReporter {
 
         if(count<=0) {
             percentage = -1;
+            if(gameObjectHandler != null){
+                gameObjectHandler.switchScene(nextScene);
+                System.out.println("Loaded");
+            }
+
         }
     }
 
     @Override
     public float getProgress() {
         return percentage;
+    }
+
+    @Override
+    public void setGameObjectHandler(GameObjectHandler goh) {
+        gameObjectHandler = goh;
     }
 }

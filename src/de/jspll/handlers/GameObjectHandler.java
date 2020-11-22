@@ -59,14 +59,6 @@ public class GameObjectHandler{
         return graphicsHandler.getSelectedCamera();
     }
 
-    public void loadScene(ChannelID scene, ArrayList<GameObject> objects){
-        for(GameObject obj: objects){
-            //loadObject(obj);
-            subscribe(obj,INSTANCE_REGISTER);
-            subscribe(obj,scene);
-        }
-    }
-
     public void setup(){
         ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
         loadingSceneBuilder.add(new LoadingCircle("LdC","system.loading",
@@ -246,11 +238,20 @@ public class GameObjectHandler{
         }
     }
 
+    public void loadScene(ChannelID scene, ArrayList<GameObject> objects){
+        for(GameObject obj: objects){
+            //loadObject(obj);
+            subscribe(obj,INSTANCE_REGISTER);
+            subscribe(obj,scene);
+        }
+    }
+
     public void loadScene(ChannelID scene, JsonArray objects){
         ArrayList<GameObject> out = new ArrayList<>();
         ProgressReporter pRpt = new Report();
         pRpt.setCount(objects.size() + 1);
         pRpt.setNextScene(scene);
+        pRpt.setGameObjectHandler(this);
         LoadingBar lb = new LoadingBar(pRpt);
         lb.setMessage("loading objects...");
         this.subscribe(lb);
@@ -294,13 +295,21 @@ public class GameObjectHandler{
                 th1.setListener(goh);
                 out.add(th1);
                 pRpt.setPayload(out);
-                pRpt.update();
+
 
                 loadScene(scene, out);
-                switchScene(scene);
+
+                pRpt.update();
+
             }
         });
         t1.start();
+    }
+
+    public void loadScene(ChannelID scene, String file){
+        String jsonStr = getResourceHandler().fileToJson(file);
+        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
+        loadScene(scene, jsonArray);
     }
 
     public TileMap[] loadMap(String mapJson){

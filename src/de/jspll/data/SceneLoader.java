@@ -2,6 +2,7 @@ package de.jspll.data;
 
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.loading.ProgressReporter;
+import de.jspll.handlers.GameObjectHandler;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -60,6 +61,11 @@ public class SceneLoader extends Thread implements ProgressReporter{
 
     @Override
     public void run() {
+
+    }
+
+    @Override
+    public void setGameObjectHandler(GameObjectHandler goh) {
 
     }
 }
