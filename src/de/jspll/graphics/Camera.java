@@ -160,11 +160,4 @@ public class Camera {
         return out;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 }

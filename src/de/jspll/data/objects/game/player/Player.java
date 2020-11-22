@@ -102,6 +102,8 @@ public class Player extends TexturedObject {
     public char update(float elapsedTime) {
         super.update(elapsedTime);
 
+        Camera c = getParent().getSelectedCamera();
+
         c.centerToObject(this);
 
         decayVelocity();
@@ -111,7 +113,6 @@ public class Player extends TexturedObject {
         handleCollision(elapsedTime);
 
         //maybe move the following code block to different method
-        Camera c = getParent().getSelectedCamera();
 
         assimilateXY();
 
