@@ -498,7 +498,7 @@ public class GameObjectHandler{
         th = new TaskHolder("test1", "g.dflt.TaskHolder",
                 new Point(622,2090),
                 new Dimension(32,16),
-                new CommonTask("Post Sortieren", "Sortieren", "Schreddern", new MailReaction()));
+                new CommonTask("Post sortieren", "Post schreddern", new MailReaction()));
         th.setListener(this);
         result.add(th);
 
