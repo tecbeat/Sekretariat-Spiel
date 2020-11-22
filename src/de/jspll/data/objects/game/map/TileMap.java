@@ -1,8 +1,10 @@
 package de.jspll.data.objects.game.map;
 
+import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.util.Collision;
 import de.jspll.util.Logger;
 
 import java.awt.*;
@@ -30,6 +32,12 @@ public class TileMap extends TexturedObject {
     private int[] mousePos = new int[]{0, 0};
     private int selectedTile = 0;
     private boolean coveringPlayer = false;
+
+    //2d array representing map
+    private int[][] collisionMap;
+    //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
+    private int[] mapPos_and_metaData;
+
 
     public TileMap(String ID, String objectID, Point playerPos, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
         super(ID, objectID, x, y, dimension, null);
@@ -211,8 +219,13 @@ public class TileMap extends TexturedObject {
                 }
             } else if (cmd.contentEquals("player")) {
                 getParent().dispatch(ChannelID.PLAYER, new Object[]{"collision", tileMap, new int[]{pos.x, pos.y, dimension.width, dimension.height, defaultTileDimension.width, defaultTileDimension.height}});
+            } else if (cmd.contentEquals("getCollisionArea")) {
+                getParent().dispatch(ChannelID.LOGIC,(String) input[1], new Object[]{"collision", tileMap, new int[]{pos.x, pos.y, dimension.width, dimension.height, defaultTileDimension.width, defaultTileDimension.height}});
             } else if (cmd.contentEquals("playerPos")) {
                 playerPos = (Point) input[1];
+            } else if(cmd.contentEquals("collision")){
+                collisionMap = (int[][]) input[1];
+                mapPos_and_metaData = (int[]) input[2];
             }
         }
         return 0;
@@ -307,49 +320,53 @@ public class TileMap extends TexturedObject {
     private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera) {
         if (playerPos == null)
             return;
-        int playerX = playerPos.x - pos.x;
-        int playerY = playerPos.y + 32 - pos.y;
-        int playerWidth = 32;
-        int playerHeight = 32;
-        int tileWidth = defaultTileDimension.width;
-        int tileHeight = defaultTileDimension.height;
-        int zoomedTileWidth = camera.applyZoom(tileWidth);
-        int zoomedTileHeight = camera.applyZoom(tileHeight);
+        if(collisionMap == null){
+            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
+        } else {
+            int playerX = playerPos.x - pos.x;
+            int playerY = playerPos.y - 12 - pos.y;
+            int playerWidth = 32;
+            int playerHeight = 64;
+            int tileWidth = defaultTileDimension.width;
+            int tileHeight = defaultTileDimension.height;
+            int zoomedTileWidth = camera.applyZoom(tileWidth);
+            int zoomedTileHeight = camera.applyZoom(tileHeight);
 
-        for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
-            for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
-                if (tileMap[x][y] < 0) {
-                    tileMap[x][y] = -1;
-                    continue;
-                }
-                if (!isTextureLoaded()) {
-                    continue;
-                }
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.drawImage(tiles[tileMap[x][y]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
-                        camera.applyXTransform(pos.x + x * defaultTileDimension.width),
-                        camera.applyYTransform(pos.y + y * defaultTileDimension.height),
-                        null);
-                if (useConnectedStrategy) {
-                    if (y > 0) {
-                        int ty = y - 1;
-                        if (tileMap[x][ty] > -1) {
-                            g2d.drawImage(tiles[tileMap[x][ty]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
-                                    camera.applyXTransform(pos.x + x * defaultTileDimension.width),
-                                    camera.applyYTransform(pos.y + ty * defaultTileDimension.height),
-                                    null);
-                            ty--;
-                            if (tileMap[x][ty] > -1) {
-                                g2d.drawImage(tiles[tileMap[x][ty]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
-                                        camera.applyXTransform(pos.x + x * defaultTileDimension.width),
-                                        camera.applyYTransform(pos.y + ty * defaultTileDimension.height),
-                                        null);
+            Graphics2D g2d = (Graphics2D) g;
+            Composite c = g2d.getComposite();
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f);
+            g2d.setComposite(ac);
 
-                            }
-                        }
+            for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
+                for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
+
+                    //debugging
+                    if(Main.DEBUG) {
+                        g.setColor(Color.GREEN);
+                        g.drawRect(camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                                camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
                     }
+
+                    if (!Collision.doesOverlapOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension))
+                        continue;
+
+                    if (tileMap[x][y] < 0) {
+                        tileMap[x][y] = -1;
+                        continue;
+                    }
+                    if (!isTextureLoaded()) {
+                        continue;
+                    }
+
+
+
+                    g2d.drawImage(tiles[tileMap[x][y]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
+                            camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                            camera.applyYTransform(pos.y + y * defaultTileDimension.height),
+                            null);
                 }
             }
+            g2d.setComposite(c);
         }
     }
 
@@ -384,5 +401,3 @@ public class TileMap extends TexturedObject {
         }
     }
 }
-
-

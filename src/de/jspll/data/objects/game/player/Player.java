@@ -50,6 +50,7 @@ public class Player extends TexturedObject {
         this.pos = pos;
         this.colorScheme = colorScheme;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
+        this.collision_Dim = new Dimension(dimension.width - 2,dimension.height / 2 - 16);
 
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, pos, dimension, this, 1F));
@@ -64,6 +65,7 @@ public class Player extends TexturedObject {
     }
 
     public Player() {
+
     }
 
 
@@ -162,7 +164,7 @@ public class Player extends TexturedObject {
 
 
         } else {
-            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{"player", "getCollisionArea"});
+            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
             scaledVelocity.updatePos(pos);
         }
     }
@@ -249,6 +251,8 @@ public class Player extends TexturedObject {
         }
     }
 
+    private Dimension collision_Dim;
+
     private boolean doesCollisionOccur(Point newPos) {
         if (!Main.DEBUG || Main.DEBUG) {
             if (keyMap != null) {
@@ -257,51 +261,13 @@ public class Player extends TexturedObject {
             }
         }
 
-
-        int mapX = mapPos_and_metaData[0],
-                mapY = mapPos_and_metaData[1],
-                mapWidth = mapPos_and_metaData[2],
-                mapHeight = mapPos_and_metaData[3],
-                playerWidth = dimension.width - 2,
-                playerHeight = dimension.height / 2 - 16;
-        if (!(
-                pos.x + playerWidth < mapX || pos.x > mapWidth + mapX ||
-                        pos.y + playerHeight < mapY || pos.y > mapY + mapHeight ||
-                        newPos.x + playerWidth < mapX || newPos.x > mapWidth + mapX ||
-                        newPos.y + playerHeight < mapY || newPos.y > mapY + mapHeight
-        )) {
-            int tileWidth = mapPos_and_metaData[4],
-                    tileHeight = mapPos_and_metaData[5],
-                    relX = newPos.x + 1 - mapX,
-                    relY = (newPos.y + 32 + 16) - mapY,
-                    leftTile = relX / tileWidth,
-                    rightTile = (relX + playerWidth) / tileWidth,
-                    topTile = relY / tileHeight,
-                    bottomTile = (relY + playerHeight) / tileHeight;
-            //collisionMap[x][y] == 0 -> not passable;
-
-            int[] newPlayerPos = new int[]{relX,
-                    relY,
-                    playerWidth,
-                    playerHeight};
-            for (int x = leftTile; x <= rightTile; x++) {
-                for (int y = topTile; y <= bottomTile; y++) {
-                    if (collisionMap[x][y] == 0) {
-                        if (Collision.doesRectCollide(newPlayerPos,
-                                new int[]{mapX + x * tileWidth,
-                                        mapY + y * tileHeight,
-                                        tileWidth,
-                                        tileHeight}))
-                            return true;
-                    }
-                }
-            }
+        Point collPos = new Point(newPos.x + 1,newPos.y + 32 + 16);
 
 
-            //Logger.d.add("playerTile x=" + playerTileX + " y=" + playerTileY);
+
+        if(Collision.doesCollisionOccur(collisionMap,mapPos_and_metaData,collPos,collision_Dim)) return true;
 
 
-        }
         return false;
     }
 
@@ -344,6 +310,14 @@ public class Player extends TexturedObject {
             for (int x = 0; x < collisionMap.length; x++) {
                 for (int y = 0; y < collisionMap[x].length; y++) {
                     if (collisionMap[x][y] == 0) {
+                        g.setColor(Color.RED);
+                        g.drawRect(camera.applyXTransform(mapPos_and_metaData[0] + x * mapPos_and_metaData[4]),
+                                camera.applyYTransform(mapPos_and_metaData[1] + y * mapPos_and_metaData[5]),
+                                camera.applyZoom(mapPos_and_metaData[4]),
+                                camera.applyZoom(mapPos_and_metaData[5]));
+                    }
+                    if (collisionMap[x][y] == 1) {
+                        g.setColor(Color.CYAN);
                         g.drawRect(camera.applyXTransform(mapPos_and_metaData[0] + x * mapPos_and_metaData[4]),
                                 camera.applyYTransform(mapPos_and_metaData[1] + y * mapPos_and_metaData[5]),
                                 camera.applyZoom(mapPos_and_metaData[4]),
@@ -444,6 +418,7 @@ public class Player extends TexturedObject {
     public void updateReferences() {
         super.updateReferences();
         keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
+        this.collision_Dim = new Dimension(dimension.width - 2,dimension.height / 2 - 16);
 
         for (Animation a : movementAnimationList)
             a.setPos(pos);
