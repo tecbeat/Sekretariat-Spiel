@@ -31,7 +31,7 @@ public class Main {
 
         ArrayList<Object> objects = new ArrayList<>();
 
-        Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
+        Player p = new Player("OwnPlayer", new Point(686,2113), new Dimension(32, 64), 1);
         objects.add(p);
 
 //        TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
