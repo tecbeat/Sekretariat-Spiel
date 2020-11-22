@@ -8,8 +8,8 @@ import de.jspll.graphics.Camera;
 import java.awt.*;
 
 public class MenuObject extends GameObject {
-    private String text;
-    private boolean border;
+    protected String text;
+    protected boolean border;
 
     public MenuObject(){
 
@@ -25,13 +25,17 @@ public class MenuObject extends GameObject {
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         //super.paint(g,elapsedTime,camera,currStage);
-        g.setColor(Color.BLUE);
-        g.setFont(new Font("Serif", Font.PLAIN, 28));
-        g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
 
         if(border){
+            g.setColor(Color.BLUE);
             g.drawRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
                     camera.applyZoom((int) dimension.getHeight()));
         }
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Serif", Font.PLAIN, 28));
+        g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
+
+
     }
 }

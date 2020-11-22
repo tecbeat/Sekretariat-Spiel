@@ -43,13 +43,39 @@ public class ButtonObject extends MenuObject {
         return 0;
     }
 
-    protected boolean checkClick(){
+    @Override
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        //super.paint(g, elapsedTime, camera, currStage);
+
+        g.setColor(Color.BLUE);
+        if(border){
+            if(checkHover()){
+                g.fillRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
+                        camera.applyZoom((int) dimension.getHeight()));
+            } else {
+                g.drawRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
+                        camera.applyZoom((int) dimension.getHeight()));
+            }
+        }
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Serif", Font.PLAIN, 28));
+        g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
+
+
+    }
+
+    protected boolean checkHover(){
         int xMin = getParent().getSelectedCamera().applyXTransform(x);
         int xMax = getParent().getSelectedCamera().applyXTransform(x+dimension.width);
         int yMin = getParent().getSelectedCamera().applyYTransform(y);
         int yMax = getParent().getSelectedCamera().applyYTransform(y + dimension.height);
 
-        return mousedown && mousePos[0] > xMin && mousePos[0] < xMax && mousePos[1] > yMin && mousePos[1] < yMax && !lockButton;
+        return mousePos[0] > xMin && mousePos[0] < xMax && mousePos[1] > yMin && mousePos[1] < yMax && !lockButton;
+    }
+
+    protected boolean checkClick(){
+        return mousedown && checkHover();
 
     }
 
