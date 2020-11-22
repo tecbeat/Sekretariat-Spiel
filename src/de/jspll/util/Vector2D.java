@@ -64,18 +64,10 @@ public class Vector2D {
 
     }
 
-    public Double abs(){
-        return Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
-    }
-
-    public static Double abs(Vector2D vec){
-        return Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.y,2));
-
-    }
 
     @Override
     public String toString() {
-        return "[x=" + x + ",y=" + y + "]";
+        return "[x=" + x + ", y=" + y + "]";
     }
 
 
@@ -87,8 +79,8 @@ public class Vector2D {
         Vector2D vec = (Vector2D) o;
 
         if (vec.x == this.x && vec.y == this.y) return true;
-
-        return vec.abs().equals(abs());
+        // needed check for direction of the vector
+        return vec.euclideanDistance() == euclideanDistance();
     }
 
 
