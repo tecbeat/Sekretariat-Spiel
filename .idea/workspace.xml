@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/de/jspll/graphics/assets/map/Main-Map.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/GameObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/examples/DisplayMover.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/data/objects/examples/DisplayMover.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GameObjectHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GraphicsHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/handlers/GraphicsHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/handlers/JSONSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/JSONSupport.java" afterDir="false" />
-    </list>
+    <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -243,6 +232,7 @@
       <workItem from="1605814291678" duration="8890000" />
       <workItem from="1605823933652" duration="7000" />
       <workItem from="1605856089777" duration="2453000" />
+      <workItem from="1606038157687" duration="30000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
