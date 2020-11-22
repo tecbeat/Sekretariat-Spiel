@@ -2,6 +2,11 @@ package de.jspll.data.objects.game.stats;
 
 import de.jspll.data.objects.GameObject;
 
+/**
+ * Manages the user statistics.
+ *
+ * @author Laura Schmidt
+ */
 public class StatManager extends GameObject {
 
     private Integer roundScore;
@@ -15,16 +20,16 @@ public class StatManager extends GameObject {
     }
 
     /**
-     * <pre>
-     *     Format:
-     * </pre>
-     *
-     * @param input
-     * @return
+     * <ul>
+     *     <li> General format: "statmanager statcommand taskTime remainingTime scoredPoints positive scoredKarma" </li>
+     *     <li> Finished task with positve karma: "statmanager 0 taskTime remainingTime scoredPoints 1 scoredKarma" </li>
+     *     <li> Finished task with negative karma: "statmanager 0 taskTime remainingTime scoredPoints 0 scoredKarma" </li>
+     *     <li> Failed task with negative karma: "statmanager 1 taskTime remainingTime scoredPoints 1 scoredKarma" </li>
+     *     <li> Failed task with positive karma: "statmanager 1 taskTime remainingTime scoredPoints 1 scoredKarma" </li>
+     * </ul>
      */
     @Override
     public char call(Object[] input) {
-        // statmanager statcommand taskTime remainingTime scoredPoints positive scoredKarma
         if(input == null || input.length < 1) {
             return 0;
         } else if(input[0] instanceof String && ((String) input[0]).contentEquals("statmanager")) {
@@ -66,12 +71,25 @@ public class StatManager extends GameObject {
         }
     }
 
+    /**
+     * Calculates the new round score.
+     *
+     * @param taskDuration time the task took
+     * @param scoredPoints scored Point
+     * @param finished shows if the task was finshed in time
+     */
     private void calculateNewRoundScore(Integer taskDuration, Integer scoredPoints, boolean finished) {
         if(finished) {
             roundScore = (taskDuration / 2) * scoredPoints;
         }
     }
 
+    /**
+     * Calculates the new karma score.
+     *
+     * @param scoredKarma karma that got scored, only positive Integer should be passed
+     * @param positiveKarma shows if the karma is negative or positive
+     */
     private void calculateNewKarmaScore(Integer scoredKarma, boolean positiveKarma) {
         if(positiveKarma) {
             karmaScore += scoredKarma;
