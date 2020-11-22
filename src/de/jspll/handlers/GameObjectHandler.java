@@ -9,8 +9,9 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.GridTiles;
 import de.jspll.data.objects.game.map.Layer;
-import de.jspll.data.objects.game.tasks.Task;
+import de.jspll.data.objects.game.tasks.ExampleTask;
 import de.jspll.data.objects.game.tasks.TaskHolder;
+import de.jspll.data.objects.game.tasks.TaskMail;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
@@ -290,9 +291,16 @@ public class GameObjectHandler{
                 TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
                         new Point(1280,1088),
                         new Dimension(32,16),
-                        new Task());
+                        new ExampleTask());
+                // TODO: Richtige Pos
+                TaskHolder th2 = new TaskHolder("test1", "g.dflt.TaskHolder",
+                        new Point(622,2090),
+                        new Dimension(32,16),
+                        new TaskMail());
                 th1.setListener(goh);
+                th2.setListener(goh);
                 out.add(th1);
+                out.add(th2);
                 pRpt.setPayload(out);
                 pRpt.update();
 
