@@ -71,6 +71,30 @@ public class StatManager extends GameObject {
             karmaScore -= scoredKarma;
         }
     }
+
+    public Integer getRoundScore() {
+        return roundScore;
+    }
+
+    public void setRoundScore(Integer roundScore) {
+        this.roundScore = roundScore;
+    }
+
+    public Integer getKarmaScore() {
+        return karmaScore;
+    }
+
+    public void setKarmaScore(Integer karmaScore) {
+        this.karmaScore = karmaScore;
+    }
+
+    public Long getRoundTime() {
+        return roundTime;
+    }
+
+    public void setRoundTime(Long roundTime) {
+        this.roundTime = roundTime;
+    }
 }
 
 enum StatCommand {
