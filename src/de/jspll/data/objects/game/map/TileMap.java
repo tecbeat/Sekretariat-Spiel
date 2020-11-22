@@ -334,7 +334,7 @@ public class TileMap extends TexturedObject {
 
             Graphics2D g2d = (Graphics2D) g;
             Composite c = g2d.getComposite();
-            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f);
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.9f);
             g2d.setComposite(ac);
 
             for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {

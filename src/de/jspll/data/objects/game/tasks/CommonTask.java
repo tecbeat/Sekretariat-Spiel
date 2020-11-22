@@ -203,8 +203,11 @@ public class CommonTask extends GameObject implements Task {
      */
     private void getMousePos(){
         // TODO: get proper mouse position if possible, siehe ExampleTask (null-check)
-        mousePos[0] = (int) getHolder().getParent().getMousePos().getX();
-        mousePos[1] = (int) getHolder().getParent().getMousePos().getY();
+        Point p = getHolder().getParent().getMousePos();
+        if(p == null)
+            return;
+        mousePos[0] = p.x;
+        mousePos[1] = p.y;
     }
 
     public void activate(){

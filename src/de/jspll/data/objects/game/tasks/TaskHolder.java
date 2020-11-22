@@ -109,16 +109,18 @@ public class TaskHolder extends GameObject {
 
         if (Main.DEBUG) {
 
-            Point pl = new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24);
-            Vector2D distanceToPlayer = new Vector2D(
-                    pl,
-                    new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2));
-            Point point = new Point(pl), destination = new Point(pl);
-            distanceToPlayer.updatePos(destination);
-            g.setColor(Color.CYAN);
-            g.drawLine(camera.applyXTransform(point.x), camera.applyYTransform(point.y),
-                    camera.applyXTransform(destination.x), camera.applyYTransform(destination.y));
 
+            if(playerPos != null && playerDim != null) {
+                Point pl = new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24);
+                Vector2D distanceToPlayer = new Vector2D(
+                        pl,
+                        new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2));
+                Point point = new Point(pl), destination = new Point(pl);
+                distanceToPlayer.updatePos(destination);
+                g.setColor(Color.CYAN);
+                g.drawLine(camera.applyXTransform(point.x), camera.applyYTransform(point.y),
+                        camera.applyXTransform(destination.x), camera.applyYTransform(destination.y));
+            }
 
             if (inProximity) {
                 g.setColor(Color.CYAN);
