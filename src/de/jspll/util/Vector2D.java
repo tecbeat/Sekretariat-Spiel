@@ -19,7 +19,8 @@ public class Vector2D {
 
     public Vector2D(Point p1, Point p2) {
         super();
-        this.x = p2.x-p1.x; this.y = p2.y - p1.y;
+        this.x = ((Integer) p2.x).doubleValue() - ((Integer) p1.x).doubleValue();
+        this.y = ((Integer) p2.y).doubleValue() - ((Integer) p1.y).doubleValue();
     }
 
     public double x, y;
@@ -121,7 +122,7 @@ public class Vector2D {
         x += this.x;
         y += this.y;
 
-        pos.move((int)Math.round(x),(int)Math.round(y));
+        pos.move((int)Math.round(x), (int)Math.round(y));
     }
 
     public void addToX(int amount){

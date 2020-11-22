@@ -20,14 +20,16 @@ public class TaskHolder extends GameObject {
     private Dimension playerDim;
     private Point pos;
     private Task task;
+    private double radius;
     private boolean inProximity = false;
     private HashMap<String,AtomicBoolean> keyMap;
 
-    public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task) {
+    public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
         this.channels = new ChannelID[]{ChannelID.UI, ChannelID.LOGIC};
         this.pos = pos;
         this.task = task;
+        this.radius = radius;
         if (task != null)
             task.setHolder(this);
     }
@@ -62,9 +64,9 @@ public class TaskHolder extends GameObject {
             return false;
         Vector2D distanceToPlayer = new Vector2D(
                 new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2),
-                new Point(playerPos.x + playerDim.width / 2, playerPos.y + dimension.height / 2));
+                new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24));
 
-        if (distanceToPlayer.euclideanDistance() < 24) {
+        if (distanceToPlayer.euclideanDistance() < radius) {
             return true;
         }
         return false;
@@ -106,6 +108,18 @@ public class TaskHolder extends GameObject {
         }
 
         if (Main.DEBUG) {
+
+            Point pl = new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24);
+            Vector2D distanceToPlayer = new Vector2D(
+                    pl,
+                    new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2));
+            Point point = new Point(pl), destination = new Point(pl);
+            distanceToPlayer.updatePos(destination);
+            g.setColor(Color.CYAN);
+            g.drawLine(camera.applyXTransform(point.x), camera.applyYTransform(point.y),
+                    camera.applyXTransform(destination.x), camera.applyYTransform(destination.y));
+
+
             if (inProximity) {
                 g.setColor(Color.CYAN);
                 g.fillRect(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y),

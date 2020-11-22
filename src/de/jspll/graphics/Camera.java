@@ -71,23 +71,23 @@ public class Camera {
     }
 
     public int revertXTransform(int in) {
-        return (int) Math.round( ((in + x) / zoom));
+        return (int) Math.round((in + x) / zoom);
     }
 
     public int revertYTransform(int in) {
-        return (int) Math.round( ((in + y) / zoom));
+        return (int) Math.round((in + y) / zoom);
     }
 
     public int applyZoom(int in) {
-        return (int) Math.round( ((float) in * zoom));
+        return Math.round((float) in * zoom);
     }
 
     public int applyXTransform(int in) {
-        return (int) Math.round( ((in * zoom) - x));
+        return (int) Math.round((in * zoom) - x);
     }
 
     public int applyYTransform(int in) {
-        return (int) Math.round( ((in * zoom) - y) );
+        return (int) Math.round((in * zoom) - y);
     }
 
     public int getWidth() {

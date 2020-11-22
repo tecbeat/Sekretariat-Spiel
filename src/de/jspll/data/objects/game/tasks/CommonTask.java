@@ -6,6 +6,7 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CommonTask extends GameObject implements Task {
     @Expose(deserialize = false, serialize = false)
@@ -20,6 +21,7 @@ public class CommonTask extends GameObject implements Task {
     // mouse properties
     private boolean mousedown;
     private int[] mousePos = new int[2];
+    private AtomicBoolean mouseClicked;
 
     // button properties
     private int btnStartY = 0;
@@ -83,7 +85,7 @@ public class CommonTask extends GameObject implements Task {
         screenHeight = (int) g2d.getClipBounds().getHeight();
         boundingX = screenWidth / 4;
         boundingY = screenHeight / 4;
-        btnGoodX = boundingX + (screenWidth / 2) / 4;
+        btnGoodX = (boundingX + (screenWidth / 2) / 4) + 85;
         btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
 
         g.setColor(new Color(0, 0, 0, 172));
@@ -92,6 +94,11 @@ public class CommonTask extends GameObject implements Task {
         //Bounding Box
         g.setColor(Color.WHITE);
         g.fillRect(boundingX, boundingY, screenWidth / 2, screenHeight / 2);
+
+        if(!buttonLock) {
+            g.setColor(Color.BLACK);
+            g.drawString(goodHeading + " oder " + badHeading, (screenWidth / 2) - 110, screenHeight / 2);
+        }
     }
 
     /**
@@ -104,7 +111,7 @@ public class CommonTask extends GameObject implements Task {
      */
     private void setUpButton(Graphics g, boolean goodButton) {
         if(!goodButton) {
-            btnBadX = boundingX + (screenWidth / 2) / 2;
+            btnBadX = (boundingX + (screenWidth / 2) / 2) + 85;
         }
         int xCoord = goodButton ? btnGoodX : btnBadX;
         String heading = goodButton ? goodHeading.split(" ")[1] : badHeading.split(" ")[1];
@@ -112,12 +119,18 @@ public class CommonTask extends GameObject implements Task {
         g.setColor(goodButton ? Color.GREEN : Color.RED);
         if (checkHover(xCoord, btnStartY, buttonSize[0], buttonSize[1])) {
             g.fillRect(xCoord, btnStartY, buttonSize[0], buttonSize[1]);
+            g.setColor(Color.BLACK);
+            g.drawString(heading, xCoord + 5, btnStartY + 15);
         } else {
             g.drawRect(xCoord, btnStartY, buttonSize[0], buttonSize[1]);
+            g.setColor(Color.BLACK);
+            g.drawString(heading, xCoord + 5, btnStartY + 15);
         }
 
-        g.setColor(Color.black);
-        g.drawString(heading, xCoord + 5, btnStartY + 15);
+        if(buttonLock) {
+            g.setColor(Color.BLACK);
+            g.drawString(heading, xCoord + 5, btnStartY + 15);
+        }
     }
 
     /**
@@ -129,7 +142,7 @@ public class CommonTask extends GameObject implements Task {
     private void onButtonClicked(Graphics g, Camera camera) {
         g.setColor(buttonGoodClicked ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255));
         String correctHeading = buttonGoodClicked ? goodHeading : badHeading;
-        g.drawString(correctHeading, camera.getWidth() / 2, camera.getHeight() / 2);
+        g.drawString(correctHeading, (screenWidth / 2) - 110, screenHeight / 2);
         g.drawString("Verbleibende Zeit: " + countDown, camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
     }
 
@@ -189,19 +202,19 @@ public class CommonTask extends GameObject implements Task {
      * Determines the mouse position.
      */
     private void getMousePos(){
-        // TODO: get proper mouse position if possible
+        // TODO: get proper mouse position if possible, siehe ExampleTask (null-check)
         mousePos[0] = (int) getHolder().getParent().getMousePos().getX();
         mousePos[1] = (int) getHolder().getParent().getMousePos().getY();
     }
 
     public void activate(){
+        mouseClicked = getHolder().getParent().getLogicHandler().getInputHandler().getMouse1();
         countDown = 10;
         this.active = true;
     }
 
     private boolean getMousePressed(){
-        // TODO: check if there is better/easier way to get if mouse is pressed
-        return (boolean) getHolder().getParent().getLogicHandler().getInputHandler().getInputInfo()[1];
+        return mouseClicked.get();
     }
 
     @Override
