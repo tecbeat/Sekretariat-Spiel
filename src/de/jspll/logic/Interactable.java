@@ -5,8 +5,6 @@ import de.jspll.handlers.GameObjectHandler;
 /**
  * Created by reclinarka on 12-Oct-20.
  */
-
-
 public interface Interactable {
     /**
      *@return default return value 0x00
@@ -22,6 +20,4 @@ public interface Interactable {
     String getID();
 
     void setListener(GameObjectHandler listener);
-
-
 }

@@ -4,7 +4,6 @@ import de.jspll.data.ChannelID;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.GraphicsHandler;
 import de.jspll.handlers.LogicHandler;
-import jdk.nashorn.internal.runtime.ECMAException;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -45,7 +44,6 @@ public class FrameHandler {
         //while (running){
             //Keep main thread running
         //}
-
     }
 
     public GameObjectHandler getGameObjectHandler() {
@@ -127,10 +125,7 @@ class FrameStabilizer extends Thread {
                     delayActive = false;
                 }
             }
-
             currentCell = currentCell % 120;
-
-
         }
     }
 }

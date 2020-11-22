@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Stack;
 
-
 /**
  * Created by reclinarka on 02-Nov-20.
  */
@@ -475,7 +474,6 @@ public class JSONUtils {
 
     }
 
-
     private enum Mode{
         START,
         OBJECT,
@@ -486,8 +484,6 @@ public class JSONUtils {
         TRUE,
         FALSE,
         NULL
-
     }
-
 }
 

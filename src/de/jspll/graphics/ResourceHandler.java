@@ -5,14 +5,11 @@ import de.jspll.handlers.GameObjectHandler;
 import de.jspll.util.Logger;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
@@ -92,11 +89,7 @@ public class ResourceHandler extends Thread {
         return textures;
     }
 
-
     public BufferedImage loadImage(String texture){
-        //TODO: REMOVE
-//        if(texture == null)
-//            return new BufferedImage(0,0,0);
         try {
             Logger.d.add("loading: " + texture);
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
@@ -105,7 +98,6 @@ public class ResourceHandler extends Thread {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public BufferedImage[] getImages(String[] textures){
@@ -114,8 +106,6 @@ public class ResourceHandler extends Thread {
             out[i] = loadImage(textures[i]);
         }
         return out;
-
-
     }
 
     //cLength represents the length of the longest number in the group
@@ -125,10 +115,8 @@ public class ResourceHandler extends Thread {
         for (int i = 0; i < count; i++){
             textures[i] = loadImage(baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf());
         }
-
         return textures;
      }
-
 
     @Override
     public void run() {
@@ -149,7 +137,6 @@ public class ResourceHandler extends Thread {
                     textures.put(key,loadImage(key));
                 }
             }
-
         }
     }
 
@@ -166,9 +153,6 @@ public class ResourceHandler extends Thread {
     }
 
     public void requestTexture(String key, FileType type){
-        //TODO: Remove!!
-//        if(key == null)
-//            return;
         if(!textures.containsKey(key) && !loadingQueue.contains(key + type.fileEnding))
             try {
                 loadingQueue.put(key + type.fileEnding);

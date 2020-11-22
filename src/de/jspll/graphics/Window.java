@@ -5,9 +5,6 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
-
-
-
     public Window(String windowTitle, JPanel content, Dimension size) {
         //setting misc. attributes of the window
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -15,8 +12,6 @@ public class Window extends JFrame {
         setResizable(false);
         setTitle(windowTitle);
         init(content);
-
-
     }
 
     private void init(JPanel content) {

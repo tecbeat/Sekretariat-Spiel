@@ -12,8 +12,6 @@ public class Secondary_window extends JDialog
         setResizable(true);
         setTitle(windowTitle);
         init(content);
-
-
     }
 
     private void init(JPanel content) {

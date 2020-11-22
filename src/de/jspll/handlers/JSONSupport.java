@@ -1,17 +1,12 @@
 package de.jspll.handlers;
 
 import com.google.gson.*;
-import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.Texture;
-import de.jspll.data.objects.examples.DisplayMover;
-import de.jspll.data.objects.examples.MouseFollower;
-import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.util.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class JSONSupport {
     private static Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();;
@@ -112,9 +107,6 @@ public class JSONSupport {
         Texture obj = cl.cast(gson.fromJson(jsonObject.getObject().get("object").toString(), cl));
         return obj;
     }
-
-
-
 }
 
 class GsonExclusionStrategy implements ExclusionStrategy {
@@ -125,7 +117,6 @@ class GsonExclusionStrategy implements ExclusionStrategy {
 
         return false;
     }
-
     public boolean shouldSkipField(FieldAttributes field) {
         return false;
     }

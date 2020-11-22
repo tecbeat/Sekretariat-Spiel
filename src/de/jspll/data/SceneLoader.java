@@ -2,7 +2,6 @@ package de.jspll.data;
 
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.loading.ProgressReporter;
-import de.jspll.handlers.JSONSupport;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

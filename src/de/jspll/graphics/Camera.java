@@ -1,6 +1,5 @@
 package de.jspll.graphics;
 
-
 import de.jspll.data.objects.GameObject;
 import de.jspll.util.Logger;
 import de.jspll.util.Vector2D;
@@ -15,7 +14,6 @@ public class Camera {
     private double xCenter;
     private double yCenter;
     private float zoom;
-
 
     public Camera(int x, int y, int width, int height, float zoom) {
         this.xCenter = x;
@@ -62,7 +60,6 @@ public class Camera {
     public int[] transform(int[] in) {
         return new int[]{applyXTransform(in[0]), applyYTransform(in[1])};
     }
-
 
     public int[] applyZoom(int[] in) {
         int[] out = new int[in.length];
@@ -141,7 +138,6 @@ public class Camera {
                              pos.y < numberTilesY*16 || pos.y > TileMapHeight - numberTilesY*16};
     }
 
-
     public int[] getRevertedBounds() {
         int[] out = new int[4];
 
@@ -156,8 +152,6 @@ public class Camera {
         out[2] = maxCoords[0] + 10;
         out[3] = maxCoords[1] + 10;
 
-
         return out;
     }
-
 }

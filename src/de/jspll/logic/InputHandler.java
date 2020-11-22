@@ -37,7 +37,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
         init();
     }
 
-
     //Mouse
 
     //returns Array in form :
@@ -66,7 +65,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
     public void mouseDragged(MouseEvent e) {
         mousePos.set(0,e.getX());
         mousePos.set(1,e.getY());
-
     }
 
     @Override
@@ -125,7 +123,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
     @Override
     public void mouseEntered(MouseEvent e) {
         inFocus.set(true);
-
     }
 
     @Override
@@ -202,7 +199,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
                 return "8";
             case KeyEvent.VK_9:
                 return "9";
-
         }
         return null;
     }
@@ -266,7 +262,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
             case KeyEvent.VK_9:
                 keyMap.get("9").set(val);
                 break;
-
         }
     }
 

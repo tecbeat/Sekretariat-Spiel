@@ -78,14 +78,11 @@ public class GraphicsHandler implements SubHandler {
         }
     }
 
-
-
     //actual drawing call, keeps
     public void drawingRoutine(Graphics g){
         if(g == null || frame == null){
             return;
         }
-
 
         frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);
@@ -105,7 +102,6 @@ public class GraphicsHandler implements SubHandler {
                     }
                 }
             }
-
         }
 
         try {
@@ -172,6 +168,5 @@ public class GraphicsHandler implements SubHandler {
         MAIN,
         DIALOG
     }
-
 }
 

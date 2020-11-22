@@ -9,7 +9,6 @@ import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.GraphicsHandler;
 import de.jspll.handlers.LogicHandler;
 
-import java.awt.*;
 import java.awt.Dimension;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,23 +35,17 @@ public class EditorHandler extends GameObject{
         graphicsHandler = new GraphicsHandler(windowTitle,size, GraphicsHandler.HandlerMode.DIALOG);
         gameObjectHandler = new GameObjectHandler();
         logicHandler = new LogicHandler(graphicsHandler);
-
     }
 
     public void init(){
-
         logicHandler.setGameObjectHandler(gameObjectHandler);
         graphicsHandler.setGameObjectHandler(gameObjectHandler);
         gameObjectHandler.setGraphicsHandler(graphicsHandler);
-
-
 
         gameObjectHandler.loadObject(new MouseFollower("test"));
         gameObjectHandler.loadObject(new DisplayMover("test1"));
         gameObjectHandler.loadObject(new GameObject("test","g.test.GameObject",0,0,new Dimension(16,16)));
         getParent().loadObject(new Repeater("0",gameObjectHandler));
-
-
     }
 
     @Override

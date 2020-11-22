@@ -1,9 +1,6 @@
 package de.jspll.handlers;
 
-import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
-import de.jspll.data.objects.examples.DisplayMover;
-import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.frames.SubHandler;
 import de.jspll.logic.InputHandler;
 
@@ -23,7 +20,6 @@ public class LogicHandler implements SubHandler {
 
     private boolean test = true;
 
-
     public LogicHandler(GraphicsHandler graphicsHandler){
         graphicsHandler.setInputListener(inputHandler);
     }
@@ -37,7 +33,6 @@ public class LogicHandler implements SubHandler {
                 object.update(elapsedTime);
             }
         }
-
     }
 
     public InputHandler getInputHandler() {

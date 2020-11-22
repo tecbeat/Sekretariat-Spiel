@@ -38,8 +38,6 @@ public class GameObjectHandler{
             channels[i] = new GameTrie();
         }
 
-
-
         //loadScene(ChannelID.SCENE_2, new ArrayList<GameObject>(Arrays.asList(loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))));
 
         /*for(TileMap tm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
@@ -47,7 +45,6 @@ public class GameObjectHandler{
             System.out.println(tm);
         }*/
         resourceHandler.start();
-
 
         //loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
     }
@@ -76,7 +73,6 @@ public class GameObjectHandler{
                 getGraphicsHandler().getWindow().getWidth() / 2,
                 getGraphicsHandler().getWindow().getHeight() / 2,
                 20, 150,new Dimension(40,40)));
-
 
         loadScene(SCENE_LOADING,loadingSceneBuilder);
     }
@@ -273,8 +269,6 @@ public class GameObjectHandler{
                         to.requestTexture();
                     }
                     pRpt.update();
-
-
                 }
                 //for(TileMap ttm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
                 //    out.add(ttm);
@@ -305,21 +299,12 @@ public class GameObjectHandler{
                 loadScene(scene, out);
                 switchScene(scene);
             }
-
-
         });
         t1.start();
-
-
-
-
-
-
     }
 
     public TileMap[] loadMap(String mapJson){
         try {
-
             Map<String,?> json = (Map<String, ?>) resourceHandler.readJsonFromFile(mapJson); //complete json
             Map<String,?> levels =  ((ArrayList<Map<String,?>>)json.get("levels")).get(0);
             Map<String,?> defs =  (Map<String,?>) json.get("defs"); //defs -> get the png filenames
@@ -419,29 +404,20 @@ public class GameObjectHandler{
                                     tex[0] = "assets\\map\\" + src; //.substring(0,src.length()-4); //-4 to cut off the .png ending
 
                                     l.setTextures(tex);
-
-
-                                    //System.out.println(l.textures[0]);
-
                                 }
                             }
-
                         }
-
-                        if(b)
+                        if(b) {
                             continue;
+                        }
                     }
                 }
-
-                if(b)
+                if(b) {
                     continue;
-
-
+                }
                 layerList.add(l);
             }
-
             TileMap[] tileMaps = new TileMap[layerList.size()+1]; //+1 to add colissions
-
 
             for(int i = 0; i < layerList.size()+1; i++){
                 layer l;
@@ -459,7 +435,7 @@ public class GameObjectHandler{
                 TileMap tm;
                 if(l.getId().contains("Ausstattung") || l.getId().contentEquals("Boden2")){
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
-                }else {
+                } else {
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());
                 }
 
@@ -476,7 +452,6 @@ public class GameObjectHandler{
                     int[] cord = gt.getPxArr();
                     tm.setTileToMap(tileCache.get(key), cord[0]/tm.getDefaultTileDimension().width, cord[1]/tm.getDefaultTileDimension().height);
                 }
-
                 tileMaps[i] = tm;
             }
 
@@ -485,14 +460,12 @@ public class GameObjectHandler{
             for(int i = 0; i<tileMaps.length; i++){
                 returnArr[tileMaps.length-1-i] = tileMaps[i];
             }
-
             return returnArr;
         } catch (Exception e){
             e.printStackTrace();
             return null;
         }
     }
-
 }
 
 

@@ -1,7 +1,6 @@
 package de.jspll.util;
 
 import java.awt.*;
-import java.util.Objects;
 
 /**
  * Created by reclinarka on 15-Nov-20.
