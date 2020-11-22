@@ -243,6 +243,7 @@ public class GameObjectHandler{
             //loadObject(obj);
             subscribe(obj,INSTANCE_REGISTER);
             subscribe(obj,scene);
+            obj.setListener(this);
         }
     }
 
@@ -307,6 +308,7 @@ public class GameObjectHandler{
     }
 
     public void loadScene(ChannelID scene, String file){
+
         String jsonStr = getResourceHandler().fileToJson(file);
         JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
         loadScene(scene, jsonArray);
