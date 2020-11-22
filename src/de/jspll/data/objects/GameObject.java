@@ -22,7 +22,7 @@ import static de.jspll.data.ChannelID.INPUT;
 public class GameObject implements Drawable, Interactable {
 
     //InstanceSpecific ID: i.e 1
-    private String ID;
+    protected String ID;
     //ID that is specific for this class: i.e g.ntt.Player
     private String objectID;
 

@@ -282,4 +282,16 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
     public AtomicIntegerArray getMousePos() {
         return mousePos;
     }
+
+    public AtomicBoolean getMouse1() {
+        return mouse1;
+    }
+
+    public AtomicBoolean getMouse2() {
+        return mouse2;
+    }
+
+    public AtomicBoolean getMouse3() {
+        return mouse3;
+    }
 }
