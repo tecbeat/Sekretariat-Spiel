@@ -64,11 +64,6 @@ public class Main {
 
 
         ArrayList<Object> objects = new ArrayList<>();
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 5; y++) {
-                //objects.add(new GameObject(x + "_" + y, "g.dflt.GameObject", x * 16, y * 32 + (16 * (x % 2)),new Dimension(16,16)));
-            }
-        }
 
 //        TileMap tm = new TileMap("tileMap", "g.dflt.TileMap", null, 0, 0,
 //                new Dimension(1000, 1000), 40, 40,
@@ -81,10 +76,6 @@ public class Main {
 
         Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
         objects.add(p);
-        //objects.add(new Player("testColor0", 0,0, new Dimension(1600,900), 2));
-        //objects.add(new Player("testColor1", 0,0, new Dimension(1600,900), 3));
-        //objects.add(new Player("testColor2", 0,0, new Dimension(1600,900), 4));
-        //objects.add(new Player("testColor3", 0,0, new Dimension(1600,900), 5));
 
         //System.out.println(JSONSupport.convertObjectToJson(p));
 
@@ -99,8 +90,6 @@ public class Main {
         objects.add(m);
         //objects.add(d);
 
-        /*System.out.println(JSONSupport.convertObjectToJson(m));
-        System.out.println(JSONSupport.convertObjectToJson(d));*/
 
         //objects.add(new Counter("test"));
         //frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_0, objects);

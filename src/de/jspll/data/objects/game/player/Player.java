@@ -10,10 +10,13 @@ import de.jspll.util.Logger;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
 
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static de.jspll.data.ChannelID.*;
 
 /**
  * Created by reclinarka on 23-Oct-20.
@@ -88,15 +91,18 @@ public class Player extends TexturedObject {
         }
     }
 
+
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         super.paint(g, elapsedTime, camera, currStage);
     }
 
+
     @Override
     public char update(float elapsedTime) {
         super.update(elapsedTime);
 
+        c.centerToObject(this);
 
         decayVelocity();
 
@@ -106,19 +112,6 @@ public class Player extends TexturedObject {
 
         //maybe move the following code block to different method
         Camera c = getParent().getSelectedCamera();
-        if (halfResolution == null) {
-            halfResolution = new Point(c.getWidth() / 2, c.getHeight() / 2);
-            Logger.d.add("Res / 2: " + halfResolution);
-        }
-        int[] transform = c.transform(new int[]{pos.x, pos.y});
-        Point transformedPos = new Point(transform[0], transform[1]);
-
-        Vector2D vec = new Vector2D(transformedPos, halfResolution);
-
-
-        c.increase_y((float) -vec.y);
-        c.increase_x((float) -vec.x);
-
 
         assimilateXY();
 
@@ -364,6 +357,7 @@ public class Player extends TexturedObject {
 
     @Override
     public char call(Object[] input) {
+        HashMap<String, AtomicBoolean> keyMap;
         super.call(input);
         if (input == null || input.length < 1) {
             return 0;
@@ -383,8 +377,6 @@ public class Player extends TexturedObject {
                 }
             }
         }
-
-
         return 0;
     }
 
@@ -396,55 +388,60 @@ public class Player extends TexturedObject {
 
     public void idleAnimation() {
         stopAllAnimation();
+
         switch (lastPressedKey) {
             case "w":
-                //movementAnimationList.get(4).setPos(pos);
                 movementAnimationList.get(4).startAnimation(start);
                 break;
             case "s":
-                //movementAnimationList.get(5).setPos(pos);
                 movementAnimationList.get(5).startAnimation(start);
                 break;
             case "a":
-                //movementAnimationList.get(6).setPos(pos);
                 movementAnimationList.get(6).startAnimation(start);
                 break;
             case "d":
-                //movementAnimationList.get(7).setPos(pos);
                 movementAnimationList.get(7).startAnimation(start);
                 break;
         }
     }
 
+
     public void moveForward() {
         stopAllAnimation();
-        //movementAnimationList.get(0).setPos(pos);
         movementAnimationList.get(0).startAnimation(start);
         start = false;
+        if (pos.y-1 >= 0  && pos.y-1 < 3136-64) pos.y -= 1;
+
         lastPressedKey = "w";
     }
 
     public void moveBackward() {
         stopAllAnimation();
-        //movementAnimationList.get(1).setPos(pos);
         movementAnimationList.get(1).startAnimation(start);
         start = false;
+        if (pos.y+1 >= 0 && pos.y+1 < 3136-64) pos.y += 1;
+
         lastPressedKey = "s";
     }
 
     public void moveLeft() {
         stopAllAnimation();
-        //movementAnimationList.get(2).setPos(pos);
+
         movementAnimationList.get(2).startAnimation(start);
         start = false;
+        if (pos.x-1 >= 0 && pos.x-1 <= 3552-32) pos.x -= 1;
+
         lastPressedKey = "a";
     }
 
     public void moveRight() {
         stopAllAnimation();
-        //movementAnimationList.get(3).setPos(pos);
+
         movementAnimationList.get(3).startAnimation(start);
         start = false;
+
+        if (pos.x+1 >= 0 && pos.x+1 <= 3552-32) pos.x += 1;
+
         lastPressedKey = "d";
     }
 
@@ -456,4 +453,8 @@ public class Player extends TexturedObject {
         for (Animation a : movementAnimationList)
             a.setPos(pos);
     }
+
+
+
+
 }

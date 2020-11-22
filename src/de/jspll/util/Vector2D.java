@@ -1,6 +1,7 @@
 package de.jspll.util;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Created by reclinarka on 15-Nov-20.
@@ -63,6 +64,34 @@ public class Vector2D {
         return this;
 
     }
+
+    public Double abs(){
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
+    }
+
+    public static Double abs(Vector2D vec){
+        return Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.y,2));
+
+    }
+
+    @Override
+    public String toString() {
+        return "[x=" + x + ",y=" + y + "]";
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vector2D vec = (Vector2D) o;
+
+        if (vec.x == this.x && vec.y == this.y) return true;
+
+        return vec.abs().equals(abs());
+    }
+
 
     private static double bellCurveConstant = 1 / (0.399d * Math.sqrt(2* Math.PI));
 
