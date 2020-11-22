@@ -6,7 +6,6 @@ import de.jspll.graphics.Camera;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -50,7 +49,7 @@ public class MouseFollower extends GameObject {
 
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         if (mousedown) {
             g.setColor(Color.red);
         } else {

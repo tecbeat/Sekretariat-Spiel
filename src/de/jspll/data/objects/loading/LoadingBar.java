@@ -1,5 +1,6 @@
 package de.jspll.data.objects.loading;
 
+import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 
@@ -35,11 +36,11 @@ public class LoadingBar extends GameObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         if(progress == -1){
             return;
         }
-        super.paint(g, elapsedTime, camera);
+        super.paint(g, elapsedTime, camera, currStage);
         Graphics2D g2d = (Graphics2D) g;
         int screenWidth = (int) g2d.getClipBounds().getWidth();
         int screenHeight = (int) g2d.getClipBounds().getHeight();

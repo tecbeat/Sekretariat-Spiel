@@ -279,4 +279,12 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
         }
         setKey(e.getKeyCode(),false);
     }
+
+    public HashMap<String, AtomicBoolean> getKeyMap() {
+        return keyMap;
+    }
+
+    public AtomicIntegerArray getMousePos() {
+        return mousePos;
+    }
 }

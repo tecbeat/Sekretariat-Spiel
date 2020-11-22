@@ -36,10 +36,13 @@ public class LogicHandler implements SubHandler {
             for (GameObject object : gameObjectHandler.getChannel(LOGIC).allValues()) {
                 object.update(elapsedTime);
             }
-        };
+        }
 
     }
 
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
 
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;

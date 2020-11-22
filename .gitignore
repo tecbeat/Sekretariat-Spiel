@@ -14,3 +14,5 @@ out/production/2d-game-engine/de/jspll/util/json/test.json
 2d-game-engine.iml
 
 out/
+
+.idea/

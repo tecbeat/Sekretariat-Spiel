@@ -1,6 +1,7 @@
 package de.jspll.util;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Created by reclinarka on 15-Nov-20.
@@ -64,6 +65,34 @@ public class Vector2D {
 
     }
 
+    public Double abs(){
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
+    }
+
+    public static Double abs(Vector2D vec){
+        return Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.y,2));
+
+    }
+
+    @Override
+    public String toString() {
+        return "[x=" + x + ",y=" + y + "]";
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vector2D vec = (Vector2D) o;
+
+        if (vec.x == this.x && vec.y == this.y) return true;
+
+        return vec.abs().equals(abs());
+    }
+
+
     private static double bellCurveConstant = 1 / (0.399d * Math.sqrt(2* Math.PI));
 
     /**
@@ -89,11 +118,48 @@ public class Vector2D {
         return bellCurveConstant * Math.exp(exponent);
     }
 
+    public double euclideanDistance(){
+        return Math.sqrt( x*x + y*y );
+    }
+
     public void updatePos(Point pos){
+        if(x == 0 && y == 0){
+            return;
+        }
         Double x = pos.getX(), y = pos.getY();
         x += this.x;
         y += this.y;
-        pos.move(x.intValue(),y.intValue());
+
+        pos.move((int)Math.round(x),(int)Math.round(y));
+    }
+
+    public void addToX(int amount){
+        this.x += amount;
+    }
+
+    public void addToY(int amount){
+        this.y += amount;
+    }
+
+    public void addToX(double amount){
+        this.x += amount;
+    }
+
+    public void addToY(double amount){
+        this.y += amount;
+    }
+
+    public void normalize(){
+        if(x == 0 && y == 0){
+            return;
+        }
+        double abs = euclideanDistance();
+        this.x /= abs;
+        this.y /= abs;
+    }
+
+    public Vector2D[] splitIntoXY(){
+        return new Vector2D[]{ new Vector2D(x,0), new Vector2D(0,y) };
     }
 
     public void setX(double x) {

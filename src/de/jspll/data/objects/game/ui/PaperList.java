@@ -34,8 +34,8 @@ public class PaperList extends TexturedObject {
     }
 
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
-        super.paint(g, elapsedTime, camera);
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        super.paint(g, elapsedTime, camera, currStage);
 
     }
 

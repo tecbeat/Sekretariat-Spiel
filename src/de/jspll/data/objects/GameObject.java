@@ -1,16 +1,15 @@
 package de.jspll.data.objects;
 
+import de.jspll.Main;
 import de.jspll.data.*;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
-import de.jspll.handlers.JSONSupport;
 import de.jspll.logic.Interactable;
 import de.jspll.util.json.JSONObject;
 
 import java.awt.*;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -143,18 +142,25 @@ public class GameObject implements Drawable, Interactable {
     }
 
     public char update(float elapsedTime){
-
         return 0;
     }
 
+    /** For Overriding, follow this example:
+     *   @Override
+     *   public void paint(...) {
+     *       super.paint(...);
+     *       //new Code goes Here
+     *       return 0;
+     *   }
+     **/
     @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera) {
-        if(!GameObjectHandler.DEBUG)
-            return;
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         if(dimension == null)
             return;
+        if(!Main.DEBUG)
+            return;
         if(elapsedTime != 0)
-            g.setColor(Color.PINK);
+            g.setColor(Color.GREEN);
         g.drawRect(camera.applyXTransform(x) , camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
                 camera.applyZoom((int) dimension.getHeight()));
 
@@ -175,6 +181,15 @@ public class GameObject implements Drawable, Interactable {
         }
         return null;
     }
+
+    /** For Overriding, follow this example:
+     *   @Override
+     *   public char call(float elapsedTime) {
+     *       super.update(elapsedTime);
+     *       //new Code goes Here
+     *       return 0;
+     *   }
+     **/
 
     @Override
     public char call(Object[] input) {
@@ -265,6 +280,11 @@ public class GameObject implements Drawable, Interactable {
         }
         json += "}";
         return json;
+    }
+
+    protected void requestPlayerPosAndSize(){
+        if(parent != null)
+            getParent().dispatch(ChannelID.PLAYER, new Object[]{"playerPos", getID(), ChannelID.LOGIC});
     }
 
     public void updateReferences(){
