@@ -42,11 +42,8 @@ public class MouseFollower extends GameObject {
                 keyMap = (HashMap<String, AtomicBoolean>) input[4];
             }
         }
-
         return 0;
     }
-
-
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {

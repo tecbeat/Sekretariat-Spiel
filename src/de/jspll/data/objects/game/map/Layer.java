@@ -2,12 +2,12 @@ package de.jspll.data.objects.game.map;
 
 import java.util.ArrayList;
 
-public class layer {
+public class Layer {
     String id;
     String[] textures = new String[1];
     int width;
     int height;
-    ArrayList<gridTiles> gT = new ArrayList<>();
+    ArrayList<GridTiles> gT = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -17,11 +17,11 @@ public class layer {
         this.id = id;
     }
 
-    public ArrayList<gridTiles> getgT() {
+    public ArrayList<GridTiles> getgT() {
         return gT;
     }
 
-    public void setgT(ArrayList<gridTiles> gT) {
+    public void setgT(ArrayList<GridTiles> gT) {
         this.gT = gT;
     }
 

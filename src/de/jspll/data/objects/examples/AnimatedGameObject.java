@@ -1,6 +1,5 @@
 package de.jspll.data.objects.examples;
 
-import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 
