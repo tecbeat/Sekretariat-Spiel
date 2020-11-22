@@ -10,12 +10,12 @@ import java.awt.*;
 public class Camera {
     private final int width;
     private final int height;
+    private final double smoothness = 1.5;
     private double x;
     private double y;
     private double xCenter;
     private double yCenter;
     private float zoom;
-
 
     public Camera(int x, int y, int width, int height, float zoom) {
         this.xCenter = x;
@@ -63,7 +63,6 @@ public class Camera {
         return new int[]{applyXTransform(in[0]), applyYTransform(in[1])};
     }
 
-
     public int[] applyZoom(int[] in) {
         int[] out = new int[in.length];
         for (int i = 0; i < in.length; i++) {
@@ -100,30 +99,53 @@ public class Camera {
         return height;
     }
 
-    public void centerToPos(Point objectPos, Dimension dimension) {
-        Point halfResolution = new Point(width / 2, height / 2);
-        boolean[] OutSideCheck = checkIfOutside(objectPos);
-        int[] transform = transform(new int[]{objectPos.x + dimension.width/2, objectPos.y + dimension.height/2});
+    /**
+     * This Function centers the camera to the given Object.
+     *
+     * @param objectPos   Point of the Object
+     * @param dimension   Width/Height of the Object
+     * @param elapsedTime Time that has elapsed since the last time this function was called
+     */
 
-        //Logger.d.add(x + ", " + y);
-        moveToBound();
+    public void centerToPos(Point objectPos, Dimension dimension, float elapsedTime) {
+        Point halfResolution = new Point(width / 2, height / 2);
+        boolean[] OutSideCheck = checkIfCameraStopMovement(objectPos);
+        int[] transform = transform(new int[]{objectPos.x + dimension.width / 2, objectPos.y + dimension.height / 2});
+
+
+        //moveToBound();
         Point transformedPos = new Point(transform[0], transform[1]);
 
         Vector2D vec = new Vector2D(transformedPos, halfResolution);
-        if (!OutSideCheck[1]) increase_y((float) -vec.y);
-        if (!OutSideCheck[0]) increase_x((float) -vec.x);
+
+        //most reliable method
+        if (!OutSideCheck[0]) {
+            increase_x((float) (-(vec.x) * elapsedTime * smoothness));
+        }
+        if (!OutSideCheck[1]) {
+            increase_y((float) (-(vec.y) * elapsedTime * smoothness));
+        }
+
 
     }
 
-    public void centerToObject(GameObject object) {
-        centerToPos(new Point(object.getX(), object.getY()), object.getDimension());
+    /**
+     * This Function gives the opportunity to use a GameObject as the reference
+     *
+     * @param object      GameObject which will be centred in the Screen Middle
+     * @param elapsedTime Time that has elapsed since the last time this function was called
+     */
+
+    public void centerToObject(GameObject object, float elapsedTime) {
+        centerToPos(new Point(object.getX(), object.getY()), object.getDimension(), elapsedTime);
     }
+
 
     private void moveToBound() {
         while (x < 0) increase_x(1);
         while (y < 0) increase_y(1);
 
-        //TODO Use with precaution
+        //Use with precaution
 //        while (x > 3552 + width) increase_x(-1);
 //        while (y > 3136 + height*2) increase_y(-1);
 
@@ -131,14 +153,26 @@ public class Camera {
         //Höhe 3136
     }
 
-    private boolean[] checkIfOutside(Point pos) {
+    /**
+     * This function is used to determine if the camera should stop moving
+     *
+     * @param pos Point of the
+     * @return two-dimensional Boolean Array [0] = X-Axis, [1] = Y-Axis
+     */
+
+    private boolean[] checkIfCameraStopMovement(Point pos) {
         // TODO remove fixed values: values are relative to zoom
-        double numberTilesX = 60 / zoom;
-        double numberTilesY = 40 / zoom;
-        int TileMapWidth = 3552;
-        int TileMapHeight = 3136;
-        return new boolean[]{pos.x < numberTilesX*16 || pos.x > TileMapWidth - numberTilesX*16 - 16,
-                             pos.y < numberTilesY*16 || pos.y > TileMapHeight - numberTilesY*16};
+
+        //it should be a lg function, but idk how :D
+        //https://imgur.com/a/d48dVB1
+
+        int x_right = (int) (Math.log(zoom) + 2576);
+        int y_down = (int) (Math.log(zoom) + 2564);
+        int x_left = (int) (Math.log(zoom) + 944);
+        int y_up = (int) (Math.log(zoom) + 509);
+
+        return new boolean[]{pos.x < 370 || pos.x > 3150,
+                pos.y < 184 || pos.y > 2890};
     }
 
 

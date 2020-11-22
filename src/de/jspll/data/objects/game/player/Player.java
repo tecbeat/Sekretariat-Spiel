@@ -104,7 +104,7 @@ public class Player extends TexturedObject {
 
         Camera c = getParent().getSelectedCamera();
 
-        c.centerToObject(this);
+        c.centerToObject(this, elapsedTime);
 
         decayVelocity();
 
@@ -360,6 +360,7 @@ public class Player extends TexturedObject {
     public char call(Object[] input) {
         HashMap<String, AtomicBoolean> keyMap;
         super.call(input);
+
         if (input == null || input.length < 1) {
             return 0;
         } else if (input[0] instanceof String) {
