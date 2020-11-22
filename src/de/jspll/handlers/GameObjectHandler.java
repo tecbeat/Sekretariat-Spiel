@@ -7,8 +7,8 @@ import de.jspll.data.objects.GameTrie;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
-import de.jspll.data.objects.game.map.gridTiles;
-import de.jspll.data.objects.game.map.layer;
+import de.jspll.data.objects.game.map.GridTiles;
+import de.jspll.data.objects.game.map.Layer;
 import de.jspll.data.objects.game.tasks.Task;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.loading.LoadingBar;
@@ -318,8 +318,8 @@ public class GameObjectHandler{
             //TileMap[] tileMaps = new TileMap[layerInstances.size()-3]; //because of missing files
 
             //layers
-            ArrayList<layer> layerList = new ArrayList<>();
-            layer collsions = new layer();
+            ArrayList<Layer> layerList = new ArrayList<>();
+            Layer collsions = new Layer();
 
             //Lists for Texture finding
             ArrayList<Map<String,?>> defsLayers =  (ArrayList<Map<String,?>>)defs.get("layers");
@@ -331,7 +331,7 @@ public class GameObjectHandler{
                 b = false;
 
                 //create layer
-                layer l = new layer();
+                Layer l = new Layer();
 
                 //id
                 l.setId((String) layerI.get("__identifier"));
@@ -347,12 +347,12 @@ public class GameObjectHandler{
                     continue;
 
                 //List for converted Grid Tiles
-                ArrayList<gridTiles> gT = new ArrayList<>();
+                ArrayList<GridTiles> gT = new ArrayList<>();
 
                 //Automatic conversion did not seem to work
                 for(Map<String,?> o : temp){
                     //create grid tile
-                    gridTiles t = new gridTiles();
+                    GridTiles t = new GridTiles();
 
                     //get values
                     t.setPx(((ArrayList<Double>) o.get("px")));
@@ -420,7 +420,7 @@ public class GameObjectHandler{
             TileMap[] tileMaps = new TileMap[layerList.size()+1]; //+1 to add colissions
 
             for(int i = 0; i < layerList.size()+1; i++){
-                layer l;
+                Layer l;
                 boolean collidable;
                 if(i == layerList.size()){
                     l = collsions;
@@ -441,7 +441,7 @@ public class GameObjectHandler{
 
                 HashMap<String, Tile> tileCache = new HashMap<>();
 
-                for(gridTiles gt : l.getgT()){
+                for(GridTiles gt : l.getgT()){
                     int[] arr = gt.getSrcArr(tm.getDefaultTileDimension());
                     String key = arr[0] + "|" + arr[1];
                     if(!tileCache.containsKey(key)) {

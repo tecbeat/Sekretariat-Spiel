@@ -54,7 +54,6 @@ public class TaskHolder extends GameObject {
                 task.activate();
             }
         }
-
         return 0;
     }
 
@@ -87,8 +86,6 @@ public class TaskHolder extends GameObject {
                 return 0;
             }
         }
-
-
         return 0;
     }
 
@@ -107,13 +104,10 @@ public class TaskHolder extends GameObject {
 
         if (Main.DEBUG) {
             if (inProximity) {
-
                 g.setColor(Color.CYAN);
                 g.fillRect(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y),
                         camera.applyZoom(dimension.width), camera.applyZoom(dimension.height));
-
             }
         }
-
     }
 }

@@ -3,7 +3,7 @@ package de.jspll.data.objects.game.map;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class gridTiles{
+public class GridTiles {
     ArrayList<Double> px = new ArrayList<>();
     ArrayList<Double> src = new ArrayList<>();
     Double f;

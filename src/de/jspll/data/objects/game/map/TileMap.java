@@ -215,15 +215,6 @@ public class TileMap extends TexturedObject {
                 playerPos = (Point) input[1];
             }
         }
-        /* else if (input[0] instanceof String && ((String) input[0]).contentEquals("input")) {
-            if (input[5] instanceof int[])
-                mousePos = (int[]) input[5];
-
-            if (input[7] instanceof String[])
-                keystrokes = (String[]) input[7];
-            if (input[1] instanceof Boolean)
-                m1 = (boolean) input[1];
-        }*/
         return 0;
     }
 
@@ -302,49 +293,15 @@ public class TileMap extends TexturedObject {
         }
 
         return 0;
-
-        /*if (keystrokes != null) {
-            for (int i = 0; i < keystrokes.length; i++) {
-                if (keystrokes[i].contains("+")) {
-                    selectedTile++;
-                    if (selectedTile > tiles.length) {
-                        selectedTile = tiles.length - 1;
-                    }
-                }
-            }
-        }
-
-        int[] clickpos = getParent().getSelectedCamera().revertTransform(mousePos);
-        if (clickpos[0] >= x && clickpos[0] < x + dimension.getWidth() &&
-                clickpos[1] >= y && clickpos[1] < y + dimension.getHeight()) {
-            int rx = clickpos[0] - x;
-            rx /= defaultTileDimension.getWidth();
-            int ry = clickpos[1] - y;
-            ry /= defaultTileDimension.getHeight();
-            if(tileMap[rx][ry] == -1){
-                tileMap[rx][ry] = -2;
-            }
-            if(m1){
-                tileMap[rx][ry] = selectedTile;
-            }
-
-        }
-
-
-        return 0;*/
     }
-
 
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-
         if (currStage == ChannelID.BACKGROUND) {
             drawMap(g, elapsedTime, camera);
         } else if (currStage == ChannelID.UI) {
             drawPlayerCover(g, elapsedTime, camera);
         }
-
-
     }
 
     private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera) {
@@ -373,7 +330,7 @@ public class TileMap extends TexturedObject {
                         camera.applyXTransform(pos.x + x * defaultTileDimension.width),
                         camera.applyYTransform(pos.y + y * defaultTileDimension.height),
                         null);
-                if (useConnectedStrategy)
+                if (useConnectedStrategy) {
                     if (y > 0) {
                         int ty = y - 1;
                         if (tileMap[x][ty] > -1) {
@@ -391,10 +348,9 @@ public class TileMap extends TexturedObject {
                             }
                         }
                     }
+                }
             }
         }
-
-
     }
 
 
@@ -423,13 +379,10 @@ public class TileMap extends TexturedObject {
                             camera.applyXTransform(x + xCoord * defaultTileDimension.width),
                             camera.applyYTransform(y + yCoord * defaultTileDimension.height), tileWidth, tileHeight,
                             null);
-
                 }
             }
         }
     }
-
-
 }
 
 

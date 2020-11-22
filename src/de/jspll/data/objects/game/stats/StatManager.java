@@ -14,6 +14,14 @@ public class StatManager extends GameObject {
         this.roundTime = roundTime;
     }
 
+    /**
+     * <pre>
+     *     Format:
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
     @Override
     public char call(Object[] input) {
         // statmanager statcommand taskTime remainingTime scoredPoints positive scoredKarma

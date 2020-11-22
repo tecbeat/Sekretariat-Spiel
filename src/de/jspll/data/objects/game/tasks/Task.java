@@ -5,8 +5,6 @@ import de.jspll.data.ChannelID;
 import de.jspll.graphics.Camera;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by reclinarka on 21-Nov-20.
@@ -59,8 +57,6 @@ public class Task {
             active = false;
             return;
         }
-
-
     }
 
     private Point getMousePos(){
@@ -68,8 +64,6 @@ public class Task {
     }
 
     public void update(float elapsedTime) {
-
-
         return;
     }
 

@@ -6,7 +6,6 @@ import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Collision;
-import de.jspll.util.Logger;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
 

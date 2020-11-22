@@ -1,10 +1,8 @@
 package de.jspll.data.objects.examples;
 
-import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
-import de.jspll.util.Logger;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -103,8 +101,6 @@ public class DisplayMover extends GameObject {
 
             }
         }
-
-
         return 0;
     }
 
