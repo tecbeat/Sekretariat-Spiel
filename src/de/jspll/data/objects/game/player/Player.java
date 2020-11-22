@@ -411,8 +411,6 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         movementAnimationList.get(0).startAnimation(start);
         start = false;
-        if (pos.y-1 >= 0  && pos.y-1 < 3136-64) pos.y -= 1;
-
         lastPressedKey = "w";
     }
 
@@ -420,7 +418,6 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         movementAnimationList.get(1).startAnimation(start);
         start = false;
-        if (pos.y+1 >= 0 && pos.y+1 < 3136-64) pos.y += 1;
 
         lastPressedKey = "s";
     }
@@ -430,7 +427,6 @@ public class Player extends TexturedObject {
 
         movementAnimationList.get(2).startAnimation(start);
         start = false;
-        if (pos.x-1 >= 0 && pos.x-1 <= 3552-32) pos.x -= 1;
 
         lastPressedKey = "a";
     }
@@ -440,8 +436,6 @@ public class Player extends TexturedObject {
 
         movementAnimationList.get(3).startAnimation(start);
         start = false;
-
-        if (pos.x+1 >= 0 && pos.x+1 <= 3552-32) pos.x += 1;
 
         lastPressedKey = "d";
     }

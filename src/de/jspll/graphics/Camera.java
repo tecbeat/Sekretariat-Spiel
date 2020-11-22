@@ -132,7 +132,7 @@ public class Camera {
     }
 
     private boolean[] checkIfOutside(Point pos) {
-        // TODO remove fixed values: values are realative to zoom
+        // TODO remove fixed values: values are relative to zoom
         double numberTilesX = 60 / zoom;
         double numberTilesY = 40 / zoom;
         int TileMapWidth = 3552;
