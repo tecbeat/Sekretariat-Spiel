@@ -1,9 +1,9 @@
-package de.jspll.data.objects.game.tasks;
+package de.jspll.data.objects.game.tasks.reactions;
 
-import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.game.tasks.iTaskReaction;
 import de.jspll.handlers.GameObjectHandler;
 
-public class MailReaction implements iTaskReaction {
+public class PhoneReaction implements iTaskReaction {
     @Override
     public int goodSelection(GameObjectHandler gOH) {
         return 10;
