@@ -72,6 +72,8 @@ public class TileMap extends TexturedObject {
         initTileMap();
         if (ID.contentEquals("Boden2") || ID.contentEquals("Boden3")) {
             useConnectedStrategy = false;
+        } else if(ID.contentEquals("Door")){
+            isHalfRes = true;
         }
     }
 
@@ -315,6 +317,7 @@ public class TileMap extends TexturedObject {
         }
     }
 
+    private boolean isHalfRes = false;
 
     private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera) {
         if (playerPos == null)
@@ -322,14 +325,38 @@ public class TileMap extends TexturedObject {
         if(collisionMap == null){
             getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
         } else {
-            int playerX = playerPos.x - pos.x;
-            int playerY = playerPos.y - 12 - pos.y;
-            int playerWidth = 32;
-            int playerHeight = 64;
             int tileWidth = defaultTileDimension.width;
             int tileHeight = defaultTileDimension.height;
+            int playerX = playerPos.x - pos.x;
+            int playerY = playerPos.y - Math.round(0.375f * tileHeight) - pos.y;
+            int playerWidth = 32;
+            int playerHeight = 64;
             int zoomedTileWidth = camera.applyZoom(tileWidth);
             int zoomedTileHeight = camera.applyZoom(tileHeight);
+
+
+            int startX ,
+                    endX,
+                    startY,
+                    endY;
+            if(isHalfRes) {
+                int tile2Width = tileWidth * 2;
+                int tile2Height = tileHeight * 2;
+                startX  = Math.max(0, (playerX / tile2Width) );
+                endX = (playerX + 2 * playerWidth) / tile2Width;
+                startY = (playerY + 2 * playerHeight) / tile2Height ;
+                endY = Math.max(0, (playerY + tile2Height) / tile2Height);
+                startX *= 2;
+                endX *= 2;
+                startY = startY * 2 - 1;
+                endY = endY * 2 - 2;
+            } else {
+                startX  = Math.max(0, (playerX / tileWidth) );
+                endX = (playerX + 2 * playerWidth) / tileWidth;
+                startY = (playerY + 2 * playerHeight) / tileHeight - 1;
+                endY = Math.max(0, (playerY + tileHeight) / tileHeight);
+            }
+
 
             Graphics2D g2d = (Graphics2D) g;
             Composite c = g2d.getComposite();
@@ -344,8 +371,14 @@ public class TileMap extends TexturedObject {
                     new Point(playerPos.x,playerPos.y + 48),
                     new Dimension(playerWidth - 2,playerHeight / 2 - 16));
 
-            for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
-                for (int y =  (playerY + 2 * playerHeight) / tileWidth - 1; y < tileMap[x].length && y >= Math.max(0, (playerY + tileHeight) / tileHeight); y--) {
+            int skip = 0;
+
+            for (int x = startX; x < tileMap.length && x < endX ; x++) {
+                for (int y = startY ; y < tileMap[x].length && y >= endY; y--) {
+                    if(skip > 0){
+                        skip --;
+                        continue;
+                    }
 
                     //debugging
                     if(Main.DEBUG) {
@@ -353,7 +386,7 @@ public class TileMap extends TexturedObject {
                         g.drawRect(camera.applyXTransform(pos.x + x * defaultTileDimension.width),
                                 camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
                     }
-
+                    //end of debugging
 
                     if( playerY + 60 > y * tileHeight){
                         //debugging
@@ -365,15 +398,19 @@ public class TileMap extends TexturedObject {
                             g.drawRect(camera.applyXTransform(pos.x + x * defaultTileDimension.width),
                                     camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
                         }
-                        if(Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension)) {
-                            if(!useConnectedStrategy && !behindWall)
-                                continue;
-                            else if(useConnectedStrategy)
+                        //end of debugging
+                        if( Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension)) {
+                            if(useConnectedStrategy)
                                 break;
+                            else if( !behindWall)
+                                continue;
+                        } else if(isHalfRes && Collision.doesDoorOverlap(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension)){
+                            skip = 1;
+                            continue;
                         }
                     }
                     // switched with if statement above because of debbuging, worse for performace
-                    if (useConnectedStrategy && !Collision.doesOverlapOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension))
+                    if ( useConnectedStrategy && !Collision.doesOverlapOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension))
                         continue;
 
                     if (tileMap[x][y] < 0) {

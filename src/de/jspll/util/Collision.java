@@ -21,11 +21,15 @@ public class Collision {
     }
 
     public static boolean doesOverlapOccur(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension) {
-        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,1 , 2);
+        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,1 , 3);
     }
 
     public static boolean doesWallOverlap(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension) {
         return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,2 , 2);
+    }
+
+    public static boolean doesDoorOverlap(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension) {
+        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,3 , 3);
     }
 
     private static boolean checkForCollisionOnInt(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension, int lowBound, int highBound){

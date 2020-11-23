@@ -455,7 +455,7 @@ public class GameObjectHandler{
                     System.out.println("Error");
                 }
                 TileMap tm;
-                if(l.getId().contains("Ausstattung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") ){
+                if(l.getId().contains("Ausstattung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
                 } else {
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());

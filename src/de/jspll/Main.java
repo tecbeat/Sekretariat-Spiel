@@ -35,7 +35,7 @@ public class Main {
         objects.add(p);
         MouseFollower mf = new MouseFollower("Follow");
         objects.add(mf);
-        TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Sekretariat-Spiel-Plan_v5.json");
+        TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Sekretariat-Spiel-Plan_v6.json");
         for(TileMap tm : tms)
             objects.add(tm);
 
