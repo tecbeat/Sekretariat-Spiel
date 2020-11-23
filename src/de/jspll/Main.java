@@ -21,7 +21,7 @@ public class Main {
         Logger logger = new Logger();
         logger.start();
 
-        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "scenes\\MainMenu");
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu");
         frameHandler.run();
     }
 }

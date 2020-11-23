@@ -52,14 +52,14 @@ public class Player extends TexturedObject {
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.collision_Dim = new Dimension(dimension.width - 2,dimension.height / 2 - 16);
 
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\forward_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\backward_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\left_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\right_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle0_", 1, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle1_", 1, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle2_", 1, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("assets\\player_animation\\" + colorScheme + "\\idle3_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/forward_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/backward_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/left_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/right_", 6, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle0_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle1_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle2_", 1, pos, dimension, this, 1F));
+        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle3_", 1, pos, dimension, this, 1F));
 
 
     }

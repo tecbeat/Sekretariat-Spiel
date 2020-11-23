@@ -414,7 +414,7 @@ public class GameObjectHandler{
                                     //Because these files do not exist
                                     if(src == null || src.equals("Anwesenheit.png")){
                                         if(src.equals("Anwesenheit.png")){
-                                            tex[0] = "assets\\map\\" + src;
+                                            tex[0] = "/assets/map/" + src;
                                             l.setTextures(tex);
                                             collsions = l;
                                         }
@@ -423,7 +423,7 @@ public class GameObjectHandler{
 
                                     }
 
-                                    tex[0] = "assets\\map\\" + src; //.substring(0,src.length()-4); //-4 to cut off the .png ending
+                                    tex[0] = "/assets/map/" + src; //.substring(0,src.length()-4); //-4 to cut off the .png ending
 
                                     l.setTextures(tex);
                                 }

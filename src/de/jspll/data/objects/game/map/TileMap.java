@@ -28,9 +28,6 @@ public class TileMap extends TexturedObject {
     private Dimension defaultTileDimension;
     protected BufferedImage[] tileSets;
     private String[] textureKeys;
-    private String[] keystrokes;
-    private int[] mousePos = new int[]{0, 0};
-    private int selectedTile = 0;
     private boolean coveringPlayer = false;
 
     //2d array representing map
@@ -70,6 +67,7 @@ public class TileMap extends TexturedObject {
         Logger.d.add("Tilemap: " + ID + " tileWidth=" + defaultTileDimension.width + " tileHeight=" + defaultTileDimension.height);
         tileMap = new int[tileColCount][tileRowCount];
         tiles = new Tile[0];
+        this.coveringPlayer = coveringPlayer;
         this.textureKeys = textureKeys;
         initTileMap();
         if (ID.contentEquals("Ausstattung4")) {
@@ -369,7 +367,6 @@ public class TileMap extends TexturedObject {
             g2d.setComposite(c);
         }
     }
-
 
     private void drawMap(Graphics g, float elapsedTime, Camera camera) {
         int[] bounds = camera.getRevertedBounds();

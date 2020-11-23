@@ -105,6 +105,20 @@ public class TaskHolder extends GameObject {
                 task.paint(g, elapsedTime, camera, currStage);
                 return;
             }
+            boolean inProximity = isInProximity();
+            Graphics2D g2d = (Graphics2D) g;
+            Stroke s = null;
+            if(inProximity) {
+                s = g2d.getStroke();
+                g2d.setStroke(new BasicStroke(3));
+            }
+            g2d.setColor(Color.RED);
+            g2d.drawRect(camera.applyXTransform(pos.x),
+                    camera.applyYTransform(pos.y),
+                    camera.applyZoom(dimension.width),
+                    camera.applyZoom(dimension.height));
+            if(inProximity && s != null)
+                g2d.setStroke(s);
         }
 
         if (Main.DEBUG) {

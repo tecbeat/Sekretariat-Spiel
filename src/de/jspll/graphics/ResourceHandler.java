@@ -92,6 +92,7 @@ public class ResourceHandler extends Thread {
 
     public BufferedImage loadImage(String texture){
         try {
+            System.out.println(texture);
             Logger.d.add("loading: " + texture);
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
             return image;
@@ -230,19 +231,20 @@ public class ResourceHandler extends Thread {
     }
 
     public String fileToJson(String filepath){
+        System.out.println(filepath);
         StringBuilder result = new StringBuilder();
         if(!filepath.endsWith(".json"))
             filepath = filepath + ".json";
         try {
-            File jsonFile = new File(this.getClass().getResource(filepath).toURI());
-            Scanner jsonReader = new Scanner(jsonFile);
-            while (jsonReader.hasNextLine()) {
-                String data = jsonReader.nextLine();
-                result.append(data);
+            BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filepath)));
+            String line = br.readLine();
+            while (line != null) {
+                result.append(line);
+                line = br.readLine();
             }
-            jsonReader.close();
+            br.close();
             return result.toString();
-        } catch (FileNotFoundException | URISyntaxException e) {
+        } catch (Exception e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

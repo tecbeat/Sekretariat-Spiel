@@ -152,7 +152,7 @@ public class GraphicsHandler implements SubHandler {
 
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;
-        window.setIconImage(gameObjectHandler.getResourceHandler().loadImage("assets\\icon.png") );
+        window.setIconImage(gameObjectHandler.getResourceHandler().loadImage("/assets/icon.png") );
     }
 
     public de.jspll.graphics.Window getWindow() {
