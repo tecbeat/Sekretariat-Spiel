@@ -412,7 +412,7 @@ public class GameObjectHandler{
                                     String src = ((String) tileset.get("relPath"));
 
                                     //Because these files do not exist
-                                    if(src == null || src.equals("Anwesenheit.png")){
+                                    if(src == null || src.equals("Anwesenheit.png") || src.equals("Buttons.png")){
                                         if(src.equals("Anwesenheit.png")){
                                             tex[0] = "/assets/map/" + src;
                                             l.setTextures(tex);
@@ -434,28 +434,36 @@ public class GameObjectHandler{
                         }
                     }
                 }
+
+                if(l.getTextures() == null){
+                    continue;
+                }
                 if(b) {
                     continue;
                 }
                 layerList.add(l);
             }
-            TileMap[] tileMaps = new TileMap[layerList.size()+1]; //+1 to add colissions
 
-            for(int i = 0; i < layerList.size()+1; i++){
+            TileMap[] tileMaps = new TileMap[layerList.size()+ (collsions.getId() != null ? 1 : 0)]; //+1 to add colissions
+
+            for(int i = 0; i < layerList.size() + (collsions.getId() != null ? 1 : 0); i++){
                 Layer l;
                 boolean collidable;
-                if(i == layerList.size()){
+                if(i == layerList.size() && collsions.getId() != null){
                     l = collsions;
                     collidable = true;
                 } else {
                     l = layerList.get(i);
                     collidable = false;
                 }
+
+                System.out.println("Doing: " + l.getId());
+
                 if(l.getTextures() == null || l.getTextures()[0] == null){
-                    System.out.println("Error");
+                    System.out.println("Error with " + l.getId());
                 }
                 TileMap tm;
-                if(l.getId().contains("Ausstattung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
+                if(l.getId().contains("Ausstattung") || l.getId().contains("Ausstatung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
                 } else {
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());
