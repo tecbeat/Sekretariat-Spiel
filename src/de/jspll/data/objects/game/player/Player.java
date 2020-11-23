@@ -8,18 +8,20 @@ import de.jspll.graphics.Camera;
 import de.jspll.util.Collision;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
-
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static de.jspll.data.ChannelID.*;
-
 /**
- * Created by reclinarka on 23-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Player extends TexturedObject {
 
 
@@ -38,6 +40,7 @@ public class Player extends TexturedObject {
     //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
     private int[] mapPos_and_metaData;
 
+    private Dimension collision_Dim;
 
     private Vector2D velocity = new Vector2D(0, 0);
 
@@ -58,14 +61,11 @@ public class Player extends TexturedObject {
         movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle1_", 1, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle2_", 1, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle3_", 1, pos, dimension, this, 1F));
-
-
     }
 
     public Player() {
 
     }
-
 
     public int getColorScheme() {
         return colorScheme;
@@ -98,6 +98,7 @@ public class Player extends TexturedObject {
 
         c.centerToObject(this, elapsedTime);
 
+        // slow down after sprinting
         decayVelocity();
 
         updateVelocity();
@@ -109,6 +110,9 @@ public class Player extends TexturedObject {
         return super.update(elapsedTime);
     }
 
+    /**
+     * Updates superclass x- and y-coordinate.
+     */
     private void assimilateXY() {
         this.x = pos.x;
         this.y = pos.y;
@@ -119,8 +123,6 @@ public class Player extends TexturedObject {
 
         if (collisionMap != null) {
             //Collision
-
-
             Point newPos = new Point(pos);
             scaledVelocity.updatePos(newPos);
 
@@ -130,30 +132,34 @@ public class Player extends TexturedObject {
                 Vector2D outVec = new Vector2D(0, 0);
                 Point oldPos = new Point(pos);
                 newPos = new Point(pos);
+
+                // try moving in y-coordinate first
                 vectors[1].updatePos(newPos);
                 if (doesCollisionOccur(newPos)) {
                     newPos = oldPos;
                 } else {
                     outVec.setY(vectors[1].getY());
                 }
+
+                // if no collision keep new pos
+                // try moving in x-coordinate based on new or old coordinate
                 vectors[0].updatePos(newPos);
                 if (!doesCollisionOccur(newPos)) {
                     outVec.setX(vectors[0].getX());
                 }
                 outVec.updatePos(pos);
-
             } else {
                 scaledVelocity.updatePos(pos);
-
             }
-
-
         } else {
             getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
             scaledVelocity.updatePos(pos);
         }
     }
 
+    /**
+     * If stopped after sprinting the character gets slowed down.
+     */
     private void decayVelocity() {
         if (sprinted_last) {
             velocity.instanceScale(0.9d);
@@ -165,6 +171,9 @@ public class Player extends TexturedObject {
         }
     }
 
+    /**
+     * Calculate movement velocity based on input.
+     */
     private void updateVelocity() {
         if (keyMap != null) {
             double speed = 95d;
@@ -236,22 +245,19 @@ public class Player extends TexturedObject {
         }
     }
 
-    private Dimension collision_Dim;
-
     private boolean doesCollisionOccur(Point newPos) {
-        if (!Main.DEBUG || Main.DEBUG) {
+        if (!Main.DEBUG || Main.DEBUG) { // due to missing doors
             if (keyMap != null) {
                 if (keyMap.get("q").get())
                     return false;
             }
         }
 
+        // calculate hitbox origin
         Point collPos = new Point(newPos.x + 1,newPos.y + 32 + 16);
 
-
-
+        // check for collision between hitbox and tilemap
         if(Collision.doesCollisionOccur(collisionMap,mapPos_and_metaData,collPos,collision_Dim)) return true;
-
 
         return false;
     }
@@ -262,24 +268,25 @@ public class Player extends TexturedObject {
             animation.draw((Graphics2D) g, elapsedTime, camera);
         }
 
-
         //debugging
-        if (!Main.DEBUG)
+        if (!Main.DEBUG) {
             return;
+        }
         Point t = new Point(pos);
         velocity.updatePos(t);
         g.setColor(Color.MAGENTA);
         g.drawLine(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyXTransform(t.x), camera.applyYTransform(t.y));
         //Logger.d.add("vector len=" + velocity.euclideanDistance());
-        if (!sprinted_last)
+        if (!sprinted_last) {
             PaintingUtil.paintCircleFromCenter(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyZoom(95), (Graphics2D) g, false);
-        else
+        } else {
             PaintingUtil.paintCircleFromCenter(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y), camera.applyZoom(95) * 1.7, (Graphics2D) g, false);
-
+        }
 
         if (keyMap != null) {
-            if (keyMap.get("q").get())
+            if (keyMap.get("q").get()) {
                 g.setColor(Color.red);
+            }
         }
 
         int playerX = pos.x + 1,
@@ -288,8 +295,6 @@ public class Player extends TexturedObject {
                 playerHeight = dimension.height / 2 - 16;
         g.drawRect(camera.applyXTransform(playerX), camera.applyYTransform(playerY), camera.applyZoom(playerWidth), camera.applyZoom(playerHeight));
         g.drawString("x=" + pos.x + " y=" + pos.y, camera.applyXTransform(pos.x), camera.applyYTransform(pos.y));
-
-
 
         if (collisionMap != null) {
             for (int x = 0; x < collisionMap.length; x++) {
@@ -311,12 +316,10 @@ public class Player extends TexturedObject {
                 }
             }
         }
-
     }
 
     @Override
     public char call(Object[] input) {
-        HashMap<String, AtomicBoolean> keyMap;
         super.call(input);
 
         if (input == null || input.length < 1) {
@@ -408,8 +411,4 @@ public class Player extends TexturedObject {
         for (Animation a : movementAnimationList)
             a.setPos(pos);
     }
-
-
-
-
 }

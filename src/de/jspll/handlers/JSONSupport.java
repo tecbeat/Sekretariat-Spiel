@@ -4,9 +4,17 @@ import com.google.gson.*;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.Texture;
 import de.jspll.util.json.JSONObject;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
 
 public class JSONSupport {
     private static Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();;

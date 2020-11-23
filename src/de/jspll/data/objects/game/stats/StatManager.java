@@ -3,10 +3,14 @@ package de.jspll.data.objects.game.stats;
 import de.jspll.data.objects.GameObject;
 
 /**
- * Manages the user statistics.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt
+ * @author
+ *
+ * @version 1.0
  */
+
 public class StatManager extends GameObject {
 
     private Integer roundScore;

@@ -3,6 +3,15 @@ package de.jspll.graphics;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
+
 public class Window extends JFrame {
 
     public Window(String windowTitle, JPanel content, Dimension size) {

@@ -3,13 +3,18 @@ package de.jspll.data;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.loading.ProgressReporter;
 import de.jspll.handlers.GameObjectHandler;
-
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by reclinarka on 17-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class SceneLoader extends Thread implements ProgressReporter{
     private AtomicInteger objectTotal = new AtomicInteger(),
             texturesTotal = new AtomicInteger(),

@@ -4,22 +4,25 @@ import com.google.gson.Gson;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.JSONSupport;
 import de.jspll.util.Logger;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by reclinarka on 27-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class ResourceHandler extends Thread {
 
     private GameObjectHandler parent;

@@ -13,6 +13,15 @@ import de.jspll.util.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
+
 public class Main {
 
     public static boolean DEBUG = false;
@@ -55,6 +64,8 @@ public class Main {
 
 
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu");
+
         frameHandler.run();
+
     }
 }

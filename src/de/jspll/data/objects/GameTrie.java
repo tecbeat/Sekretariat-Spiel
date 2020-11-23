@@ -1,12 +1,17 @@
 package de.jspll.data.objects;
 
 import com.sun.istack.internal.Nullable;
-
 import java.util.ArrayList;
 
 /**
- * Created by reclinarka on 23-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class GameTrie {
 
     private GameObject value = null;

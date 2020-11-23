@@ -6,16 +6,19 @@ import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Collision;
 import de.jspll.util.Logger;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 /**
- * Representation of the map.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt
+ * @author
+ *
+ * @version 1.0
  */
+
 public class TileMap extends TexturedObject {
 
     private Point playerPos;

@@ -2,12 +2,17 @@ package de.jspll.data.objects;
 
 import de.jspll.data.ChannelID;
 import de.jspll.graphics.Camera;
-
 import java.awt.*;
 
 /**
- * Created by reclinarka on 28-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class TexturedObject extends GameObject {
 
     public TexturedObject() {

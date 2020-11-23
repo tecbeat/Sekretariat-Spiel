@@ -3,8 +3,16 @@ package de.jspll.data.objects.loading;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.handlers.GameObjectHandler;
-
 import java.util.ArrayList;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
 
 public class Report implements ProgressReporter {
     private float count;
