@@ -143,7 +143,7 @@ public class CommonTask extends GameObject implements Task {
         g.setColor(buttonGoodClicked ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255));
         String correctHeading = buttonGoodClicked ? goodHeading : badHeading;
         g.drawString(correctHeading, (screenWidth / 2) - 110, screenHeight / 2);
-        g.drawString("Verbleibende Zeit: " + countDown, camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
+        g.drawString("Verbleibende Zeit: " + String.format("%1.2f", countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
     }
 
     /**
