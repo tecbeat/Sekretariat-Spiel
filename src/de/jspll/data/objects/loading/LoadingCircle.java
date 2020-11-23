@@ -5,12 +5,17 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
-
 import java.awt.*;
 
 /**
- * Created by reclinarka on 06-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class LoadingCircle extends GameObject {
 
     public LoadingCircle(String ID, String objectID, int x, int y, double radius, double distance, Dimension dimension){

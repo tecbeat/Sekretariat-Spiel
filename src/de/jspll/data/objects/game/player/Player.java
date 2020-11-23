@@ -8,16 +8,20 @@ import de.jspll.graphics.Camera;
 import de.jspll.util.Collision;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
-
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by reclinarka on 23-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Player extends TexturedObject {
 
 

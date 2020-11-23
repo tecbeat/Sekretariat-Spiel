@@ -1,12 +1,16 @@
 package de.jspll.util;
-import de.jspll.Main;
 
 import java.awt.*;
 
-
 /**
- * Created by reclinarka on 21-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Collision {
     //rec in form [ x, y, width, height ]
     public static boolean doesRectCollide(int[] rec1, int[] rec2 ){

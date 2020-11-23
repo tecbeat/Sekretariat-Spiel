@@ -2,12 +2,17 @@ package de.jspll.data.objects;
 
 import de.jspll.data.ChannelID;
 import de.jspll.handlers.GameObjectHandler;
-
 import static de.jspll.data.ChannelID.DISPATCH;
 
 /**
- * Created by reclinarka on 25-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Repeater extends GameObject{
     GameObjectHandler reciever;
     public Repeater(String ID,GameObjectHandler reciever) {

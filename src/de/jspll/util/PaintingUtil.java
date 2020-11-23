@@ -4,8 +4,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by reclinarka on 15-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class PaintingUtil {
     public static void paintCircleFromCenter(int x, int y, double radius, Graphics2D g, boolean fill){
         if(fill)

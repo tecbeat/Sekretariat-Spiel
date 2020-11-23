@@ -7,18 +7,22 @@ import de.jspll.graphics.Camera;
 import de.jspll.graphics.Drawable;
 import de.jspll.logic.Interactable;
 import de.jspll.util.json.JSONObject;
-
 import java.awt.*;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import static de.jspll.data.ChannelID.BACKGROUND;
 import static de.jspll.data.ChannelID.INPUT;
 
 /**
- * Created by reclinarka on 21-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class GameObject implements Drawable, Interactable {
 
     //InstanceSpecific ID: i.e 1

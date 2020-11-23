@@ -3,8 +3,14 @@ package de.jspll.util;
 import java.awt.*;
 
 /**
- * Created by reclinarka on 15-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Vector2D {
 
     public Vector2D() {

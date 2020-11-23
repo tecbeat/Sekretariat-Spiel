@@ -2,14 +2,19 @@ package de.jspll.data.objects.examples;
 
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by reclinarka on 29-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class AnimatedGameObject extends TexturedObject {
     public AnimatedGameObject(String ID, int x, int y, Dimension dimension, Animation animation) {
         super(ID, "g.tst.Animated", x, y, dimension, animation);

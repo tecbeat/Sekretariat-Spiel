@@ -2,10 +2,16 @@ package de.jspll.data.objects.game.ui;
 
 import de.jspll.data.ChannelID;
 import de.jspll.graphics.Camera;
-
 import java.awt.*;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
 
 public class ButtonObject extends MenuObject {
     private boolean mousedown;

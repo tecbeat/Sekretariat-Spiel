@@ -1,11 +1,18 @@
 package de.jspll.data.objects.game.ui;
 
-import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
-
 import java.awt.*;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
 
 public class MenuObject extends GameObject {
     protected String text;

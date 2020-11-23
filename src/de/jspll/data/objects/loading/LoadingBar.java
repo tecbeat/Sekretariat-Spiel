@@ -3,13 +3,18 @@ package de.jspll.data.objects.loading;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
-
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Created by reclinarka on 05-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class LoadingBar extends GameObject {
 
     public LoadingBar(ProgressReporter progressReporter){

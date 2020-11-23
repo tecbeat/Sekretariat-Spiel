@@ -18,20 +18,24 @@ import de.jspll.data.objects.loading.ProgressReporter;
 import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
 import static de.jspll.data.ChannelID.LAST_CHANNEL;
 import static de.jspll.data.ChannelID.SCENE_LOADING;
 
 /**
- * Created by reclinarka on 21-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class GameObjectHandler{
     public GameObjectHandler() {
 

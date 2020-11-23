@@ -5,14 +5,19 @@ import de.jspll.graphics.ResourceHandler;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.json.JSONObject;
 import de.jspll.util.json.JSONValue;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
- * Created by reclinarka on 28-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Texture {
 
     protected Point pos;
