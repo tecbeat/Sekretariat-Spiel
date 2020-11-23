@@ -31,7 +31,6 @@ public class Player extends TexturedObject {
     private String lastPressedKey = "s";
     private boolean start = true;
     private Point pos;
-    private float continuous_walking_time = 0f;
     private boolean sprinted_last = false;
 
     //2d array representing map
@@ -39,7 +38,6 @@ public class Player extends TexturedObject {
     //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
     private int[] mapPos_and_metaData;
 
-    Point halfResolution;
 
     private Vector2D velocity = new Vector2D(0, 0);
 
@@ -92,13 +90,6 @@ public class Player extends TexturedObject {
         }
     }
 
-
-    @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        super.paint(g, elapsedTime, camera, currStage);
-    }
-
-
     @Override
     public char update(float elapsedTime) {
         super.update(elapsedTime);
@@ -112,8 +103,6 @@ public class Player extends TexturedObject {
         updateVelocity();
 
         handleCollision(elapsedTime);
-
-        //maybe move the following code block to different method
 
         assimilateXY();
 
@@ -136,7 +125,6 @@ public class Player extends TexturedObject {
             scaledVelocity.updatePos(newPos);
 
             if (doesCollisionOccur(newPos)) {
-                //Logger.d.add("Collission occured");
                 //handle collision
                 Vector2D[] vectors = scaledVelocity.splitIntoXY();
                 Vector2D outVec = new Vector2D(0, 0);
@@ -148,11 +136,8 @@ public class Player extends TexturedObject {
                 } else {
                     outVec.setY(vectors[1].getY());
                 }
-                oldPos = new Point(newPos);
                 vectors[0].updatePos(newPos);
-                if (doesCollisionOccur(newPos)) {
-                    newPos = oldPos;
-                } else {
+                if (!doesCollisionOccur(newPos)) {
                     outVec.setX(vectors[0].getX());
                 }
                 outVec.updatePos(pos);
@@ -176,7 +161,7 @@ public class Player extends TexturedObject {
                 sprinted_last = false;
             }
         } else {
-            velocity.instanceScale(0d);
+            velocity.instanceScale(0.1d);
         }
     }
 

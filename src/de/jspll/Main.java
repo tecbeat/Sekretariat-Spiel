@@ -1,9 +1,16 @@
 package de.jspll;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import de.jspll.data.ChannelID;
+import de.jspll.data.objects.examples.MouseFollower;
+import de.jspll.data.objects.game.map.TileMap;
+import de.jspll.data.objects.game.player.Player;
 import de.jspll.frames.FrameHandler;
+import de.jspll.handlers.JSONSupport;
 import de.jspll.util.Logger;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -21,7 +28,27 @@ public class Main {
         Logger logger = new Logger();
         logger.start();
 
-        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu");
+
+        //debugging start
+        ArrayList<Object> objects = new ArrayList<>();
+        Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
+        objects.add(p);
+        MouseFollower mf = new MouseFollower("Follow");
+        objects.add(mf);
+        TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Sekretariat-Spiel-Plan_v2.json");
+        for(TileMap tm : tms)
+            objects.add(tm);
+
+        String jsonStr = JSONSupport.convertObjectsToJson(objects);
+        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
+
+
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jsonArray);
+        frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
+        //debugging end
+
+
+        //frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu");
         frameHandler.run();
     }
 }

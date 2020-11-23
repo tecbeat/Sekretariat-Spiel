@@ -70,7 +70,7 @@ public class TileMap extends TexturedObject {
         this.coveringPlayer = coveringPlayer;
         this.textureKeys = textureKeys;
         initTileMap();
-        if (ID.contentEquals("Ausstattung4")) {
+        if (ID.contentEquals("Boden2") || ID.contentEquals("Boden3")) {
             useConnectedStrategy = false;
         }
     }
@@ -315,6 +315,7 @@ public class TileMap extends TexturedObject {
         }
     }
 
+
     private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera) {
         if (playerPos == null)
             return;
@@ -332,11 +333,19 @@ public class TileMap extends TexturedObject {
 
             Graphics2D g2d = (Graphics2D) g;
             Composite c = g2d.getComposite();
-            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.9f);
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.95f);
             g2d.setComposite(ac);
 
+//            for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
+//                for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
+            boolean behindWall = Collision.doesWallOverlap(
+                    collisionMap,
+                    mapPos_and_metaData,
+                    new Point(playerPos.x,playerPos.y + 48),
+                    new Dimension(playerWidth - 2,playerHeight / 2 - 16));
+
             for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
-                for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
+                for (int y =  (playerY + 2 * playerHeight) / tileWidth - 1; y < tileMap[x].length && y >= Math.max(0, (playerY + tileHeight) / tileHeight); y--) {
 
                     //debugging
                     if(Main.DEBUG) {
@@ -345,11 +354,29 @@ public class TileMap extends TexturedObject {
                                 camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
                     }
 
-                    if (!Collision.doesOverlapOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension))
+
+                    if( playerY + 60 > y * tileHeight){
+                        //debugging
+                        g.setColor(Color.BLUE);
+                        if(Main.DEBUG) {
+                            g.drawString("y=" + y,camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                                    camera.applyYTransform(pos.y + y * defaultTileDimension.height) );
+                            g.setColor(Color.GREEN);
+                            g.drawRect(camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                                    camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
+                        }
+                        if(Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension)) {
+                            if(!useConnectedStrategy && !behindWall)
+                                continue;
+                            else if(useConnectedStrategy)
+                                break;
+                        }
+                    }
+                    // switched with if statement above because of debbuging, worse for performace
+                    if (useConnectedStrategy && !Collision.doesOverlapOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension))
                         continue;
 
                     if (tileMap[x][y] < 0) {
-                        tileMap[x][y] = -1;
                         continue;
                     }
                     if (!isTextureLoaded()) {
@@ -362,6 +389,8 @@ public class TileMap extends TexturedObject {
                             camera.applyXTransform(pos.x + x * defaultTileDimension.width),
                             camera.applyYTransform(pos.y + y * defaultTileDimension.height),
                             null);
+
+
                 }
             }
             g2d.setComposite(c);

@@ -17,18 +17,18 @@ public class Collision {
     }
 
     public static boolean doesCollisionOccur(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension) {
-
-
-        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,0);
+        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,0,0);
     }
 
     public static boolean doesOverlapOccur(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension) {
-        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,1);
-
-
+        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,1 , 2);
     }
 
-    private static boolean checkForCollisionOnInt(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension, int s){
+    public static boolean doesWallOverlap(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension) {
+        return checkForCollisionOnInt(collisionMap,mapPos_and_metaData,newPos,dimension,2 , 2);
+    }
+
+    private static boolean checkForCollisionOnInt(int[][] collisionMap ,int[] mapPos_and_metaData,Point newPos, Dimension dimension, int lowBound, int highBound){
         int mapX = mapPos_and_metaData[0],
                 mapY = mapPos_and_metaData[1],
                 mapWidth = mapPos_and_metaData[2],
@@ -54,7 +54,7 @@ public class Collision {
                     collidableHeight};
             for (int x = leftTile; x <= rightTile; x++) {
                 for (int y = topTile; y <= bottomTile; y++) {
-                    if (collisionMap[x][y] == s) {
+                    if (collisionMap[x][y] >= lowBound && collisionMap[x][y] <= highBound) {
                         if (Collision.doesRectCollide(newPlayerPos,
                                 new int[]{mapX + x * tileWidth,
                                         mapY + y * tileHeight,
