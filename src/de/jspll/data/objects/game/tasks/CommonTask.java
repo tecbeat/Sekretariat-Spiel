@@ -211,6 +211,7 @@ public class CommonTask extends GameObject implements Task {
     }
 
     public void activate(){
+        buttonLock = false;
         mouseClicked = getHolder().getParent().getLogicHandler().getInputHandler().getMouse1();
         countDown = 10;
         this.active = true;
