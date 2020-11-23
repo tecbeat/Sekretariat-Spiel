@@ -1,3 +1,20 @@
+//Convert Map to Json
+ArrayList<Object> objects = new ArrayList<>();
+Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
+objects.add(p);
+MouseFollower mf = new MouseFollower("Follow");
+objects.add(mf);
+TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Sekretariat-Spiel-Plan_v2.json");
+for(TileMap tm : tms)
+    objects.add(tm);
+
+String jsonStr = JSONSupport.convertObjectsToJson(objects);
+JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
+frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jsonArray);
+frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
+//End of Map Conversion (remove mouse follower if not needed)
+
+
         //EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));
         //frameHandler.getGameObjectHandler().loadObject(test);
 
