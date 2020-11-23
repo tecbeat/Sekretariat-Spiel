@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="" />
+    <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,12 +27,13 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="texture_loading" />
+        <entry key="$PROJECT_DIR$" value="Comment_with_names" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectId" id="1jIdKbb3zKKlEfgvFdKZnA2OC5b" />
   <component name="ProjectViewState">
@@ -37,17 +42,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SearchEverywhereHistoryKey" value="Resourc&#9;PSI&#9;JAVA://de.jspll.graphics.ResourceHandler" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production/2d-game-engine/de/jspll/graphics/assets/map" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/gson-2.8.6.jar!/" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
@@ -58,7 +65,7 @@
       <recent name="C:\Users\Lukas\Documents\a_Studium\3. Semester\Software Engineering\Repo\src\de\jspll\graphics\assets\map" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Debug">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -86,12 +93,27 @@
       </Profilers>
       <method />
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+    <configuration name="Debug" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="de.jspll.Main" />
-      <module name="2d-game-engine" />
+      <module name="Sekretariat-Spiel" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="de.jspll.Main" />
+      <module name="Sekretariat-Spiel" />
       <option name="PROGRAM_PARAMETERS" value="-Xmx8256 -XX:+UseParallelGC" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="de.jspll.Main" />
+      <module name="Sekretariat-Spiel" />
+      <option name="PROGRAM_PARAMETERS" value="-Xmx8256 -XX:+UseParallelGC" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -142,40 +164,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <module name="" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
       <option name="VM_PARAMETERS" />
@@ -195,11 +183,10 @@
       <envs />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Debug" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -228,6 +215,8 @@
       <workItem from="1605635563155" duration="3610000" />
       <workItem from="1605700957799" duration="27907000" />
       <workItem from="1605814291678" duration="2158000" />
+      <workItem from="1606124541152" duration="90000" />
+      <workItem from="1606124646296" duration="11169000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -418,7 +407,21 @@
       <option name="project" value="LOCAL" />
       <updated>1605808283210</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Comment with names">
+      <created>1606128945603</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1606128945603</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Comment with names">
+      <created>1606139922844</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1606139922844</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -429,12 +432,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method" />
@@ -454,60 +458,114 @@
     <MESSAGE value="optimized textures, fixed some player related issues, implemented rudimentary tileMap modification, added some documentation in inputHandler" />
     <MESSAGE value="implemented first stage of map loading" />
     <MESSAGE value="tilemap loading debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="tilemap loading debugging" />
+    <MESSAGE value="Comment with names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment with names" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="677" y="236" key="#Main" timestamp="1606124754447">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="677" y="236" key="#Main/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124754447" />
     <state x="909" y="198" key="#Project_Structure" timestamp="1605814143322">
       <screen x="74" y="0" width="2486" height="1080" />
     </state>
     <state x="909" y="198" key="#Project_Structure/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814143322" />
-    <state x="771" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605814178962">
-      <screen x="74" y="0" width="2486" height="1080" />
+    <state x="-1382" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606139089517">
+      <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="771" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814178962" />
-    <state x="1046" y="324" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605814166243">
-      <screen x="74" y="0" width="2486" height="1080" />
+    <state x="-1382" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606139089517" />
+    <state x="538" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124932704" />
+    <state x="-1169" y="324" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1606139087201">
+      <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state x="1046" y="324" key="#com.intellij.ide.util.TreeClassChooserDialog/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814166243" />
-    <state x="1097" y="281" key="FileChooserDialogImpl" timestamp="1605814176695">
-      <screen x="74" y="0" width="2486" height="1080" />
+    <state x="-1169" y="324" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606139087201" />
+    <state x="751" y="324" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124918281" />
+    <state x="808" y="429" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1606124556687">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="808" y="429" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124556687" />
+    <state x="540" y="195" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1606124506920">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="540" y="195" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124506920" />
+    <state x="-1378" y="134" key="CommitChangelistDialog2" timestamp="1606139931908">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="-1378" y="134" key="CommitChangelistDialog2/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606139931908" />
+    <state x="790" y="281" key="FileChooserDialogImpl" timestamp="1606124838431">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="1097" y="281" key="FileChooserDialogImpl/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814176695" />
-    <state width="1877" height="272" key="GridCell.Tab.0.bottom" timestamp="1605816563276">
-      <screen x="-1846" y="0" width="1846" height="1080" />
+    <state x="790" y="281" key="FileChooserDialogImpl/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124838431" />
+    <state width="1860" height="500" key="GridCell.Tab.0.bottom" timestamp="1606150659016">
+      <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.bottom/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563276" />
     <state width="2443" height="272" key="GridCell.Tab.0.bottom/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608480" />
-    <state width="1877" height="272" key="GridCell.Tab.0.center" timestamp="1605816563275">
-      <screen x="-1846" y="0" width="1846" height="1080" />
+    <state width="1860" height="500" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606150659016" />
+    <state width="1877" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124935243" />
+    <state width="1860" height="500" key="GridCell.Tab.0.center" timestamp="1606150659016">
+      <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.center/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563275" />
     <state width="2443" height="272" key="GridCell.Tab.0.center/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608479" />
-    <state width="1877" height="272" key="GridCell.Tab.0.left" timestamp="1605816563275">
-      <screen x="-1846" y="0" width="1846" height="1080" />
+    <state width="1860" height="500" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606150659016" />
+    <state width="1877" height="295" key="GridCell.Tab.0.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124935242" />
+    <state width="1860" height="500" key="GridCell.Tab.0.left" timestamp="1606150659016">
+      <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.left/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563275" />
     <state width="2443" height="272" key="GridCell.Tab.0.left/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608479" />
-    <state width="1877" height="272" key="GridCell.Tab.0.right" timestamp="1605816563276">
-      <screen x="-1846" y="0" width="1846" height="1080" />
+    <state width="1860" height="500" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606150659016" />
+    <state width="1877" height="295" key="GridCell.Tab.0.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124935242" />
+    <state width="1860" height="500" key="GridCell.Tab.0.right" timestamp="1606150659016">
+      <screen x="-1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.right/-1846.0.1846.1080/74.0.2486.1080@-1846.0.1846.1080" timestamp="1605816563276" />
     <state width="2443" height="272" key="GridCell.Tab.0.right/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605815608480" />
-    <state x="1013" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1605814284599">
-      <screen x="74" y="0" width="2486" height="1080" />
+    <state width="1860" height="500" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606150659016" />
+    <state width="1877" height="295" key="GridCell.Tab.0.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124935243" />
+    <state width="1877" height="363" key="GridCell.Tab.1.bottom" timestamp="1606125926060">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.bottom/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606125926060" />
+    <state width="1877" height="363" key="GridCell.Tab.1.bottom/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124882860" />
+    <state width="1877" height="363" key="GridCell.Tab.1.center" timestamp="1606125926060">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.center/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606125926060" />
+    <state width="1877" height="363" key="GridCell.Tab.1.center/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124882860" />
+    <state width="1877" height="363" key="GridCell.Tab.1.left" timestamp="1606125926060">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.left/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606125926060" />
+    <state width="1877" height="363" key="GridCell.Tab.1.left/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124882860" />
+    <state width="1877" height="363" key="GridCell.Tab.1.right" timestamp="1606125926060">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="363" key="GridCell.Tab.1.right/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606125926060" />
+    <state width="1877" height="363" key="GridCell.Tab.1.right/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124882860" />
+    <state x="440" y="114" key="SettingsEditor" timestamp="1606124841058">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="440" y="114" key="SettingsEditor/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124841058" />
+    <state x="-1368" y="273" key="Vcs.Push.Dialog.v2" timestamp="1606139935098">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="-1368" y="273" key="Vcs.Push.Dialog.v2/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606139935098" />
+    <state x="725" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1606124646907">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="1013" y="364" key="com.intellij.ide.util.TipDialog/-1846.0.1846.1080/74.0.2486.1080@74.0.2486.1080" timestamp="1605814284599" />
+    <state x="725" y="364" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/-1920.0.1920.1080@0.0.1920.1080" timestamp="1606124646907" />
+    <state x="-1151" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606145820013">
+      <screen x="-1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="-1151" y="457" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1606145820013" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java</url>
-          <line>480</line>
-          <option name="timeStamp" value="159" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="((TileMap)this).parent" custom="de.jspll.data.objects.game.map.TileMap" />
