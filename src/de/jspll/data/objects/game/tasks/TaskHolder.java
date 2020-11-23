@@ -26,7 +26,7 @@ public class TaskHolder extends GameObject {
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
-        this.channels = new ChannelID[]{ChannelID.UI, ChannelID.LOGIC};
+        this.channels = new ChannelID[]{ ChannelID.LOGIC, ChannelID.OVERLAY};
         this.pos = pos;
         this.task = task;
         this.radius = radius;
@@ -101,7 +101,7 @@ public class TaskHolder extends GameObject {
         super.paint(g, elapsedTime, camera, currStage);
 
         if (task != null) {
-            if (currStage == ChannelID.UI && task.isActive()) {
+            if (currStage == ChannelID.getbyID(ChannelID.OVERLAY.valueOf()) && task.isActive()) {
                 task.paint(g, elapsedTime, camera, currStage);
                 return;
             }
