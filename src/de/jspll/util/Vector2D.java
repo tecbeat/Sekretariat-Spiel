@@ -53,6 +53,12 @@ public class Vector2D {
         return this;
     }
 
+    /**
+     * Rotate the vector by the given angle
+     *
+     * @param rotation an angle, in radians
+     * @return vector with the rotated coordinates
+     */
     public Vector2D rotate(double rotation){
 
         double rx = (x * Math.cos(rotation)) - (y * Math.sin(rotation));
@@ -71,22 +77,35 @@ public class Vector2D {
 
     }
 
-
+    /**
+     * Override the toString methode form java.lang.object
+     *
+     * @return String with the {@code x} and {@code y} coordinates
+     */
     @Override
     public String toString() {
         return "[x=" + x + ", y=" + y + "]";
     }
 
-
+    /**
+     * Override the equals method from java.lang.object
+     * An Vector is equal to another one if:
+     *    - they share the same euclidean Distance
+     *    - they point in the same direction
+     *
+     * @param o vector which will be checked against the current
+     * @return {@code true} if all of the above criteria match,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Vector2D vec = (Vector2D) o;
-
         if (vec.x == this.x && vec.y == this.y) return true;
-        // needed check for direction of the vector
+
+        // TODO needed check for direction of the vector
         return vec.euclideanDistance() == euclideanDistance();
     }
 
@@ -116,6 +135,10 @@ public class Vector2D {
         return bellCurveConstant * Math.exp(exponent);
     }
 
+    /**
+     * Calculates the euclidean Distance by using the pythagorean theorem (c^2 = a^2 + b^2)
+     * @return euclidean Distance as a double
+     */
     public double euclideanDistance(){
         return Math.sqrt( x*x + y*y );
     }
@@ -147,6 +170,11 @@ public class Vector2D {
         this.y += amount;
     }
 
+    /**
+     * Normalizes to Vector so that it has a euclidean distance of 1
+     * The {@code x} and {@code y} Coordinates are divided by the current euclidean distance
+     */
+
     public void normalize(){
         if(x == 0 && y == 0){
             return;
@@ -167,4 +195,16 @@ public class Vector2D {
     public void setY(double y) {
         this.y = y;
     }
+
+
+    /**
+     * calculates the Angle of the Vector from the position (0,0)
+     * to calculate it the hyperbolic tangent needs to be calculated by the division of the {@code x} and {@code y} Coordinates
+     * @return Angle in Degrees
+     */
+    public Double calculateAngle(){
+        return Math.toDegrees(Math.tanh(x / y));
+    }
+
+
 }
