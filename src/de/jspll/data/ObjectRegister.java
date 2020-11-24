@@ -4,8 +4,14 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.player.Player;
 
 /**
- * Created by reclinarka on 21-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public enum ObjectRegister {
     DEFAULT(new GameObject(), "GameObject"),
     PLAYER(new Player(), "Player");

@@ -1,7 +1,6 @@
 package de.jspll.logic;
 
 import de.jspll.handlers.LogicHandler;
-
 import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 import java.util.HashMap;
@@ -11,11 +10,17 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Created by reclinarka on 11-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Lukas Becker
+ *
+ * @version 1.0
  */
+
 public class InputHandler implements MouseInputListener, MouseWheelListener, KeyListener {
     private String[] keyList = new String[]{"1","2","3","4","5","6","7","8","9","0","w","a","s","d","q","e","+","-","ESC", "CTRL", "SHIFT", "ALT", "TAB","CAPS", "ENTER"};
-    private LogicHandler parent;
+    private LogicHandler parent; // ToDo: Parent Kruse fix
     private AtomicLong wheelMovement = new AtomicLong(Double.doubleToLongBits(0));
     private AtomicBoolean mouse1 = new AtomicBoolean(false);
     private AtomicBoolean mouse2 = new AtomicBoolean(false);
@@ -281,5 +286,17 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
 
     public AtomicIntegerArray getMousePos() {
         return mousePos;
+    }
+
+    public AtomicBoolean getMouse1() {
+        return mouse1;
+    }
+
+    public AtomicBoolean getMouse2() {
+        return mouse2;
+    }
+
+    public AtomicBoolean getMouse3() {
+        return mouse3;
     }
 }

@@ -1,10 +1,16 @@
 package de.jspll.data.objects.game.map;
 
 import de.jspll.util.PaintingUtil;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.management.GarbageCollectorMXBean;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
 
 public class Tile {
     private transient TileMap parent;

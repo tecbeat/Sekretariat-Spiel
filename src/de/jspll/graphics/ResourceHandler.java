@@ -2,14 +2,12 @@ package de.jspll.graphics;
 
 import com.google.gson.Gson;
 import de.jspll.handlers.GameObjectHandler;
+import de.jspll.handlers.JSONSupport;
 import de.jspll.util.Logger;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,8 +15,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by reclinarka on 27-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Lukas Becker
+ *
+ * @version 1.0
  */
+
 public class ResourceHandler extends Thread {
 
     private GameObjectHandler parent;
@@ -91,6 +95,7 @@ public class ResourceHandler extends Thread {
 
     public BufferedImage loadImage(String texture){
         try {
+            System.out.println(texture);
             Logger.d.add("loading: " + texture);
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
             return image;
@@ -186,6 +191,67 @@ public class ResourceHandler extends Thread {
             if(!this.textures.containsKey(key))
                 requestTexture(key);
         }
+    }
+
+    public void jsonStrToFile(String json, String filepath){
+        boolean created = false;
+
+        if(filepath.endsWith(".json"))
+            filepath = filepath.substring(0,filepath.length()-5);
+
+        filepath = filepath + ".json";
+
+        try {
+            File jsonFile = new File(filepath);
+            if (jsonFile.createNewFile()) {
+                created = true;
+            } else {
+                //How to handle existing files
+                //Overwrite?
+            }
+
+            if(created) {
+                FileWriter jsonWriter = new FileWriter(jsonFile);
+                jsonWriter.write(json);
+                jsonWriter.close();
+                System.out.println("written!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in jsonToFile:");
+            e.printStackTrace();
+        }
+    }
+
+    public void objectToFile(Object o, String filepath){
+        String jsonStr = JSONSupport.convertObjectToJson(o);
+        jsonStrToFile(jsonStr, filepath);
+    }
+
+    public void objectsToFile(ArrayList<Object> oArr, String filepath){
+        String jsonStr = JSONSupport.convertObjectsToJson(oArr);
+        jsonStrToFile(jsonStr, filepath);
+    }
+
+    public String fileToJson(String filepath){
+        System.out.println(filepath);
+        StringBuilder result = new StringBuilder();
+        if(!filepath.endsWith(".json"))
+            filepath = filepath + ".json";
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filepath)));
+            String line = br.readLine();
+            while (line != null) {
+                result.append(line);
+                line = br.readLine();
+            }
+            br.close();
+            return result.toString();
+        } catch (Exception e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public enum FileType{

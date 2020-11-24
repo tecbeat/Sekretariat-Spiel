@@ -1,19 +1,24 @@
 package de.jspll.data.objects.game.map;
 
+import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.util.Collision;
 import de.jspll.util.Logger;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 /**
- * Representation of the map.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt
+ * @author
+ *
+ * @version 1.0
  */
+
 public class TileMap extends TexturedObject {
 
     private Point playerPos;
@@ -26,10 +31,13 @@ public class TileMap extends TexturedObject {
     private Dimension defaultTileDimension;
     protected BufferedImage[] tileSets;
     private String[] textureKeys;
-    private String[] keystrokes;
-    private int[] mousePos = new int[]{0, 0};
-    private int selectedTile = 0;
     private boolean coveringPlayer = false;
+
+    //2d array representing map
+    private int[][] collisionMap;
+    //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
+    private int[] mapPos_and_metaData;
+
 
     public TileMap(String ID, String objectID, Point playerPos, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
         super(ID, objectID, x, y, dimension, null);
@@ -62,10 +70,13 @@ public class TileMap extends TexturedObject {
         Logger.d.add("Tilemap: " + ID + " tileWidth=" + defaultTileDimension.width + " tileHeight=" + defaultTileDimension.height);
         tileMap = new int[tileColCount][tileRowCount];
         tiles = new Tile[0];
+        this.coveringPlayer = coveringPlayer;
         this.textureKeys = textureKeys;
         initTileMap();
-        if (ID.contentEquals("Ausstattung4")) {
+        if (ID.contentEquals("Boden2") || ID.contentEquals("Boden3")) {
             useConnectedStrategy = false;
+        } else if(ID.contentEquals("Door")){
+            isHalfRes = true;
         }
     }
 
@@ -211,8 +222,13 @@ public class TileMap extends TexturedObject {
                 }
             } else if (cmd.contentEquals("player")) {
                 getParent().dispatch(ChannelID.PLAYER, new Object[]{"collision", tileMap, new int[]{pos.x, pos.y, dimension.width, dimension.height, defaultTileDimension.width, defaultTileDimension.height}});
+            } else if (cmd.contentEquals("getCollisionArea")) {
+                getParent().dispatch(ChannelID.LOGIC,(String) input[1], new Object[]{"collision", tileMap, new int[]{pos.x, pos.y, dimension.width, dimension.height, defaultTileDimension.width, defaultTileDimension.height}});
             } else if (cmd.contentEquals("playerPos")) {
                 playerPos = (Point) input[1];
+            } else if(cmd.contentEquals("collision")){
+                collisionMap = (int[][]) input[1];
+                mapPos_and_metaData = (int[]) input[2];
             }
         }
         return 0;
@@ -304,55 +320,122 @@ public class TileMap extends TexturedObject {
         }
     }
 
+    private boolean isHalfRes = false;
+
     private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera) {
         if (playerPos == null)
             return;
-        int playerX = playerPos.x - pos.x;
-        int playerY = playerPos.y + 32 - pos.y;
-        int playerWidth = 32;
-        int playerHeight = 32;
-        int tileWidth = defaultTileDimension.width;
-        int tileHeight = defaultTileDimension.height;
-        int zoomedTileWidth = camera.applyZoom(tileWidth);
-        int zoomedTileHeight = camera.applyZoom(tileHeight);
+        if(collisionMap == null){
+            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
+        } else {
+            int tileWidth = defaultTileDimension.width;
+            int tileHeight = defaultTileDimension.height;
+            int playerX = playerPos.x - pos.x;
+            int playerY = playerPos.y - Math.round(0.375f * tileHeight) - pos.y;
+            int playerWidth = 32;
+            int playerHeight = 64;
+            int zoomedTileWidth = camera.applyZoom(tileWidth);
+            int zoomedTileHeight = camera.applyZoom(tileHeight);
 
-        for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
-            for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
-                if (tileMap[x][y] < 0) {
-                    tileMap[x][y] = -1;
-                    continue;
-                }
-                if (!isTextureLoaded()) {
-                    continue;
-                }
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.drawImage(tiles[tileMap[x][y]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
-                        camera.applyXTransform(pos.x + x * defaultTileDimension.width),
-                        camera.applyYTransform(pos.y + y * defaultTileDimension.height),
-                        null);
-                if (useConnectedStrategy) {
-                    if (y > 0) {
-                        int ty = y - 1;
-                        if (tileMap[x][ty] > -1) {
-                            g2d.drawImage(tiles[tileMap[x][ty]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
-                                    camera.applyXTransform(pos.x + x * defaultTileDimension.width),
-                                    camera.applyYTransform(pos.y + ty * defaultTileDimension.height),
-                                    null);
-                            ty--;
-                            if (tileMap[x][ty] > -1) {
-                                g2d.drawImage(tiles[tileMap[x][ty]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
-                                        camera.applyXTransform(pos.x + x * defaultTileDimension.width),
-                                        camera.applyYTransform(pos.y + ty * defaultTileDimension.height),
-                                        null);
 
-                            }
+            int startX ,
+                    endX,
+                    startY,
+                    endY;
+            if(isHalfRes) {
+                int tile2Width = tileWidth * 2;
+                int tile2Height = tileHeight * 2;
+                startX  = Math.max(0, (playerX / tile2Width) );
+                endX = (playerX + 2 * playerWidth) / tile2Width;
+                startY = (playerY + 2 * playerHeight) / tile2Height ;
+                endY = Math.max(0, (playerY + tile2Height) / tile2Height);
+                startX *= 2;
+                endX *= 2;
+                startY = startY * 2 - 1;
+                endY = endY * 2 - 2;
+            } else {
+                startX  = Math.max(0, (playerX / tileWidth) );
+                endX = (playerX + 2 * playerWidth) / tileWidth;
+                startY = (playerY + 2 * playerHeight) / tileHeight - 1;
+                endY = Math.max(0, (playerY + tileHeight) / tileHeight);
+            }
+
+
+            Graphics2D g2d = (Graphics2D) g;
+            Composite c = g2d.getComposite();
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.95f);
+            g2d.setComposite(ac);
+
+//            for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
+//                for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
+            boolean behindWall = Collision.doesWallOverlap(
+                    collisionMap,
+                    mapPos_and_metaData,
+                    new Point(playerPos.x,playerPos.y + 48),
+                    new Dimension(playerWidth - 2,playerHeight / 2 - 16));
+
+            int skip = 0;
+
+            for (int x = startX; x < tileMap.length && x < endX ; x++) {
+                for (int y = startY ; y < tileMap[x].length && y >= endY; y--) {
+                    if(skip > 0){
+                        skip --;
+                        continue;
+                    }
+
+                    //debugging
+                    if(Main.DEBUG) {
+                        g.setColor(Color.GREEN);
+                        g.drawRect(camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                                camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
+                    }
+                    //end of debugging
+
+                    if( playerY + 60 > y * tileHeight){
+                        //debugging
+                        g.setColor(Color.BLUE);
+                        if(Main.DEBUG) {
+                            g.drawString("y=" + y,camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                                    camera.applyYTransform(pos.y + y * defaultTileDimension.height) );
+                            g.setColor(Color.GREEN);
+                            g.drawRect(camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                                    camera.applyYTransform(pos.y + y * defaultTileDimension.height), camera.applyZoom(tileWidth), camera.applyZoom(tileHeight));
+                        }
+                        //end of debugging
+                        if( Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension)) {
+                            if(useConnectedStrategy)
+                                break;
+                            else if( !behindWall)
+                                continue;
+                        } else if(isHalfRes && Collision.doesDoorOverlap(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension)){
+                            skip = 1;
+                            continue;
                         }
                     }
+                    // switched with if statement above because of debbuging, worse for performace
+                    if ( useConnectedStrategy && !Collision.doesOverlapOccur(collisionMap, mapPos_and_metaData, new Point(x * tileWidth + pos.x, y * tileHeight + pos.y), defaultTileDimension))
+                        continue;
+
+                    if (tileMap[x][y] < 0) {
+                        continue;
+                    }
+                    if (!isTextureLoaded()) {
+                        continue;
+                    }
+
+
+
+                    g2d.drawImage(tiles[tileMap[x][y]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
+                            camera.applyXTransform(pos.x + x * defaultTileDimension.width),
+                            camera.applyYTransform(pos.y + y * defaultTileDimension.height),
+                            null);
+
+
                 }
             }
+            g2d.setComposite(c);
         }
     }
-
 
     private void drawMap(Graphics g, float elapsedTime, Camera camera) {
         int[] bounds = camera.getRevertedBounds();
@@ -384,5 +467,3 @@ public class TileMap extends TexturedObject {
         }
     }
 }
-
-

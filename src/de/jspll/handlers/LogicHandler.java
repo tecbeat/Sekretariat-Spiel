@@ -3,14 +3,17 @@ package de.jspll.handlers;
 import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
 import de.jspll.logic.InputHandler;
-
-import java.util.ArrayList;
-
 import static de.jspll.data.ChannelID.*;
 
 /**
- * Created by reclinarka on 05-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class LogicHandler implements SubHandler {
     public String ID = "main";
 

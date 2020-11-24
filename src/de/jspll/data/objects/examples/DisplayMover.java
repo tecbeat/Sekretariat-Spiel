@@ -3,12 +3,19 @@ package de.jspll.data.objects.examples;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
-
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import static de.jspll.data.ChannelID.INPUT;
 import static de.jspll.data.ChannelID.LOGIC;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
+ */
 
 public class DisplayMover extends GameObject {
     public DisplayMover(String ID) {

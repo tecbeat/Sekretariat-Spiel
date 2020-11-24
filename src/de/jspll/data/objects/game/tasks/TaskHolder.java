@@ -5,29 +5,36 @@ import de.jspll.data.*;
 import de.jspll.data.objects.GameObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Vector2D;
-
 import java.awt.*;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by reclinarka on 21-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Lukas Becker, Philipp Polland
+ *
+ * @version 1.0
  */
+
 public class TaskHolder extends GameObject {
 
     private Point playerPos;
     private Dimension playerDim;
     private Point pos;
     private Task task;
+    private double radius;
     private boolean inProximity = false;
     private HashMap<String,AtomicBoolean> keyMap;
 
-    public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task) {
+    public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
-        this.channels = new ChannelID[]{ChannelID.UI, ChannelID.LOGIC};
+        this.channels = new ChannelID[]{ ChannelID.LOGIC, ChannelID.OVERLAY};
         this.pos = pos;
         this.task = task;
+        this.radius = radius;
         if (task != null)
             task.setHolder(this);
     }
@@ -62,9 +69,9 @@ public class TaskHolder extends GameObject {
             return false;
         Vector2D distanceToPlayer = new Vector2D(
                 new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2),
-                new Point(playerPos.x + playerDim.width / 2, playerPos.y + dimension.height / 2));
+                new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24));
 
-        if (distanceToPlayer.euclideanDistance() < 24) {
+        if (distanceToPlayer.euclideanDistance() < radius) {
             return true;
         }
         return false;
@@ -85,6 +92,11 @@ public class TaskHolder extends GameObject {
                 task.call(input);
                 return 0;
             }
+
+            if (((String) input[0]).contentEquals("input")) {
+                task.call(input);
+            }
+
         }
         return 0;
     }
@@ -94,13 +106,41 @@ public class TaskHolder extends GameObject {
         super.paint(g, elapsedTime, camera, currStage);
 
         if (task != null) {
-            if (currStage == ChannelID.UI && task.isActive()) {
+            if (currStage == ChannelID.getbyID(ChannelID.OVERLAY.valueOf()) && task.isActive()) {
                 task.paint(g, elapsedTime, camera, currStage);
                 return;
             }
+            boolean inProximity = isInProximity();
+            Graphics2D g2d = (Graphics2D) g;
+            Stroke s = null;
+            if(inProximity) {
+                s = g2d.getStroke();
+                g2d.setStroke(new BasicStroke(3));
+            }
+            g2d.setColor(Color.RED);
+            g2d.drawRect(camera.applyXTransform(pos.x),
+                    camera.applyYTransform(pos.y),
+                    camera.applyZoom(dimension.width),
+                    camera.applyZoom(dimension.height));
+            if(inProximity && s != null)
+                g2d.setStroke(s);
         }
 
         if (Main.DEBUG) {
+
+
+            if(playerPos != null && playerDim != null) {
+                Point pl = new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24);
+                Vector2D distanceToPlayer = new Vector2D(
+                        pl,
+                        new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2));
+                Point point = new Point(pl), destination = new Point(pl);
+                distanceToPlayer.updatePos(destination);
+                g.setColor(Color.CYAN);
+                g.drawLine(camera.applyXTransform(point.x), camera.applyYTransform(point.y),
+                        camera.applyXTransform(destination.x), camera.applyYTransform(destination.y));
+            }
+
             if (inProximity) {
                 g.setColor(Color.CYAN);
                 g.fillRect(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y),

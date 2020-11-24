@@ -1,17 +1,19 @@
 package de.jspll;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.frames.FrameHandler;
-import de.jspll.handlers.JSONSupport;
-import de.jspll.data.objects.game.map.TileMap;
-import de.jspll.data.objects.game.player.Player;
 import de.jspll.util.Logger;
-
 import java.awt.*;
-import java.util.ArrayList;
+
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Lukas Becker, Samuel Assmann
+ *
+ * @version 1.0
+ */
 
 public class Main {
 
@@ -29,32 +31,36 @@ public class Main {
         Logger logger = new Logger();
         logger.start();
 
-        ArrayList<Object> objects = new ArrayList<>();
+        MouseFollower mf = new MouseFollower("Follow");
 
+        /*
+        //debugging start
+        ArrayList<Object> objects = new ArrayList<>();
         Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
         objects.add(p);
 
-//        TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
-//                new Point(1280,1088),
-//                new Dimension(32,16),
-//                new Task());
-//        objects.add(th1);
-        MouseFollower m = new MouseFollower("test1");
-        objects.add(m);
+        TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Home_Screen.json");
+        for(TileMap tm : tms)
+            objects.add(tm);
 
-        //EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));
-        //frameHandler.getGameObjectHandler().loadObject(test);
+        String jsonStr = JSONSupport.convertObjectsToJson(objects);
 
-        for(TileMap tileMap: frameHandler.getGameObjectHandler().loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")) {
-            objects.add(tileMap);
-        }
-
-        String strJSON = JSONSupport.convertObjectsToJson(objects);
+        ResourceHandler rh = frameHandler.getGameObjectHandler().getResourceHandler();
+        rh.jsonStrToFile(jsonStr, "C:\\Users\\Lukas\\Desktop\\Temp\\Game.json");
 
 
-        JsonArray jo = new JsonParser().parse(strJSON).getAsJsonArray();
+        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
 
-        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jo);
+
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jsonArray);
+        frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
+        debugging end
+        */
+
+
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu");
+
         frameHandler.run();
+
     }
 }

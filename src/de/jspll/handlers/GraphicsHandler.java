@@ -6,17 +6,21 @@ import de.jspll.frames.SubHandler;
 import de.jspll.graphics.*;
 import de.jspll.logic.InputHandler;
 import de.jspll.util.ColorStorage;
-
 import java.awt.*;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import static de.jspll.data.ChannelID.*;
 
 /**
- * Created by reclinarka on 05-Oct-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class GraphicsHandler implements SubHandler {
 
     public GraphicsHandler(String windowTitle, Dimension size, HandlerMode mode){
@@ -152,7 +156,7 @@ public class GraphicsHandler implements SubHandler {
 
     public void setGameObjectHandler(GameObjectHandler gameObjectHandler) {
         this.gameObjectHandler = gameObjectHandler;
-        window.setIconImage(gameObjectHandler.getResourceHandler().loadImage("assets\\icon.png") );
+        window.setIconImage(gameObjectHandler.getResourceHandler().loadImage("/assets/icon.png") );
     }
 
     public de.jspll.graphics.Window getWindow() {

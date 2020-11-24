@@ -3,8 +3,14 @@ package de.jspll.util;
 import java.awt.*;
 
 /**
- * Created by reclinarka on 15-Nov-20.
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author
+ *
+ * @version 1.0
  */
+
 public class Vector2D {
 
     public Vector2D() {
@@ -19,7 +25,8 @@ public class Vector2D {
 
     public Vector2D(Point p1, Point p2) {
         super();
-        this.x = p2.x-p1.x; this.y = p2.y - p1.y;
+        this.x = ((Integer) p2.x).doubleValue() - ((Integer) p1.x).doubleValue();
+        this.y = ((Integer) p2.y).doubleValue() - ((Integer) p1.y).doubleValue();
     }
 
     public double x, y;
@@ -64,18 +71,10 @@ public class Vector2D {
 
     }
 
-    public Double abs(){
-        return Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
-    }
-
-    public static Double abs(Vector2D vec){
-        return Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.y,2));
-
-    }
 
     @Override
     public String toString() {
-        return "[x=" + x + ",y=" + y + "]";
+        return "[x=" + x + ", y=" + y + "]";
     }
 
 
@@ -87,8 +86,8 @@ public class Vector2D {
         Vector2D vec = (Vector2D) o;
 
         if (vec.x == this.x && vec.y == this.y) return true;
-
-        return vec.abs().equals(abs());
+        // needed check for direction of the vector
+        return vec.euclideanDistance() == euclideanDistance();
     }
 
 
@@ -129,7 +128,7 @@ public class Vector2D {
         x += this.x;
         y += this.y;
 
-        pos.move((int)Math.round(x),(int)Math.round(y));
+        pos.move((int)Math.round(x), (int)Math.round(y));
     }
 
     public void addToX(int amount){
