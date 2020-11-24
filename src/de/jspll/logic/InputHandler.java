@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Lukas Becker
  *
  * @version 1.0
  */
