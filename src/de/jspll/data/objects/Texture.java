@@ -110,6 +110,7 @@ public class Texture {
         return parent;
     }
 
+    //TODO WHYYY
     public GameObject getParent(GameObject gO) {
         parent = gO;
         return parent;

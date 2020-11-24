@@ -16,7 +16,7 @@ import static de.jspll.data.ChannelID.LOGIC;
  *
  * @version 1.0
  */
-
+@Deprecated
 public class DisplayMover extends GameObject {
     public DisplayMover(String ID) {
         super(ID, "g.tst.DisplayMover");

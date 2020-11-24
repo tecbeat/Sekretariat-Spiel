@@ -13,7 +13,7 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
+@Deprecated
 public class Counter extends GameObject {
     private float test = 0f;
 

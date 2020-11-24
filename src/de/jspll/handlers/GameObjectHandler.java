@@ -304,6 +304,7 @@ public class GameObjectHandler{
                 // TODO: Richtige Pos
                 for(TaskHolder th : tempTaskContainer()){
                     out.add(th);
+                    th.requestTexture();
                 }
 
                 /**
