@@ -1,17 +1,21 @@
 package de.jspll.data.objects.game.stats;
 
-import de.jspll.data.objects.GameObject;
+import de.jspll.data.ChannelID;
+import de.jspll.data.objects.TexturedObject;
+import de.jspll.graphics.Camera;
+
+import java.awt.*;
 
 /**
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Laura Schmidt
  *
  * @version 1.0
  */
 
-public class StatManager extends GameObject {
+public class StatManager extends TexturedObject {
 
     private Integer roundScore;
     private Integer karmaScore;
@@ -51,6 +55,18 @@ public class StatManager extends GameObject {
             }
         }
         return 0;
+    }
+
+    @Override
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        // TODO: prettify
+        g.setColor(Color.WHITE);
+        g.fillRect(camera.getWidth() - 200, 0, 200, 70);
+
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Serif", Font.PLAIN, 18));
+        g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
+        g.drawString("Round score: " + roundScore, camera.getWidth() - 195, 45);
     }
 
     private void callTaskFinished(Object[] input, boolean finished) {
@@ -100,6 +116,14 @@ public class StatManager extends GameObject {
         } else {
             karmaScore -= scoredKarma;
         }
+    }
+
+    public void updateKarmaScore(int karmaScore) {
+        this.karmaScore += karmaScore;
+    }
+
+    public void updateRoundScore(int roundScore) {
+        this.roundScore += roundScore;
     }
 
     public Integer getRoundScore() {

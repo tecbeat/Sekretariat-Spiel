@@ -9,6 +9,7 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.GridTiles;
 import de.jspll.data.objects.game.map.Layer;
+import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.game.tasks.CommonTask;
@@ -123,6 +124,7 @@ public class GameObjectHandler{
     private GraphicsHandler graphicsHandler;
     private LogicHandler logicHandler;
     private AtomicBoolean loadingScene = new AtomicBoolean(false);
+    private StatManager statManager = new StatManager(300L);
 
     public LogicHandler getLogicHandler() {
         return logicHandler;
@@ -301,10 +303,11 @@ public class GameObjectHandler{
                         new Point(1280,1088),
                         new Dimension(32,16),
                         new ExampleTask());*/
-                // TODO: Richtige Pos
-                for(TaskHolder th : tempTaskContainer()){
+                for(TaskHolder th : tempTaskContainer(statManager)){
                     out.add(th);
                 }
+                // TODO: Add StatManager and Tasks to JSON
+                out.add(statManager);
 
                 /**
                  * End Tasks
@@ -501,42 +504,42 @@ public class GameObjectHandler{
         }
     }
 
-    private ArrayList<TaskHolder> tempTaskContainer(){
+    private ArrayList<TaskHolder> tempTaskContainer(StatManager statManager){
 
         ArrayList<TaskHolder> result = new ArrayList<>();
 
         TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
                 new Point(622,2090),
                 new Dimension(32,16),
-                new CommonTask("Post sortieren", "Post schreddern", new MailReaction()), 65);
+                new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
         thMail.setListener(this);
         result.add(thMail);
 
         TaskHolder thGrades = new TaskHolder("grades", "g.dflt.TaskHolder",
                 new Point(1638, 2295),
                 new Dimension(32, 16),
-                new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction()), 65);
+                new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
         thGrades.setListener(this);
         result.add(thGrades);
 
         TaskHolder thPhone = new TaskHolder("phone", "g.dflt.TaskHolder",
                 new Point(3105, 440),
                 new Dimension(32, 16),
-                new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction()), 65);
+                new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
         thPhone.setListener(this);
         result.add(thPhone);
 
         TaskHolder thCourses = new TaskHolder("courses", "g.dflt.TaskHolder",
                 new Point(2320, 1778),
                 new Dimension(32, 16),
-                new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction()), 65);
+                new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
         thCourses.setListener(this);
         result.add(thCourses);
 
         TaskHolder thCoursePlan = new TaskHolder("courseplan", "g.dflt.TaskHolder",
                 new Point(1818, 455),
                 new Dimension(32, 16),
-                new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction()), 65);
+                new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
         thCoursePlan.setListener(this);
         result.add(thCoursePlan);
 

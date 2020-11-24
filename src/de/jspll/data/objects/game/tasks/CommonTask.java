@@ -3,6 +3,7 @@ package de.jspll.data.objects.game.tasks;
 import com.google.gson.annotations.Expose;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
+import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.graphics.Camera;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -49,11 +50,15 @@ public class CommonTask extends GameObject implements Task {
     private final String goodHeading;
     private final String badHeading;
 
+    private StatManager statManager;
 
-    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect){
+
+    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager){
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
+        this.statManager = statManager;
+        channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
     }
 
     @Override
@@ -71,6 +76,7 @@ public class CommonTask extends GameObject implements Task {
 
         // close task window when countdown is lower than 0
         if(countDown < 0){
+            updateKarmaAndRoundScore();
             active = false;
             return;
         }
@@ -178,7 +184,6 @@ public class CommonTask extends GameObject implements Task {
     private void checkClick(){
         if(getMousePressed()) {
             if(checkHover(btnGoodX, btnStartY, buttonSize[0], buttonSize[1])){
-                System.out.println("positive Karma");
                 countDown = onSelect.goodSelection(getHolder().getParent());
                 buttonGoodClicked = true;
                 buttonLock = true;
@@ -186,7 +191,6 @@ public class CommonTask extends GameObject implements Task {
             }
 
             if(checkHover(btnBadX, btnStartY, buttonSize[0], buttonSize[1])){
-                System.out.println("negative Karma");
                 countDown = onSelect.badSelection(getHolder().getParent());
                 buttonGoodClicked = false;
                 buttonLock = true;
@@ -204,6 +208,10 @@ public class CommonTask extends GameObject implements Task {
         if(countDownStarted) {
             countDown -= elapsedTime;
         }
+    }
+
+    private void updateKarmaAndRoundScore() {
+        onSelect.taskFinished(statManager, buttonGoodClicked);
     }
 
     /**
