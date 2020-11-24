@@ -176,6 +176,7 @@ public class GameObjectHandler{
     public void unsubscribe(GameObject item) {
         for (ChannelID id : item.getChannels()) {
             if (id == INSTANCE_REGISTER)
+                // TODO: Check if necessary. Kruse will tear our heads if we leave it in.
                 continue;
             this.channels[id.valueOf()].delete(item.getID());
         }
@@ -303,9 +304,7 @@ public class GameObjectHandler{
                         new Point(1280,1088),
                         new Dimension(32,16),
                         new ExampleTask());*/
-                for(TaskHolder th : tempTaskContainer(statManager)){
-                    out.add(th);
-                }
+                out.addAll(tempTaskContainer(statManager));
                 // TODO: Add StatManager and Tasks to JSON
                 out.add(statManager);
 
@@ -372,6 +371,7 @@ public class GameObjectHandler{
                 //get gridTiles
                 ArrayList<Map<String,?>> temp = (ArrayList<Map<String, ?>>) layerI.get("gridTiles");
 
+                // TODO: Check if necessary. Kruse will tear our heads out if we leave it in.
                 if(temp.size() == 0)
                     continue;
 
@@ -426,8 +426,8 @@ public class GameObjectHandler{
                                             collsions = l;
                                         }
                                         b = true;
+                                        // TODO: Check if necessary. Kruse will tear our heads out if we leave it in.
                                         continue;
-
                                     }
 
                                     tex[0] = "/assets/map/" + src; //.substring(0,src.length()-4); //-4 to cut off the .png ending
@@ -436,12 +436,10 @@ public class GameObjectHandler{
                                 }
                             }
                         }
-                        if(b) {
-                            continue;
-                        }
                     }
                 }
 
+                // TODO: Check if necessary. Application worked as normal without. Kruse will tear our heads out if we leave it in.
                 if(l.getTextures() == null){
                     continue;
                 }
