@@ -136,6 +136,15 @@ public class Camera {
 
     }
 
+    public void instantlyCenterToPos(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public void instantlyZoom(float level){
+        this.zoom = level;
+    }
+
     /**
      * This Function gives the opportunity to use a GameObject as the reference
      *

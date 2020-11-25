@@ -305,11 +305,10 @@ public class GameObjectHandler{
                         new Dimension(32,16),
                         new ExampleTask());*/
                 // TODO: Richtige Pos
-                for(TaskHolder th : tempTaskContainer()){
+                for(TaskHolder th : tempTaskContainer(statManager)){
                     out.add(th);
                     th.requestTexture();
                 }
-                out.addAll(tempTaskContainer(statManager));
                 // TODO: Add StatManager and Tasks to JSON
                 out.add(statManager);
 
