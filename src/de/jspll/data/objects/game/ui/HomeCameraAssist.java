@@ -6,6 +6,15 @@ import de.jspll.graphics.Camera;
 
 import java.awt.*;
 
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Lukas Becker
+ *
+ * @version 1.0
+ */
+
 public class HomeCameraAssist extends GameObject {
     int mapWidth;
     int mapHeight;
