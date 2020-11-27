@@ -9,7 +9,9 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.GridTiles;
 import de.jspll.data.objects.game.map.Layer;
-import de.jspll.data.objects.game.stats.StatManager;
+import de.jspll.data.objects.game.player.ColorScheme;
+import de.jspll.data.objects.game.player.NPC;
+import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.game.tasks.CommonTask;
@@ -312,6 +314,7 @@ public class GameObjectHandler{
                 // TODO: Add StatManager and Tasks to JSON
                 out.add(statManager);
 
+
                 /**
                  * End Tasks
                  */
@@ -506,9 +509,9 @@ public class GameObjectHandler{
         }
     }
 
-    private ArrayList<TaskHolder> tempTaskContainer(StatManager statManager){
+    private ArrayList<TexturedObject> tempTaskContainer(){
 
-        ArrayList<TaskHolder> result = new ArrayList<>();
+        ArrayList<TexturedObject> result = new ArrayList<>();
 
         TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
                 new Point(622,2090),
@@ -544,6 +547,11 @@ public class GameObjectHandler{
                 new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
         thCoursePlan.setListener(this);
         result.add(thCoursePlan);
+
+        Player testNPC = new NPC("NPC",  ColorScheme.BLUE);
+        testNPC.setListener(this);
+
+        result.add(testNPC);
 
         return result;
     }

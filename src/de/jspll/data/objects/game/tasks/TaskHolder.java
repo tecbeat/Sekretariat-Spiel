@@ -3,12 +3,12 @@ package de.jspll.data.objects.game.tasks;
 import de.jspll.Main;
 import de.jspll.data.*;
 import de.jspll.data.objects.Animation;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Vector2D;
 import java.awt.*;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -31,6 +31,7 @@ public class TaskHolder extends TexturedObject {
     private boolean inProximity = false;
     private HashMap<String,AtomicBoolean> keyMap;
     private final Animation an;
+    private BufferedImage texture;
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
@@ -40,14 +41,14 @@ public class TaskHolder extends TexturedObject {
         this.radius = radius;
         if (task != null)
             task.setHolder(this);
-        an = new Animation("/assets/task/task_", 20, new Point(pos.x, pos.y - 30), new Dimension(32,32), this,7F);
+        an = new Animation("/assets/task/task_", 20, new Point(pos.x, pos.y - 30), new Dimension(32,32), this,3F);
     }
 
     @Override
     public void requestTexture() {
         an.requestTextures(this);
         an.setLooping(true);
-        an.startAnimation(true);
+        an.startAnimation();
     }
 
     @Override
@@ -126,6 +127,8 @@ public class TaskHolder extends TexturedObject {
         return 0;
     }
 
+    Boolean unlockAnimation = true;
+
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         super.paint(g, elapsedTime, camera, currStage);
@@ -150,6 +153,8 @@ public class TaskHolder extends TexturedObject {
             if(inProximity && s != null)
                 g2d.setStroke(s);
         }
+
+
 
         if (Main.DEBUG) {
 
