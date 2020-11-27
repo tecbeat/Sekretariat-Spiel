@@ -25,6 +25,7 @@ public class StatManager extends TexturedObject {
         this.roundScore = 0;
         this.karmaScore = 0;
         this.roundTime = roundTime;
+        channels = new ChannelID[]{ChannelID.INPUT, ChannelID.UI};
     }
 
     /**

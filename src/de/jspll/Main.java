@@ -20,8 +20,6 @@ import de.jspll.util.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 
-c
-
 public class Main {
 
     public static boolean DEBUG = false;

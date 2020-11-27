@@ -12,9 +12,11 @@ import de.jspll.data.objects.game.map.Layer;
 import de.jspll.data.objects.game.player.ColorScheme;
 import de.jspll.data.objects.game.player.NPC;
 import de.jspll.data.objects.game.player.Player;
+import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.game.tasks.CommonTask;
+import de.jspll.data.objects.game.ui.MenuObject;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
@@ -307,12 +309,22 @@ public class GameObjectHandler{
                         new Dimension(32,16),
                         new ExampleTask());*/
                 // TODO: Richtige Pos
-                for(TaskHolder th : tempTaskContainer(statManager)){
-                    out.add(th);
-                    th.requestTexture();
+                boolean home = false;
+                for(GameObject o : out){
+                    if(o instanceof MenuObject){
+                        home = true;
+                        break;
+                    }
                 }
-                // TODO: Add StatManager and Tasks to JSON
-                out.add(statManager);
+                if(!home) {
+                    for (TexturedObject th : tempTaskContainer(statManager)) {
+                        out.add(th);
+                        th.requestTexture();
+                    }
+                    // TODO: Add StatManager and Tasks to JSON
+                    statManager.setListener(goh);
+                    out.add(statManager);
+                }
 
 
                 /**
@@ -509,7 +521,7 @@ public class GameObjectHandler{
         }
     }
 
-    private ArrayList<TexturedObject> tempTaskContainer(){
+    private ArrayList<TexturedObject> tempTaskContainer(StatManager statManager){
 
         ArrayList<TexturedObject> result = new ArrayList<>();
 
