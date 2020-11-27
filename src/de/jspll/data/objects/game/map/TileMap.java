@@ -8,7 +8,9 @@ import de.jspll.util.Collision;
 import de.jspll.util.Logger;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * © Sekretariat-Spiel
@@ -22,6 +24,7 @@ import java.util.Arrays;
 public class TileMap extends TexturedObject {
 
     private Point playerPos;
+    private HashMap<String, Point> npcPlayerPos ;
     private int[][] tileMap;
     private Tile[] tiles;
     private Point pos;
@@ -46,6 +49,7 @@ public class TileMap extends TexturedObject {
         this.textureKeys = textureKeys;
         defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
         tileMap = new int[tileColCount][tileRowCount];
+
         initTileMap();
         debugInit();
     }
@@ -226,6 +230,12 @@ public class TileMap extends TexturedObject {
                 getParent().dispatch(ChannelID.LOGIC,(String) input[1], new Object[]{"collision", tileMap, new int[]{pos.x, pos.y, dimension.width, dimension.height, defaultTileDimension.width, defaultTileDimension.height}});
             } else if (cmd.contentEquals("playerPos")) {
                 playerPos = (Point) input[1];
+            } else if (cmd.startsWith("npcPos")) {
+                //TODO WTF else its null
+                if (npcPlayerPos == null){
+                    npcPlayerPos = new HashMap<>(10);
+                }
+                npcPlayerPos.put(cmd, (Point) input[1]);
             } else if(cmd.contentEquals("collision")){
                 collisionMap = (int[][]) input[1];
                 mapPos_and_metaData = (int[]) input[2];
@@ -316,13 +326,14 @@ public class TileMap extends TexturedObject {
         if (currStage == ChannelID.BACKGROUND) {
             drawMap(g, elapsedTime, camera);
         } else if (currStage == ChannelID.UI) {
-            drawPlayerCover(g, elapsedTime, camera);
+            drawPlayerCover(g, elapsedTime, camera, playerPos);
+            for (Point npcPoint : npcPlayerPos.values() ) drawPlayerCover(g, elapsedTime, camera, npcPoint);
         }
     }
 
     private boolean isHalfRes = false;
 
-    private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera) {
+    private void drawPlayerCover(Graphics g, float elapsedTime, Camera camera, Point playerPos) {
         if (playerPos == null)
             return;
         if(collisionMap == null){

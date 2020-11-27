@@ -9,6 +9,9 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.GridTiles;
 import de.jspll.data.objects.game.map.Layer;
+import de.jspll.data.objects.game.player.ColorScheme;
+import de.jspll.data.objects.game.player.NPC;
+import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.game.tasks.CommonTask;
@@ -302,10 +305,11 @@ public class GameObjectHandler{
                         new Dimension(32,16),
                         new ExampleTask());*/
                 // TODO: Richtige Pos
-                for(TaskHolder th : tempTaskContainer()){
+                for(TexturedObject th : tempTaskContainer()){
                     out.add(th);
                     th.requestTexture();
                 }
+
 
                 /**
                  * End Tasks
@@ -502,9 +506,9 @@ public class GameObjectHandler{
         }
     }
 
-    private ArrayList<TaskHolder> tempTaskContainer(){
+    private ArrayList<TexturedObject> tempTaskContainer(){
 
-        ArrayList<TaskHolder> result = new ArrayList<>();
+        ArrayList<TexturedObject> result = new ArrayList<>();
 
         TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
                 new Point(622,2090),
@@ -540,6 +544,11 @@ public class GameObjectHandler{
                 new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction()), 65);
         thCoursePlan.setListener(this);
         result.add(thCoursePlan);
+
+        Player testNPC = new NPC("NPC",  ColorScheme.BLUE);
+        testNPC.setListener(this);
+
+        result.add(testNPC);
 
         return result;
     }
