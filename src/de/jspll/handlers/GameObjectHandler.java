@@ -124,7 +124,7 @@ public class GameObjectHandler{
     private GraphicsHandler graphicsHandler;
     private LogicHandler logicHandler;
     private AtomicBoolean loadingScene = new AtomicBoolean(false);
-    private StatManager statManager = new StatManager(300L);
+    private StatManager statManager = new StatManager(300);
 
     public LogicHandler getLogicHandler() {
         return logicHandler;
