@@ -9,10 +9,14 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.GridTiles;
 import de.jspll.data.objects.game.map.Layer;
+import de.jspll.data.objects.game.player.ColorScheme;
+import de.jspll.data.objects.game.player.NPC;
+import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.game.tasks.CommonTask;
+import de.jspll.data.objects.game.ui.MenuObject;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
@@ -304,9 +308,24 @@ public class GameObjectHandler{
                         new Point(1280,1088),
                         new Dimension(32,16),
                         new ExampleTask());*/
-                out.addAll(tempTaskContainer(statManager));
-                // TODO: Add StatManager and Tasks to JSON
-                out.add(statManager);
+                // TODO: Richtige Pos
+                boolean home = false;
+                for(GameObject o : out){
+                    if(o instanceof MenuObject){
+                        home = true;
+                        break;
+                    }
+                }
+                if(!home) {
+                    for (TexturedObject th : tempTaskContainer(statManager)) {
+                        out.add(th);
+                        th.requestTexture();
+                    }
+                    // TODO: Add StatManager and Tasks to JSON
+                    statManager.setListener(goh);
+                    out.add(statManager);
+                }
+
 
                 /**
                  * End Tasks
@@ -502,9 +521,9 @@ public class GameObjectHandler{
         }
     }
 
-    private ArrayList<TaskHolder> tempTaskContainer(StatManager statManager){
+    private ArrayList<TexturedObject> tempTaskContainer(StatManager statManager){
 
-        ArrayList<TaskHolder> result = new ArrayList<>();
+        ArrayList<TexturedObject> result = new ArrayList<>();
 
         TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
                 new Point(622,2090),
@@ -540,6 +559,11 @@ public class GameObjectHandler{
                 new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
         thCoursePlan.setListener(this);
         result.add(thCoursePlan);
+
+        Player testNPC = new NPC("NPC",  ColorScheme.BLUE);
+        testNPC.setListener(this);
+
+        result.add(testNPC);
 
         return result;
     }

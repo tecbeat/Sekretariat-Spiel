@@ -9,7 +9,7 @@ import java.awt.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Jonas Sperling, Lukas Becker (geringe Beteiligung)
  *
  * @version 1.0
  */
@@ -134,6 +134,15 @@ public class Camera {
         }
 
 
+    }
+
+    public void instantlyCenterToPos(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public void instantlyZoom(float level){
+        this.zoom = level;
     }
 
     /**

@@ -8,6 +8,7 @@ import de.jspll.graphics.Camera;
 import de.jspll.util.Collision;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,41 +19,35 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Jonas Sperling, Lukas Becker, Philipp Polland
- *
  * @version 1.0
  */
 
 public class Player extends TexturedObject {
 
 
-    private int colorScheme;   //Possible 0 - 4
-
     //[0] = Forward (W), [1] = Backwards (S), [2] = Left(L), [3] = Right(R)
     private final ArrayList<Animation> movementAnimationList = new ArrayList<>();
-
+    HashMap<String, AtomicBoolean> keyMap;
+    private ColorScheme colorScheme;
     private String lastPressedKey = "s";
     private boolean start = true;
-    private Point pos;
+    protected Point pos;
     private boolean sprinted_last = false;
-
     //2d array representing map
-    private int[][] collisionMap;
+    protected int[][] collisionMap;
     //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
-    private int[] mapPos_and_metaData;
-
+    protected int[] mapPos_and_metaData;
     private Dimension collision_Dim;
-
     private Vector2D velocity = new Vector2D(0, 0);
+    private boolean isNPC = false;
 
-    HashMap<String, AtomicBoolean> keyMap;
-
-    public Player(String ID, Point pos, Dimension dimension, int colorScheme) {
+    public Player(String ID, Point pos, Dimension dimension, ColorScheme colorScheme, boolean isNPC) {
         super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
         this.pos = pos;
         this.colorScheme = colorScheme;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
-        this.collision_Dim = new Dimension(dimension.width - 2,dimension.height / 2 - 16);
-
+        this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
+        this.isNPC = isNPC;
         movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/forward_", 6, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/backward_", 6, pos, dimension, this, 1F));
         movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/left_", 6, pos, dimension, this, 1F));
@@ -67,7 +62,7 @@ public class Player extends TexturedObject {
 
     }
 
-    public int getColorScheme() {
+    public ColorScheme getColorScheme() {
         return colorScheme;
     }
 
@@ -92,8 +87,6 @@ public class Player extends TexturedObject {
 
     @Override
     public char update(float elapsedTime) {
-        super.update(elapsedTime);
-
         Camera c = getParent().getSelectedCamera();
 
         c.centerToObject(this, elapsedTime);
@@ -107,18 +100,18 @@ public class Player extends TexturedObject {
 
         assimilateXY();
 
-        return super.update(elapsedTime);
+        return 0;
     }
 
     /**
      * Updates superclass x- and y-coordinate.
      */
-    private void assimilateXY() {
+    protected void assimilateXY() {
         this.x = pos.x;
         this.y = pos.y;
     }
 
-    private void handleCollision(float elapsedTime) {
+    protected void handleCollision(float elapsedTime) {
         Vector2D scaledVelocity = velocity.scale(elapsedTime);
 
         if (collisionMap != null) {
@@ -152,7 +145,7 @@ public class Player extends TexturedObject {
                 scaledVelocity.updatePos(pos);
             }
         } else {
-            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
+            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{"getCollisionArea", getID()});
             scaledVelocity.updatePos(pos);
         }
     }
@@ -160,7 +153,7 @@ public class Player extends TexturedObject {
     /**
      * If stopped after sprinting the character gets slowed down.
      */
-    private void decayVelocity() {
+    protected void decayVelocity() {
         if (sprinted_last) {
             velocity.instanceScale(0.9d);
             if (velocity.euclideanDistance() < 1) {
@@ -174,7 +167,7 @@ public class Player extends TexturedObject {
     /**
      * Calculate movement velocity based on input.
      */
-    private void updateVelocity() {
+    protected void updateVelocity() {
         if (keyMap != null) {
             double speed = 95d;
 
@@ -254,10 +247,10 @@ public class Player extends TexturedObject {
         }
 
         // calculate hitbox origin
-        Point collPos = new Point(newPos.x + 1,newPos.y + 32 + 16);
+        Point collPos = new Point(newPos.x + 1, newPos.y + 32 + 16);
 
         // check for collision between hitbox and tilemap
-        if(Collision.doesCollisionOccur(collisionMap,mapPos_and_metaData,collPos,collision_Dim)) return true;
+        if (Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, collPos, collision_Dim)) return true;
 
         return false;
     }
@@ -320,26 +313,26 @@ public class Player extends TexturedObject {
 
     @Override
     public char call(Object[] input) {
-        super.call(input);
 
-        if (input == null || input.length < 1) {
-            return 0;
-        } else if (input[0] instanceof String) {
-            String cmd = (String) input[0];
-            if (cmd.contentEquals("collision") && input[1] instanceof int[][] && input[2] instanceof int[]) {
-                // [ "collision", collisionMap, mapPos_and_Metadata ]
-                collisionMap = (int[][]) input[1];
-                mapPos_and_metaData = (int[]) input[2];
+            if (input == null || input.length < 1) {
+                return 0;
+            } else if (input[0] instanceof String) {
+                String cmd = (String) input[0];
+                if (cmd.contentEquals("collision") && input[1] instanceof int[][] && input[2] instanceof int[]) {
+                    // [ "collision", collisionMap, mapPos_and_Metadata ]
+                    collisionMap = (int[][]) input[1];
+                    mapPos_and_metaData = (int[]) input[2];
 
-            } else if(cmd.contentEquals("playerPos")){ // [ "playerPos", scope ]
-                if(input[1] instanceof String){
-                    String scope = (String) input[1];
-                    ChannelID targetChannel = (ChannelID) input[2];
-                    getParent().dispatch(targetChannel,scope, new Object[]{"playerPos", pos, dimension});
-                    //sends ["playerPos", pos, dimension] to scope
+                } else if (cmd.contentEquals("playerPos")) { // [ "playerPos", scope ]
+                    if (input[1] instanceof String) {
+                        String scope = (String) input[1];
+                        ChannelID targetChannel = (ChannelID) input[2];
+                        getParent().dispatch(targetChannel, scope, new Object[]{"playerPos", pos, dimension});
+                        //sends ["playerPos", pos, dimension] to scope
+                    }
                 }
             }
-        }
+
         return 0;
     }
 
@@ -380,7 +373,6 @@ public class Player extends TexturedObject {
         stopAllAnimation();
         movementAnimationList.get(1).startAnimation(start);
         start = false;
-
         lastPressedKey = "s";
     }
 
@@ -405,10 +397,14 @@ public class Player extends TexturedObject {
     @Override
     public void updateReferences() {
         super.updateReferences();
-        keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
-        this.collision_Dim = new Dimension(dimension.width - 2,dimension.height / 2 - 16);
+        this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
 
-        for (Animation a : movementAnimationList)
-            a.setPos(pos);
+        if (!isNPC) {
+            keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
+
+            for (Animation a : movementAnimationList)
+                a.setPos(pos);
+        }
     }
 }
+

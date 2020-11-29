@@ -16,7 +16,7 @@ import static de.jspll.data.ChannelID.LOGIC;
  *
  * @version 1.0
  */
-
+@Deprecated
 public class DisplayMover extends GameObject {
     public DisplayMover(String ID) {
         super(ID, "g.tst.DisplayMover");
@@ -37,7 +37,7 @@ public class DisplayMover extends GameObject {
     public char update(float elapsedTime) {
         super.update(elapsedTime);
         if (keyMap != null) {
-            float displacement = 160f;
+            float displacement = 260f;
 
             if((keyMap.get("w").get() && keyMap.get("a").get()) || (keyMap.get("w").get() && keyMap.get("d").get()) || (keyMap.get("s").get() && keyMap.get("a").get()) || (keyMap.get("s").get() && keyMap.get("d").get()))
                 displacement *= 0.5;

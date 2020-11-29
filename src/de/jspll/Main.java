@@ -1,19 +1,24 @@
 package de.jspll;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import de.jspll.data.ChannelID;
+import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
+import de.jspll.data.objects.game.map.TileMap;
+import de.jspll.data.objects.game.player.Player;
+import de.jspll.data.objects.game.ui.HomeCameraAssist;
+import de.jspll.data.objects.game.ui.MenuObject;
+import de.jspll.data.objects.game.ui.SceneSwitchButton;
+import de.jspll.data.objects.game.ui.semiTransparentBackground;
 import de.jspll.frames.FrameHandler;
+import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
+import de.jspll.handlers.GameObjectHandler;
+import de.jspll.handlers.JSONSupport;
 import de.jspll.util.Logger;
 import java.awt.*;
-
-/**
- * © Sekretariat-Spiel
- * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
- *
- * @author Lukas Becker, Samuel Assmann
- *
- * @version 1.0
- */
+import java.util.ArrayList;
 
 public class Main {
 
@@ -58,7 +63,10 @@ public class Main {
         */
 
 
-        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu");
+
+
+
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
 
         frameHandler.run();
 

@@ -27,6 +27,7 @@ public class MenuObject extends GameObject {
         super(ID, objectID, x, y, dimension);
         this.text = text;
         this.border = border;
+        channels = new ChannelID[]{ChannelID.INPUT, ChannelID.LOGIC, ChannelID.UI};
     }
 
     @Override
