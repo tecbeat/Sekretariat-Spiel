@@ -19,12 +19,14 @@ public class StatManager extends TexturedObject {
 
     private Integer roundScore;
     private Integer karmaScore;
-    private Long roundTime;
+    private float roundTime;
+    private float remainingTime;
 
-    public StatManager(Long roundTime) {
+    public StatManager(float roundTime) {
         this.roundScore = 0;
         this.karmaScore = 0;
         this.roundTime = roundTime;
+        this.remainingTime = roundTime;
     }
 
     /**
@@ -61,12 +63,60 @@ public class StatManager extends TexturedObject {
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         // TODO: prettify
         g.setColor(Color.WHITE);
-        g.fillRect(camera.getWidth() - 200, 0, 200, 70);
+        g.fillRect(camera.getWidth() - 200, 0, 200, 90);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 18));
-        g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
+
+        // draw round score
         g.drawString("Round score: " + roundScore, camera.getWidth() - 195, 45);
+
+        // draw karma score
+        setColorForKarmaScore(g);
+        g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
+
+        // draw remaining time
+        remainingTime -= elapsedTime;
+        setColorForRemainingTime(g);
+        g.drawString("Remaining time: " + (remainingTime >= 0 ? (int) remainingTime : 0),
+                camera.getWidth() - 195, 70);
+
+        // TODO: implement what should happen if time is over
+        if(remainingTime <= 0) {
+            g.setFont(new Font("Serif", Font.PLAIN, 48));
+            g.drawString("TIME IS UP", camera.getWidth() / 2 - 100, camera.getHeight() / 2);
+        }
+    }
+
+    /**
+     * Sets color for the karma score. If karma is lower then 0 the
+     * karma score gets painted in red. If karma is higher then 0 the score
+     * gets painted in green. If the karma equals 0 the score gets
+     * painted in black.
+     *
+     * @param g Graphics
+     */
+    private void setColorForKarmaScore(Graphics g) {
+        if(karmaScore < 0) {
+            g.setColor(Color.RED);
+        } else if (karmaScore > 0) {
+            g.setColor(Color.GREEN);
+        }
+    }
+
+    /**
+     * Sets color of the remaining time. If there a 10 seconds or less
+     * remaining the remaining time gets red. Otherwise the Color is#
+     * set to black.
+     *
+     * @param g Graphics
+     */
+    private void setColorForRemainingTime(Graphics g) {
+        if(remainingTime <= 10) {
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.BLACK);
+        }
     }
 
     private void callTaskFinished(Object[] input, boolean finished) {
@@ -142,11 +192,11 @@ public class StatManager extends TexturedObject {
         this.karmaScore = karmaScore;
     }
 
-    public Long getRoundTime() {
+    public float getRoundTime() {
         return roundTime;
     }
 
-    public void setRoundTime(Long roundTime) {
+    public void setRoundTime(float roundTime) {
         this.roundTime = roundTime;
     }
 }
