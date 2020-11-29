@@ -8,7 +8,6 @@ import de.jspll.util.Collision;
 import de.jspll.util.Logger;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -16,7 +15,7 @@ import java.util.HashMap;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt
+ * @author Laura Schmidt, Lukas Becker
  *
  * @version 1.0
  */
@@ -40,6 +39,8 @@ public class TileMap extends TexturedObject {
     private int[][] collisionMap;
     //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
     private int[] mapPos_and_metaData;
+
+    private float timeSincePlayPosUpdate = 0;
 
 
     public TileMap(String ID, String objectID, Point playerPos, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
@@ -314,8 +315,10 @@ public class TileMap extends TexturedObject {
     @Override
     public char update(float elapsedTime) {
         super.update(elapsedTime);
-        if (playerPos == null) {
+        timeSincePlayPosUpdate += elapsedTime;
+        if (playerPos == null || timeSincePlayPosUpdate > 5) {
             getParent().dispatch(ChannelID.PLAYER, new Object[]{"playerPos", getID(), ChannelID.LOGIC});
+            timeSincePlayPosUpdate = 0;
         }
 
         return 0;
@@ -327,7 +330,10 @@ public class TileMap extends TexturedObject {
             drawMap(g, elapsedTime, camera);
         } else if (currStage == ChannelID.UI) {
             drawPlayerCover(g, elapsedTime, camera, playerPos);
-            for (Point npcPoint : npcPlayerPos.values() ) drawPlayerCover(g, elapsedTime, camera, npcPoint);
+
+            if(npcPlayerPos != null)
+                if(!npcPlayerPos.isEmpty())
+                    for (Point npcPoint : npcPlayerPos.values() ) drawPlayerCover(g, elapsedTime, camera, npcPoint);
         }
     }
 
@@ -337,7 +343,7 @@ public class TileMap extends TexturedObject {
         if (playerPos == null)
             return;
         if(collisionMap == null){
-            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
+            getParent().dispatch(ChannelID.SCENE_GAME, "g.dflt.TileMap:Collision", new Object[]{ "getCollisionArea", getID()});
         } else {
             int tileWidth = defaultTileDimension.width;
             int tileHeight = defaultTileDimension.height;

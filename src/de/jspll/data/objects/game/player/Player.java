@@ -41,6 +41,10 @@ public class Player extends TexturedObject {
     private Vector2D velocity = new Vector2D(0, 0);
     private boolean isNPC = false;
 
+    protected double referenceSpeed = 95f;
+
+
+
     public Player(String ID, Point pos, Dimension dimension, ColorScheme colorScheme, boolean isNPC) {
         super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
         this.pos = pos;
@@ -145,7 +149,7 @@ public class Player extends TexturedObject {
                 scaledVelocity.updatePos(pos);
             }
         } else {
-            getParent().dispatch(ChannelID.SCENE_2, "g.dflt.TileMap:Collision", new Object[]{"getCollisionArea", getID()});
+            getParent().dispatch(ChannelID.SCENE_GAME, "g.dflt.TileMap:Collision", new Object[]{"getCollisionArea", getID()});
             scaledVelocity.updatePos(pos);
         }
     }
@@ -169,7 +173,7 @@ public class Player extends TexturedObject {
      */
     protected void updateVelocity() {
         if (keyMap != null) {
-            double speed = 95d;
+            double speed = referenceSpeed;
 
             boolean w = keyMap.get("w").get();
             boolean a = keyMap.get("a").get();

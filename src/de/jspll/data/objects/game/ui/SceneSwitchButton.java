@@ -27,7 +27,11 @@ public class SceneSwitchButton extends ButtonObject {
         super.call(input);
 
         if(checkClick())
-            getParent().loadScene(scene, file);
+            if(this.scene == ChannelID.SCENE_GAME) {
+                getParent().loadNextLevel();
+            } else {
+                getParent().loadScene(scene, file);
+            }
 
         return 0;
     }

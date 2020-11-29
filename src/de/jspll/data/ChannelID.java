@@ -33,7 +33,7 @@ public enum ChannelID {
     //SCENES
     SCENE_0(15),
     SCENE_1(16),
-    SCENE_2(17),
+    SCENE_GAME(17),
     SCENE_3(18),
     SCENE_LOADING(19),
 

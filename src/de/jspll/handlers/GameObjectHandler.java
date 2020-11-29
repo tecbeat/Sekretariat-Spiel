@@ -9,13 +9,7 @@ import de.jspll.data.objects.game.map.Tile;
 import de.jspll.data.objects.game.map.TileMap;
 import de.jspll.data.objects.game.map.GridTiles;
 import de.jspll.data.objects.game.map.Layer;
-import de.jspll.data.objects.game.player.ColorScheme;
-import de.jspll.data.objects.game.player.NPC;
-import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
-import de.jspll.data.objects.game.tasks.reactions.*;
-import de.jspll.data.objects.game.tasks.TaskHolder;
-import de.jspll.data.objects.game.tasks.CommonTask;
 import de.jspll.data.objects.game.ui.MenuObject;
 import de.jspll.data.objects.loading.LoadingBar;
 import de.jspll.data.objects.loading.LoadingCircle;
@@ -42,6 +36,8 @@ import static de.jspll.data.ChannelID.SCENE_LOADING;
  */
 
 public class GameObjectHandler{
+    private GameManager gameManager = new GameManager(this, new StatManager(300L));
+
     public GameObjectHandler() {
 
         for (int i = 0; i < channels.length; i++) {
@@ -55,6 +51,8 @@ public class GameObjectHandler{
             System.out.println(tm);
         }*/
         resourceHandler.start();
+
+        loadObject(gameManager);
 
         //loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
     }
@@ -77,6 +75,10 @@ public class GameObjectHandler{
                 20, 150,new Dimension(40,40)));
 
         loadScene(SCENE_LOADING,loadingSceneBuilder);
+    }
+
+    public GameManager getGameManager(){
+        return this.gameManager;
     }
 
     public void switchScene(ChannelID newScene){
@@ -128,7 +130,6 @@ public class GameObjectHandler{
     private GraphicsHandler graphicsHandler;
     private LogicHandler logicHandler;
     private AtomicBoolean loadingScene = new AtomicBoolean(false);
-    private StatManager statManager = new StatManager(300L);
 
     public LogicHandler getLogicHandler() {
         return logicHandler;
@@ -250,6 +251,13 @@ public class GameObjectHandler{
         }
     }
 
+    public void loadTask(ChannelID scene, TexturedObject task){
+        subscribe(task,scene);
+        subscribe(task);
+        task.setListener(this);
+        task.requestTexture();
+    }
+
     public void loadScene(ChannelID scene, ArrayList<GameObject> objects){
         for(GameObject obj: objects){
             //loadObject(obj);
@@ -308,6 +316,98 @@ public class GameObjectHandler{
                         new Point(1280,1088),
                         new Dimension(32,16),
                         new ExampleTask());*/
+                /*// TODO: Richtige Pos
+                boolean home = false;
+                for(GameObject o : out){
+                    if(o instanceof MenuObject){
+                        home = true;
+                        break;
+                    }
+                }
+                if(!home) {
+                    StatManager statManager = getGameManager().getStatManager();
+                    for (TexturedObject th : tempTaskContainer(statManager)) {
+                        out.add(th);
+                        th.requestTexture();
+                    }
+                    // TODO: Add StatManager and Tasks to JSON
+                    statManager.setListener(goh);
+                    out.add(statManager);
+                }*/
+
+
+                /**
+                 * End Tasks
+                 */
+
+                pRpt.setPayload(out);
+
+
+                loadScene(scene, out);
+
+                pRpt.update();
+
+            }
+        });
+        t1.start();
+    }
+
+    public void loadScene(ChannelID scene, String file){
+
+        String jsonStr = getResourceHandler().fileToJson(file);
+        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
+        loadScene(scene, jsonArray);
+    }
+
+    public void loadSceneWithTasks(ChannelID scene, JsonArray objects, ArrayList<TexturedObject> tasks){
+        ArrayList<GameObject> out = new ArrayList<>();
+        ProgressReporter pRpt = new Report();
+        pRpt.setCount(objects.size() + 1);
+        pRpt.setNextScene(scene);
+        pRpt.setGameObjectHandler(this);
+        LoadingBar lb = new LoadingBar(pRpt);
+        lb.setMessage("loading objects...");
+        this.subscribe(lb);
+        final GameObjectHandler goh = this;
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(JsonElement jsonObject: objects){
+                    GameObject go = JSONSupport.fromJsonToGameObject(jsonObject);
+                    out.add(go);
+                    go.setListener(goh);
+                    go.updateReferences();
+                    if(go instanceof TexturedObject){
+                        TexturedObject to = (TexturedObject) go;
+                        to.requestTexture();
+                    }
+                    pRpt.update();
+                }
+                //for(TileMap ttm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
+                //    out.add(ttm);
+                //}
+                lb.setMessage("loading textures...");
+                boolean waitingForTexture = true;
+                while(waitingForTexture){
+                    waitingForTexture = false;
+                    for(GameObject obj: out){
+                        if(obj instanceof TexturedObject){
+                            if(!((TexturedObject) obj).isTextureLoaded()){
+                                ((TexturedObject) obj).loadTexture();
+                                waitingForTexture = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                /**
+                 * Tasks
+                 */
+                /*TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
+                        new Point(1280,1088),
+                        new Dimension(32,16),
+                        new ExampleTask());*/
                 // TODO: Richtige Pos
                 boolean home = false;
                 for(GameObject o : out){
@@ -317,7 +417,8 @@ public class GameObjectHandler{
                     }
                 }
                 if(!home) {
-                    for (TexturedObject th : tempTaskContainer(statManager)) {
+                    StatManager statManager = getGameManager().getStatManager();
+                    for (TexturedObject th : tasks) {
                         out.add(th);
                         th.requestTexture();
                     }
@@ -343,12 +444,20 @@ public class GameObjectHandler{
         t1.start();
     }
 
-    public void loadScene(ChannelID scene, String file){
-
-        String jsonStr = getResourceHandler().fileToJson(file);
-        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
-        loadScene(scene, jsonArray);
+    //TODO Should this be public??
+    public void clearScene(ChannelID scene){
+        channels[scene.valueOf()].dropAll();
     }
+
+    public void loadNextLevel(){
+        ChannelID channel = ChannelID.SCENE_GAME;
+        String file = "/scenes/Game.json";
+        loadScene(channel, file);
+        gameManager.startGame();
+        loadTask(channel, gameManager.getStatManager());
+    }
+
+
 
     public TileMap[] loadMap(String mapJson){
         try {
@@ -519,52 +628,5 @@ public class GameObjectHandler{
             e.printStackTrace();
             return null;
         }
-    }
-
-    private ArrayList<TexturedObject> tempTaskContainer(StatManager statManager){
-
-        ArrayList<TexturedObject> result = new ArrayList<>();
-
-        TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
-                new Point(622,2090),
-                new Dimension(32,16),
-                new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
-        thMail.setListener(this);
-        result.add(thMail);
-
-        TaskHolder thGrades = new TaskHolder("grades", "g.dflt.TaskHolder",
-                new Point(1638, 2295),
-                new Dimension(32, 16),
-                new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
-        thGrades.setListener(this);
-        result.add(thGrades);
-
-        TaskHolder thPhone = new TaskHolder("phone", "g.dflt.TaskHolder",
-                new Point(3105, 440),
-                new Dimension(32, 16),
-                new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
-        thPhone.setListener(this);
-        result.add(thPhone);
-
-        TaskHolder thCourses = new TaskHolder("courses", "g.dflt.TaskHolder",
-                new Point(2320, 1778),
-                new Dimension(32, 16),
-                new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
-        thCourses.setListener(this);
-        result.add(thCourses);
-
-        TaskHolder thCoursePlan = new TaskHolder("courseplan", "g.dflt.TaskHolder",
-                new Point(1818, 455),
-                new Dimension(32, 16),
-                new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
-        thCoursePlan.setListener(this);
-        result.add(thCoursePlan);
-
-        Player testNPC = new NPC("NPC",  ColorScheme.BLUE);
-        testNPC.setListener(this);
-
-        result.add(testNPC);
-
-        return result;
     }
 }

@@ -62,12 +62,13 @@ public class StatManager extends TexturedObject {
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         // TODO: prettify
         g.setColor(Color.WHITE);
-        g.fillRect(camera.getWidth() - 200, 0, 200, 70);
+        g.fillRect(camera.getWidth() - 200, 0, 200, 90);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 18));
         g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
         g.drawString("Round score: " + roundScore, camera.getWidth() - 195, 45);
+        g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 195, 70);
     }
 
     private void callTaskFinished(Object[] input, boolean finished) {
