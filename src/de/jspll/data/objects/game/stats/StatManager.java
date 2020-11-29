@@ -65,7 +65,7 @@ public class StatManager extends TexturedObject {
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         // TODO: prettify
         g.setColor(Color.WHITE);
-        g.fillRect(camera.getWidth() - 200, 0, 200, 90);
+        g.fillRect(camera.getWidth() - 200, 0, 200, 120);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -76,17 +76,20 @@ public class StatManager extends TexturedObject {
         // draw karma score
         setColorForKarmaScore(g);
         g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
+
+        g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 195, 70);
+
         // draw remaining time
         remainingTime -= elapsedTime;
         setColorForRemainingTime(g);
         g.drawString("Remaining time: " + (remainingTime >= 0 ? (int) remainingTime : 0),
-                camera.getWidth() - 195, 70);
+                camera.getWidth() - 195, 95);
 
         // TODO: implement what should happen if time is over
-        if(remainingTime <= 0) {
+        if (remainingTime <= 0) {
             g.setFont(new Font("Serif", Font.PLAIN, 48));
             g.drawString("TIME IS UP", camera.getWidth() / 2 - 100, camera.getHeight() / 2);
-        g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 195, 70);
+        }
     }
 
     /**
