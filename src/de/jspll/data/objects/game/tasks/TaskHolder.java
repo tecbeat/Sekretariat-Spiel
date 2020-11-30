@@ -3,7 +3,6 @@ package de.jspll.data.objects.game.tasks;
 import de.jspll.Main;
 import de.jspll.data.*;
 import de.jspll.data.objects.Animation;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Vector2D;
@@ -48,12 +47,17 @@ public class TaskHolder extends TexturedObject {
         an.requestTextures(this);
         an.setLooping(true);
         an.startAnimation(true);
+        task.requestTexture();
     }
 
     @Override
     public boolean isTextureLoaded() {
         if (!an.isLoaded()){
             an.loadTextures();
+            return false;
+        }
+        if (!task.isLoaded()){
+            task.loadTextures();
             return false;
         }
         return true;

@@ -15,6 +15,20 @@ import java.awt.*;
  */
 
 public class ExampleTask implements Task{
+    @Override
+    public void requestTexture() {
+
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return false;
+    }
+
+    @Override
+    public void loadTextures() {
+
+    }
 
     private Color maskColor = new Color(0, 0, 0, 172);
     @Expose(deserialize = false, serialize = false)

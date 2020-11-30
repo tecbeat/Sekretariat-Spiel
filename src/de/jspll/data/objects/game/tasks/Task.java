@@ -27,5 +27,11 @@ public interface Task {
 
     void setHolder(TaskHolder holder);
 
+    void requestTexture();
+
+    boolean isLoaded();
+
+    void loadTextures();
+
     TaskHolder getHolder();
 }

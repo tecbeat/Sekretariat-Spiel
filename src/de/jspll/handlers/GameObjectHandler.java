@@ -513,7 +513,8 @@ public class GameObjectHandler{
         TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
                 new Point(622,2090),
                 new Dimension(32,16),
-                new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
+                new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager,
+                new String[]{"/assets/task/image/Postsortieren", "/assets/task/image/Briefe"}), 65);
         thMail.setListener(this);
         result.add(thMail);
 
