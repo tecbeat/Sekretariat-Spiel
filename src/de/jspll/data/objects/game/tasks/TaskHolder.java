@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @author Lukas Becker, Philipp Polland
  *
- * @version 1.0
+ * @version 1.0 Samuel Assmann
  */
 
 public class TaskHolder extends TexturedObject {
@@ -48,13 +48,18 @@ public class TaskHolder extends TexturedObject {
     public void requestTexture() {
         an.requestTextures(this);
         an.setLooping(true);
-        an.startAnimation();
+        an.startAnimation(true);
+        task.requestTexture();
     }
 
     @Override
     public boolean isTextureLoaded() {
         if (!an.isLoaded()){
             an.loadTextures();
+            return false;
+        }
+        if (!task.isLoaded()){
+            task.loadTextures();
             return false;
         }
         return true;

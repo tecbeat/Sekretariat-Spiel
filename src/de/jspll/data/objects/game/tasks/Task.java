@@ -8,7 +8,7 @@ import java.awt.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Samuel Assmann
  *
  * @version 1.0
  */
@@ -26,6 +26,12 @@ public interface Task {
     void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage);
 
     void setHolder(TaskHolder holder);
+
+    void requestTexture();
+
+    boolean isLoaded();
+
+    void loadTextures();
 
     TaskHolder getHolder();
 }

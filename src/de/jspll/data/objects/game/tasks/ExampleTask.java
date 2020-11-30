@@ -9,12 +9,26 @@ import java.awt.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Samuel Assmann
  *
  * @version 1.0
  */
 
 public class ExampleTask implements Task{
+    @Override
+    public void requestTexture() {
+
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return false;
+    }
+
+    @Override
+    public void loadTextures() {
+
+    }
 
     private Color maskColor = new Color(0, 0, 0, 172);
     @Expose(deserialize = false, serialize = false)

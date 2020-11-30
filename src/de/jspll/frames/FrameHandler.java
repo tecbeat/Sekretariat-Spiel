@@ -1,5 +1,6 @@
 package de.jspll.frames;
 
+import de.jspll.audio.AudioHandler;
 import de.jspll.data.ChannelID;
 import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.GraphicsHandler;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Samuel Assmann
  *
  * @version 1.0
  */
@@ -23,10 +24,12 @@ public class FrameHandler {
         graphicsHandler = new GraphicsHandler(title,size, GraphicsHandler.HandlerMode.MAIN);
         logicHandler = new LogicHandler(graphicsHandler);
         frameStabilizer = new FrameStabilizer(new SubHandler[]{logicHandler,graphicsHandler});
+        audioHandler = new AudioHandler();
         graphicsHandler.setGameObjectHandler(gameObjectHandler);
         logicHandler.setGameObjectHandler(gameObjectHandler);
         gameObjectHandler.setGraphicsHandler(graphicsHandler);
         gameObjectHandler.setLogicHandler(logicHandler);
+        gameObjectHandler.setAudioHandler(audioHandler);
         //gameObjectHandler.setup();
         gameObjectHandler.switchScene(ChannelID.SCENE_LOADING);
     }
@@ -40,6 +43,7 @@ public class FrameHandler {
     //Logic Handler and according frame stabilizer
     private LogicHandler logicHandler;
     private FrameStabilizer frameStabilizer;
+    private AudioHandler audioHandler;
 
     public void run() {
         //start stabilizers

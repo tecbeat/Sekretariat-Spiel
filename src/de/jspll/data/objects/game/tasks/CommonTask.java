@@ -5,14 +5,20 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt, Lukas Becker
+ * @author Laura Schmidt, Lukas Becker, Samuel Assmann
  *
  * @version 1.0
  */
@@ -52,6 +58,10 @@ public class CommonTask extends GameObject implements Task {
 
     private StatManager statManager;
 
+    // files
+    private String[] files;
+    private BufferedImage[] textures;
+
 
     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager){
         this.goodHeading = goodHeading;
@@ -59,6 +69,15 @@ public class CommonTask extends GameObject implements Task {
         this.onSelect = onSelect;
         this.statManager = statManager;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
+    }
+
+    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] files){
+        this.goodHeading = goodHeading;
+        this.badHeading = badHeading;
+        this.onSelect = onSelect;
+        this.statManager = statManager;
+        channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
+        this.files = files;
     }
 
     @Override
@@ -84,6 +103,10 @@ public class CommonTask extends GameObject implements Task {
         if(!buttonLock){
             checkClick();
         }
+
+        if (files != null)
+            if (isLoaded())
+                g.drawImage(textures[0],50,50, 100, 100, null);
     }
 
     /**
@@ -196,6 +219,39 @@ public class CommonTask extends GameObject implements Task {
                 buttonLock = true;
                 countDownStarted = true;
             }
+        }
+    }
+
+    @Override
+    public boolean isLoaded() {
+        if(files == null)
+            return true;
+        if(textures == null)
+            return false;
+        for (BufferedImage i:textures) {
+            if (i == null)
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void loadTextures() {
+        if(files == null)
+            return;
+        if(textures == null)
+            textures = new BufferedImage[files.length];
+        for (int i = 0; i < files.length; i++){
+            if (textures[i] == null)
+                textures[i] = getHolder().getParent().getResourceHandler().getTexture(files[i]);
+        }
+    }
+
+    public void requestTexture(){
+        if (files == null)
+            return;
+        for (String s: files){
+            getHolder().getParent().getResourceHandler().requestTexture(s, ResourceHandler.FileType.PNG);
         }
     }
 
