@@ -34,7 +34,7 @@ public class GameManager extends GameObject {
     private static int NEXT_TASK_TRESHOLD = 30;
     private static int BASE_TASKS = 2;
     private static int TASKS_PER_LEVEL = 4;
-    private static float LEVEL_COMPLETION_TRESHOLD = 0.1f;
+    private static float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
     private boolean resultScreen = false;
     private boolean pauseScreen = false;
