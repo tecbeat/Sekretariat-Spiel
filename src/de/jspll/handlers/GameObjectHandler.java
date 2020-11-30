@@ -1,6 +1,7 @@
 package de.jspll.handlers;
 
 import com.google.gson.*;
+import de.jspll.audio.AudioHandler;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.GameTrie;
@@ -32,12 +33,23 @@ import static de.jspll.data.ChannelID.SCENE_LOADING;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Samuel Assmann
  *
  * @version 1.0
  */
 
 public class GameObjectHandler{
+
+    private AudioHandler audioHandler;
+
+    public void setAudioHandler(AudioHandler audioHandler) {
+        this.audioHandler = audioHandler;
+    }
+
+    public AudioHandler getAudioHandler() {
+        return audioHandler;
+    }
+
     public GameObjectHandler() {
 
         for (int i = 0; i < channels.length; i++) {

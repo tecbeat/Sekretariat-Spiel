@@ -1,11 +1,7 @@
 package de.jspll.audio;
 
-import sun.audio.AudioStream;
-
 import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
-
 /**
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
@@ -16,7 +12,7 @@ import java.io.IOException;
  */
 
 public class AudioHandler {
-    String trackname = "";
+    String trackname = "/assets/audio/Dag_Reinbott-A_brilliant_Idea.mp3";
 
     public void player(){
         new Thread(new Runnable() {

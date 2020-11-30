@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @author Lukas Becker, Philipp Polland
  *
- * @version 1.0
+ * @version 1.0 Samuel Assmann
  */
 
 public class TaskHolder extends TexturedObject {
