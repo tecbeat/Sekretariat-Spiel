@@ -22,9 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import static de.jspll.data.ChannelID.INSTANCE_REGISTER;
-import static de.jspll.data.ChannelID.LAST_CHANNEL;
-import static de.jspll.data.ChannelID.SCENE_LOADING;
+
+import static de.jspll.data.ChannelID.*;
 
 /**
  * © Sekretariat-Spiel
@@ -259,6 +258,13 @@ public class GameObjectHandler{
         task.requestTexture();
     }
 
+    public void loadStatManager(StatManager statManager){
+        register(statManager);
+        subscribe(statManager,SCENE_GAME);
+        subscribe(statManager);
+        statManager.setListener(this);
+    }
+
     public void loadScene(ChannelID scene, ArrayList<GameObject> objects){
         for(GameObject obj: objects){
             //loadObject(obj);
@@ -458,7 +464,7 @@ public class GameObjectHandler{
         String file = "/scenes/Game.json";
         loadScene(channel, file);
         gameManager.startGame();
-        loadTask(channel, gameManager.getStatManager());
+
     }
 
 

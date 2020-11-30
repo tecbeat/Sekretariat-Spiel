@@ -19,7 +19,7 @@ public class LoadingBar extends GameObject {
 
     public LoadingBar(ProgressReporter progressReporter){
         this.progressReporter = progressReporter;
-        this.channels = new ChannelID[]{ChannelID.SCENE_1, ChannelID.SCENE_GAME, ChannelID.UI};
+        this.channels = new ChannelID[]{ChannelID.SCENE_1, ChannelID.UI};
     }
 
     protected ProgressReporter progressReporter;

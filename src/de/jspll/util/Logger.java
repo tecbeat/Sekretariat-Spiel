@@ -18,8 +18,9 @@ public class Logger extends Thread {
     @Override
     public void run() {
         while (true){
-            if(!d.isEmpty())
-             System.out.println(d.poll());
+            if(!d.isEmpty()){
+                //System.out.println(d.poll());
+            }
         }
     }
 }

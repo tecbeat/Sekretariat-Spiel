@@ -139,9 +139,13 @@ public class GameManager extends GameObject {
         this.level++;
         this.gameRunning = true;
         this.remainingTime = ROUND_TIME;
+        this.taskCount = 0;
+        this.completedTasks = 0;
         statManager.resetKarma();
         for(int i = 0; i< BASE_TASKS; i++)
             addTaskToCurrentLevel();
+        gameObjectHandler.loadStatManager(statManager);
+        //gameObjectHandler.loadTask(ChannelID.SCENE_GAME, statManager);
     }
 
     //Stops Countdowns, clears input
@@ -280,47 +284,49 @@ public class GameManager extends GameObject {
     }
     //End T O D O
 
+    int instanceCount = 0;
     private TexturedObject getRandomTask(){
-        int id = randomGenerator.nextInt(5);
+        int id = randomGenerator.nextInt(6);
+        instanceCount++;
 
         switch (id){
             case 0:
-                TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
+                TaskHolder thMail = new TaskHolder("mail" + instanceCount, "g.dflt.TaskHolder",
                         new Point(622,2090),
                         new Dimension(32,16),
-                        new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
+                        new CommonTask("Post sortieren" + instanceCount, "Post schreddern", new MailReaction(), statManager), 65);
                 thMail.setListener(gameObjectHandler);
                 return thMail;
             case 1:
-                TaskHolder thGrades = new TaskHolder("grades", "g.dflt.TaskHolder",
+                TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1638, 2295),
                         new Dimension(32, 16),
-                        new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
+                        new CommonTask("Noten eintragen" + instanceCount, "Noten verwerfen", new GradesReaction(), statManager), 65);
                 thGrades.setListener(gameObjectHandler);
                 return thGrades;
             case 2:
-                TaskHolder thPhone = new TaskHolder("phone", "g.dflt.TaskHolder",
+                TaskHolder thPhone = new TaskHolder("phone" + instanceCount, "g.dflt.TaskHolder",
                         new Point(3105, 440),
                         new Dimension(32, 16),
-                        new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
+                        new CommonTask("Telefonat annehmen" + instanceCount, "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case 3:
-                TaskHolder thCourses = new TaskHolder("courses", "g.dflt.TaskHolder",
+                TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2320, 1778),
                         new Dimension(32, 16),
-                        new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
+                        new CommonTask("Kurse zuordnen" + instanceCount, "Kurse löschen", new CoursesReaction(), statManager), 65);
                 thCourses.setListener(gameObjectHandler);
                 return thCourses;
             case 4:
-                TaskHolder thCoursePlan = new TaskHolder("courseplan", "g.dflt.TaskHolder",
+                TaskHolder thCoursePlan = new TaskHolder("courseplan" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1818, 455),
                         new Dimension(32, 16),
                         new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
                 thCoursePlan.setListener(gameObjectHandler);
                 return thCoursePlan;
             case 5:
-                Player testNPC = new NPC("NPC",  ColorScheme.BLUE);
+                Player testNPC = new NPC("NPC" + instanceCount,  ColorScheme.BLUE);
                 testNPC.setListener(gameObjectHandler);
                 return testNPC;
             default:
