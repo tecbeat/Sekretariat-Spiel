@@ -61,6 +61,15 @@ public class TaskHolder extends TexturedObject {
     }
 
     @Override
+    public String toString() {
+        return "TaskHolder{" +
+                "task=" + task +
+                ", inProximity=" + inProximity +
+                ", ID='" + ID + '\'' +
+                "} " + super.toString();
+    }
+
+    @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         an.draw((Graphics2D) g, elapsedTime, camera);
     }

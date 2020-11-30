@@ -3,6 +3,7 @@ package de.jspll.data.objects.game.stats;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.handlers.GameManager;
 
 import java.awt.*;
 
@@ -21,13 +22,15 @@ public class StatManager extends TexturedObject {
     private Integer karmaScore;
     private float roundTime;
     private float remainingTime;
+    private GameManager gameManager;
 
-    public StatManager(float roundTime) {
+    public StatManager(GameManager gm) {
         this.roundScore = 0;
         this.karmaScore = 0;
-        this.roundTime = roundTime;
+        this.gameManager = gm;
+        roundTime = gm.getRoundTime();
         this.remainingTime = roundTime;
-      
+
         channels = new ChannelID[]{ChannelID.INPUT, ChannelID.UI};
     }
 
@@ -77,10 +80,11 @@ public class StatManager extends TexturedObject {
         setColorForKarmaScore(g);
         g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
 
+        g.setColor(Color.BLACK);
         g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 195, 70);
 
         // draw remaining time
-        remainingTime -= elapsedTime;
+        remainingTime = gameManager.getRemainingTime();
         setColorForRemainingTime(g);
         g.drawString("Remaining time: " + (remainingTime >= 0 ? (int) remainingTime : 0),
                 camera.getWidth() - 195, 95);
@@ -196,12 +200,8 @@ public class StatManager extends TexturedObject {
         this.karmaScore = karmaScore;
     }
 
-    public float getRoundTime() {
-        return roundTime;
-    }
-
-    public void setRoundTime(float roundTime) {
-        this.roundTime = roundTime;
+    public void resetKarma(){
+        this.karmaScore = 0;
     }
 }
 

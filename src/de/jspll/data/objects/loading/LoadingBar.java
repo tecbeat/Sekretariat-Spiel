@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Lukas Becker
  *
  * @version 1.0
  */
@@ -19,6 +19,7 @@ public class LoadingBar extends GameObject {
 
     public LoadingBar(ProgressReporter progressReporter){
         this.progressReporter = progressReporter;
+        this.channels = new ChannelID[]{ChannelID.SCENE_1, ChannelID.SCENE_GAME, ChannelID.UI};
     }
 
     protected ProgressReporter progressReporter;

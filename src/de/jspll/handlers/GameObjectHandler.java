@@ -36,7 +36,7 @@ import static de.jspll.data.ChannelID.SCENE_LOADING;
  */
 
 public class GameObjectHandler{
-    private GameManager gameManager = new GameManager(this, new StatManager(300L));
+    private GameManager gameManager = new GameManager(this);
 
     public GameObjectHandler() {
 
@@ -252,6 +252,7 @@ public class GameObjectHandler{
     }
 
     public void loadTask(ChannelID scene, TexturedObject task){
+        register(task);
         subscribe(task,scene);
         subscribe(task);
         task.setListener(this);
@@ -367,7 +368,8 @@ public class GameObjectHandler{
         pRpt.setGameObjectHandler(this);
         LoadingBar lb = new LoadingBar(pRpt);
         lb.setMessage("loading objects...");
-        this.subscribe(lb);
+        this.loadObject(lb);
+        //this.subscribe(lb);
         final GameObjectHandler goh = this;
 
         Thread t1 = new Thread(new Runnable() {
@@ -450,7 +452,9 @@ public class GameObjectHandler{
     }
 
     public void loadNextLevel(){
+        clearScene(ChannelID.UI);
         ChannelID channel = ChannelID.SCENE_GAME;
+        clearScene(channel);
         String file = "/scenes/Game.json";
         loadScene(channel, file);
         gameManager.startGame();

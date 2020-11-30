@@ -76,7 +76,7 @@ public class CommonTask extends GameObject implements Task {
 
         // close task window when countdown is lower than 0
         if(countDown < 0){
-            updateKarmaAndRoundScore();
+            closeTask();
             active = false;
             return;
         }
@@ -210,8 +210,28 @@ public class CommonTask extends GameObject implements Task {
         }
     }
 
-    private void updateKarmaAndRoundScore() {
+    /**
+     * Updates Karma and Roundscore and unregisteres the task
+     *
+     */
+    private void closeTask() {
         onSelect.taskFinished(statManager, buttonGoodClicked);
+        getHolder().getParent().getGameManager().taskCompleted();
+        getHolder().getParent().unsubscribe(getHolder());
+    }
+
+    @Override
+    public String toString() {
+        return "CommonTask{" +
+                "active=" + active +
+                ", countDown=" + countDown +
+                ", countDownStarted=" + countDownStarted +
+                ", buttonLock=" + buttonLock +
+                ", buttonGoodClicked=" + buttonGoodClicked +
+                ", goodHeading='" + goodHeading + '\'' +
+                ", badHeading='" + badHeading + '\'' +
+                ", statManager=" + statManager +
+                "} " + super.toString();
     }
 
     /**
