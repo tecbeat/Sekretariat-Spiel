@@ -1,6 +1,7 @@
 package de.jspll.data.objects.game.player;
 
 import de.jspll.data.ChannelID;
+import de.jspll.data.objects.game.tasks.TaskHolder;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -19,52 +20,70 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class NPC extends Player {
 
 
+    private TaskHolder task;
     double sumTime = 0;
-    int in = 0;
     Random randomGenerator = new Random(System.currentTimeMillis());
+    int in = randomGenerator.nextInt(4);
     private String[] keyList = new String[]{"w","a","s","d","q","SHIFT"};
 
     private boolean posBroadcasted = false;
 
 
-    public NPC(String ID, ColorScheme colorScheme) {
-        super(ID, new Point(1280, 1120), new Dimension(32, 64), colorScheme, true);
-
+    public NPC(String ID, String ObjectID, ColorScheme colorScheme) {
+        super(ID, ObjectID, new Point(1280, 1120), new Dimension(32, 64), colorScheme);
         referenceSpeed = 80f;
         resetKeyMap();
     }
+
+    public NPC(String ID, String ObjectID, ColorScheme colorScheme, TaskHolder task) {
+        super(ID, ObjectID, new Point(1100, 1120), new Dimension(32, 64), colorScheme);
+        referenceSpeed = 80f;
+        resetKeyMap();
+        this.task = task;
+
+    }
+
     private void resetKeyMap(){
         super.keyMap = new HashMap<>();
         for (String s: keyList){
             keyMap.put(s,new AtomicBoolean(false));
         }
     }
-
+    boolean firstTime = true;
+    boolean active = false;
     @Override
     public char update(float elapsedTime) {
+
+        if (firstTime){
+            getParent().loadTask(ChannelID.SCENE_GAME, task);
+            firstTime = false;
+        }
+
+        task.setPos(new Point(super.pos.x, super.pos.y));
+
+        if (task != null)  active = task.getTask().isActive();
+
         if (sumTime > 2) {
-            in = randomGenerator.nextInt(4);
+            in = randomGenerator.nextInt(5);
             sumTime = 0;
             resetKeyMap();
         }
+        if (active) in = 4;
+
         switch (in) {
             case 0:
                 keyMap.get("s").set(true);
-                moveForward();
-
                 break;
             case 1:
                 keyMap.get("w").set(true);
-                moveBackward();
                 break;
             case 2:
                 keyMap.get("a").set(true);
-                moveLeft();
                 break;
             case 3:
                 keyMap.get("d").set(true);
-                moveRight();
                 break;
+            default:break;
         }
 
         sumTime += elapsedTime;

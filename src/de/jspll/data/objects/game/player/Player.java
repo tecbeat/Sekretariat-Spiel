@@ -27,39 +27,30 @@ public class Player extends TexturedObject {
 
     //[0] = Forward (W), [1] = Backwards (S), [2] = Left(L), [3] = Right(R)
     private final ArrayList<Animation> movementAnimationList = new ArrayList<>();
-    HashMap<String, AtomicBoolean> keyMap;
-    private ColorScheme colorScheme;
-    private String lastPressedKey = "s";
-    private boolean start = true;
     protected Point pos;
-    private boolean sprinted_last = false;
     //2d array representing map
     protected int[][] collisionMap;
     //int arr in form: [ mapX, mapY, mapWidth, mapHeight, tileWidth, tileHeight ]
     protected int[] mapPos_and_metaData;
+    protected double referenceSpeed = 95f;
+    HashMap<String, AtomicBoolean> keyMap;
+    private ColorScheme colorScheme;
+    private String lastPressedKey = "s";
+    private boolean start = true;
+    private boolean sprinted_last = false;
     private Dimension collision_Dim;
     private Vector2D velocity = new Vector2D(0, 0);
-    private boolean isNPC = false;
-
-    protected double referenceSpeed = 95f;
 
 
-
-    public Player(String ID, Point pos, Dimension dimension, ColorScheme colorScheme, boolean isNPC) {
-        super(ID, "g.ntt.OwnPlayer", pos.x, pos.y, dimension);
+    public Player(String ID, String ObjectID, Point pos, Dimension dimension, ColorScheme colorScheme) {
+        super(ID, ObjectID, pos.x, pos.y, dimension);
         this.pos = pos;
         this.colorScheme = colorScheme;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
-        this.isNPC = isNPC;
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/forward_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/backward_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/left_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/right_", 6, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle0_", 1, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle1_", 1, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle2_", 1, pos, dimension, this, 1F));
-        movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/idle3_", 1, pos, dimension, this, 1F));
+        for (String s : new String[]{"forward", "backward", "left", "right", "idle0", "idle1", "idle2", "idle3"}){
+            movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/" + s + "_", s.contains("idle") ? 1 : 6, pos, dimension, this, 1F));
+        }
     }
 
     public Player() {
@@ -254,9 +245,7 @@ public class Player extends TexturedObject {
         Point collPos = new Point(newPos.x + 1, newPos.y + 32 + 16);
 
         // check for collision between hitbox and tilemap
-        if (Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, collPos, collision_Dim)) return true;
-
-        return false;
+        return Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, collPos, collision_Dim);
     }
 
     @Override
@@ -318,24 +307,24 @@ public class Player extends TexturedObject {
     @Override
     public char call(Object[] input) {
 
-            if (input == null || input.length < 1) {
-                return 0;
-            } else if (input[0] instanceof String) {
-                String cmd = (String) input[0];
-                if (cmd.contentEquals("collision") && input[1] instanceof int[][] && input[2] instanceof int[]) {
-                    // [ "collision", collisionMap, mapPos_and_Metadata ]
-                    collisionMap = (int[][]) input[1];
-                    mapPos_and_metaData = (int[]) input[2];
+        if (input == null || input.length < 1) {
+            return 0;
+        } else if (input[0] instanceof String) {
+            String cmd = (String) input[0];
+            if (cmd.contentEquals("collision") && input[1] instanceof int[][] && input[2] instanceof int[]) {
+                // [ "collision", collisionMap, mapPos_and_Metadata ]
+                collisionMap = (int[][]) input[1];
+                mapPos_and_metaData = (int[]) input[2];
 
-                } else if (cmd.contentEquals("playerPos")) { // [ "playerPos", scope ]
-                    if (input[1] instanceof String) {
-                        String scope = (String) input[1];
-                        ChannelID targetChannel = (ChannelID) input[2];
-                        getParent().dispatch(targetChannel, scope, new Object[]{"playerPos", pos, dimension});
-                        //sends ["playerPos", pos, dimension] to scope
-                    }
+            } else if (cmd.contentEquals("playerPos")) { // [ "playerPos", scope ]
+                if (input[1] instanceof String) {
+                    String scope = (String) input[1];
+                    ChannelID targetChannel = (ChannelID) input[2];
+                    getParent().dispatch(targetChannel, scope, new Object[]{"playerPos", pos, dimension});
+                    //sends ["playerPos", pos, dimension] to scope
                 }
             }
+        }
 
         return 0;
     }
@@ -402,13 +391,9 @@ public class Player extends TexturedObject {
     public void updateReferences() {
         super.updateReferences();
         this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
+        keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
 
-        if (!isNPC) {
-            keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
-
-            for (Animation a : movementAnimationList)
-                a.setPos(pos);
-        }
+        for (Animation a : movementAnimationList) a.setPos(pos);
     }
 }
 
