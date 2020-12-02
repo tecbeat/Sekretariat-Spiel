@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 
 public class InputHandler implements MouseInputListener, MouseWheelListener, KeyListener {
-    private String[] keyList = new String[]{"1","2","3","4","5","6","7","8","9","0","w","a","s","d","q","e","+","-","ESC", "CTRL", "SHIFT", "ALT", "TAB","CAPS", "ENTER"};
+    private String[] keyList = new String[]{"1","2","3","4","5","6","7","8","9","0","w","a","s","d","q","e","p", "r","+","-","ESC", "CTRL", "SHIFT", "ALT", "TAB","CAPS", "ENTER"};
     private LogicHandler parent; // ToDo: Parent Kruse fix
     private AtomicLong wheelMovement = new AtomicLong(Double.doubleToLongBits(0));
     private AtomicBoolean mouse1 = new AtomicBoolean(false);
