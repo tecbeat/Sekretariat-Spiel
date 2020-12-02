@@ -8,6 +8,7 @@ import de.jspll.data.objects.game.player.NPC;
 import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.CommonTask;
+import de.jspll.data.objects.game.tasks.NPCTask;
 import de.jspll.data.objects.game.tasks.TaskHolder;
 import de.jspll.data.objects.game.tasks.iTaskReaction;
 import de.jspll.data.objects.game.tasks.reactions.*;
@@ -456,6 +457,7 @@ public class GameManager extends GameObject {
     private TexturedObject getRandomTask(){
         int id = randomGenerator.nextInt(6);
         instanceCount++;
+        id = 5;
 
         switch (id){
             case 0:
@@ -497,7 +499,7 @@ public class GameManager extends GameObject {
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
-                        new CommonTask("Mit NPC freuen","NPC beleidigen", new CoursePlanReaction(), statManager), 65));
+                        new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;

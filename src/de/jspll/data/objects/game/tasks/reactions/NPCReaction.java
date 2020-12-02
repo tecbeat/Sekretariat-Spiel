@@ -8,12 +8,12 @@ import de.jspll.handlers.GameObjectHandler;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt, Samuel Assmann
+ * @author Lukas Becker
  *
  * @version 1.0
  */
 
-public class CoursesReaction implements iTaskReaction {
+public class NPCReaction implements iTaskReaction {
     // TODO: add logic
     @Override
     public int goodSelection(GameObjectHandler gOH) {
@@ -28,11 +28,9 @@ public class CoursesReaction implements iTaskReaction {
     @Override
     public void taskFinished(StatManager statManager, boolean goodTask) {
         if(goodTask) {
-            statManager.updateKarmaScore(30);
             statManager.updateRoundScore(20);
         } else {
-            statManager.updateKarmaScore(-30);
-            statManager.updateRoundScore(20);
+            statManager.updateRoundScore(-20);
         }
     }
 

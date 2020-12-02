@@ -316,20 +316,20 @@ public class Player extends TexturedObject {
                 collisionMap = (int[][]) input[1];
                 mapPos_and_metaData = (int[]) input[2];
 
-                } else if (cmd.contentEquals("playerPos")) { // [ "playerPos", scope ]
-                    if (input[1] instanceof String) {
-                        String scope = (String) input[1];
-                        ChannelID targetChannel = (ChannelID) input[2];
-                        getParent().dispatch(targetChannel, scope, new Object[]{"playerPos", pos, dimension});
-                        //sends ["playerPos", pos, dimension] to scope
-                    }
-                } else if (cmd.contentEquals("playerObject")) { // [ "playerObject" ]
-
-                    ChannelID targetChannel = (ChannelID) input[1];
-                    getParent().dispatch(targetChannel, new Object[]{"playerObj", this});
-
+            } else if (cmd.contentEquals("playerPos")) { // [ "playerPos", scope ]
+                if (input[1] instanceof String) {
+                    String scope = (String) input[1];
+                    ChannelID targetChannel = (ChannelID) input[2];
+                    getParent().dispatch(targetChannel, scope, new Object[]{"playerPos", pos, dimension});
+                    //sends ["playerPos", pos, dimension] to scope
                 }
+            } else if (cmd.contentEquals("playerObject")) { // [ "playerObject" ]
+
+                ChannelID targetChannel = (ChannelID) input[1];
+                getParent().dispatch(targetChannel, new Object[]{"playerObj", this});
+
             }
+
         }
 
         return 0;

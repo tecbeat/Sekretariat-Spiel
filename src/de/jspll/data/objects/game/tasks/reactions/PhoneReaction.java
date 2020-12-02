@@ -32,7 +32,7 @@ public class PhoneReaction implements iTaskReaction {
             statManager.updateRoundScore(20);
         } else {
             statManager.updateKarmaScore(-30);
-            statManager.updateRoundScore(-20);
+            statManager.updateRoundScore(20);
         }
     }
 
