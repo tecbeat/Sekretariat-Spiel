@@ -2,6 +2,7 @@ package de.jspll;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import de.jspll.audio.AudioHandler;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;

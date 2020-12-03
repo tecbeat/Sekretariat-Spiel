@@ -2,6 +2,7 @@ package de.jspll.audio;
 
 import javax.sound.sampled.*;
 import java.io.File;
+
 /**
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
@@ -12,37 +13,48 @@ import java.io.File;
  */
 
 public class AudioHandler {
-    String trackname = "/assets/audio/Dag_Reinbott-A_brilliant_Idea.mp3";
+    File[] files;
 
-    public void player(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
+    public void playMusic() {
+        new Thread(() -> {
+            File dir = new File("assets/");
+            files = dir.listFiles();
+            try {
+                if (files != null) {
+                    for (File f : files) {
+                        if (f.exists()) {
+                            System.out.println("(Play) " + f.getAbsolutePath());
 
-                    try {
-                        Clip clip = AudioSystem.getClip();
-                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(trackname));
-                        clip.open(audioInputStream);
-                        clip.addLineListener(new LineListener() {
-                            @Override
-                            public void update(LineEvent event) {
-                                if (clip.getMicrosecondPosition() == clip.getMicrosecondLength() - 4000){
-                                    clip.stop();
+                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f);
+                            Clip clip = AudioSystem.getClip();
+                            clip.open(audioInputStream);
 
-                                }
-                                clip.getMicrosecondPosition();
+                            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                            double gain = 0.05;
+                            float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+                            gainControl.setValue(dB);
+
+                            long clipLength = clip.getMicrosecondLength();
+                            clipLength = (clipLength/1000)-7000;
+                            System.out.println("(length) " + clipLength/60000 + ":" + (clipLength/1000)%60);
+
+                            clip.start();
+
+                            try {
+                                Thread.sleep(clipLength);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
-                        long tracklen = clip.getMicrosecondLength();
-                    }catch (Exception e){
-                        e.printStackTrace();
+                        } else {
+                            System.out.println("File dosent Exists");
+                        }
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }){
 
         }.start();
     }
-
 }
