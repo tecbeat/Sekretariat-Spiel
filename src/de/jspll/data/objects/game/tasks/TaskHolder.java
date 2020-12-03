@@ -31,6 +31,7 @@ public class TaskHolder extends TexturedObject {
     private boolean inProximity = false;
     private HashMap<String, AtomicBoolean> keyMap;
     private BufferedImage texture;
+    private final int ArrowOffset = 30;
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
@@ -40,7 +41,7 @@ public class TaskHolder extends TexturedObject {
         this.radius = radius;
         if (task != null)
             task.setHolder(this);
-        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(pos.x, pos.y - 30), new Dimension(32, 32), this, 3F);
+        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
     }
 
 
@@ -101,7 +102,7 @@ public class TaskHolder extends TexturedObject {
                 task.activate();
             }
         }
-        taskIndicationArrow.setPos(pos);
+        taskIndicationArrow.setPos(new Point(pos.x, pos.y - ArrowOffset));
         return 0;
     }
 
