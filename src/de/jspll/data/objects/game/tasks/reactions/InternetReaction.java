@@ -13,9 +13,12 @@ import de.jspll.handlers.GameObjectHandler;
  * @version 1.0
  */
 public class InternetReaction implements iTaskReaction {
-    // TODO: add logic
+
+    private GameObjectHandler goh;
+
     @Override
     public int goodSelection(GameObjectHandler gOH) {
+        this.goh = gOH;
         return 10;
     }
 
@@ -29,8 +32,7 @@ public class InternetReaction implements iTaskReaction {
         if(goodTask) {
             statManager.updateKarmaScore(-30);
             statManager.updateRoundScore(-20);
-        } else {
-            // TODO: disable all tasks that are using the internet
+            goh.setInternetTaskDone(true);
         }
     }
 

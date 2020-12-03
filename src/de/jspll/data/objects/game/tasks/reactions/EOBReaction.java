@@ -1,5 +1,6 @@
 package de.jspll.data.objects.game.tasks.reactions;
 
+import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.iTaskReaction;
 import de.jspll.handlers.GameObjectHandler;
@@ -13,9 +14,12 @@ import de.jspll.handlers.GameObjectHandler;
  * @version 1.0
  */
 public class EOBReaction implements iTaskReaction {
-    // TODO: add logic
+
+    private GameObjectHandler goh;
+
     @Override
     public int goodSelection(GameObjectHandler gOH) {
+        this.goh = gOH;
         return 10;
     }
 
@@ -26,7 +30,7 @@ public class EOBReaction implements iTaskReaction {
 
     @Override
     public void taskFinished(StatManager statManager, boolean goodTask) {
-        // TODO: implement that the round is over
+        goh.getGameManager().setRemainingTime(-1);
     }
 
     @Override
