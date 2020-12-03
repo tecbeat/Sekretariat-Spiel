@@ -12,7 +12,6 @@ import de.jspll.handlers.GameObjectHandler;
  *
  * @version 1.0
  */
-
 public class PhoneReaction implements iTaskReaction {
     // TODO: add logic
     @Override

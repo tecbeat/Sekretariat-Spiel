@@ -7,10 +7,7 @@ import de.jspll.data.objects.game.player.ColorScheme;
 import de.jspll.data.objects.game.player.NPC;
 import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
-import de.jspll.data.objects.game.tasks.CommonTask;
-import de.jspll.data.objects.game.tasks.NPCTask;
-import de.jspll.data.objects.game.tasks.TaskHolder;
-import de.jspll.data.objects.game.tasks.iTaskReaction;
+import de.jspll.data.objects.game.tasks.*;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.graphics.Camera;
 
@@ -457,7 +454,7 @@ public class GameManager extends GameObject {
     private TexturedObject getRandomTask(){
         int id = randomGenerator.nextInt(6);
         instanceCount++;
-        id = 5;
+        id = 7;
 
         switch (id){
             case 0:
@@ -503,6 +500,35 @@ public class GameManager extends GameObject {
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
+            case 6:
+                TaskHolder thStudentCard = new TaskHolder("studentcard" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(1280, 1760),
+                        new Dimension(32, 16),
+                        new CommonTask("Stundierendenausweise austeilen", "Studierendenausweise schreddern",
+                                new StudentCardReaction(), statManager), 65);
+                thStudentCard.setListener(gameObjectHandler);
+                return thStudentCard;
+            case 7:
+                TaskHolder thInternet = new TaskHolder("internet" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(750, 656),
+                        new Dimension(32, 16),
+                        new CommonTask("Internet löschen", new InternetReaction(), statManager), 65);
+                thInternet.setListener(gameObjectHandler);
+                return thInternet;
+            case 8:
+                TaskHolder thEMail = new TaskHolder("email" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(2750, 1536),
+                        new Dimension(32, 16),
+                        new CommonTask("Mails löschen", new EMailReaction(), statManager), 65);
+                thEMail.setListener(gameObjectHandler);
+                return thEMail;
+            case 9:
+                TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(2430, 2335),
+                        new Dimension(32, 16),
+                        new CommonTask("Feierabend machen", new EOBReaction(), statManager), 65);
+                thEOB.setListener(gameObjectHandler);
+                return thEOB;
             default:
                 return null;
         }
