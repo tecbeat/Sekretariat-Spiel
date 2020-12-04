@@ -17,7 +17,7 @@ public class AudioHandler {
 
     public void playMusic() {
         new Thread(() -> {
-            File dir = new File("assets/");
+            File dir = new File("assets/audio/");
             files = dir.listFiles();
             try {
                 if (files != null) {
