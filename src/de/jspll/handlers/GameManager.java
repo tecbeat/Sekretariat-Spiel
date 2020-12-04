@@ -294,35 +294,35 @@ public class GameManager extends GameObject {
                 TaskHolder thMail = new TaskHolder("mail" + instanceCount, "g.dflt.TaskHolder",
                         new Point(622,2090),
                         new Dimension(32,16),
-                        new CommonTask("Post sortieren" + instanceCount, "Post schreddern", new MailReaction(), statManager), 65);
+                        new CommonTask("Post sortieren" + instanceCount, "Post schreddern", new MailReaction(), statManager, new String[]{"/assets/task/image/mail_pic","/assets/task/image/mail_drag"}), 65);
                 thMail.setListener(gameObjectHandler);
                 return thMail;
             case 1:
                 TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1638, 2295),
                         new Dimension(32, 16),
-                        new CommonTask("Noten eintragen" + instanceCount, "Noten verwerfen", new GradesReaction(), statManager), 65);
+                        new CommonTask("Noten eintragen" + instanceCount, "Noten verwerfen", new GradesReaction(), statManager, new String[]{"/assets/task/image/grades_pic","/assets/task/image/grades_drag"}), 65);
                 thGrades.setListener(gameObjectHandler);
                 return thGrades;
             case 2:
                 TaskHolder thPhone = new TaskHolder("phone" + instanceCount, "g.dflt.TaskHolder",
                         new Point(3105, 440),
                         new Dimension(32, 16),
-                        new CommonTask("Telefonat annehmen" + instanceCount, "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
+                        new CommonTask("Telefonat annehmen" + instanceCount, "Telefonat ablehnen", new PhoneReaction(), statManager, new String[]{"/assets/task/image/phone_pic","/assets/task/image/phone_drag"}), 65);
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case 3:
                 TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2320, 1778),
                         new Dimension(32, 16),
-                        new CommonTask("Kurse zuordnen" + instanceCount, "Kurse löschen", new CoursesReaction(), statManager), 65);
+                        new CommonTask("Kurse zuordnen" + instanceCount, "Kurse löschen", new CoursesReaction(), statManager, new String[]{"/assets/task/image/course_pic","/assets/task/image/course_drag"}), 65);
                 thCourses.setListener(gameObjectHandler);
                 return thCourses;
             case 4:
                 TaskHolder thCoursePlan = new TaskHolder("courseplan" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1818, 455),
                         new Dimension(32, 16),
-                        new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
+                        new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager, new String[]{"/assets/task/image/courseplan_pic","/assets/task/image/courseplan_drag"}), 65);
                 thCoursePlan.setListener(gameObjectHandler);
                 return thCoursePlan;
             case 5:

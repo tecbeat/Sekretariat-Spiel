@@ -80,4 +80,8 @@ public class Collision {
         }
         return false;
     }
+
+    public static boolean posInRect(Point pos, Rectangle rectangle){
+        return pos.x > rectangle.x && pos.y > rectangle.y && pos.y < rectangle.y+rectangle.height && pos.x < rectangle.x + rectangle.width;
+    }
 }
