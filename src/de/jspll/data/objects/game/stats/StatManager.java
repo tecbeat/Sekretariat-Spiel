@@ -79,26 +79,26 @@ public class StatManager extends TexturedObject {
             height = 130 + activeTasks.size() * 25;
         // TODO: prettify
         g.setColor(Color.WHITE);
-        g.fillRect(camera.getWidth() - 200, 0, 200, height);
+        g.fillRect(camera.getWidth() - 250, 0, camera.getWidth(), height);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 
         // draw round score
-        g.drawString("Round score: " + roundScore, camera.getWidth() - 195, 45);
+        g.drawString("Round score: " + roundScore, camera.getWidth() - 240, 45);
 
         // draw karma score
         setColorForKarmaScore(g);
-        g.drawString("Karma score: " + karmaScore, camera.getWidth() - 195, 20);
+        g.drawString("Karma score: " + karmaScore, camera.getWidth() - 240, 20);
 
         g.setColor(Color.BLACK);
-        g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 195, 70);
+        g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 240, 70);
 
         // draw remaining time
         remainingTime = gameManager.getRemainingTime();
         setColorForRemainingTime(g);
         g.drawString("Remaining time: " + (remainingTime >= 0 ? (int) remainingTime : 0),
-                camera.getWidth() - 195, 95);
+                camera.getWidth() - 240, 95);
 
         // TODO: implement what should happen if time is over
         if (remainingTime <= 0) {
@@ -108,13 +108,16 @@ public class StatManager extends TexturedObject {
 
         int todoY = 120;
 
-        g.drawString("Todo: ",camera.getWidth() - 195, todoY);
+        g.drawString("Todo: ",camera.getWidth() - 240, todoY);
 
         if(activeTasks != null){
             for (String key : activeTasks.keySet()) {
                 todoY += 25;
+                if(key.equals("Studierendenausweise austeilen")) {
+                    key = "Ausweise austeilen";
+                }
                 g.drawString(key + ": " + Math.round(remainingTime - activeTasks.get(key)),
-                        camera.getWidth() - 195, todoY);
+                        camera.getWidth() - 240, todoY);
             }
         }
     }
