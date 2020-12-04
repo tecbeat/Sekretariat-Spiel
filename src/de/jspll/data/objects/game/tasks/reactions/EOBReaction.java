@@ -1,6 +1,5 @@
 package de.jspll.data.objects.game.tasks.reactions;
 
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.iTaskReaction;
 import de.jspll.handlers.GameObjectHandler;
