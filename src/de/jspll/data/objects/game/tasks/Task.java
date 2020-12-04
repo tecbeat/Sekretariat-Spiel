@@ -17,6 +17,8 @@ public interface Task {
 
     void activate();
 
+    void deActivate();
+
     boolean isActive();
 
     char update(float elapsedTime);
@@ -34,4 +36,6 @@ public interface Task {
     void loadTextures();
 
     TaskHolder getHolder();
+
+    String getName();
 }

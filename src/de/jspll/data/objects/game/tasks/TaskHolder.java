@@ -3,6 +3,7 @@ package de.jspll.data.objects.game.tasks;
 import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
+import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Vector2D;
@@ -21,6 +22,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 
 public class TaskHolder extends TexturedObject {
+
+    private final int DURATION = 120;
+    private float initTime = 0;
+    private boolean active = true;
 
     private final Animation taskIndicationArrow;
     private Point playerPos;
@@ -102,6 +107,15 @@ public class TaskHolder extends TexturedObject {
             }
         }
         taskIndicationArrow.setPos(pos);
+
+        if(initTime == 0){
+            initTime = getParent().getGameManager().getRemainingTime();
+        }
+        if((initTime - DURATION) > getParent().getGameManager().getRemainingTime()){
+            task.deActivate();
+            active = false;
+        }
+
         return 0;
     }
 
@@ -129,6 +143,9 @@ public class TaskHolder extends TexturedObject {
             } else if (cmd.contentEquals("toTask")) {
                 task.call(input);
                 return 0;
+            } else if (cmd.contentEquals("getTask") && active){
+                getParent().dispatch(ChannelID.INPUT, new Object[]{"activeTask", task.getName(), initTime - DURATION});
+
             }
 
             if (((String) input[0]).contentEquals("input")) {
@@ -141,6 +158,9 @@ public class TaskHolder extends TexturedObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        if(!active)
+            return;
+
         super.paint(g, elapsedTime, camera, currStage);
 
         if (task != null) {

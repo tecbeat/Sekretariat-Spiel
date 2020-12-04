@@ -47,6 +47,10 @@ public class ExampleTask implements Task{
         this.active = true;
     }
 
+    public void deActivate(){
+        active = false;
+    }
+
     public void setHolder(TaskHolder holder) {
         this.holder = holder;
     }
@@ -90,5 +94,7 @@ public class ExampleTask implements Task{
         return 0;
     }
 
-
+    public String getName(){
+        return "";
+    }
 }

@@ -2,10 +2,13 @@ package de.jspll.data.objects.game.stats;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.TexturedObject;
+import de.jspll.data.objects.game.tasks.Task;
 import de.jspll.graphics.Camera;
 import de.jspll.handlers.GameManager;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * © Sekretariat-Spiel
@@ -24,6 +27,9 @@ public class StatManager extends TexturedObject {
     private float remainingTime;
     private GameManager gameManager;
 
+    private float timeSinceUpdate = -1;
+    private HashMap<String, Float> activeTasks;
+
     public StatManager(GameManager gm) {
         this.roundScore = 0;
         this.karmaScore = 0;
@@ -35,7 +41,7 @@ public class StatManager extends TexturedObject {
     }
 
     /**
-     * <ul>
+     * <ul>w
      *     <li> General format: "statmanager statcommand taskTime remainingTime scoredPoints positive scoredKarma" </li>
      *     <li> Finished task with positve karma: "statmanager 0 taskTime remainingTime scoredPoints 1 scoredKarma" </li>
      *     <li> Finished task with negative karma: "statmanager 0 taskTime remainingTime scoredPoints 0 scoredKarma" </li>
@@ -60,15 +66,20 @@ public class StatManager extends TexturedObject {
                         return 0;
                 }
             }
+        } else if(input[0] instanceof String && ((String)input[0]).equals("activeTask")) {
+            activeTasks.put((String)input[1], (float)input[2]);
         }
         return 0;
     }
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        int height = 130;
+        if(activeTasks != null)
+            height = 130 + activeTasks.size() * 25;
         // TODO: prettify
         g.setColor(Color.WHITE);
-        g.fillRect(camera.getWidth() - 200, 0, 200, 120);
+        g.fillRect(camera.getWidth() - 200, 0, 200, height);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -94,6 +105,30 @@ public class StatManager extends TexturedObject {
             g.setFont(new Font("Serif", Font.PLAIN, 48));
             g.drawString("TIME IS UP", camera.getWidth() / 2 - 100, camera.getHeight() / 2);
         }
+
+        int todoY = 120;
+
+        g.drawString("Todo: ",camera.getWidth() - 195, todoY);
+
+        if(activeTasks != null){
+            for (String key : activeTasks.keySet()) {
+                todoY += 25;
+                g.drawString(key + ": " + Math.round(remainingTime - activeTasks.get(key)),
+                        camera.getWidth() - 195, todoY);
+            }
+        }
+    }
+
+    @Override
+    public char update(float elapsedTime) {
+        timeSinceUpdate += elapsedTime;
+        if(timeSinceUpdate > 1 || timeSinceUpdate == -1){
+            timeSinceUpdate = 0;
+            activeTasks = new HashMap<>();
+            getParent().dispatch(ChannelID.LOGIC, new Object[]{"getTask"});
+        }
+
+        return 0;
     }
 
     /**

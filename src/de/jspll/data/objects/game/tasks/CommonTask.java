@@ -308,6 +308,10 @@ public class CommonTask extends GameObject implements Task {
         this.active = true;
     }
 
+    public void deActivate(){
+        this.active = false;
+    }
+
     private boolean getMousePressed(){
         return mouseClicked.get();
     }
@@ -335,5 +339,9 @@ public class CommonTask extends GameObject implements Task {
 
     public TaskHolder getHolder() {
         return holder;
+    }
+
+    public String getName(){
+        return goodHeading;
     }
 }

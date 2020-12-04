@@ -232,6 +232,10 @@ public class NPCTask extends GameObject implements Task {
 
     }
 
+    public void deActivate(){
+        active = false;
+    }
+
     @Override
     public char call(Object[] input) {
         if (input[0] instanceof String) {
@@ -255,5 +259,9 @@ public class NPCTask extends GameObject implements Task {
 
     public TaskHolder getHolder() {
         return holder;
+    }
+
+    public String getName(){
+        return "NPC";
     }
 }
