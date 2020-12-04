@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-
 public class CommonTask extends GameObject implements Task {
     @Expose(deserialize = false, serialize = false)
 
@@ -66,6 +65,21 @@ public class CommonTask extends GameObject implements Task {
     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager){
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
+        this.onSelect = onSelect;
+        this.statManager = statManager;
+        channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
+    }
+
+    /**
+     * Constructor to use if the task only has one option to choose.
+     *
+     * @param heading short description of the task
+     * @param onSelect specific class to handle the button clicks
+     * @param statManager manages the game statistics
+     */
+    public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager) {
+        this.goodHeading = heading;
+        this.badHeading = "";
         this.onSelect = onSelect;
         this.statManager = statManager;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
@@ -116,7 +130,7 @@ public class CommonTask extends GameObject implements Task {
      * @param camera Camera
      */
     private void initTaskScreen(Graphics g, Camera camera) {
-        g.setFont(new Font("Serif", Font.PLAIN, 14));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
         Graphics2D g2d = (Graphics2D) g;
         screenWidth = (int) g2d.getClipBounds().getWidth();
         screenHeight = (int) g2d.getClipBounds().getHeight();
@@ -134,7 +148,13 @@ public class CommonTask extends GameObject implements Task {
 
         if(!buttonLock) {
             g.setColor(Color.BLACK);
-            g.drawString(goodHeading + " oder " + badHeading, (screenWidth / 2) - 110, screenHeight / 2);
+            String heading;
+            if(!badHeading.equals("")) {
+                heading = goodHeading + " oder " + badHeading;
+            } else {
+                heading = goodHeading;
+            }
+            g.drawString(heading, (screenWidth / 2) - 110, screenHeight / 2);
         }
     }
 
@@ -151,7 +171,12 @@ public class CommonTask extends GameObject implements Task {
             btnBadX = (boundingX + (screenWidth / 2) / 2) + 85;
         }
         int xCoord = goodButton ? btnGoodX : btnBadX;
-        String heading = goodButton ? goodHeading.split(" ")[1] : badHeading.split(" ")[1];
+        String heading;
+        if(!badHeading.equals("")) {
+            heading = goodButton ? goodHeading.split(" ")[1] : badHeading.split(" ")[1];
+        } else {
+            heading = goodButton ? "Ja" : "Nein";
+        }
 
         g.setColor(goodButton ? Color.GREEN : Color.RED);
         if (checkHover(xCoord, btnStartY, buttonSize[0], buttonSize[1])) {
@@ -166,6 +191,9 @@ public class CommonTask extends GameObject implements Task {
 
         if(buttonLock) {
             g.setColor(Color.BLACK);
+            if(badHeading.equals("")) {
+                heading = goodHeading;
+            }
             g.drawString(heading, xCoord + 5, btnStartY + 15);
         }
     }
@@ -294,7 +322,6 @@ public class CommonTask extends GameObject implements Task {
      * Determines the mouse position.
      */
     private void getMousePos(){
-        // TODO: get proper mouse position if possible, siehe ExampleTask (null-check)
         if(getHolder().getParent().getMousePos() != null) {
             mousePos[0] = (int) getHolder().getParent().getMousePos().getX();
             mousePos[1] = (int) getHolder().getParent().getMousePos().getY();

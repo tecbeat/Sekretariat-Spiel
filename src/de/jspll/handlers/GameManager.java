@@ -7,10 +7,7 @@ import de.jspll.data.objects.game.player.ColorScheme;
 import de.jspll.data.objects.game.player.NPC;
 import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
-import de.jspll.data.objects.game.tasks.CommonTask;
-import de.jspll.data.objects.game.tasks.NPCTask;
-import de.jspll.data.objects.game.tasks.TaskHolder;
-import de.jspll.data.objects.game.tasks.iTaskReaction;
+import de.jspll.data.objects.game.tasks.*;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.graphics.Camera;
 
@@ -22,17 +19,14 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * The Game Manager handles basic functions such as difficulty, play and pause
+ *
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Laura Schmidt
  *
  * @version 1.0
- */
-
-
-/**
- * The Game Manager handles basic functions such as difficulty, play and pause
  */
 public class GameManager extends GameObject {
     //Balancing
@@ -86,10 +80,10 @@ public class GameManager extends GameObject {
 
     }
 
-
     /**
      * update overrides game object update
      * Adds tasks and stops game if time over
+     *
      * @param elapsedTime
      * @return
      */
@@ -194,7 +188,6 @@ public class GameManager extends GameObject {
         if(pauseForbiddenScreen){
             pauseScreen(g,camera,false);
         }
-
     }
 
     public StatManager getStatManager() {
@@ -264,6 +257,7 @@ public class GameManager extends GameObject {
         this.gameRunning = false;
         gameObjectHandler.clearScene(ChannelID.LOGIC);
         gameObjectHandler.loadObject(this);
+        this.resultScreen = true;
     }
 
     private void pauseGame(){
@@ -271,8 +265,6 @@ public class GameManager extends GameObject {
         gameRunning = false;
         pauseScreen = true;
         gameObjectHandler.loadObject(this);
-
-
     }
 
     private void resumeGame(){
@@ -289,7 +281,7 @@ public class GameManager extends GameObject {
      * @param g Graphics
      * @param camera Camera
      */
-    private void initResultScreen(Graphics g, Camera camera) {
+    public void initResultScreen(Graphics g, Camera camera) {
         g.setFont(new Font("Serif", Font.PLAIN, 14));
         Graphics2D g2d = (Graphics2D) g;
         screenWidth = (int) g2d.getClipBounds().getWidth();
@@ -306,11 +298,9 @@ public class GameManager extends GameObject {
         g.setColor(Color.WHITE);
         g.fillRect(boundingX, boundingY, screenWidth / 2, screenHeight / 2);
 
-
         g.setColor(Color.BLACK);
-        g.drawString("Level Complete", (screenWidth / 2) - 110, screenHeight / 2);
+//        g.drawString("Level Complete", (screenWidth / 2) - 110, screenHeight / 2);
         g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Level complete" : "You Failed", (screenWidth / 2) - 110, screenHeight / 2 + 25);
-
     }
 
     /**
@@ -318,9 +308,9 @@ public class GameManager extends GameObject {
      * @param g
      */
     private void setUpButton(Graphics g) {
-        String heading = getTaskCompletionPercentage()>LEVEL_COMPLETION_TRESHOLD ? "Next Level" : "Main Menu";
+        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Next Level" : "Main Menu";
 
-        g.setColor(getTaskCompletionPercentage()>LEVEL_COMPLETION_TRESHOLD ? Color.GREEN : Color.RED);
+        g.setColor(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? Color.GREEN : Color.RED);
         if (checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
             g.fillRect(btnStartX, btnStartY, buttonSize[0], buttonSize[1]);
             g.setColor(Color.BLACK);
@@ -351,7 +341,6 @@ public class GameManager extends GameObject {
      * Determines the mouse position.
      */
     private void getMousePos(){
-        // TODO: get proper mouse position if possible, siehe ExampleTask (null-check)
         if(gameObjectHandler.getMousePos() != null) {
             mousePos[0] = (int) gameObjectHandler.getMousePos().getX();
             mousePos[1] = (int) gameObjectHandler.getMousePos().getY();
@@ -412,8 +401,6 @@ public class GameManager extends GameObject {
 
     }
 
-
-
     public int getLevel(){
         return this.level;
     }
@@ -421,10 +408,10 @@ public class GameManager extends GameObject {
     public float getRoundTime(){
         return this.ROUND_TIME;
     }
+
     public float getRemainingTime(){
         return this.remainingTime;
     }
-
 
     //TODO: Not sure if we need these two
     public ArrayList<TexturedObject> getTasksforCurrentLevel(){
@@ -457,7 +444,11 @@ public class GameManager extends GameObject {
      * @return one random task
      */
     private TexturedObject getRandomTask(){
-        int id = randomGenerator.nextInt(6);
+        int id = randomGenerator.nextInt(10);
+
+        if(getParent().isInternetTaskDone()) {
+            id = randomGenerator.nextInt(6);
+        }
         instanceCount++;
 
         switch (id){
@@ -469,34 +460,21 @@ public class GameManager extends GameObject {
                 thMail.setListener(gameObjectHandler);
                 return thMail;
             case 1:
-                TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
-                        new Point(1638, 2295),
-                        new Dimension(32, 16),
-                        new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
-                thGrades.setListener(gameObjectHandler);
-                return thGrades;
-            case 2:
                 TaskHolder thPhone = new TaskHolder("phone" + instanceCount, "g.dflt.TaskHolder",
                         new Point(3105, 440),
                         new Dimension(32, 16),
                         new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
-            case 3:
+            case 2:
                 TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2320, 1778),
                         new Dimension(32, 16),
                         new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
                 thCourses.setListener(gameObjectHandler);
                 return thCourses;
-            case 4:
-                TaskHolder thCoursePlan = new TaskHolder("courseplan", "g.dflt.TaskHolder",
-                        new Point(1818, 455),
-                        new Dimension(32, 16),
-                        new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
-                thCoursePlan.setListener(gameObjectHandler);
-                return thCoursePlan;
-            case 5:
+
+            case 3:
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
@@ -504,9 +482,56 @@ public class GameManager extends GameObject {
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
+            case 4:
+                TaskHolder thStudentCard = new TaskHolder("studentcard" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(1280, 1760),
+                        new Dimension(32, 16),
+                        new CommonTask("Stundierendenausweise austeilen", "Studierendenausweise schreddern",
+                                new StudentCardReaction(), statManager), 65);
+                thStudentCard.setListener(gameObjectHandler);
+                return thStudentCard;
+            case 5:
+                TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(2430, 2335),
+                        new Dimension(32, 16),
+                        new CommonTask("Feierabend machen", new EOBReaction(), statManager), 65);
+                thEOB.setListener(gameObjectHandler);
+                return thEOB;
+            case 6:
+                TaskHolder thInternet = new TaskHolder("internet" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(750, 656),
+                        new Dimension(32, 16),
+                        new CommonTask("Internet löschen", new InternetReaction(), statManager), 65);
+                thInternet.setListener(gameObjectHandler);
+                return thInternet;
+            case 7:
+                TaskHolder thCoursePlan = new TaskHolder("courseplan" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(1818, 455),
+                        new Dimension(32, 16),
+                        new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
+                thCoursePlan.setListener(gameObjectHandler);
+                return thCoursePlan;
+            case 8:
+                TaskHolder thEMail = new TaskHolder("email" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(2750, 1536),
+                        new Dimension(32, 16),
+                        new CommonTask("Mails löschen", new EMailReaction(), statManager), 65);
+                thEMail.setListener(gameObjectHandler);
+                return thEMail;
+            case 9:
+                TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(1638, 2295),
+                        new Dimension(32, 16),
+                        new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
+                thGrades.setListener(gameObjectHandler);
+                return thGrades;
             default:
                 return null;
         }
+    }
+
+    public void setRemainingTime(float remainingTime) {
+        this.remainingTime = remainingTime;
     }
 
     private ArrayList<TexturedObject> tempTaskContainer(){

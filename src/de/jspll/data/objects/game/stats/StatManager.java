@@ -82,7 +82,7 @@ public class StatManager extends TexturedObject {
         g.fillRect(camera.getWidth() - 200, 0, 200, height);
 
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Serif", Font.PLAIN, 18));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 
         // draw round score
         g.drawString("Round score: " + roundScore, camera.getWidth() - 195, 45);

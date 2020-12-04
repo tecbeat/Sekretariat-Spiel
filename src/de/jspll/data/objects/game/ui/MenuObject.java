@@ -41,7 +41,7 @@ public class MenuObject extends GameObject {
         }
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Serif", Font.PLAIN, 28));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 24));
         g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
 
 

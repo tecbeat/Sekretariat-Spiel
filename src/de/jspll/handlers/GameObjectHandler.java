@@ -34,48 +34,29 @@ import static de.jspll.data.ChannelID.*;
  *
  * @version 1.0
  */
-
 public class GameObjectHandler{
     private GameManager gameManager = new GameManager(this);
 
-
     private AudioHandler audioHandler;
 
-    public void setAudioHandler(AudioHandler audioHandler) {
-        this.audioHandler = audioHandler;
-    }
+    private ResourceHandler resourceHandler = new ResourceHandler(this);
+    private GraphicsHandler graphicsHandler;
+    private LogicHandler logicHandler;
+    private AtomicBoolean loadingScene = new AtomicBoolean(false);
 
-    public AudioHandler getAudioHandler() {
-        return audioHandler;
-    }
+    private ChannelID activeScene = SCENE_LOADING;
+
+    private GameTrie[] channels = new GameTrie[LAST_CHANNEL.valueOf() + 1];
+
+    private boolean internetTaskDone = false;
 
     public GameObjectHandler() {
-
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new GameTrie();
         }
-
-        //loadScene(ChannelID.SCENE_2, new ArrayList<GameObject>(Arrays.asList(loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json"))));
-
-        /*for(TileMap tm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
-            loadObject(tm);
-            System.out.println(tm);
-        }*/
         resourceHandler.start();
 
         loadObject(gameManager);
-
-        //loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json");
-    }
-
-    public Point getMousePos() {
-        if (graphicsHandler == null)
-            return null;
-        return graphicsHandler.getMousePos();
-    }
-
-    public Camera getSelectedCamera() {
-        return graphicsHandler.getSelectedCamera();
     }
 
     public void setup(){
@@ -86,10 +67,6 @@ public class GameObjectHandler{
                 20, 150,new Dimension(40,40)));
 
         loadScene(SCENE_LOADING,loadingSceneBuilder);
-    }
-
-    public GameManager getGameManager(){
-        return this.gameManager;
     }
 
     public void switchScene(ChannelID newScene){
@@ -123,39 +100,6 @@ public class GameObjectHandler{
         deleteScene(scene);
         channels[scene.valueOf()].dropAll();
         return true;
-    }
-
-    public Dimension getScreenDimensions() {
-        return graphicsHandler.getWindow().getSize();
-    }
-
-    public GraphicsHandler getGraphicsHandler() {
-        return graphicsHandler;
-    }
-
-    public ResourceHandler getResourceHandler() {
-        return resourceHandler;
-    }
-
-    private ResourceHandler resourceHandler = new ResourceHandler(this);
-    private GraphicsHandler graphicsHandler;
-    private LogicHandler logicHandler;
-    private AtomicBoolean loadingScene = new AtomicBoolean(false);
-
-    public LogicHandler getLogicHandler() {
-        return logicHandler;
-    }
-
-    public void setLogicHandler(LogicHandler logicHandler) {
-        this.logicHandler = logicHandler;
-    }
-
-    private ChannelID activeScene = SCENE_LOADING;
-
-    private GameTrie[] channels = new GameTrie[LAST_CHANNEL.valueOf() + 1];
-
-    public void setGraphicsHandler(GraphicsHandler graphicsHandler) {
-        this.graphicsHandler = graphicsHandler;
     }
 
     public void register(GameObject item) {
@@ -192,7 +136,6 @@ public class GameObjectHandler{
     public void unsubscribe(GameObject item) {
         for (ChannelID id : item.getChannels()) {
             if (id == INSTANCE_REGISTER)
-                // TODO: Check if necessary. Kruse will tear our heads if we leave it in.
                 continue;
             this.channels[id.valueOf()].delete(item.getID());
         }
@@ -231,14 +174,6 @@ public class GameObjectHandler{
         for (GameObject object : channels[target.valueOf()].allValues()) {
             object.call(input);
         }
-    }
-
-    public GameTrie getChannel(ChannelID channel) {
-        return channels[channel.valueOf()];
-    }
-
-    public ChannelID getActiveScene() {
-        return activeScene;
     }
 
     public void loadObjects(ArrayList<GameObject> objects) {
@@ -300,7 +235,7 @@ public class GameObjectHandler{
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(JsonElement jsonObject: objects){
+                for(JsonElement jsonObject : objects){
                     GameObject go = JSONSupport.fromJsonToGameObject(jsonObject);
                     out.add(go);
                     go.setListener(goh);
@@ -311,9 +246,7 @@ public class GameObjectHandler{
                     }
                     pRpt.update();
                 }
-                //for(TileMap ttm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
-                //    out.add(ttm);
-                //}
+
                 lb.setMessage("loading textures...");
                 boolean waitingForTexture = true;
                 while(waitingForTexture){
@@ -328,39 +261,7 @@ public class GameObjectHandler{
                         }
                     }
                 }
-                /**
-                 * Tasks
-                 */
-                /*TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
-                        new Point(1280,1088),
-                        new Dimension(32,16),
-                        new ExampleTask());*/
-                /*// TODO: Richtige Pos
-                boolean home = false;
-                for(GameObject o : out){
-                    if(o instanceof MenuObject){
-                        home = true;
-                        break;
-                    }
-                }
-                if(!home) {
-                    StatManager statManager = getGameManager().getStatManager();
-                    for (TexturedObject th : tempTaskContainer(statManager)) {
-                        out.add(th);
-                        th.requestTexture();
-                    }
-                    // TODO: Add StatManager and Tasks to JSON
-                    statManager.setListener(goh);
-                    out.add(statManager);
-                }*/
-
-
-                /**
-                 * End Tasks
-                 */
-
                 pRpt.setPayload(out);
-
 
                 loadScene(scene, out);
 
@@ -372,7 +273,6 @@ public class GameObjectHandler{
     }
 
     public void loadScene(ChannelID scene, String file){
-
         String jsonStr = getResourceHandler().fileToJson(file);
         JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
         loadScene(scene, jsonArray);
@@ -387,7 +287,6 @@ public class GameObjectHandler{
         LoadingBar lb = new LoadingBar(pRpt);
         lb.setMessage("loading objects...");
         this.loadObject(lb);
-        //this.subscribe(lb);
         final GameObjectHandler goh = this;
 
         Thread t1 = new Thread(new Runnable() {
@@ -404,9 +303,7 @@ public class GameObjectHandler{
                     }
                     pRpt.update();
                 }
-                //for(TileMap ttm : loadMap("assets\\map\\Sekretariat-Spiel-Plan_v2.json")){
-                //    out.add(ttm);
-                //}
+
                 lb.setMessage("loading textures...");
                 boolean waitingForTexture = true;
                 while(waitingForTexture){
@@ -421,14 +318,6 @@ public class GameObjectHandler{
                         }
                     }
                 }
-                /**
-                 * Tasks
-                 */
-                /*TaskHolder th1 = new TaskHolder("test", "g.dflt.TaskHolder",
-                        new Point(1280,1088),
-                        new Dimension(32,16),
-                        new ExampleTask());*/
-                // TODO: Richtige Pos
                 boolean home = false;
                 for(GameObject o : out){
                     if(o instanceof MenuObject){
@@ -447,13 +336,7 @@ public class GameObjectHandler{
                     out.add(statManager);
                 }
 
-
-                /**
-                 * End Tasks
-                 */
-
                 pRpt.setPayload(out);
-
 
                 loadScene(scene, out);
 
@@ -478,8 +361,6 @@ public class GameObjectHandler{
         gameManager.startGame();
 
     }
-
-
 
     public TileMap[] loadMap(String mapJson){
         try {
@@ -521,7 +402,6 @@ public class GameObjectHandler{
                 //get gridTiles
                 ArrayList<Map<String,?>> temp = (ArrayList<Map<String, ?>>) layerI.get("gridTiles");
 
-                // TODO: Check if necessary. Kruse will tear our heads out if we leave it in.
                 if(temp.size() == 0)
                     continue;
 
@@ -576,7 +456,6 @@ public class GameObjectHandler{
                                             collsions = l;
                                         }
                                         b = true;
-                                        // TODO: Check if necessary. Kruse will tear our heads out if we leave it in.
                                         continue;
                                     }
 
@@ -588,8 +467,6 @@ public class GameObjectHandler{
                         }
                     }
                 }
-
-                // TODO: Check if necessary. Application worked as normal without. Kruse will tear our heads out if we leave it in.
                 if(l.getTextures() == null){
                     continue;
                 }
@@ -650,5 +527,67 @@ public class GameObjectHandler{
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Point getMousePos() {
+        if (graphicsHandler == null)
+            return null;
+        return graphicsHandler.getMousePos();
+    }
+
+    public GameTrie getChannel(ChannelID channel) {
+        return channels[channel.valueOf()];
+    }
+
+    public ChannelID getActiveScene() {
+        return activeScene;
+    }
+
+    public Camera getSelectedCamera() {
+        return graphicsHandler.getSelectedCamera();
+    }
+
+    public void setAudioHandler(AudioHandler audioHandler) {
+        this.audioHandler = audioHandler;
+    }
+
+    public AudioHandler getAudioHandler() {
+        return audioHandler;
+    }
+
+    public GameManager getGameManager(){
+        return this.gameManager;
+    }
+
+    public Dimension getScreenDimensions() {
+        return graphicsHandler.getWindow().getSize();
+    }
+
+    public GraphicsHandler getGraphicsHandler() {
+        return graphicsHandler;
+    }
+
+    public ResourceHandler getResourceHandler() {
+        return resourceHandler;
+    }
+
+    public LogicHandler getLogicHandler() {
+        return logicHandler;
+    }
+
+    public void setLogicHandler(LogicHandler logicHandler) {
+        this.logicHandler = logicHandler;
+    }
+
+    public void setGraphicsHandler(GraphicsHandler graphicsHandler) {
+        this.graphicsHandler = graphicsHandler;
+    }
+
+    public boolean isInternetTaskDone() {
+        return this.internetTaskDone;
+    }
+
+    public void setInternetTaskDone(boolean taskDone) {
+        this.internetTaskDone = taskDone;
     }
 }

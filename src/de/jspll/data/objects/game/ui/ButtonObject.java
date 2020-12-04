@@ -65,7 +65,7 @@ public class ButtonObject extends MenuObject {
         }
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Serif", Font.PLAIN, 28));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 22));
         g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
 
 
