@@ -130,7 +130,7 @@ public class CommonTask extends GameObject implements Task {
      * @param camera Camera
      */
     private void initTaskScreen(Graphics g, Camera camera) {
-        g.setFont(new Font("Serif", Font.PLAIN, 14));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
         Graphics2D g2d = (Graphics2D) g;
         screenWidth = (int) g2d.getClipBounds().getWidth();
         screenHeight = (int) g2d.getClipBounds().getHeight();
