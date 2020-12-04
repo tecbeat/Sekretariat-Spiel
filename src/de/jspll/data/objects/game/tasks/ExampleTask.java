@@ -9,11 +9,11 @@ import java.awt.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Samuel Assmann
+ * @author Samuel Assmann, Philipp Polland
  *
  * @version 1.0
  */
-
+@Deprecated
 public class ExampleTask implements Task{
     @Override
     public void requestTexture() {
