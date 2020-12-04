@@ -2,6 +2,7 @@ package de.jspll.audio;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.util.Random;
 
 /**
  * © Sekretariat-Spiel
@@ -19,13 +20,15 @@ public class AudioHandler {
         new Thread(() -> {
             File dir = new File("assets/audio/");
             files = dir.listFiles();
+            Random random = new Random();
             try {
                 if (files != null) {
-                    for (File f : files) {
-                        if (f.exists()) {
-                            System.out.println("(Play) " + f.getAbsolutePath());
+                    while (true){
+                        int rand = random.nextInt(files.length);
+                        if (files[rand].exists()) {
+                            System.out.println("(Play) " + files[rand].getAbsolutePath());
 
-                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f);
+                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(files[rand]);
                             Clip clip = AudioSystem.getClip();
                             clip.open(audioInputStream);
 
