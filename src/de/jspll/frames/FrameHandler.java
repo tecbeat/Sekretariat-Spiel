@@ -32,6 +32,7 @@ public class FrameHandler {
         gameObjectHandler.setAudioHandler(audioHandler);
         //gameObjectHandler.setup();
         gameObjectHandler.switchScene(ChannelID.SCENE_LOADING);
+
     }
 
     private boolean running = true;
@@ -43,6 +44,8 @@ public class FrameHandler {
     //Logic Handler and according frame stabilizer
     private LogicHandler logicHandler;
     private FrameStabilizer frameStabilizer;
+
+    //Audio
     private AudioHandler audioHandler;
 
     public void run() {
