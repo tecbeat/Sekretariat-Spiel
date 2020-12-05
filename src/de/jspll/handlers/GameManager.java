@@ -478,7 +478,7 @@ public class GameManager extends GameObject {
                 TaskHolder thStudentCard = new TaskHolder("studentcard" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1760),
                         new Dimension(32, 16),
-                        new CommonTask("Stundierendenausweise austeilen", "Studierendenausweise schreddern",
+                        new CommonTask("Studierendenausweise austeilen", "Studierendenausweise schreddern",
                                 new StudentCardReaction(), statManager), 65);
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
