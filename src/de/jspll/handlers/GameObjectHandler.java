@@ -165,7 +165,10 @@ public class GameObjectHandler{
     }
 
     public void dispatch(ChannelID target, String scope, Object[] input) {
-        for (GameObject object : channels[target.valueOf()].allValuesAfter(scope)) {
+        ArrayList<GameObject> targets = channels[target.valueOf()].allValuesAfter(scope);
+        if(targets == null)
+            return;
+        for (GameObject object : targets) {
             object.call(input);
         }
     }

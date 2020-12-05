@@ -20,7 +20,7 @@ public class GameTrie {
 
     private ArrayList<GameTrie> tries = new ArrayList<>();
 
-    public GameObject find(String key){
+    public synchronized GameObject find(String key){
         if(key.contentEquals("")){
             return value;
         } else {
@@ -32,7 +32,7 @@ public class GameTrie {
         }
     }
 
-    public GameTrie findTrie(String key){
+    public synchronized GameTrie findTrie(String key){
         if(key.contentEquals("")){
             return this;
         } else {
@@ -44,7 +44,7 @@ public class GameTrie {
         }
     }
 
-    public GameTrie insert(String key, GameObject value){
+    public synchronized GameTrie insert(String key, GameObject value){
         if(key.contentEquals("")){
             this.value = value;
         } else {
@@ -60,11 +60,11 @@ public class GameTrie {
         return this;
     }
 
-    public boolean isEmpty(){
+    public synchronized boolean isEmpty(){
         return value == null && chars.size() == 0 && tries.size() == 0;
     }
 
-    public GameTrie delete(String key){
+    public synchronized GameTrie delete(String key){
         if(key.contentEquals("")){
             this.value = null;
             return this;
@@ -83,7 +83,7 @@ public class GameTrie {
         return this;
     }
 
-    private void _allValues(ArrayList<GameObject> collector){
+    private synchronized void _allValues(ArrayList<GameObject> collector){
         if(value != null){
             collector.add(value);
         }
@@ -92,24 +92,28 @@ public class GameTrie {
         }
     }
 
-    public ArrayList<GameObject> allValues(){
+    public synchronized ArrayList<GameObject> allValues(){
         ArrayList<GameObject> values = new ArrayList<>();
         _allValues(values);
         return values;
     }
 
 
-    public void dropAll(){
+    public synchronized void dropAll(){
         value = null;
         chars = new ArrayList<>();
         tries = new ArrayList<>();
     }
 
-    public ArrayList<GameObject> allValuesAfter( String prefix){
-        return findTrie(prefix).allValues();
+    public synchronized ArrayList<GameObject> allValuesAfter( String prefix){
+        GameTrie tmp = findTrie(prefix);
+        if(tmp != null){
+            return tmp.allValues();
+        }
+        return null;
     }
 
-    private void _allKeys(ArrayList<String> collector, String prefix){
+    private synchronized void _allKeys(ArrayList<String> collector, String prefix){
         if(value != null){
             collector.add(prefix);
         }
@@ -118,13 +122,13 @@ public class GameTrie {
         }
     }
 
-    public ArrayList<String> allKeys(@Nullable String prefix){
+    public synchronized ArrayList<String> allKeys(@Nullable String prefix){
         ArrayList<String> keys = new ArrayList<>();
         _allKeys(keys,prefix);
         return keys;
     }
 
-    private ArrayList<String> _findSuffix(@Nullable String s, String prefix){
+    private synchronized ArrayList<String> _findSuffix(@Nullable String s, String prefix){
         if(s == null || s.contentEquals("")){
             return allKeys(prefix);
         }
@@ -137,7 +141,7 @@ public class GameTrie {
         return suffix;
     }
 
-    public ArrayList<String> findSuffix( String prefix){
+    public synchronized ArrayList<String> findSuffix( String prefix){
         return _findSuffix(prefix,prefix);
     }
 

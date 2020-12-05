@@ -167,6 +167,8 @@ public class TaskHolder extends TexturedObject {
 
         if (task != null) {
             if (currStage == ChannelID.getbyID(ChannelID.OVERLAY.valueOf()) && task.isActive()) {
+                if(!task.isLoaded())
+                    task.loadTextures();
                 task.paint(g, elapsedTime, camera, currStage);
                 return;
             }

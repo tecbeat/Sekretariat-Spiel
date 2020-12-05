@@ -27,6 +27,27 @@ public class PaintingUtil {
         g.fillOval( (int)  (x - radius),(int)(y - radius),(int)(radius * 2),(int)(radius * 2));
     }
 
+    public static void drawPictureFromCenter(int x, int y, BufferedImage img,Graphics2D g2d, Dimension dimension){
+        x = x - dimension.width/2;
+        y = y - dimension.height/2;
+        g2d.drawImage(img,x,y,dimension.width,dimension.height,null);
+
+    }
+
+    public static void drawPictureFromCenter(Point pos, BufferedImage img,Graphics2D g2d, Dimension dimension){
+        int x = pos.x - dimension.width/2;
+        int y = pos.y - dimension.height/2;
+        g2d.drawImage(img,x,y,dimension.width,dimension.height,null);
+
+    }
+
+    public static void drawRectFromCenter(Point pos,Graphics2D g2d, Dimension dimension){
+        int x = pos.x - dimension.width/2;
+        int y = pos.y - dimension.height/2;
+        g2d.drawRect(x,y,dimension.width,dimension.height);
+
+    }
+
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_FAST);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
