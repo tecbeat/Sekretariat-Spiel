@@ -53,6 +53,7 @@ public class GameManager extends GameObject {
 
     private int level = 0;
     private float time = 0f;
+    private ArrayList<Integer> activeTaskIdentifiers = new ArrayList<>();
     private int taskCount = 0;
     private int completedTasks = 0;
     private float remainingTime;
@@ -413,30 +414,9 @@ public class GameManager extends GameObject {
         return this.remainingTime;
     }
 
-    //TODO: Not sure if we need these two
-    public ArrayList<TexturedObject> getTasksforCurrentLevel(){
-        int taskCount = getTaskCountForCurrentLevel();
-        ArrayList<TexturedObject> res = new ArrayList<>();
-        int id;
-        for (int i = 0; i < taskCount ; i++){
-            TexturedObject task = getRandomTask();
-            if(!res.contains(task)){
-                res.add(task);
-            } else {
-                i--;
-            }
-        }
-
-        return res;
+    public void removeTaskFromActiveList(){
+        activeTaskIdentifiers.remove(0);
     }
-
-    private void addAllTasksToCurrentLevel(){
-        ChannelID scene = gameObjectHandler.getActiveScene();
-        for(TexturedObject object : getTasksforCurrentLevel()){
-            gameObjectHandler.loadTask(scene, object);
-        }
-    }
-    //End T O D O
 
     int instanceCount = 0;
 
@@ -444,11 +424,23 @@ public class GameManager extends GameObject {
      * @return one random task
      */
     private TexturedObject getRandomTask(){
-        int id = randomGenerator.nextInt(10);
+        final int NPC_ID = 3;
 
-        if(getParent().isInternetTaskDone()) {
-            id = randomGenerator.nextInt(6);
-        }
+        int attemptCount = 0; //if there are no tasks available add an npc
+
+        int id;
+        do {
+            id = randomGenerator.nextInt(10);
+
+            if (getParent().isInternetTaskDone()) {
+                id = randomGenerator.nextInt(6);
+            }
+            attemptCount++;
+            if(attemptCount > 30)
+                id = NPC_ID;
+        } while (!(!(activeTaskIdentifiers.contains(id)) || id == NPC_ID));
+        if(id != NPC_ID)
+            activeTaskIdentifiers.add(id);
         instanceCount++;
 
         switch (id){
@@ -474,8 +466,8 @@ public class GameManager extends GameObject {
                 thCourses.setListener(gameObjectHandler);
                 return thCourses;
 
-            case 3:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC" + instanceCount, "g.dflt.TaskHolder",
+            case NPC_ID:
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
                         new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65));

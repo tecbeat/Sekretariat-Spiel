@@ -111,9 +111,11 @@ public class TaskHolder extends TexturedObject {
         if(initTime == 0){
             initTime = getParent().getGameManager().getRemainingTime();
         }
-        if((initTime - DURATION) > getParent().getGameManager().getRemainingTime()){
+        if((initTime - DURATION) > getParent().getGameManager().getRemainingTime() && active){
             task.deActivate();
             active = false;
+            if(!(task instanceof NPCTask))
+                getParent().getGameManager().removeTaskFromActiveList();
         }
 
         return 0;

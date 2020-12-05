@@ -262,6 +262,7 @@ public class NPCTask extends GameObject implements Task {
     }
 
     public String getName(){
-        return "NPC";
+        String holderID = getHolder().getID();
+        return holderID.substring(holderID.indexOf(":")+1);
     }
 }

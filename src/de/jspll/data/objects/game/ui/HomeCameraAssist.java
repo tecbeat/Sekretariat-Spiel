@@ -27,12 +27,13 @@ public class HomeCameraAssist extends GameObject {
         mapHeight = mh;
         mapWidth = mw;
         zoom = z;
+
+        channels = new ChannelID[]{ChannelID.UI};
     }
 
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        //super.paint(g, elapsedTime, camera, currStage);
         camera.instantlyCenterToPos(mapWidth/3, mapHeight/3);
         camera.instantlyZoom(zoom);
     }

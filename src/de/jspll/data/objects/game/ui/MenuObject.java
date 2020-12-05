@@ -40,8 +40,8 @@ public class MenuObject extends GameObject {
                     camera.applyZoom((int) dimension.getHeight()));
         }
 
-        g.setColor(Color.WHITE);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 24));
+        g.setColor(Color.WHITE);
         g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
 
 
