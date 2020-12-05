@@ -465,14 +465,6 @@ public class GameManager extends GameObject {
                         new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager, new String[]{"/assets/task/image/phone_pic","/assets/task/image/phone_drag"}), 65);
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
-            case 2:
-                TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
-                        new Point(2320, 1778),
-                        new Dimension(32, 16),
-                        new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager, new String[]{"/assets/task/image/course_pic","/assets/task/image/course_drag"}), 65);
-                thCourses.setListener(gameObjectHandler);
-                return thCourses;
-
             case NPC_ID:
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
@@ -481,6 +473,7 @@ public class GameManager extends GameObject {
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
+
             case 4:
                 TaskHolder thStudentCard = new TaskHolder("studentcard" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1760),
@@ -518,12 +511,12 @@ public class GameManager extends GameObject {
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
             case 9:
-                TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
-                        new Point(1638, 2295),
+                TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(2320, 1778),
                         new Dimension(32, 16),
-                        new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
-                thGrades.setListener(gameObjectHandler);
-                return thGrades;
+                        new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager, new String[]{"/assets/task/image/course_pic","/assets/task/image/course_drag"}), 65);
+                thCourses.setListener(gameObjectHandler);
+                return thCourses;
             default:
                 return null;
         }
@@ -531,52 +524,5 @@ public class GameManager extends GameObject {
 
     public void setRemainingTime(float remainingTime) {
         this.remainingTime = remainingTime;
-    }
-
-    private ArrayList<TexturedObject> tempTaskContainer(){
-
-        ArrayList<TexturedObject> result = new ArrayList<>();
-
-        TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
-                new Point(622,2090),
-                new Dimension(32,16),
-                new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
-        thMail.setListener(gameObjectHandler);
-        result.add(thMail);
-
-        TaskHolder thGrades = new TaskHolder("grades", "g.dflt.TaskHolder",
-                new Point(1638, 2295),
-                new Dimension(32, 16),
-                new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
-        thGrades.setListener(gameObjectHandler);
-        result.add(thGrades);
-
-        TaskHolder thPhone = new TaskHolder("phone", "g.dflt.TaskHolder",
-                new Point(3105, 440),
-                new Dimension(32, 16),
-                new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
-        thPhone.setListener(gameObjectHandler);
-        result.add(thPhone);
-
-        TaskHolder thCourses = new TaskHolder("courses", "g.dflt.TaskHolder",
-                new Point(2320, 1778),
-                new Dimension(32, 16),
-                new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
-        thCourses.setListener(gameObjectHandler);
-        result.add(thCourses);
-
-        TaskHolder thCoursePlan = new TaskHolder("courseplan", "g.dflt.TaskHolder",
-                new Point(1818, 455),
-                new Dimension(32, 16),
-                new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
-        thCoursePlan.setListener(gameObjectHandler);
-        result.add(thCoursePlan);
-
-        Player testNPC = new NPC("NPC", "g.ntt.NPC", ColorScheme.BLUE);
-        testNPC.setListener(gameObjectHandler);
-
-        result.add(testNPC);
-
-        return result;
     }
 }
