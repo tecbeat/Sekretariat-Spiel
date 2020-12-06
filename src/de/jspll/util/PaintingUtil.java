@@ -1,7 +1,5 @@
 package de.jspll.util;
 
-import com.sun.javafx.scene.paint.GradientUtils;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -9,7 +7,7 @@ import java.awt.image.BufferedImage;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
@@ -60,12 +58,13 @@ public class PaintingUtil {
         return dimg;
     }
 
-    public static void paintArrow(Graphics2D g, Point arrowOrigin, Point arrowTip, Color borderColor, Color fillColor){
+    public static void paintArrow(Graphics2D g, Point arrowOrigin, Point arrowTip, Color borderColor, Color fillColor, double arrlength){
         Vector2D vecP1toP2 = new Vector2D(arrowOrigin,arrowTip);
+        arrowOrigin = vecP1toP2.normalize().scale(-arrlength).updatePos(new Point(arrowTip));
         double length = vecP1toP2.euclideanDistance();
         double sideMod = 0.3;
         double dentMod = 0.1;
-        Vector2D vecToSide = new Vector2D(vecP1toP2).normalize().instanceRotate(Math.PI * 0.5d).instanceScale(length * sideMod);
+        Vector2D vecToSide = new Vector2D(vecP1toP2).instanceNormalize().instanceRotate(Math.PI * 0.5d).instanceScale(length * sideMod);
         Point dentPos = vecP1toP2.scale(1/length).scale(length * dentMod).updatePos(new Point(arrowOrigin));
         Point rightPos = vecToSide.updatePos(new Point(arrowOrigin));
         Point leftPos = vecToSide.instanceScale(-1).updatePos(new Point(arrowOrigin));
@@ -86,4 +85,6 @@ public class PaintingUtil {
 
 
     }
+
+
 }

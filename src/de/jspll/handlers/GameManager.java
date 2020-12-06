@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker, Laura Schmidt
+ * @author Lukas Becker, Laura Schmidt, Philipp Polland
  *
  * @version 1.0
  */
@@ -59,6 +59,7 @@ public class GameManager extends TexturedObject {
     private int taskCount = 0;
     private int completedTasks = 0;
     private float remainingTime;
+    private boolean firstUpdate;
 
     // mouse properties
     private boolean mousedown;
@@ -80,13 +81,16 @@ public class GameManager extends TexturedObject {
     // 0-2: path to textures for pause-screen, 3-15: path textures for round-screen
     private String[] textureKeys;
     private BufferedImage[] textures;
-    private boolean texturesLoaded = false;
+    private int instanceCount = 0;
+    private String[][] npc_textures = new String[][]{new String[]{"/assets/task/image/student_interakt"},new String[]{"/assets/task/image/prof_interakt"}};
 
+
+    private boolean texturesLoaded = false;
 
     public GameManager(GameObjectHandler gameObjectHandler){
         this.gameObjectHandler = gameObjectHandler;
         setTextureKeys();
-        channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.UI};
+        channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.LAST_LAYER};
     }
 
     /**
@@ -98,6 +102,12 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public char update(float elapsedTime) {
+        if(firstUpdate && ROUND_TIME - remainingTime > 5){
+            for(int i = 0; i< BASE_TASKS; i++)
+                addTaskToCurrentLevel();
+            firstUpdate = false;
+        }
+
         if(gameRunning) {
 
             if(player == null){
@@ -152,7 +162,6 @@ public class GameManager extends TexturedObject {
     private void pauseForbiddenEnd() {
         pauseForbiddenScreen = false;
         gameObjectHandler.subscribe(player, ChannelID.LOGIC);
-        //TODO: WHY do I need this??
         gameObjectHandler.loadStatManager(statManager);
     }
 
@@ -208,13 +217,13 @@ public class GameManager extends TexturedObject {
         return statManager;
     }
 
+
     /**
      * @return TaskCount calculated by balancing constants
      */
     private int getTaskCountForCurrentLevel(){
         return BASE_TASKS + (level * TASKS_PER_LEVEL);
     }
-
 
     /**
      * @return Completion Percentage
@@ -240,13 +249,13 @@ public class GameManager extends TexturedObject {
         gameObjectHandler.loadTask(scene, task);
     }
 
+
     /**
      * Increase counter to keep track for when the game ends
      */
     public void taskCompleted(){
         this.completedTasks++;
     }
-
 
     /**
      * Increments level, starts task addition, resets time, task count and karma
@@ -258,9 +267,8 @@ public class GameManager extends TexturedObject {
         this.taskCount = 0;
         this.completedTasks = 0;
         this.activeTaskIdentifiers = new ArrayList<>();
+        firstUpdate = true;
         statManager.resetKarma();
-        for(int i = 0; i< BASE_TASKS; i++)
-            addTaskToCurrentLevel();
         //Level Loading resets the ui channel, so the statManager needs to get loaded again
         gameObjectHandler.loadStatManager(statManager);
     }
@@ -286,7 +294,6 @@ public class GameManager extends TexturedObject {
         gameObjectHandler.subscribe(player, ChannelID.LOGIC);
         gameRunning = true;
         pauseScreen = false;
-        //TODO I have no idea why this is needed:
         gameObjectHandler.loadStatManager(statManager);
     }
 
@@ -473,14 +480,12 @@ public class GameManager extends TexturedObject {
      */
     private void checkClick(){
         if(getMousePressed()) {
-            if(checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])){
-                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD){
+            if(checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
+                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD) {
                     gameObjectHandler.loadNextLevel();
                 } else {
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
-
-
                 resultScreen = false;
             }
             if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
@@ -493,6 +498,20 @@ public class GameManager extends TexturedObject {
     private boolean getMousePressed(){
         return mouseClicked.get();
     }
+
+    @Override
+    public boolean isTextureLoaded() {
+        if (textureKeys == null)
+            return true;
+        if (textures == null)
+            return false;
+        for (BufferedImage i : textures) {
+            if (i == null)
+                return false;
+        }
+        return true;
+    }
+
 
     private void setTextureKeys() {
         textureKeys = new String[]{
@@ -513,19 +532,6 @@ public class GameManager extends TexturedObject {
                 "/assets/screen/round/penta11",
                 "/assets/screen/round/penta12",
         };
-    }
-
-    @Override
-    public boolean isTextureLoaded() {
-        if (textureKeys == null)
-            return true;
-        if (textures == null)
-            return false;
-        for (BufferedImage i : textures) {
-            if (i == null)
-                return false;
-        }
-        return true;
     }
 
     public void loadTextures() {
@@ -570,8 +576,6 @@ public class GameManager extends TexturedObject {
     public void removeTaskFromActiveList(){
         activeTaskIdentifiers.remove(0);
     }
-
-    int instanceCount = 0;
 
     /**
      * @return one random task
@@ -622,10 +626,11 @@ public class GameManager extends TexturedObject {
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case NPC_ID:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(randomGenerator.nextInt(3)+2), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
-                        new Dimension(32, 16),
-                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
+                        new Dimension(32, 48),
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager,instanceCount % 2 == 0 , npc_textures[instanceCount%2]), 65, false),
+                        NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
@@ -635,21 +640,24 @@ public class GameManager extends TexturedObject {
                         new Point(1280, 1760),
                         new Dimension(32, 16),
                         new CommonTask("Studierendenausweise austeilen", "Studierendenausweise schreddern",
-                                new StudentCardReaction(), statManager), 65);
+                                new StudentCardReaction(), statManager,
+                                new String[]{"/assets/task/image/id_pic","/assets/task/image/id_drag"}), 65);
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
             case 5:
                 TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2430, 2335),
                         new Dimension(32, 16),
-                        new CommonTask("Feierabend machen", new EOBReaction(), statManager), 65);
+                        new CommonTask("Feierabend machen", new EOBReaction(), statManager,
+                                new String[]{"/assets/task/image/eob_pic","/assets/task/image/eob_drag"}), 65);
                 thEOB.setListener(gameObjectHandler);
                 return thEOB;
             case 6:
                 TaskHolder thInternet = new TaskHolder("internet" + instanceCount, "g.dflt.TaskHolder",
                         new Point(750, 656),
                         new Dimension(32, 16),
-                        new CommonTask("Internet löschen", new InternetReaction(), statManager), 65);
+                        new CommonTask("Internet löschen", new InternetReaction(), statManager,
+                                new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65);
                 thInternet.setListener(gameObjectHandler);
                 return thInternet;
             case 7:
@@ -664,7 +672,8 @@ public class GameManager extends TexturedObject {
                 TaskHolder thEMail = new TaskHolder("email" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2750, 1536),
                         new Dimension(32, 16),
-                        new CommonTask("Mails löschen", new EMailReaction(), statManager), 65);
+                        new CommonTask("Mails löschen", new EMailReaction(), statManager,
+                                new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65);
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
             case 9:

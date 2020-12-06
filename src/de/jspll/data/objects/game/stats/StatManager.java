@@ -16,7 +16,6 @@ import java.util.HashMap;
  *
  * @version 1.0
  */
-
 public class StatManager extends TexturedObject {
 
     private Integer gameScore;
@@ -75,7 +74,7 @@ public class StatManager extends TexturedObject {
         int height = 130;
         if(activeTasks != null)
             height = 130 + activeTasks.size() * 25;
-        // TODO: prettify
+
         g.setColor(Color.WHITE);
         g.fillRect(camera.getWidth() - 250, 0, camera.getWidth(), height);
 
@@ -125,7 +124,6 @@ public class StatManager extends TexturedObject {
             activeTasks = new HashMap<>();
             getParent().dispatch(ChannelID.LOGIC, new Object[]{"getTask"});
         }
-
         return 0;
     }
 

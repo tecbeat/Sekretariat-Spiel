@@ -14,13 +14,13 @@ import java.util.concurrent.atomic.AtomicLong;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class InputHandler implements MouseInputListener, MouseWheelListener, KeyListener {
-    private String[] keyList = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "w", "a", "s", "d", "q", "e", "p", "r", "+", "-", "ESC", "CTRL", "SHIFT", "ALT", "TAB", "CAPS", "ENTER"};
-    private LogicHandler parent; // ToDo: Parent Kruse fix
+    private String[] keyList = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "w", "a", "s", "d",
+            "q", "e", "p", "r", "+", "-", "ESC", "CTRL", "SHIFT", "ALT", "TAB", "CAPS", "ENTER"};
+    private LogicHandler parent;
     private AtomicLong wheelMovement = new AtomicLong(Double.doubleToLongBits(0));
     private AtomicBoolean mouse1 = new AtomicBoolean(false);
     private AtomicBoolean mouse2 = new AtomicBoolean(false);
@@ -75,7 +75,8 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
         typingQueue.clear();
         this.clicks.clear();
         wheelMovement.set(0);
-        return new Object[]{"input", mouse1.get(), mouse2.get(), mouse3.get(), keyMap, new int[]{mousePos.get(0), mousePos.get(1)}, keyList, mousewheelMovement, keyStrokes, clicks};
+        return new Object[]{"input", mouse1.get(), mouse2.get(), mouse3.get(), keyMap,
+                new int[]{mousePos.get(0), mousePos.get(1)}, keyList, mousewheelMovement, keyStrokes, clicks};
     }
 
     /**
@@ -206,7 +207,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
     public void mouseWheelMoved(MouseWheelEvent e) {
         wheelMovement.set(Double.doubleToLongBits(Double.longBitsToDouble(wheelMovement.get()) + e.getPreciseWheelRotation()));
     }
-
 
     /**
      * Implements the keyTyped function from the interface {@code KeyListener}. <br>
@@ -387,7 +387,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
                 break;
         }
     }
-
 
     public HashMap<String, AtomicBoolean> getKeyMap() {
         return keyMap;

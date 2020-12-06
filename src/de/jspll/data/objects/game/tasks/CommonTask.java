@@ -19,12 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt, Lukas Becker, Samuel Assmann
+ * @author Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  * @version 1.0
  */
-
 public class CommonTask implements Task {
-    private final Color maskColor = new Color(0, 0, 0, 172);
     // headings
     private final String goodHeading;
     private final String badHeading;
@@ -38,6 +36,9 @@ public class CommonTask implements Task {
     private boolean countDownStarted = false;
     private iTaskReaction onSelect;
     private Point draggablePos;
+    private final Color maskColor = new Color(0, 0, 0, 172);
+    private boolean singleChoiceTask;
+
     //texture properties
     private float draggableSize = 1.6f;
     private Dimension draggableDim;
@@ -71,7 +72,6 @@ public class CommonTask implements Task {
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
-        //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
     }
 
     /**
@@ -86,13 +86,22 @@ public class CommonTask implements Task {
         this.statManager = statManager;
     }
 
-    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
+    public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
+        this.goodHeading = heading;
+        this.badHeading = "";
+        this.onSelect = onSelect;
+        this.statManager = statManager;
+        this.textureKeys = textureKeys;
+        this.singleChoiceTask = true;
+    }
+
+     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
-        //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.textureKeys = textureKeys;
+        this.singleChoiceTask = false;
     }
 
     /**
@@ -112,7 +121,6 @@ public class CommonTask implements Task {
             setUpButton(g, true);
             setUpButton(g, false);
         }
-
 
         if (!buttonLock) {
             checkClick();
@@ -139,12 +147,8 @@ public class CommonTask implements Task {
             resetDraggablePos();
         }
         g2d.drawImage(textures[0], boundingX, boundingY, boundingWidth, boundingHeight, null);
-        Rectangle btnGoodHitbox = new Rectangle(btnGoodX, btnStartY, buttonSize[0], buttonSize[1]);
-        Rectangle btnBadHitbox = new Rectangle(btnBadX, btnStartY, buttonSize[0], buttonSize[1]);
-        //g2d.setColor(Color.GREEN);
-        //g2d.fill(btnGoodHitbox);
-        //g2d.setColor(Color.RED);
-        //g2d.fill(btnBadHitbox);
+        Rectangle btnGoodHitbox = new Rectangle(btnGoodX,btnStartY,buttonSize[0],buttonSize[1]);
+        Rectangle btnBadHitbox = new Rectangle(btnBadX,btnStartY,buttonSize[0],buttonSize[1]);
 
         if (buttonLock) {
             onButtonClicked(g, camera);
@@ -154,9 +158,8 @@ public class CommonTask implements Task {
             setUpButton(g, false);
         }
 
-
-        Rectangle draggableHitbox = new Rectangle(draggablePos.x - draggableDim.width / 2,
-                draggablePos.y - draggableDim.height / 2,
+        Rectangle draggableHitbox = new Rectangle(draggablePos.x-draggableDim.width/2,
+                draggablePos.y-draggableDim.height/2,
                 draggableDim.width,
                 draggableDim.height);
         getMousePos();
@@ -175,15 +178,16 @@ public class CommonTask implements Task {
                 if (Collision.posInRect(mousePoint, btnGoodHitbox)) {
                     buttonLock = true;
                     buttonGoodClicked = true;
+                    countDown = onSelect.goodSelection(getHolder().getParent());
                     countDownStarted = true;
                 } else if (Collision.posInRect(mousePoint, btnBadHitbox)) {
                     buttonLock = true;
                     buttonGoodClicked = false;
+                    countDown = onSelect.badSelection(getHolder().getParent());
                     countDownStarted = true;
                 }
             }
         }
-
 
         PaintingUtil.drawPictureFromCenter(draggablePos, textures[1], g2d, draggableDim);
         if (Main.DEBUG) {
@@ -206,7 +210,6 @@ public class CommonTask implements Task {
      */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        //g.setFont(Font.getFont(Font.SANS_SERIF));
         // close task window when countdown is lower than 0
         if (!active) return;
         countTimerDown(elapsedTime);
@@ -229,8 +232,6 @@ public class CommonTask implements Task {
         } else {
             textBasedRender(g, elapsedTime, camera, currStage);
         }
-
-
     }
 
     /**
@@ -260,7 +261,6 @@ public class CommonTask implements Task {
             btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
             btnBadX = (boundingX + (screenWidth / 2) / 2) + 85;
         }
-
     }
 
     /**
@@ -279,7 +279,7 @@ public class CommonTask implements Task {
         if (!buttonLock) {
             g.setColor(Color.BLACK);
             String heading;
-            if (!badHeading.equals("")) {
+            if(!singleChoiceTask) {
                 heading = goodHeading + " oder " + badHeading;
             } else {
                 heading = goodHeading;
@@ -300,10 +300,10 @@ public class CommonTask implements Task {
 
         int xCoord = goodButton ? btnGoodX : btnBadX;
         String heading;
-        if (!badHeading.equals("")) {
+        if(!singleChoiceTask) {
             heading = goodButton ? goodHeading.split(" ")[1] : badHeading.split(" ")[1];
         } else {
-            heading = goodButton ? "Ja" : "Nein";
+            heading = goodButton ? goodHeading : "Abbruch";
         }
 
         g.setColor(goodButton ? Color.GREEN : Color.RED);

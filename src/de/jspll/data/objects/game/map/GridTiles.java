@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * @author Lukas Becker
  * @version 1.0
  */
-
 public class GridTiles {
     ArrayList<Double> px = new ArrayList<>();
     ArrayList<Double> src = new ArrayList<>();

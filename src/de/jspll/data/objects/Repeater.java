@@ -8,11 +8,10 @@ import static de.jspll.data.ChannelID.DISPATCH;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
-
 public class Repeater extends GameObject{
     GameObjectHandler reciever;
     public Repeater(String ID,GameObjectHandler reciever) {

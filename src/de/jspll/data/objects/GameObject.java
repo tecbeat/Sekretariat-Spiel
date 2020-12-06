@@ -18,18 +18,16 @@ import static de.jspll.data.ChannelID.INPUT;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Philipp Polland
  *
  * @version 1.0
  */
-
 public class GameObject implements Drawable, Interactable {
 
     //InstanceSpecific ID: i.e 1
     protected String ID;
     //ID that is specific for this class: i.e g.ntt.Player
     private String objectID;
-
 
     protected boolean active = true;
     protected int x = 0;
@@ -39,7 +37,6 @@ public class GameObject implements Drawable, Interactable {
     private HashMap<String, Integer> keyPressedMap = new HashMap<>(100);
 
     private GameObjectHandler parent;
-
 
     public GameObject() {
 
@@ -194,7 +191,6 @@ public class GameObject implements Drawable, Interactable {
      *       return 0;
      *   }
      **/
-
     @Override
     public char call(Object[] input) {
         if (input == null || input.length < 1) {
@@ -206,7 +202,6 @@ public class GameObject implements Drawable, Interactable {
                 active = true;
             }
         }
-
         return 0;
     }
 

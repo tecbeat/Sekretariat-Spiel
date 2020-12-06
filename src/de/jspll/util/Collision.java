@@ -8,7 +8,7 @@ import java.awt.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
@@ -40,7 +40,6 @@ public class Collision {
     public static Point findLineLineIntersection(Point line1start, Point line1end, Point line2start, Point line2end)
     {
 
-        //Line a, Line b
         float x1 = line1start.x;
         float y1 = line1start.y;
         float x2 = line1end.x;
@@ -62,26 +61,6 @@ public class Collision {
         float py = yNominator / denominator;
 
         return new Point(Math.round(px), Math.round(py));
-
-
-//        // Get Gradient of first line - points : line1start to line1end
-//        float dy1 = line1end.y-line1start.y;
-//        float dx1 = line1start.x-line1end.x;
-//        // Get Gradient of second line - points : line2start to line2end
-//        float dy2 = line2end.y-line2start.y;
-//        float dx2 = line2start.x-line2end.x;
-//
-//        // Get delta and check if the lines are parallel
-//        float delta = dy1*dx2 - dy2*dx1;
-//        if(delta == 0) return null;
-//
-//        // Get C of first and second lines
-//        float c2 = dy2*(float)line2start.x+dx2*(float)line2start.y;
-//        float c1 = dy1*(float)line1start.x+dx1*(float)line1start.y;
-//        //invert delta to make division cheaper
-//        float invdelta = 1/delta;
-//        // now return the Vector2 intersection point
-//        return new Point(  Math.round((dx2*c1 - dx1*c2)*invdelta),  Math.round((dy1*c2 - dy2*c1)*invdelta) );
     }
 
     //rec in form [ x, y, width, height ]
@@ -126,7 +105,6 @@ public class Collision {
                     rightTile = (relX + collidableWidth) / tileWidth,
                     topTile = relY / tileHeight,
                     bottomTile = (relY + collidableHeight) / tileHeight;
-            //collisionMap[x][y] == 0 -> not passable;
 
             int[] newPlayerPos = new int[]{relX,
                     relY,
@@ -146,7 +124,6 @@ public class Collision {
             }
 
 
-            //Logger.d.add("playerTile x=" + playerTileX + " y=" + playerTileY);
 
 
         }

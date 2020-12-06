@@ -12,7 +12,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class ButtonObject extends MenuObject {
     private boolean mousedown;
     private int[] mousePos = new int[2];
@@ -22,14 +21,12 @@ public class ButtonObject extends MenuObject {
 
     }
 
-
     public ButtonObject(String ID, String objectID, int x, int y, Dimension dimension, String text, boolean border) {
         super(ID, objectID, x, y, dimension, text, border);
     }
 
     @Override
     public char call(Object[] input) {
-
         super.call(input);
         if(input == null || input.length < 1){
             return 0;
@@ -45,14 +42,11 @@ public class ButtonObject extends MenuObject {
                 mousePos[1] = pos[1];
             }
         }
-
         return 0;
     }
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        //super.paint(g, elapsedTime, camera, currStage);
-
         g.setColor(Color.BLUE);
         if(border){
             if(checkHover()){
@@ -67,8 +61,6 @@ public class ButtonObject extends MenuObject {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 22));
         g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
-
-
     }
 
     protected boolean checkHover(){
@@ -82,7 +74,5 @@ public class ButtonObject extends MenuObject {
 
     protected boolean checkClick(){
         return mousedown && checkHover();
-
     }
-
 }

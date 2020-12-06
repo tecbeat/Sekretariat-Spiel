@@ -8,12 +8,10 @@ import java.awt.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
-
-//used for rerouting drawing method
 public class Slate extends JPanel {
     private GraphicsHandler parent;
     public Slate(GraphicsHandler parent){

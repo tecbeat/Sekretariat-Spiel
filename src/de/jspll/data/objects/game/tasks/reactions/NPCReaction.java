@@ -13,7 +13,6 @@ import de.jspll.handlers.GameObjectHandler;
  * @version 1.0
  */
 public class NPCReaction implements iTaskReaction {
-    // TODO: add logic
     @Override
     public int goodSelection(GameObjectHandler gOH) {
         return 10;

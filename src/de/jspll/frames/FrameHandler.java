@@ -12,11 +12,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Samuel Assmann
+ * @author Philipp Polland
  *
  * @version 1.0
  */
-
 public class FrameHandler {
 
     public FrameHandler(String title, Dimension size) {
@@ -32,7 +31,6 @@ public class FrameHandler {
         gameObjectHandler.setAudioHandler(audioHandler);
         //gameObjectHandler.setup();
         gameObjectHandler.switchScene(ChannelID.SCENE_LOADING);
-
     }
 
     private boolean running = true;
@@ -50,12 +48,7 @@ public class FrameHandler {
 
     public void run() {
         //start stabilizers
-
         frameStabilizer.start();
-
-        //while (running){
-            //Keep main thread running
-        //}
     }
 
     public GameObjectHandler getGameObjectHandler() {

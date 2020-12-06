@@ -41,7 +41,7 @@ frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
         objects.add(mo);
         mo = new SceneSwitchButton("Credits", "de.jspll.data.objects.game.ui.MenuObject", width/2,height/3+50,new Dimension(120,20), "Credits", true, ChannelID.SCENE_3, "/scenes/Credits.json");
         objects.add(mo);
-        semiTransparentBackground stb = new semiTransparentBackground("BG", "de.jspll.data.objects.game.ui.semiTransparentBackground", width/2+100, height/3 -40, new Dimension(450, 200));
+        semiTransparentBackground stb = new semiTransparentBackground("BG", "de.jspll.data.objects.game.ui.SemiTransparentBackground", width/2+100, height/3 -40, new Dimension(450, 200));
         objects.add(stb);
 
 
@@ -55,6 +55,30 @@ frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
         frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_1);*/
 
 //End of Home_Screen Conversion
+
+        /*
+        //debugging start
+        ArrayList<Object> objects = new ArrayList<>();
+        Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
+        objects.add(p);
+
+        TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Home_Screen.json");
+        for(TileMap tm : tms)
+            objects.add(tm);
+
+        String jsonStr = JSONSupport.convertObjectsToJson(objects);
+
+        ResourceHandler rh = frameHandler.getGameObjectHandler().getResourceHandler();
+        rh.jsonStrToFile(jsonStr, "C:\\Users\\Lukas\\Desktop\\Temp\\Game.json");
+
+
+        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
+
+
+        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jsonArray);
+        frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
+        debugging end
+        */
 
 
         //EditorHandler test = new EditorHandler("dev1", "devtools", new Dimension(200, 700));

@@ -9,7 +9,6 @@ import java.awt.*;
  * @author Lukas Becker
  * @version 1.0 Samuel Assmann
  */
-
 public enum NPCSpawnPosition {
     POS_1(0,new Point(1100, 1120)),
     POS_2(1,new Point(1351, 565)),
@@ -18,11 +17,13 @@ public enum NPCSpawnPosition {
     POS_5(4,new Point(3121, 1265)),
     POS_6(5,new Point(2912, 2481)),
     POS_7(6,new Point(603, 1530)),
+    POS_8(7,new Point(2289, 758)),
     ;
 
     private final int id;
     private final Point point;
-    private NPCSpawnPosition(int id, Point point) {
+
+    NPCSpawnPosition(int id, Point point) {
         this.id = id;
         this.point = point;
     }

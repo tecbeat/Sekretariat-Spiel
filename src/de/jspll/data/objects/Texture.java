@@ -13,11 +13,10 @@ import java.util.HashMap;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
-
 public class Texture {
 
     protected Point pos;
@@ -45,7 +44,6 @@ public class Texture {
     public Texture(){
 
     }
-
 
     protected void loadTextures() {
         if(loaded)
@@ -109,7 +107,6 @@ public class Texture {
     public GameObject getParent() {
         return parent;
     }
-
 
     public GameObject getParent(GameObject gO) {
         parent = gO;

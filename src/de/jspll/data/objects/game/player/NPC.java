@@ -12,12 +12,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Jonas Sperling, Lukas Becker
+ * @author Jonas Sperling, Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class NPC extends Player {
-
 
     private final String[] keyList = new String[]{"w", "a", "s", "d", "q", "SHIFT"};
     double sumTime = 0;
@@ -44,7 +42,6 @@ public class NPC extends Player {
         referenceSpeed = 80f;
         resetKeyMap();
         this.task = task;
-
     }
 
     /**
@@ -69,6 +66,7 @@ public class NPC extends Player {
     public char update(float elapsedTime) {
         if (firstUpdateCall) {
             getParent().loadTask(ChannelID.SCENE_GAME, task);
+            getParent().dispatch(ChannelID.LOGIC, "g.dflt.TileMap:Collision", new Object[]{"npcPos" + getID(), pos, dimension});
             firstUpdateCall = false;
         }
 

@@ -10,11 +10,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Philipp Polland
  *
  * @version 1.0
  */
-
 public class LoadingBar extends GameObject {
 
     public LoadingBar(ProgressReporter progressReporter){
@@ -65,7 +64,6 @@ public class LoadingBar extends GameObject {
         int screenWidth = (int) g2d.getClipBounds().getWidth();
         int screenHeight = (int) g2d.getClipBounds().getHeight();
         int x = screenWidth / 4;
-        //int y = screenHeight / 2 - screenHeight / 10;
         int y = screenHeight / 10 * 8;
         int height = 50;
         int fullWidth = screenWidth / 2;
@@ -85,6 +83,5 @@ public class LoadingBar extends GameObject {
             g2d.setColor(Color.CYAN);
             g2d.drawString(message.get(),x + 5,y+(height * 3/5));
         }
-
     }
 }

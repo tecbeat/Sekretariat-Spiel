@@ -13,7 +13,6 @@ import de.jspll.data.objects.game.map.Layer;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.ui.MenuObject;
 import de.jspll.data.objects.loading.LoadingBar;
-import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
 import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
@@ -30,7 +29,7 @@ import static de.jspll.data.ChannelID.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker, Samuel Assmann
+ * @author Lukas Becker, Samuel Assmann, Philipp Polland
  *
  * @version 1.0
  */
@@ -57,16 +56,6 @@ public class GameObjectHandler{
         resourceHandler.start();
 
         loadObject(gameManager);
-    }
-
-    public void setup(){
-        ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
-        loadingSceneBuilder.add(new LoadingCircle("LdC","system.loading",
-                getGraphicsHandler().getWindow().getWidth() / 2,
-                getGraphicsHandler().getWindow().getHeight() / 2,
-                20, 150,new Dimension(40,40)));
-
-        loadScene(SCENE_LOADING,loadingSceneBuilder);
     }
 
     public void switchScene(ChannelID newScene){
@@ -196,7 +185,6 @@ public class GameObjectHandler{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -334,7 +322,6 @@ public class GameObjectHandler{
                         out.add(th);
                         th.requestTexture();
                     }
-                    // TODO: Add StatManager and Tasks to JSON
                     statManager.setListener(goh);
                     out.add(statManager);
                 }
@@ -360,8 +347,6 @@ public class GameObjectHandler{
         clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
         loadScene(SCENE_GAME, file);
-        //gameManager.startGame();
-
     }
 
     public TileMap[] loadMap(String mapJson){
@@ -376,7 +361,6 @@ public class GameObjectHandler{
             int mapHeight = ((Double) levels.get("pxHei")).intValue();
 
             ArrayList<TileMap> tileMapsList = new ArrayList<>();
-            //TileMap[] tileMaps = new TileMap[layerInstances.size()-3]; //because of missing files
 
             //layers
             ArrayList<Layer> layerList = new ArrayList<>();
@@ -450,6 +434,8 @@ public class GameObjectHandler{
                                     //get texture source
                                     String src = ((String) tileset.get("relPath"));
 
+                                    System.out.println(src);
+
                                     //Because these files do not exist
                                     if(src == null || src.equals("Anwesenheit.png") || src.equals("Buttons.png")){
                                         if(src.equals("Anwesenheit.png")){
@@ -497,10 +483,13 @@ public class GameObjectHandler{
                     System.out.println("Error with " + l.getId());
                 }
                 TileMap tm;
-                if(l.getId().contains("Ausstattung") || l.getId().contains("Ausstatung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
-                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
+                if(l.getId().contains("Ausstattung") || l.getId().contains("Ausstatung") || l.getId().contentEquals("Boden2")
+                        || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight),
+                            l.getHeight(), l.getWidth(), l.getTextures(),true);
                 } else {
-                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(), false);
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight),
+                            l.getHeight(), l.getWidth(), l.getTextures(), false);
                 }
 
                 HashMap<String, Tile> tileCache = new HashMap<>();
@@ -514,7 +503,8 @@ public class GameObjectHandler{
                         tm.addTile(t);
                     }
                     int[] cord = gt.getPxArr();
-                    tm.setTileToMap(tileCache.get(key), cord[0]/tm.getDefaultTileDimension().width, cord[1]/tm.getDefaultTileDimension().height);
+                    tm.setTileToMap(tileCache.get(key), cord[0]/tm.getDefaultTileDimension().width,
+                            cord[1]/tm.getDefaultTileDimension().height);
                 }
                 tileMaps[i] = tm;
             }

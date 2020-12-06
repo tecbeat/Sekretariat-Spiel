@@ -24,7 +24,7 @@ public class InternetReaction implements iTaskReaction {
 
     @Override
     public int badSelection(GameObjectHandler gOH) {
-        return 0;
+        return 5;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class InternetReaction implements iTaskReaction {
             statManager.updateKarmaScore(-30);
             statManager.updateGameScore(-20);
             goh.setInternetTaskDone(true);
+
         }
     }
 

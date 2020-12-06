@@ -12,7 +12,7 @@ import static de.jspll.data.ChannelID.LOGIC;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
@@ -105,7 +105,6 @@ public class DisplayMover extends GameObject {
                 if (input[7] instanceof Number) {
                     mwMovement = ((Number) input[7]).floatValue();
                 }
-
             }
         }
         return 0;

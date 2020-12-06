@@ -1,4 +1,4 @@
-package de.jspll.data.objects.game.ui;
+package de.jspll.data.objects.examples;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.TexturedObject;
@@ -12,11 +12,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland
  *
  * @version 1.0
  */
-
 public class PaperList extends TexturedObject {
     public PaperList(String ID, Dimension size, Point pos) {
         super(ID, "g.ui.PaperList", pos.x, pos.y, size,new LayeredTexture("assets\\clipboard\\clipboard_",3,10,pos,size,null));
@@ -31,17 +30,14 @@ public class PaperList extends TexturedObject {
     private int[] currMousePos = new int[]{0, 0};
     private int[] previousMousePos = new int[]{0, 0};
 
-
     @Override
     public char update(float elapsedTime) {
         return super.update(elapsedTime);
-
     }
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         super.paint(g, elapsedTime, camera, currStage);
-
     }
 
     @Override
@@ -64,7 +60,6 @@ public class PaperList extends TexturedObject {
                 if (input[4] instanceof HashMap) {
                     this.keyMap = (HashMap<String, AtomicBoolean>) input[4];
                 }
-
             }
         }
 
@@ -76,7 +71,7 @@ public class PaperList extends TexturedObject {
                     y -= - getParent().getSelectedCamera().revertXTransform(currMousePos[1]) + getParent().getSelectedCamera().revertXTransform(previousMousePos[1]);
                     texture.getPos().x = x;
                     texture.getPos().y = y;
-                    }
+                }
             }
         }
         if(mouseOver(currMousePos)){
@@ -91,7 +86,6 @@ public class PaperList extends TexturedObject {
                         }
                     }
                     number_cooldowns[i]++;
-
                 } else {
                     number_cooldowns[i] = 0;
                 }
@@ -101,9 +95,6 @@ public class PaperList extends TexturedObject {
         previousMousePos[0] = currMousePos[0];
         previousMousePos[1] = currMousePos[1];
 
-
         return 0;
-
     }
-
 }
