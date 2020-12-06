@@ -317,7 +317,6 @@ public class GameManager extends TexturedObject {
                 getRightPentagram().getWidth() / 2,
                 null);
 
-        // TODO: add round information to round-screen
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.BOLD, 42));
         g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Level erfolgreich" : "Level gescheitert",
