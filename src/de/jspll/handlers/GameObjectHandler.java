@@ -355,11 +355,11 @@ public class GameObjectHandler{
     }
 
     public void loadNextLevel(){
-        clearScene(ChannelID.UI);
-        ChannelID channel = ChannelID.SCENE_GAME;
-        clearScene(channel);
+        clearScene(UI);
+        clearScene(PLAYER);
+        clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
-        loadScene(channel, file);
+        loadScene(SCENE_GAME, file);
         //gameManager.startGame();
 
     }

@@ -624,7 +624,7 @@ public class GameManager extends TexturedObject {
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
-                        new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
