@@ -30,7 +30,6 @@ public class Animation extends Texture {
     protected int frames;
     protected int selectedTexture = 0;
     protected Texture[] textures;
-    protected ArrayList<KeyPoint> path;
 
     public Animation(String baseFile, int frames, Point pos, Dimension dimension, TexturedObject parent, float duration) {
         super(baseFile, pos, dimension, parent);
@@ -67,6 +66,13 @@ public class Animation extends Texture {
         getParent(gO).getParent().getResourceHandler().requestTextureGroup(baseFile, cLength, frames, PNG);
     }
 
+    /**
+     * Draws every animation-frame one by one
+     *
+     * @param g2d         Graphics2D for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     */
     @Override
     public void draw(Graphics2D g2d, float elapsedTime, Camera camera) {
         super.draw(g2d, elapsedTime, camera);
@@ -93,19 +99,20 @@ public class Animation extends Texture {
         textures[selectedTexture % textures.length].draw(g2d, elapsedTime, camera);
     }
 
-    public void drawFrame(Graphics g, float elapsedTime, Camera camera, Point point) {
-        Graphics2D g2d = (Graphics2D) g;
 
-    }
+    /**
+     * Restart the animation in the next frame.
+     * The animation continues with the last used parameters
+     */
 
-    public void startAnimation(Boolean start) {
+    public void restartAnimation() {
         active = true;
-        if (start) {
-            current_time = 0;
-            selectedTexture = 0;
-        }
     }
 
+    /**
+     * Start the animation in the next frame.
+     * Reset the {@code current_time} and {@code selectedTexture} to 0.
+     */
     public void startAnimation() {
         active = true;
         current_time = 0;
@@ -129,28 +136,6 @@ public class Animation extends Texture {
     public void updateDuration(float duration) {
         current_time *= duration/ this.duration ;
         setDuration(duration);
-    }
-
-
-    protected class KeyPoint {
-
-        protected double timestamp;
-        protected int selectedImage;
-        protected boolean transformations;
-        protected Dimension dimension;
-
-        public KeyPoint(double timestamp, int selectedImage) {
-            this.timestamp = timestamp;
-            this.selectedImage = selectedImage;
-            this.transformations = false;
-        }
-
-        public KeyPoint(double timestamp, int selectedImage, Dimension dimension) {
-            this.timestamp = timestamp;
-            this.selectedImage = selectedImage;
-            this.transformations = true;
-            this.dimension = dimension;
-        }
     }
 
 }

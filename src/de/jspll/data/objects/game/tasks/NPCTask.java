@@ -79,6 +79,15 @@ public class NPCTask extends GameObject implements Task {
         this.files = files;
     }
 
+    /**
+     * Display the Task if {@code countDown} is not 0.
+     *
+     * @param g           Graphics to draw
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
+
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         initTaskScreen(g, camera);
@@ -144,6 +153,11 @@ public class NPCTask extends GameObject implements Task {
         g.drawString("Verbleibende Zeit: " + String.format("%2.2f",countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
     }
 
+    /**
+     * Check if all {@code textures} and {@code files} are loaded.
+     *
+     * @return true if {@code files} and all {@code textures} are loaded, else false
+     */
     @Override
     public boolean isLoaded() {
         if(files == null)
@@ -157,6 +171,10 @@ public class NPCTask extends GameObject implements Task {
         return true;
     }
 
+    /**
+     * Load all textures from {@code files} and save them in {@code textures}.<br>
+     * {@code Textures} are images based on what task it is.
+     */
     @Override
     public void loadTextures() {
         if(files == null)
@@ -169,6 +187,11 @@ public class NPCTask extends GameObject implements Task {
         }
     }
 
+    /**
+     * Get the {@code ResourceHandler} and request all {@code Textures} needed for the images.
+     *
+     * @see ResourceHandler
+     */
     public void requestTexture(){
         if (files == null)
             return;
@@ -212,11 +235,16 @@ public class NPCTask extends GameObject implements Task {
                 "} " + super.toString();
     }
 
+    /**
+     * Task will be activated and is displayed on the next frame.
+     * The type of interaction is based on the {@code KarmaScore} and what type of npc (student, professor)
+     */
     public void activate(){
         buttonLock = false;
         mouseClicked = getHolder().getParent().getLogicHandler().getInputHandler().getMouse1();
         countDown = 10;
         this.active = true;
+
 
 
 
@@ -232,10 +260,20 @@ public class NPCTask extends GameObject implements Task {
 
     }
 
+    /**
+     * Task will be deactivated
+     */
     public void deactivate(){
         active = false;
     }
 
+    /**
+     * Implement how to response when {@code CommonTask} is getting called. <br>
+     * 1. The current {@code mousePos} and {@code mousedown} are transmitted to {@code CommonTask}.
+     *
+     * @param input Array of Objects
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char call(Object[] input) {
         if (input[0] instanceof String) {

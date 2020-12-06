@@ -1,4 +1,12 @@
 package de.jspll.data.objects.game.player;
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Jonas Sperling
+ *
+ * @version 1.0
+ */
 
 public enum ColorScheme {
     RED_YELLOW(1),
