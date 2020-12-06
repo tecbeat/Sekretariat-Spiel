@@ -251,7 +251,7 @@ public class Player extends TexturedObject {
                 } else if (d) {
                     moveRight();
                 }
-                velocity.normalize();
+                velocity.instanceNormalize();
                 velocity.instanceScale(speed);
             } else {
                 idleAnimation();

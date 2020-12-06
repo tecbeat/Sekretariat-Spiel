@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Lukas Becker, Philipp Polland
- * @version 1.0 Samuel Assmann
+ * @version 1.0
  */
 
 public class TaskHolder extends TexturedObject {
@@ -41,7 +41,7 @@ public class TaskHolder extends TexturedObject {
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
-        this.channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.OVERLAY};
+        this.channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.OVERLAY, ChannelID.UI};
         this.pos = pos;
         this.task = task;
         this.radius = radius;
@@ -159,15 +159,9 @@ public class TaskHolder extends TexturedObject {
         return 0;
     }
 
-    @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        if(!active)
-            return;
-
-        super.paint(g, elapsedTime, camera, currStage);
-
+    private void paintOverlay(Graphics g, float elapsedTime, Camera camera, ChannelID currStage){
         if (task != null) {
-            if (currStage == ChannelID.getbyID(ChannelID.OVERLAY.valueOf()) && task.isActive()) {
+            if (task.isActive()) {
                 if(!task.isLoaded())
                     task.loadTextures();
                 task.paint(g, elapsedTime, camera, currStage);
@@ -179,42 +173,6 @@ public class TaskHolder extends TexturedObject {
             if (inProximity) {
                 s = g2d.getStroke();
                 g2d.setStroke(new BasicStroke(3));
-            } else {
-                //Arrow Drawing:
-                if (playerPos != null && playerDim != null) {
-                    //Defining points in gamespace
-                    Point playerCenter = new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24);
-                    Point taskHolderCenter = new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2);
-                    //convert to screenspace
-                    playerCenter.setLocation(camera.applyXTransform(playerCenter.x),camera.applyYTransform(playerCenter.y));
-                    taskHolderCenter.setLocation(camera.applyXTransform(taskHolderCenter.x),camera.applyYTransform(taskHolderCenter.y));
-                    //get vec player -> Task (screenspace)
-                    Vector2D distanceToPlayer = new Vector2D( playerCenter, taskHolderCenter );
-                    Point middle = new Point(playerCenter), destination = new Point(playerCenter);
-                    distanceToPlayer.updatePos(destination);
-                    
-                    if(distanceToPlayer.euclideanDistance() > camera.getHeight()) {
-
-                        Point rect1 = new Point(20,20);
-                        int rec1Width = camera.getWidth() - 40, rec1Height = camera.getHeight() - 40;
-                        Point coll1 = Collision.findLineRectIntersection(playerCenter,taskHolderCenter,rect1,rec1Width,rec1Height);
-
-                        Point rect2 = new Point(100,100);
-                        int rec2Width = camera.getWidth() - 200, rec2Height = camera.getHeight() - 200;
-                        Point coll2 = Collision.findLineRectIntersection(playerCenter,taskHolderCenter,rect2,rec2Width,rec2Height);
-
-
-                        PaintingUtil.paintArrow(g2d, coll2, coll1, Color.BLACK, Color.RED);
-                    }
-                    if(Main.DEBUG){
-                        g.setColor(Color.CYAN);
-                        g.drawLine(playerCenter.x, playerCenter.y,
-                                taskHolderCenter.x, taskHolderCenter.y);
-                    }
-
-                }
-
-
             }
             g2d.setColor(Color.RED);
             g2d.drawRect(camera.applyXTransform(pos.x),
@@ -237,6 +195,61 @@ public class TaskHolder extends TexturedObject {
                         camera.applyZoom(dimension.width), camera.applyZoom(dimension.height));
             }
         }
+    }
+
+    private void paintUI(Graphics g, float elapsedTime, Camera camera, ChannelID currStage){
+        if(task != null && !inProximity){
+            //Arrow Drawing:
+            if (playerPos != null && playerDim != null) {
+                Graphics2D g2d = (Graphics2D) g;
+                //Defining points in gamespace
+                Point playerCenter = new Point((playerPos.x + playerDim.width / 2), (playerPos.y + playerDim.height / 2) + 24);
+                Point taskHolderCenter = new Point(pos.x + dimension.width / 2, pos.y + dimension.height / 2);
+                //convert to screenspace
+                playerCenter.setLocation(camera.applyXTransform(playerCenter.x),camera.applyYTransform(playerCenter.y));
+                taskHolderCenter.setLocation(camera.applyXTransform(taskHolderCenter.x),camera.applyYTransform(taskHolderCenter.y));
+                //get vec player -> Task (screenspace)
+                Vector2D distanceToPlayer = new Vector2D( playerCenter, taskHolderCenter );
+                Point middle = new Point(playerCenter), destination = new Point(playerCenter);
+                distanceToPlayer.updatePos(destination);
+
+                if(distanceToPlayer.euclideanDistance() > camera.getHeight()) {
+
+                    Point rect1 = new Point(20,20);
+                    int rec1Width = camera.getWidth() - 40, rec1Height = camera.getHeight() - 40;
+                    Point coll1 = Collision.findLineRectIntersection(playerCenter,taskHolderCenter,rect1,rec1Width,rec1Height);
+
+                    Point rect2 = new Point(100,100);
+                    int rec2Width = camera.getWidth() - 200, rec2Height = camera.getHeight() - 200;
+                    Point coll2 = Collision.findLineRectIntersection(playerCenter,taskHolderCenter,rect2,rec2Width,rec2Height);
+
+
+                    PaintingUtil.paintArrow(g2d, coll2, coll1, Color.BLACK, Color.RED,100);
+                }
+                if(Main.DEBUG){
+                    g.setColor(Color.CYAN);
+                    g.drawLine(playerCenter.x, playerCenter.y,
+                            taskHolderCenter.x, taskHolderCenter.y);
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        if(!active)
+            return;
+
+        super.paint(g, elapsedTime, camera, currStage);
+
+        if(currStage.valueOf() == ChannelID.OVERLAY.valueOf()){
+            paintOverlay(g, elapsedTime, camera, currStage);
+        } else if(currStage.valueOf() == ChannelID.UI.valueOf()){
+            paintUI(g, elapsedTime, camera, currStage);
+        }
+
+
     }
 
     public void setPos(Point pos) {

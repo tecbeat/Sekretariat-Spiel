@@ -13,7 +13,6 @@ import de.jspll.data.objects.game.map.Layer;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.ui.MenuObject;
 import de.jspll.data.objects.loading.LoadingBar;
-import de.jspll.data.objects.loading.LoadingCircle;
 import de.jspll.data.objects.loading.ProgressReporter;
 import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
@@ -30,7 +29,7 @@ import static de.jspll.data.ChannelID.*;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker, Samuel Assmann
+ * @author Lukas Becker, Samuel Assmann, Philipp Polland
  *
  * @version 1.0
  */
@@ -59,15 +58,6 @@ public class GameObjectHandler{
         loadObject(gameManager);
     }
 
-    public void setup(){
-        ArrayList<GameObject> loadingSceneBuilder = new ArrayList<>();
-        loadingSceneBuilder.add(new LoadingCircle("LdC","system.loading",
-                getGraphicsHandler().getWindow().getWidth() / 2,
-                getGraphicsHandler().getWindow().getHeight() / 2,
-                20, 150,new Dimension(40,40)));
-
-        loadScene(SCENE_LOADING,loadingSceneBuilder);
-    }
 
     public void switchScene(ChannelID newScene){
         unsubscribeScene(activeScene);

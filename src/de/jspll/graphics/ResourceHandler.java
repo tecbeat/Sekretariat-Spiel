@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Philipp Polland
  *
  * @version 1.0
  */
@@ -63,11 +63,7 @@ public class ResourceHandler extends Thread {
         if(textures.containsKey(textureKey)){
             return textures.get(textureKey);
         }
-        try {
-            loadingQueue.put(textureKey);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        requestTexture(textureKey);
         return null;
     }
 
@@ -76,11 +72,7 @@ public class ResourceHandler extends Thread {
         if(textures.containsKey(textureKey + type.fileEnding)){
             return textures.get(textureKey + type.fileEnding);
         }
-        try {
-            loadingQueue.put(textureKey + type.fileEnding);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        requestTexture(textureKey, type);
         return null;
     }
 
@@ -151,7 +143,7 @@ public class ResourceHandler extends Thread {
     public void requestTexture(String key){
         if(key == null)
             return;
-        if(!textures.containsKey(key))
+        if(!textures.containsKey(key) && !loadingQueue.contains(key))
             try {
                 loadingQueue.put(key);
             } catch (InterruptedException e) {
@@ -161,6 +153,8 @@ public class ResourceHandler extends Thread {
     }
 
     public void requestTexture(String key, FileType type){
+        if(key == null)
+            return;
         if(!textures.containsKey(key) && !loadingQueue.contains(key + type.fileEnding))
             try {
                 loadingQueue.put(key + type.fileEnding);

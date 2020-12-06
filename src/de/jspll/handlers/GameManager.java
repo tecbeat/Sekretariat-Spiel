@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker, Laura Schmidt
+ * @author Lukas Becker, Laura Schmidt, Philipp Polland
  *
  * @version 1.0
  */
@@ -494,6 +494,19 @@ public class GameManager extends TexturedObject {
         return mouseClicked.get();
     }
 
+    @Override
+    public boolean isTextureLoaded() {
+        if (textureKeys == null)
+            return true;
+        if (textures == null)
+            return false;
+        for (BufferedImage i : textures) {
+            if (i == null)
+                return false;
+        }
+        return true;
+    }
+
     private void setTextureKeys() {
         textureKeys = new String[]{
                 "/assets/screen/pause/KeinePause",
@@ -515,17 +528,6 @@ public class GameManager extends TexturedObject {
         };
     }
 
-    public boolean isLoaded() {
-        if (textureKeys == null)
-            return true;
-        if (textures == null)
-            return false;
-        for (BufferedImage i : textures) {
-            if (i == null)
-                return false;
-        }
-        return true;
-    }
 
     public void loadTextures() {
         if (textureKeys == null)

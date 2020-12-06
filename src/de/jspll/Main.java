@@ -21,6 +21,14 @@ import de.jspll.util.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * © Sekretariat-Spiel
+ * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
+ *
+ * @author Lukas Becker, Philipp Polland
+ * @version 1.0
+ */
+
 public class Main {
 
     public static boolean DEBUG = false;
