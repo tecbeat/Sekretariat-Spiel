@@ -30,7 +30,7 @@ public class AudioHandler {
                     Clip clip = rh.getAudioByName(AudioFileName.getFileById(randomGenerator.nextInt(AudioFileName.length())));
 
                     FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                    double gain = 0.1;
+                    double gain = 0.05;
                     float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
                     gainControl.setValue(dB);
 

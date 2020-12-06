@@ -179,10 +179,12 @@ public class CommonTask implements Task {
                 if(Collision.posInRect(mousePoint,btnGoodHitbox)){
                     buttonLock = true;
                     buttonGoodClicked = true;
+                    countDown = onSelect.goodSelection(getHolder().getParent());
                     countDownStarted = true;
                 } else if(Collision.posInRect(mousePoint,btnBadHitbox)){
                     buttonLock = true;
                     buttonGoodClicked = false;
+                    countDown = onSelect.badSelection(getHolder().getParent());
                     countDownStarted = true;
                 }
             }

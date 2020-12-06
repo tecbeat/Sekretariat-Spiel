@@ -97,9 +97,10 @@ public class ResourceHandler extends Thread {
 
     public BufferedImage loadImage(String texture){
         try {
-            System.out.println(texture);
+            System.out.println("Attempting: " + texture);
             Logger.d.add("loading: " + texture);
             BufferedImage image = ImageIO.read(this.getClass().getResource(texture));
+            System.out.println("loaded: " + texture);
             return image;
         } catch (IOException e) {
             e.printStackTrace();
