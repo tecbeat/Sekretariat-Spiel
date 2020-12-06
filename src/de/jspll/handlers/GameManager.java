@@ -80,8 +80,11 @@ public class GameManager extends TexturedObject {
     // 0-2: path to textures for pause-screen, 3-15: path textures for round-screen
     private String[] textureKeys;
     private BufferedImage[] textures;
-    private boolean texturesLoaded = false;
+    private int instanceCount = 0;
+    private String[][] npc_textures = new String[][]{new String[]{"/assets/task/image/student_interakt"},new String[]{"/assets/task/image/prof_interakt"}};
 
+
+    private boolean texturesLoaded = false;
 
     public GameManager(GameObjectHandler gameObjectHandler){
         this.gameObjectHandler = gameObjectHandler;
@@ -208,13 +211,13 @@ public class GameManager extends TexturedObject {
         return statManager;
     }
 
+
     /**
      * @return TaskCount calculated by balancing constants
      */
     private int getTaskCountForCurrentLevel(){
         return BASE_TASKS + (level * TASKS_PER_LEVEL);
     }
-
 
     /**
      * @return Completion Percentage
@@ -240,13 +243,13 @@ public class GameManager extends TexturedObject {
         gameObjectHandler.loadTask(scene, task);
     }
 
+
     /**
      * Increase counter to keep track for when the game ends
      */
     public void taskCompleted(){
         this.completedTasks++;
     }
-
 
     /**
      * Increments level, starts task addition, resets time, task count and karma
@@ -507,6 +510,7 @@ public class GameManager extends TexturedObject {
         return true;
     }
 
+
     private void setTextureKeys() {
         textureKeys = new String[]{
                 "/assets/screen/pause/KeinePause",
@@ -527,7 +531,6 @@ public class GameManager extends TexturedObject {
                 "/assets/screen/round/penta12",
         };
     }
-
 
     public void loadTextures() {
         if (textureKeys == null)
@@ -571,8 +574,6 @@ public class GameManager extends TexturedObject {
     public void removeTaskFromActiveList(){
         activeTaskIdentifiers.remove(0);
     }
-
-    int instanceCount = 0;
 
     /**
      * @return one random task
@@ -623,10 +624,11 @@ public class GameManager extends TexturedObject {
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case NPC_ID:
+
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 48),
-                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, instanceCount % 2 == 0), 65, false),
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager,instanceCount % 2 == 0 , npc_textures[instanceCount%2]), 65, false),
                         NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();

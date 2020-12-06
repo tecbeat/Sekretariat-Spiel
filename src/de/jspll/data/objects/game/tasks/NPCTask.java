@@ -70,13 +70,14 @@ public class NPCTask extends GameObject implements Task {
         isStudent = student;
     }
 
-    public NPCTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] files){
+    public NPCTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager,boolean student, String[] files){
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.files = files;
+        isStudent = student;
     }
 
     @Override
@@ -95,10 +96,6 @@ public class NPCTask extends GameObject implements Task {
             active = false;
             return;
         }
-
-        if (files != null)
-            if (isLoaded())
-                g.drawImage(textures[0],50,50, 100, 100, null);
     }
 
     /**
@@ -123,6 +120,9 @@ public class NPCTask extends GameObject implements Task {
         //Bounding Box
         g.setColor(Color.WHITE);
         g.fillRect(boundingX, boundingY, screenWidth / 2, screenHeight / 2);
+        if (files != null)
+            if (isLoaded())
+                g.drawImage(textures[0],boundingX, boundingY, screenWidth / 2, screenHeight / 2,null);
 
         if(!buttonLock) {
             g.setColor(Color.BLACK);
@@ -165,7 +165,7 @@ public class NPCTask extends GameObject implements Task {
             textures = new BufferedImage[files.length];
         for (int i = 0; i < files.length; i++){
             if (textures[i] == null)
-                textures[i] = getHolder().getParent().getResourceHandler().getTexture(files[i]);
+                textures[i] = getHolder().getParent().getResourceHandler().getTexture(files[i], ResourceHandler.FileType.PNG);
         }
     }
 
