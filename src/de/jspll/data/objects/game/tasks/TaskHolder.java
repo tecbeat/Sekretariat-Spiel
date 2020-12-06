@@ -3,7 +3,6 @@ package de.jspll.data.objects.game.tasks;
 import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
 import de.jspll.util.Vector2D;
@@ -112,7 +111,7 @@ public class TaskHolder extends TexturedObject {
             initTime = getParent().getGameManager().getRemainingTime();
         }
         if((initTime - DURATION) > getParent().getGameManager().getRemainingTime()){
-            task.deActivate();
+            task.deactivate();
             active = false;
         }
 

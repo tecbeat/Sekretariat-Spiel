@@ -5,6 +5,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
 import de.jspll.util.Collision;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
@@ -36,7 +37,6 @@ public class Player extends TexturedObject {
     HashMap<String, AtomicBoolean> keyMap;
     private ColorScheme colorScheme;
     private String lastPressedKey = "s";
-    private boolean start = true;
     private boolean sprinted_last = false;
     private Dimension collision_Dim;
     private Vector2D velocity = new Vector2D(0, 0);
@@ -61,6 +61,12 @@ public class Player extends TexturedObject {
         return colorScheme;
     }
 
+    /**
+     * Check if all animations are loaded.
+     *
+     * @return true if all animations are loaded, else false
+     * @see TexturedObject
+     */
     @Override
     public boolean isTextureLoaded() {
         for (Animation an : movementAnimationList) {
@@ -72,14 +78,26 @@ public class Player extends TexturedObject {
         return true;
     }
 
+    /**
+     * Get the {@code ResourceHandler} and request all {@code Textures} needed for the {@code Animation}.<br>
+     * Additionally sets the Animation is looping.
+     * @see ResourceHandler
+     */
     @Override
     public void requestTexture() {
         for (Animation animation : movementAnimationList) {
-            animation.setLooping(true);
             animation.requestTextures(this);
+            animation.setLooping(true);
         }
     }
 
+    /**
+     * Every frame the {@code Player} is moved based on the inputs. <br>
+     * The {@code Camera} is centred to the {@code Player}.
+     *
+     * @param elapsedTime delta time between frames
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char update(float elapsedTime) {
         Camera c = getParent().getSelectedCamera();
@@ -99,7 +117,7 @@ public class Player extends TexturedObject {
     }
 
     /**
-     * Updates superclass x- and y-coordinate.
+     * Updates superclass x- and y-coordinate to current position.
      */
     protected void assimilateXY() {
         this.x = pos.x;
@@ -241,8 +259,14 @@ public class Player extends TexturedObject {
         }
     }
 
+    /**
+     * Checks if the player is about to move into a wall. If so then return true, else false.
+     * <p>DEBUG: If "Q" is pressed the {@code Player} can move trough walls.</p>
+     * @param newPos Position of the Player
+     * @return true if collision occurs, else false
+     */
     private boolean doesCollisionOccur(Point newPos) {
-        if (!Main.DEBUG || Main.DEBUG) { // due to missing doors
+        if (Main.DEBUG) {
             if (keyMap != null) {
                 if (keyMap.get("q").get())
                     return false;
@@ -255,6 +279,17 @@ public class Player extends TexturedObject {
         // check for collision between hitbox and tilemap
         return Collision.doesCollisionOccur(collisionMap, mapPos_and_metaData, collPos, collision_Dim);
     }
+
+    /**
+     * Draw all movement animations.
+     *
+     * <p> DEBUG: Display velocity vector as circle around player. <br> Draw a grid of 16x16 blocks with positions inside the {@code TileMap}</p>
+     * @param g Graphics to draw
+     * @param elapsedTime delta time between frames
+     * @param camera selected Camera
+     * @param currStage current active ChannelID
+     * @see Animation
+     */
 
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
@@ -312,9 +347,18 @@ public class Player extends TexturedObject {
         }
     }
 
+
+    /**
+     * Implement how to response when {@code Player} is getting called. <br>
+     *  1. The {@code collisionMap} and {@code mapPos_and_metaData} get transmitted to the {@code Player}. <br>
+     *  2. Another {@code GameObject} requests for the current player position {@code pos}.  Send it back to them.
+     *  3. Another {@code GameObject} requests the {@code Player} as an Object.
+     *
+     * @param input Array of Objects
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char call(Object[] input) {
-
         if (input == null || input.length < 1) {
             return 0;
         } else if (input[0] instanceof String) {
@@ -332,10 +376,8 @@ public class Player extends TexturedObject {
                     //sends ["playerPos", pos, dimension] to scope
                 }
             } else if (cmd.contentEquals("playerObject")) { // [ "playerObject" ]
-
                 ChannelID targetChannel = (ChannelID) input[1];
                 getParent().dispatch(targetChannel, new Object[]{"playerObj", this});
-
             }
 
         }
@@ -343,70 +385,89 @@ public class Player extends TexturedObject {
         return 0;
     }
 
+    /**
+     * Iterate over all {@code Animation} in {@code movementAnimationList} and stop there Animation.
+     * @see Animation
+     */
     public void stopAllAnimation() {
         for (Animation animation : movementAnimationList) {
             animation.stopAnimation();
         }
     }
 
+    /**
+     * Is called when no key ("W", "A", "S", "D") is pressed.
+     * Based on the last pressed Key the idle state will start.
+     */
     public void idleAnimation() {
         stopAllAnimation();
 
         switch (lastPressedKey) {
             case "w":
-                movementAnimationList.get(4).startAnimation(start);
+                movementAnimationList.get(4).startAnimation(false);
                 break;
             case "s":
-                movementAnimationList.get(5).startAnimation(start);
+                movementAnimationList.get(5).startAnimation(false);
                 break;
             case "a":
-                movementAnimationList.get(6).startAnimation(start);
+                movementAnimationList.get(6).startAnimation(false);
                 break;
             case "d":
-                movementAnimationList.get(7).startAnimation(start);
+                movementAnimationList.get(7).startAnimation(false);
                 break;
         }
     }
 
-
+    /**
+     * Is called when the "W" key was pressed. <br>
+     * Start the corresponding movement animation. <br>
+     * Set {@code lastPressedKey} to "w".
+     */
     public void moveForward() {
         stopAllAnimation();
-        movementAnimationList.get(0).startAnimation(start);
-        start = false;
+        movementAnimationList.get(0).startAnimation(false);
         lastPressedKey = "w";
     }
 
+    /**
+     * Is called when the "S" key was pressed. <br>
+     * Start the corresponding movement animation. <br>
+     * Set {@code lastPressedKey} to "s".
+     */
     public void moveBackward() {
         stopAllAnimation();
-        movementAnimationList.get(1).startAnimation(start);
-        start = false;
+        movementAnimationList.get(1).startAnimation(false);
         lastPressedKey = "s";
     }
 
+    /**
+     * Is called when the "A" key was pressed. <br>
+     * Start the corresponding movement animation. <br>
+     * Set {@code lastPressedKey} to "a".
+     */
     public void moveLeft() {
         stopAllAnimation();
-
-        movementAnimationList.get(2).startAnimation(start);
-        start = false;
-
+        movementAnimationList.get(2).startAnimation(false);
         lastPressedKey = "a";
     }
 
+    /**
+     * Is called when the "D" key was pressed. <br>
+     * Start the corresponding movement animation. <br>
+     * Set {@code lastPressedKey} to "d".
+     */
     public void moveRight() {
         stopAllAnimation();
-
-        movementAnimationList.get(3).startAnimation(start);
-        start = false;
-
+        movementAnimationList.get(3).startAnimation(false);
         lastPressedKey = "d";
     }
 
+    /**
+     * Update the {@code keyMap} and the Positions of all {@code Animation} in {@code movementAnimationList}.
+     */
     @Override
     public void updateReferences() {
-        super.updateReferences();
-        this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
         keyMap = getParent().getLogicHandler().getInputHandler().getKeyMap();
-
         for (Animation a : movementAnimationList) a.setPos(pos);
     }
 }

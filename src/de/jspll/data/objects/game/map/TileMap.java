@@ -198,7 +198,7 @@ public class TileMap extends TexturedObject {
     }
 
     /**
-     * Get the {@code ResourceHandler} and request all {@code Textures} needed for the {@code Tiles}.
+     * Get the {@code ResourceHandler} and request all {@code Textures} needed for the {@code Tile}.
      * @see ResourceHandler
      */
     @Override
@@ -216,7 +216,7 @@ public class TileMap extends TexturedObject {
      *  4. {@code NPC} transmits his {@code Point}.<br>
      *  5. The {@code collisionMap} and {@code mapPos_and_metaData} get transmitted.
      *
-     * @param input Array if Objects
+     * @param input Array of Objects
      * @return exit code - similar to program exit codes in Java/C
      */
     @Override
@@ -318,6 +318,10 @@ public class TileMap extends TexturedObject {
         }
     }
 
+    /**
+     * Check if texture is loaded, if not load all needed Textures
+     * @see TexturedObject
+     */
     @Override
     public void loadTexture() {
         if (isTextureLoaded())
@@ -343,7 +347,7 @@ public class TileMap extends TexturedObject {
     }
 
     /**
-     * Check if the {@code playerPos} is set, if not the position is requested from the player.
+     * Check if the {@code playerPos} is set, if not position is requested from the player.
      *
      * @param elapsedTime delta time between frames
      * @return exit code - similar to program exit codes in Java/C

@@ -23,7 +23,7 @@ public class NPC extends Player {
     double sumTime = 0;
     Random randomGenerator = new Random(System.currentTimeMillis());
     int nextMovement = randomGenerator.nextInt(4);
-    boolean firstTime = true;
+    boolean firstUpdateCall = true;
     boolean taskActive = false;
     private TaskHolder task;
     private boolean posBroadcasted = false;
@@ -50,12 +50,18 @@ public class NPC extends Player {
         }
     }
 
+    /**
+     * Every two second the {@code NPC} is moved randomly in a direction. <br>
+     * This is achieved by setting the corresponding key in the {@code keyMap} to true <br>
+     *
+     * @param elapsedTime delta time between frames
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char update(float elapsedTime) {
-
-        if (firstTime) {
+        if (firstUpdateCall) {
             getParent().loadTask(ChannelID.SCENE_GAME, task);
-            firstTime = false;
+            firstUpdateCall = false;
         }
 
         task.setPos(new Point(super.pos.x, super.pos.y + 20));
@@ -99,7 +105,14 @@ public class NPC extends Player {
         return 0;
     }
 
-
+    /**
+     * Implement how to response when {@code NPC} is getting called. <br>
+     *  1. The {@code collisionMap} and {@code mapPos_and_metaData} get transmitted to the {@code NPC}. <br>
+     *  2. Another {@code GameObject} asks for the current npc position {@code pos}. Send it back to them.
+     *
+     * @param input Array of Objects
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char call(Object[] input) {
         if (input == null || input.length < 1) {
@@ -115,15 +128,13 @@ public class NPC extends Player {
                 if (input[1] instanceof String) {
                     String scope = (String) input[1];
                     ChannelID targetChannel = (ChannelID) input[2];
+                    //sends ["npcPos", pos, dimension] to scope
                     getParent().dispatch(targetChannel, scope, new Object[]{"npcPos" + getID(), pos, dimension});
                     posBroadcasted = true;
-                    //sends ["npcPos", pos, dimension] to scope
+
                 }
             }
         }
-
-
         return 0;
-
     }
 }

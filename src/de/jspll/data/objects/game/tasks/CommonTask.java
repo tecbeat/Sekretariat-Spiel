@@ -250,6 +250,9 @@ public class CommonTask extends GameObject implements Task {
         }
     }
 
+    /**
+     * @return true if every textures are loaded, else false
+     */
     @Override
     public boolean isLoaded() {
         if(files == null)
@@ -263,6 +266,10 @@ public class CommonTask extends GameObject implements Task {
         return true;
     }
 
+    /**
+     * Load all textures from {@code files} and save them in {@code textures}.<br>
+     * {@code Textures} are images based on what task it is.
+     */
     @Override
     public void loadTextures() {
         if(files == null)
@@ -275,6 +282,11 @@ public class CommonTask extends GameObject implements Task {
         }
     }
 
+    /**
+     * Get the {@code ResourceHandler} and request all {@code Textures} needed for the images.
+     * @see ResourceHandler
+     */
+    @Override
     public void requestTexture(){
         if (files == null)
             return;
@@ -295,7 +307,7 @@ public class CommonTask extends GameObject implements Task {
     }
 
     /**
-     * Updates Karma and Roundscore and unregisteres the task
+     * Updates Karma and Roundscore. Unsubscribes the task.
      *
      */
     private void closeTask() {
@@ -328,14 +340,19 @@ public class CommonTask extends GameObject implements Task {
         }
     }
 
+    /**
+     * After calling the Task will be activated and is displayed
+     */
     public void activate(){
         buttonLock = false;
         mouseClicked = getHolder().getParent().getLogicHandler().getInputHandler().getMouse1();
         countDown = 10;
         this.active = true;
     }
-
-    public void deActivate(){
+    /**
+     * After calling the Task will be deactivated
+     */
+    public void deactivate(){
         this.active = false;
     }
 
@@ -343,6 +360,13 @@ public class CommonTask extends GameObject implements Task {
         return mouseClicked.get();
     }
 
+    /**
+     * Implement how to response when {@code CommonTask} is getting called. <br>
+     *  1. The current {@code mousePos} and {@code mousedown} are transmitted to {@code CommonTask}.
+     *
+     * @param input Array of Objects
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char call(Object[] input) {
         if (input[0] instanceof String) {
