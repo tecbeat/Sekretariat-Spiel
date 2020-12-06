@@ -347,7 +347,6 @@ public class GameObjectHandler{
         t1.start();
     }
 
-    //TODO Should this be public??
     public void clearScene(ChannelID scene){
         channels[scene.valueOf()].dropAll();
     }
@@ -498,7 +497,7 @@ public class GameObjectHandler{
                 if(l.getId().contains("Ausstattung") || l.getId().contains("Ausstatung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
                     tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
                 } else {
-                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures());
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(), false);
                 }
 
                 HashMap<String, Tile> tileCache = new HashMap<>();

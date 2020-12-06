@@ -48,7 +48,7 @@ public class Player extends TexturedObject {
         this.colorScheme = colorScheme;
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
-        for (String s : new String[]{"forward", "backward", "left", "right", "idle0", "idle1", "idle2", "idle3"}){
+        for (String s : new String[]{"forward", "backward", "left", "right", "idle0", "idle1", "idle2", "idle3"}) {
             movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/" + s + "_", s.contains("idle") ? 1 : 6, pos, dimension, this, 1F));
         }
     }
@@ -106,6 +106,12 @@ public class Player extends TexturedObject {
         this.y = pos.y;
     }
 
+    /**
+     * Checks if the Player will collide with an object on the map.
+     * If not the Position will be updated
+     *
+     * @param elapsedTime Time since last update call
+     */
     protected void handleCollision(float elapsedTime) {
         Vector2D scaledVelocity = velocity.scale(elapsedTime);
 
@@ -146,7 +152,9 @@ public class Player extends TexturedObject {
     }
 
     /**
-     * If stopped after sprinting the character gets slowed down.
+     * After stopping the player gradually slows down.
+     * If the player sprinted just before stopping the slowdown is more noticeable.
+     *
      */
     protected void decayVelocity() {
         if (sprinted_last) {

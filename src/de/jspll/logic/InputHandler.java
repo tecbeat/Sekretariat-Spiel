@@ -56,16 +56,16 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
      * <p>
      * the values will be formatted in a specific way:
      *
-     * @return Array in form :
-     * [0 String "input",                       - identifier
-     * 1 boolean mouse1,                       - true if mouse 1 down
-     * 2 boolean mouse2,                       - true if mouse 2 down
-     * 3 boolean mouse3,                       - true if mouse 3 down
-     * 4 HashMap<String,AtomicBoolean> keyMap, - HashMap for all keys
-     * 5 int[] mousePos,                       - Array in form of [ int x, int y] pos of Mouse
-     * 6 double mousewheelMovement,            - Double indicating the amount of wheel movement
-     * 7 String[] keystrokes,                  - Array containing key presses in order
-     * 8 MouseEvent[] clicks                   - Array containing all MouseEvents of all Clicks in order
+     * @return Array in form : [<br>
+     * 0 String "input",                       - identifier <br>
+     * 1 boolean mouse1,                       - true if mouse 1 down <br>
+     * 2 boolean mouse2,                       - true if mouse 2 down <br>
+     * 3 boolean mouse3,                       - true if mouse 3 down <br>
+     * 4 HashMap<String,AtomicBoolean> keyMap, - HashMap for all keys <br>
+     * 5 int[] mousePos,                       - Array in form of [ int x, int y] pos of Mouse <br>
+     * 6 double mousewheelMovement,            - Double indicating the amount of wheel movement <br>
+     * 7 String[] keystrokes,                  - Array containing key presses in order <br>
+     * 8 MouseEvent[] clicks                   - Array containing all MouseEvents of all Clicks in order <br>
      * ]
      */
     public Object[] getInputInfo() {
@@ -84,7 +84,6 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
      * @param e MouseEvents
      * @see MouseMotionListener
      */
-
     @Override
     public void mouseDragged(MouseEvent e) {
         mousePos.set(0, e.getX());
@@ -238,7 +237,7 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
             key.set(true);
             return;
         }
-        //Alternative, if the pressed Key is not trivial (e.g. "SHIFT", "ESC", ...)
+        //alternative, if the pressed Key is not trivial (e.g. "SHIFT", "ESC", ...)
         setKey(e.getKeyCode(), true);
     }
 
@@ -257,7 +256,7 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
             key.set(false);
             return;
         }
-        //Alternative, if the pressed Key is not trivial (e.g. "SHIFT", "ESC", ...)
+        //alternative, if the pressed Key is not trivial (e.g. "SHIFT", "ESC", ...)
         setKey(e.getKeyCode(), false);
     }
 
@@ -323,7 +322,7 @@ public class InputHandler implements MouseInputListener, MouseWheelListener, Key
      * Key is determined by the {@code keyCode}.
      *
      * @param keyCode int from keyCode
-     * @param val the value to set
+     * @param val     the value to set
      * @see KeyEvent
      */
 

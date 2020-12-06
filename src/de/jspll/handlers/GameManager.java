@@ -475,7 +475,7 @@ public class GameManager extends GameObject {
                 return thCourses;
 
             case 3:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC" + instanceCount, "g.dflt.TaskHolder",
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", new Point(1100,1120),ColorScheme.PURPLE_MAN, new TaskHolder("NPC" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
                         new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65));
@@ -573,7 +573,7 @@ public class GameManager extends GameObject {
         thCoursePlan.setListener(gameObjectHandler);
         result.add(thCoursePlan);
 
-        Player testNPC = new NPC("NPC", "g.ntt.NPC", ColorScheme.BLUE);
+        Player testNPC = new NPC("NPC", "g.ntt.NPC", new Point(1100,1280), ColorScheme.BLUE);
         testNPC.setListener(gameObjectHandler);
 
         result.add(testNPC);
