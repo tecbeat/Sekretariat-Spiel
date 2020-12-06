@@ -440,6 +440,8 @@ public class GameObjectHandler{
                                     //get texture source
                                     String src = ((String) tileset.get("relPath"));
 
+                                    System.out.println(src);
+
                                     //Because these files do not exist
                                     if(src == null || src.equals("Anwesenheit.png") || src.equals("Buttons.png")){
                                         if(src.equals("Anwesenheit.png")){

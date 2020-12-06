@@ -18,6 +18,7 @@ public enum NPCSpawnPosition {
     POS_5(4,new Point(3121, 1265)),
     POS_6(5,new Point(2912, 2481)),
     POS_7(6,new Point(603, 1530)),
+    POS_8(7,new Point(2289, 758)),
     ;
 
     private final int id;

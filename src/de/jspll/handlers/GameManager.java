@@ -34,7 +34,7 @@ public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 300f;
     private final int NEXT_TASK_TRESHOLD = 30;
-    private final int BASE_TASKS = 20;
+    private final int BASE_TASKS = 2;
     private final int TASKS_PER_LEVEL = 4;
     private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
@@ -86,7 +86,7 @@ public class GameManager extends TexturedObject {
     public GameManager(GameObjectHandler gameObjectHandler){
         this.gameObjectHandler = gameObjectHandler;
         setTextureKeys();
-        channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.UI};
+        channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.LAST_LAYER};
     }
 
     /**
@@ -623,10 +623,10 @@ public class GameManager extends TexturedObject {
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case NPC_ID:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(randomGenerator.nextInt(3)+2), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
-                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, randomGenerator.nextInt(9) % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;

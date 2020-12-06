@@ -69,6 +69,7 @@ public class NPC extends Player {
     public char update(float elapsedTime) {
         if (firstUpdateCall) {
             getParent().loadTask(ChannelID.SCENE_GAME, task);
+            getParent().dispatch(ChannelID.LOGIC, "g.dflt.TileMap:Collision", new Object[]{"npcPos" + getID(), pos, dimension});
             firstUpdateCall = false;
         }
 

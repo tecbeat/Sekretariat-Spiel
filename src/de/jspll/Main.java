@@ -7,6 +7,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.examples.DisplayMover;
 import de.jspll.data.objects.examples.MouseFollower;
 import de.jspll.data.objects.game.map.TileMap;
+import de.jspll.data.objects.game.player.ColorScheme;
 import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.ui.HomeCameraAssist;
 import de.jspll.data.objects.game.ui.MenuObject;
@@ -47,29 +48,8 @@ public class Main {
 
         MouseFollower mf = new MouseFollower("Follow");
 
-        /*
-        //debugging start
-        ArrayList<Object> objects = new ArrayList<>();
-        Player p = new Player("OwnPlayer", new Point(1280,1120), new Dimension(32, 64), 1);
-        objects.add(p);
-
-        TileMap[] tms = frameHandler.getGameObjectHandler().loadMap("/assets/map/Home_Screen.json");
-        for(TileMap tm : tms)
-            objects.add(tm);
-
-        String jsonStr = JSONSupport.convertObjectsToJson(objects);
-
-        ResourceHandler rh = frameHandler.getGameObjectHandler().getResourceHandler();
-        rh.jsonStrToFile(jsonStr, "C:\\Users\\Lukas\\Desktop\\Temp\\Game.json");
 
 
-        JsonArray jsonArray = new JsonParser().parse(jsonStr).getAsJsonArray();
-
-
-        frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_2, jsonArray);
-        frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
-        debugging end
-        */
 
 
 
