@@ -1,6 +1,7 @@
 package de.jspll.audio;
 
 import de.jspll.graphics.ResourceHandler;
+import de.jspll.handlers.GameObjectHandler;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -22,7 +23,8 @@ public class AudioHandler {
     /**
      *
      */
-    public void playMusic(ResourceHandler rh) {
+    public void playMusic(GameObjectHandler gh) {
+        ResourceHandler rh = gh.getResourceHandler();
         Random randomGenerator = new Random(System.currentTimeMillis());
         new Thread(() -> {
             try {

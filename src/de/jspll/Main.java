@@ -65,7 +65,7 @@ public class Main {
 
 
 
-        new AudioHandler().playMusic(frameHandler.getGameObjectHandler().getResourceHandler());
+        new AudioHandler().playMusic(frameHandler.getGameObjectHandler());
 
 
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
