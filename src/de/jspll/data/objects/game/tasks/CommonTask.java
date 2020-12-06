@@ -3,7 +3,6 @@ package de.jspll.data.objects.game.tasks;
 import com.google.gson.annotations.Expose;
 import de.jspll.Main;
 import de.jspll.data.ChannelID;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
@@ -14,7 +13,6 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -26,6 +24,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 
 public class CommonTask implements Task {
+    private final Color maskColor = new Color(0, 0, 0, 172);
+    // headings
+    private final String goodHeading;
+    private final String badHeading;
+    int[] buttonSize = new int[]{80, 30};
     @Expose(deserialize = false, serialize = false)
 
     // general properties
@@ -35,30 +38,23 @@ public class CommonTask implements Task {
     private boolean countDownStarted = false;
     private iTaskReaction onSelect;
     private Point draggablePos;
-    private final Color maskColor = new Color(0, 0, 0, 172);
-
     //texture properties
     private float draggableSize = 1.6f;
     private Dimension draggableDim;
     private String[] textureKeys;
     private BufferedImage[] textures;
-
     @Expose(deserialize = false, serialize = false)
     private boolean texturesLoaded = false;
-
     // mouse properties
     private boolean mousedown;
     private int[] mousePos = new int[2];
     private AtomicBoolean mouseClicked;
-
     // button properties
     private int btnStartY = 0;
     private int btnGoodX = 0;
     private int btnBadX = 0;
-    int[] buttonSize = new int[]{80, 30};
     private boolean buttonLock = false;
     private boolean buttonGoodClicked;
-
     // screen properties
     private int screenWidth;
     private int screenHeight;
@@ -66,13 +62,9 @@ public class CommonTask implements Task {
     private int boundingY;
     private int boundingWidth;
     private int boundingHeight;
-
-    // headings
-    private final String goodHeading;
-    private final String badHeading;
-
     private StatManager statManager;
-
+    private boolean startedInHitbox = false;
+    private Color highlight_color = new Color(255, 255, 255, 255);
 
     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager) {
         this.goodHeading = goodHeading;
@@ -82,21 +74,19 @@ public class CommonTask implements Task {
         //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
     }
 
-   
-     /**
+    /**
+     * @param heading     short description of the task
+     * @param onSelect    specific class to handle the button clicks
      * @param statManager manages the game statistics
-     * @param onSelect specific class to handle the button clicks
-     * @param heading short description of the task
-     *
      */
-     public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager) {
-         this.goodHeading = heading;
-         this.badHeading = "";
-         this.onSelect = onSelect;
-         this.statManager = statManager;
-     }
+    public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager) {
+        this.goodHeading = heading;
+        this.badHeading = "";
+        this.onSelect = onSelect;
+        this.statManager = statManager;
+    }
 
-     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
+    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
@@ -105,7 +95,14 @@ public class CommonTask implements Task {
         this.textureKeys = textureKeys;
     }
 
-
+    /**
+     * Display the Task when no textures are set.
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
     private void textBasedRender(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         initTaskScreen(g, camera);
 
@@ -122,11 +119,18 @@ public class CommonTask implements Task {
         }
     }
 
-    private boolean startedInHitbox = false;
-    private void resetDraggablePos(){
+    private void resetDraggablePos() {
         draggablePos = new Point(boundingX + screenWidth / 4, boundingY + screenHeight / 4);
     }
 
+    /**
+     * Display the task with set {@code textures}.
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
     private void textureBasedRender(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -135,8 +139,8 @@ public class CommonTask implements Task {
             resetDraggablePos();
         }
         g2d.drawImage(textures[0], boundingX, boundingY, boundingWidth, boundingHeight, null);
-        Rectangle btnGoodHitbox = new Rectangle(btnGoodX,btnStartY,buttonSize[0],buttonSize[1]);
-        Rectangle btnBadHitbox = new Rectangle(btnBadX,btnStartY,buttonSize[0],buttonSize[1]);
+        Rectangle btnGoodHitbox = new Rectangle(btnGoodX, btnStartY, buttonSize[0], buttonSize[1]);
+        Rectangle btnBadHitbox = new Rectangle(btnBadX, btnStartY, buttonSize[0], buttonSize[1]);
         //g2d.setColor(Color.GREEN);
         //g2d.fill(btnGoodHitbox);
         //g2d.setColor(Color.RED);
@@ -151,28 +155,28 @@ public class CommonTask implements Task {
         }
 
 
-        Rectangle draggableHitbox = new Rectangle(draggablePos.x-draggableDim.width/2,
-                draggablePos.y-draggableDim.height/2,
+        Rectangle draggableHitbox = new Rectangle(draggablePos.x - draggableDim.width / 2,
+                draggablePos.y - draggableDim.height / 2,
                 draggableDim.width,
                 draggableDim.height);
         getMousePos();
-        Point mousePoint = new Point(mousePos[0],mousePos[1]);
-        if(mouseClicked.get()){
-            if(startedInHitbox){
+        Point mousePoint = new Point(mousePos[0], mousePos[1]);
+        if (mouseClicked.get()) {
+            if (startedInHitbox) {
                 draggablePos = mousePoint;
-            } else if(Collision.posInRect(mousePoint,draggableHitbox)){
+            } else if (Collision.posInRect(mousePoint, draggableHitbox)) {
                 startedInHitbox = true;
             } else {
                 startedInHitbox = false;
             }
         } else {
-            if(startedInHitbox){
+            if (startedInHitbox) {
                 startedInHitbox = false;
-                if(Collision.posInRect(mousePoint,btnGoodHitbox)){
+                if (Collision.posInRect(mousePoint, btnGoodHitbox)) {
                     buttonLock = true;
                     buttonGoodClicked = true;
                     countDownStarted = true;
-                } else if(Collision.posInRect(mousePoint,btnBadHitbox)){
+                } else if (Collision.posInRect(mousePoint, btnBadHitbox)) {
                     buttonLock = true;
                     buttonGoodClicked = false;
                     countDownStarted = true;
@@ -192,11 +196,19 @@ public class CommonTask implements Task {
         }
     }
 
+    /**
+     * Display the Task if {@code active} and the {@code countDown} is not 0.
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         //g.setFont(Font.getFont(Font.SANS_SERIF));
         // close task window when countdown is lower than 0
-        if(!active) return;
+        if (!active) return;
         countTimerDown(elapsedTime);
         if (countDown < 0) {
             closeTask();
@@ -221,6 +233,11 @@ public class CommonTask implements Task {
 
     }
 
+    /**
+     * Initialize bounding variables for button dimensions, positions.
+     *
+     * @param g Graphics
+     */
     private void initVars(Graphics g) {
         if (textures != null) {
             buttonSize[0] = 200;
@@ -234,10 +251,10 @@ public class CommonTask implements Task {
         boundingWidth = screenWidth / 2;
         boundingHeight = screenHeight / 2;
 
-        if(textures != null){
+        if (textures != null) {
             btnGoodX = boundingX;
             btnBadX = boundingX + boundingWidth - buttonSize[0];
-            btnStartY = boundingY+ boundingHeight;
+            btnStartY = boundingY + boundingHeight;
         } else {
             btnGoodX = (boundingX + (screenWidth / 2) / 4) + 85;
             btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
@@ -262,7 +279,7 @@ public class CommonTask implements Task {
         if (!buttonLock) {
             g.setColor(Color.BLACK);
             String heading;
-            if(!badHeading.equals("")) {
+            if (!badHeading.equals("")) {
                 heading = goodHeading + " oder " + badHeading;
             } else {
                 heading = goodHeading;
@@ -283,7 +300,7 @@ public class CommonTask implements Task {
 
         int xCoord = goodButton ? btnGoodX : btnBadX;
         String heading;
-        if(!badHeading.equals("")) {
+        if (!badHeading.equals("")) {
             heading = goodButton ? goodHeading.split(" ")[1] : badHeading.split(" ")[1];
         } else {
             heading = goodButton ? "Ja" : "Nein";
@@ -306,8 +323,6 @@ public class CommonTask implements Task {
         }
     }
 
-    private Color highlight_color= new Color(255,255,255,255);
-
     /**
      * Sets the remaining time to finish the task and draws the task name at the screen.
      *
@@ -317,10 +332,10 @@ public class CommonTask implements Task {
     private void onButtonClicked(Graphics g, Camera camera) {
         Color txtColor = buttonGoodClicked ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255);
         String correctHeading = buttonGoodClicked ? goodHeading : badHeading;
-        Rectangle2D headingBounds = g.getFont().getStringBounds(correctHeading,new FontRenderContext(null,true,false));
+        Rectangle2D headingBounds = g.getFont().getStringBounds(correctHeading, new FontRenderContext(null, true, false));
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(highlight_color);
-        g2d.fillRect((screenWidth / 2) - 110,screenHeight / 2 -(int) headingBounds.getHeight(),(int)headingBounds.getWidth(),(int)headingBounds.getHeight());
+        g2d.fillRect((screenWidth / 2) - 110, screenHeight / 2 - (int) headingBounds.getHeight(), (int) headingBounds.getWidth(), (int) headingBounds.getHeight());
         g.setColor(txtColor);
         g.drawString(correctHeading, (screenWidth / 2) - 110, screenHeight / 2);
         g.drawString("Verbleibende Zeit: " + String.format("%2.2f", countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
@@ -399,6 +414,7 @@ public class CommonTask implements Task {
 
     /**
      * Get the {@code ResourceHandler} and request all {@code Textures} needed for the images.
+     *
      * @see ResourceHandler
      */
     public void requestTexture() {
@@ -422,7 +438,6 @@ public class CommonTask implements Task {
 
     /**
      * Updates Karma and Roundscore. Unsubscribes the task.
-     *
      */
     private void closeTask() {
         onSelect.taskFinished(statManager, buttonGoodClicked);
@@ -456,28 +471,29 @@ public class CommonTask implements Task {
     }
 
     /**
-     * After calling the Task will be activated and is displayed
+     * Task will be activated and is displayed
      */
-    public void activate(){
+    public void activate() {
         buttonLock = false;
         mouseClicked = getHolder().getParent().getLogicHandler().getInputHandler().getMouse1();
         countDown = 10;
         this.active = true;
     }
+
     /**
      * After calling the Task will be deactivated
      */
-    public void deactivate(){
+    public void deactivate() {
         this.active = false;
     }
 
-    private boolean getMousePressed(){
+    private boolean getMousePressed() {
         return mouseClicked.get();
     }
 
     /**
      * Implement how to response when {@code CommonTask} is getting called. <br>
-     *  1. The current {@code mousePos} and {@code mousedown} are transmitted to {@code CommonTask}.
+     * 1. The current {@code mousePos} and {@code mousedown} are transmitted to {@code CommonTask}.
      *
      * @param input Array of Objects
      * @return exit code - similar to program exit codes in Java/C
@@ -504,15 +520,15 @@ public class CommonTask implements Task {
         return active;
     }
 
-    public void setHolder(TaskHolder holder) {
-        this.holder = holder;
-    }
-
     public TaskHolder getHolder() {
         return holder;
     }
 
-    public String getName(){
+    public void setHolder(TaskHolder holder) {
+        this.holder = holder;
+    }
+
+    public String getName() {
         return goodHeading;
     }
 }

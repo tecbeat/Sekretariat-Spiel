@@ -400,14 +400,14 @@ public class GameManager extends TexturedObject {
         }
     }
 
-     /**
+    /**
      * Checks if the mouse position is over one of the buttons.
      *
-             * @param startX x-coordinate of top left corner of the button
+     * @param startX x-coordinate of top left corner of the button
      * @param startY y-coordinate of top left corner of the button
      * @param width width of the button
      * @param height height of the button
-     * @return if mouse is over button
+     * @return true if mouse is over button, else false
      */
     protected boolean checkHover(int startX, int startY, int width, int height){
         getMousePos();
@@ -515,7 +515,8 @@ public class GameManager extends TexturedObject {
         };
     }
 
-    public boolean isLoaded() {
+    @Override
+    public boolean isTextureLoaded() {
         if (textureKeys == null)
             return true;
         if (textures == null)

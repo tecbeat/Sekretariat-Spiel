@@ -80,7 +80,8 @@ public class Player extends TexturedObject {
 
     /**
      * Get the {@code ResourceHandler} and request all {@code Textures} needed for the {@code Animation}.<br>
-     * Additionally sets the Animation is looping.
+     * Additionally sets animation loop to true
+     *
      * @see ResourceHandler
      */
     @Override
@@ -173,7 +174,6 @@ public class Player extends TexturedObject {
     /**
      * After stopping the player gradually slows down.
      * If the player sprinted just before stopping the slowdown is more noticeable.
-     *
      */
     protected void decayVelocity() {
         if (sprinted_last) {
@@ -263,6 +263,7 @@ public class Player extends TexturedObject {
     /**
      * Checks if the player is about to move into a wall. If so then return true, else false.
      * <p>DEBUG: If "Q" is pressed the {@code Player} can move trough walls.</p>
+     *
      * @param newPos Position of the Player
      * @return true if collision occurs, else false
      */
@@ -285,13 +286,13 @@ public class Player extends TexturedObject {
      * Draw all movement animations.
      *
      * <p> DEBUG: Display velocity vector as circle around player. <br> Draw a grid of 16x16 blocks with positions inside the {@code TileMap}</p>
-     * @param g Graphics to draw
+     *
+     * @param g           Graphics to draw
      * @param elapsedTime delta time between frames
-     * @param camera selected Camera
-     * @param currStage current active ChannelID
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
      * @see Animation
      */
-
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
 
@@ -352,9 +353,9 @@ public class Player extends TexturedObject {
 
     /**
      * Implement how to response when {@code Player} is getting called. <br>
-     *  1. The {@code collisionMap} and {@code mapPos_and_metaData} get transmitted to the {@code Player}. <br>
-     *  2. Another {@code GameObject} requests for the current player position {@code pos}.  Send it back to them.
-     *  3. Another {@code GameObject} requests the {@code Player} as an Object.
+     * 1. The {@code collisionMap} and {@code mapPos_and_metaData} get transmitted to the {@code Player}. <br>
+     * 2. Another {@code GameObject} requests for the current player position {@code pos}.  Send it back to them.
+     * 3. Another {@code GameObject} requests the {@code Player} as an Object.
      *
      * @param input Array of Objects
      * @return exit code - similar to program exit codes in Java/C
@@ -389,6 +390,7 @@ public class Player extends TexturedObject {
 
     /**
      * Iterate over all {@code Animation} in {@code movementAnimationList} and stop there Animation.
+     *
      * @see Animation
      */
     public void stopAllAnimation() {
@@ -406,16 +408,16 @@ public class Player extends TexturedObject {
 
         switch (lastPressedKey) {
             case "w":
-                movementAnimationList.get(4).startAnimation(false);
+                movementAnimationList.get(4).restartAnimation();
                 break;
             case "s":
-                movementAnimationList.get(5).startAnimation(false);
+                movementAnimationList.get(5).restartAnimation();
                 break;
             case "a":
-                movementAnimationList.get(6).startAnimation(false);
+                movementAnimationList.get(6).restartAnimation();
                 break;
             case "d":
-                movementAnimationList.get(7).startAnimation(false);
+                movementAnimationList.get(7).restartAnimation();
                 break;
         }
     }
@@ -427,7 +429,7 @@ public class Player extends TexturedObject {
      */
     public void moveForward() {
         stopAllAnimation();
-        movementAnimationList.get(0).startAnimation(false);
+        movementAnimationList.get(0).restartAnimation();
         lastPressedKey = "w";
     }
 
@@ -438,7 +440,7 @@ public class Player extends TexturedObject {
      */
     public void moveBackward() {
         stopAllAnimation();
-        movementAnimationList.get(1).startAnimation(false);
+        movementAnimationList.get(1).restartAnimation();
         lastPressedKey = "s";
     }
 
@@ -449,7 +451,7 @@ public class Player extends TexturedObject {
      */
     public void moveLeft() {
         stopAllAnimation();
-        movementAnimationList.get(2).startAnimation(false);
+        movementAnimationList.get(2).restartAnimation();
         lastPressedKey = "a";
     }
 
@@ -460,7 +462,7 @@ public class Player extends TexturedObject {
      */
     public void moveRight() {
         stopAllAnimation();
-        movementAnimationList.get(3).startAnimation(false);
+        movementAnimationList.get(3).restartAnimation();
         lastPressedKey = "d";
     }
 

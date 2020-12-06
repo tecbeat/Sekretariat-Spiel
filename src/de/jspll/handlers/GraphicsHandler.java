@@ -32,12 +32,12 @@ public class GraphicsHandler implements SubHandler {
         switch (mode){
             case DIALOG:
                 dialog = new Secondary_window(windowTitle,slate,size);
-                cameras[0] = new Camera(0,0,(int) size.getWidth(),(int) size.getHeight(),2);
+                cameras[0] = new Camera(624,377,(int) size.getWidth(),(int) size.getHeight(),2);
                 break;
             case MAIN:
                 this.window = new de.jspll.graphics.Window(windowTitle,slate,size);
                 this.windowTitle = windowTitle;
-                cameras[0] = new Camera(0,0,slate.getWidth(),slate.getHeight(),2.5f);
+                cameras[0] = new Camera(624,377,slate.getWidth(),slate.getHeight(),2.5f);
                 break;
         }
     }

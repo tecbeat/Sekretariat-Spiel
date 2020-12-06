@@ -5,6 +5,7 @@ import de.jspll.data.ChannelID;
 import de.jspll.data.objects.Animation;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
 import de.jspll.util.Collision;
 import de.jspll.util.PaintingUtil;
 import de.jspll.util.Vector2D;
@@ -50,15 +51,25 @@ public class TaskHolder extends TexturedObject {
         taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
     }
 
-
+    /**
+     * Get the {@code ResourceHandler} and request all {@code Textures} needed for the {@code Animation}.<br>
+     * Additionally sets animation loop to true and starts the {@code Animation}.
+     * @see ResourceHandler
+     */
     @Override
     public void requestTexture() {
         taskIndicationArrow.requestTextures(this);
         taskIndicationArrow.setLooping(true);
-        taskIndicationArrow.startAnimation(true);
+        taskIndicationArrow.startAnimation();
         task.requestTexture();
     }
 
+    /**
+     * Check if the arrow animations are loaded.
+     *
+     * @return true if all animations are loaded, else false
+     * @see TexturedObject
+     */
     @Override
     public boolean isTextureLoaded() {
         if (!taskIndicationArrow.isLoaded()) {
@@ -81,14 +92,28 @@ public class TaskHolder extends TexturedObject {
                 "} " + super.toString();
     }
 
+    /**
+     * Draw the Indication Arrow
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         taskIndicationArrow.draw((Graphics2D) g, elapsedTime, camera);
     }
 
+    /**
+     * Call update from the {@code task}. <br>
+     * Request the {@code playerPos} and {@code playerDim} from the {@code Player}. <br>
+     *
+     * @param elapsedTime delta time between frames
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char update(float elapsedTime) {
-        super.update(elapsedTime);
 
         if (task != null && task.isActive()) {
             task.update(elapsedTime);
@@ -122,6 +147,9 @@ public class TaskHolder extends TexturedObject {
         return 0;
     }
 
+    /**
+     * @return true if player is within the {@code radius} of the task, else false
+     */
     private boolean isInProximity() {
         if (playerPos == null || playerDim == null)
             return false;
@@ -132,6 +160,16 @@ public class TaskHolder extends TexturedObject {
         return distanceToPlayer.euclideanDistance() < radius;
     }
 
+    /**
+     * Implement how to response when {@code TaskHolder} is getting called. <br>
+     *  1. The current {@code palyerPos} and {@code playerDim} are transmitted to {@code TaskHolder}. <br>
+     *  2. Forward the call to the {@code task}. <br>
+     *  3. Another {@code GameObject} requests the active task.
+     *  4. Forward the inputs to the {@code task}. <br>
+     *
+     * @param input Array of Objects
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char call(Object[] input) {
         super.call(input);
@@ -148,17 +186,23 @@ public class TaskHolder extends TexturedObject {
                 return 0;
             } else if (cmd.contentEquals("getTask") && active){
                 getParent().dispatch(ChannelID.INPUT, new Object[]{"activeTask", task.getName(), initTime - DURATION});
-
             }
-
             if (((String) input[0]).contentEquals("input")) {
                 task.call(input);
             }
-
         }
         return 0;
     }
 
+    /**
+     * Paint the Task if active.
+     * Paint an Arrow showing the direction to the task.
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         if(!active)
@@ -203,7 +247,6 @@ public class TaskHolder extends TexturedObject {
                         int rec2Width = camera.getWidth() - 200, rec2Height = camera.getHeight() - 200;
                         Point coll2 = Collision.findLineRectIntersection(playerCenter,taskHolderCenter,rect2,rec2Width,rec2Height);
 
-
                         PaintingUtil.paintArrow(g2d, coll2, coll1, Color.BLACK, Color.RED);
                     }
                     if(Main.DEBUG){
@@ -211,10 +254,7 @@ public class TaskHolder extends TexturedObject {
                         g.drawLine(playerCenter.x, playerCenter.y,
                                 taskHolderCenter.x, taskHolderCenter.y);
                     }
-
                 }
-
-
             }
             g2d.setColor(Color.RED);
             g2d.drawRect(camera.applyXTransform(pos.x),
@@ -225,12 +265,7 @@ public class TaskHolder extends TexturedObject {
                 g2d.setStroke(s);
         }
 
-
         if (Main.DEBUG) {
-
-
-
-
             if (inProximity) {
                 g.setColor(Color.CYAN);
                 g.fillRect(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y),

@@ -3,6 +3,7 @@ package de.jspll.graphics;
 import de.jspll.data.objects.GameObject;
 import de.jspll.util.Logger;
 import de.jspll.util.Vector2D;
+
 import java.awt.*;
 
 /**
@@ -10,14 +11,13 @@ import java.awt.*;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Jonas Sperling, Lukas Becker (geringe Beteiligung)
- *
  * @version 1.0
  */
 
 public class Camera {
+    private final double smoothness = 1.5;
     private int width;
     private int height;
-    private final double smoothness = 1.5;
     private double x;
     private double y;
     private double xCenter;
@@ -136,12 +136,12 @@ public class Camera {
 
     }
 
-    public void instantlyCenterToPos(int x, int y){
+    public void instantlyCenterToPos(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void instantlyZoom(float level){
+    public void instantlyZoom(float level) {
         this.zoom = level;
     }
 
@@ -157,18 +157,6 @@ public class Camera {
     }
 
 
-    private void moveToBound() {
-        while (x < 0) increase_x(1);
-        while (y < 0) increase_y(1);
-
-        //Use with precaution
-//        while (x > 3552 + width) increase_x(-1);
-//        while (y > 3136 + height*2) increase_y(-1);
-
-        //Breite 3552
-        //Höhe 3136
-    }
-
     /**
      * This function is used to determine if the camera should stop moving
      *
@@ -177,18 +165,10 @@ public class Camera {
      */
 
     private boolean[] checkIfCameraStopMovement(Point pos) {
-        // TODO remove fixed values: values are relative to zoom
-
-        //it should be a lg function, but idk how :D
+        //it should be a lg function
         //https://imgur.com/a/d48dVB1
-
-        int x_right = (int) (Math.log(zoom) + 2576);
-        int y_down = (int) (Math.log(zoom) + 2564);
-        int x_left = (int) (Math.log(zoom) + 944);
-        int y_up = (int) (Math.log(zoom) + 509);
-
-        return new boolean[]{pos.x < 370 || pos.x > 3150,
-                pos.y < 184 || pos.y > 2890};
+        return new boolean[]{pos.x < 465 || pos.x > 3056,
+                pos.y < 240 || pos.y > 2833};
     }
 
     public int[] getRevertedBounds() {
@@ -208,7 +188,7 @@ public class Camera {
         return out;
     }
 
-    public void updateWindowSize(Graphics2D g){
+    public void updateWindowSize(Graphics2D g) {
         width = (int) Math.round(g.getClipBounds().getWidth());
         height = width = (int) Math.round(g.getClipBounds().getHeight());
         updateXY();

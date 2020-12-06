@@ -27,11 +27,16 @@ public class LoadingBar extends GameObject {
 
     float progress = 0;
 
+    /**
+     * Unsubscribe/delete the {@code LoadingBar}
+     *
+     * @param elapsedTime delta time between frames
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char update(float elapsedTime) {
         if(progress == -1){
             getParent().delete(this);
-
             progressReporter = null;
         }
         return 0;
@@ -40,6 +45,15 @@ public class LoadingBar extends GameObject {
     public void setMessage(String message) {
         this.message.set(message);
     }
+
+    /**
+     * Draw the current state of the loading process
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
+     */
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
