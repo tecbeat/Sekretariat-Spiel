@@ -29,10 +29,10 @@ public class GraphicsHandler implements SubHandler {
         frame_graphics.setClip(0,0,size.width,size.height);
         this.mode = mode;
         switch (mode){
-            case DIALOG:
+/*            case DIALOG:
                 dialog = new Secondary_window(windowTitle,slate,size);
                 cameras[0] = new Camera(624,377,(int) size.getWidth(),(int) size.getHeight(),2);
-                break;
+                break;*/
             case MAIN:
                 this.window = new de.jspll.graphics.Window(windowTitle,slate,size);
                 this.windowTitle = windowTitle;

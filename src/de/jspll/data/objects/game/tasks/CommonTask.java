@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @version 1.0
  */
 public class CommonTask implements Task {
-    private final Color maskColor = new Color(0, 0, 0, 172);
     // headings
     private final String goodHeading;
     private final String badHeading;
