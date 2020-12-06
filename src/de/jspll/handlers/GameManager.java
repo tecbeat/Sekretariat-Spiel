@@ -59,6 +59,7 @@ public class GameManager extends TexturedObject {
     private int taskCount = 0;
     private int completedTasks = 0;
     private float remainingTime;
+    private boolean firstUpdate;
 
     // mouse properties
     private boolean mousedown;
@@ -98,6 +99,12 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public char update(float elapsedTime) {
+        if(firstUpdate && ROUND_TIME - remainingTime > 5){
+            for(int i = 0; i< BASE_TASKS; i++)
+                addTaskToCurrentLevel();
+            firstUpdate = false;
+        }
+
         if(gameRunning) {
 
             if(player == null){
@@ -258,9 +265,8 @@ public class GameManager extends TexturedObject {
         this.taskCount = 0;
         this.completedTasks = 0;
         this.activeTaskIdentifiers = new ArrayList<>();
+        firstUpdate = true;
         statManager.resetKarma();
-        for(int i = 0; i< BASE_TASKS; i++)
-            addTaskToCurrentLevel();
         //Level Loading resets the ui channel, so the statManager needs to get loaded again
         gameObjectHandler.loadStatManager(statManager);
     }
