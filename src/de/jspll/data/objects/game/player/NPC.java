@@ -13,34 +13,30 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Jonas Sperling, Lukas Becker
- *
  * @version 1.0
  */
 
 public class NPC extends Player {
 
 
-    private TaskHolder task;
+    private final String[] keyList = new String[]{"w", "a", "s", "d", "q", "SHIFT"};
     double sumTime = 0;
     Random randomGenerator = new Random(System.currentTimeMillis());
-    int in = randomGenerator.nextInt(4);
-    private String[] keyList = new String[]{"w","a","s","d","q","SHIFT"};
-
+    int nextMovement = randomGenerator.nextInt(4);
+    boolean firstTime = true;
+    boolean taskActive = false;
+    private TaskHolder task;
     private boolean posBroadcasted = false;
 
-
-    public NPC(String ID, String ObjectID, ColorScheme colorScheme) {
-        super(ID, ObjectID, new Point(1280, 1120), new Dimension(32, 64), colorScheme);
-        referenceSpeed = 80f;
-        resetKeyMap();
+    public NPC(String ID, String ObjectID, Point NPCStartPos, ColorScheme colorScheme) {
+        this(ID, ObjectID, NPCStartPos, colorScheme, null);
     }
 
-    public NPC(String ID, String ObjectID, ColorScheme colorScheme, TaskHolder task) {
-        super(ID, ObjectID, new Point(1100, 1120), new Dimension(32, 64), colorScheme);
+    public NPC(String ID, String ObjectID, Point NPCStartPos, ColorScheme colorScheme, TaskHolder task) {
+        super(ID, ObjectID, NPCStartPos, new Dimension(32, 64), colorScheme);
         referenceSpeed = 80f;
         resetKeyMap();
         this.task = task;
-
     }
 
     public NPC(String ID, String ObjectID, ColorScheme colorScheme, TaskHolder task, Point spawnPosition) {
@@ -51,34 +47,37 @@ public class NPC extends Player {
 
     }
 
-    private void resetKeyMap(){
+    /**
+     * Reset the KeyMap.
+     * Default: all values are false
+     */
+    private void resetKeyMap() {
         super.keyMap = new HashMap<>();
-        for (String s: keyList){
-            keyMap.put(s,new AtomicBoolean(false));
+        for (String s : keyList) {
+            keyMap.put(s, new AtomicBoolean(false));
         }
     }
-    boolean firstTime = true;
-    boolean active = false;
+
     @Override
     public char update(float elapsedTime) {
 
-        if (firstTime){
+        if (firstTime) {
             getParent().loadTask(ChannelID.SCENE_GAME, task);
             firstTime = false;
         }
 
-        task.setPos(new Point(super.pos.x, super.pos.y));
+        task.setPos(new Point(super.pos.x, super.pos.y + 20));
 
-        if (task != null)  active = task.getTask().isActive();
+        if (task != null) taskActive = task.getTask().isActive();
 
         if (sumTime > 2) {
-            in = randomGenerator.nextInt(5);
+            nextMovement = randomGenerator.nextInt(5);
             sumTime = 0;
             resetKeyMap();
         }
-        if (active) in = 4;
+        if (taskActive) nextMovement = 4;
 
-        switch (in) {
+        switch (nextMovement) {
             case 0:
                 keyMap.get("s").set(true);
                 break;
@@ -91,7 +90,8 @@ public class NPC extends Player {
             case 3:
                 keyMap.get("d").set(true);
                 break;
-            default:break;
+            default:
+                break;
         }
 
         sumTime += elapsedTime;
@@ -123,7 +123,7 @@ public class NPC extends Player {
                 if (input[1] instanceof String) {
                     String scope = (String) input[1];
                     ChannelID targetChannel = (ChannelID) input[2];
-                    getParent().dispatch(targetChannel, scope, new Object[]{"npcPos"  + getID(), pos, dimension});
+                    getParent().dispatch(targetChannel, scope, new Object[]{"npcPos" + getID(), pos, dimension});
                     posBroadcasted = true;
                     //sends ["npcPos", pos, dimension] to scope
                 }

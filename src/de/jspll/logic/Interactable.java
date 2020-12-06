@@ -13,8 +13,9 @@ import de.jspll.handlers.GameObjectHandler;
 
 public interface Interactable {
     /**
-     *@return default return value 0x00
-     * **/
+     * @return default return value 0x00
+     *
+     **/
     char call( Object[] input);
 
     /**
@@ -22,7 +23,7 @@ public interface Interactable {
      * <objectID>:<id>
      * objectID: goup.subgroup.Object
      * id: 1
-     * **/
+     */
     String getID();
 
     void setListener(GameObjectHandler listener);

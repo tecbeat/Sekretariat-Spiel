@@ -111,7 +111,7 @@ public class Camera {
      *
      * @param objectPos   Point of the Object
      * @param dimension   Width/Height of the Object
-     * @param elapsedTime Time that has elapsed since the last time this function was called
+     * @param elapsedTime delta time between frames
      */
 
     public void centerToPos(Point objectPos, Dimension dimension, float elapsedTime) {
@@ -149,7 +149,7 @@ public class Camera {
      * This Function gives the opportunity to use a GameObject as the reference
      *
      * @param object      GameObject which will be centred in the Screen Middle
-     * @param elapsedTime Time that has elapsed since the last time this function was called
+     * @param elapsedTime delta time between frames
      */
 
     public void centerToObject(GameObject object, float elapsedTime) {

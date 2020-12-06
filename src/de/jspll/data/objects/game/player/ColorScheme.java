@@ -5,7 +5,7 @@ public enum ColorScheme {
     BLUE(2),
     PURPLE_MAN(3),
     RED_BROWN(4),
-    PURPLE_WOMAN(6);
+    PURPLE_WOMAN(5);
 
     int id;
     ColorScheme(int id){
