@@ -18,6 +18,11 @@ public class Vector2D {
         x = 0.0; y = 0.0;
     }
 
+    public Vector2D(Vector2D vec) {
+        super();
+        x = vec.x; y = vec.y;
+    }
+
     public Vector2D(double x, double y) {
         super();
         this.x = x; this.y = y;
@@ -143,15 +148,16 @@ public class Vector2D {
         return Math.sqrt( x*x + y*y );
     }
 
-    public void updatePos(Point pos){
+    public Point updatePos(Point pos){
         if(x == 0 && y == 0){
-            return;
+            return pos;
         }
         Double x = pos.getX(), y = pos.getY();
         x += this.x;
         y += this.y;
 
         pos.move((int)Math.round(x), (int)Math.round(y));
+        return pos;
     }
 
     public void addToX(int amount){
@@ -175,13 +181,14 @@ public class Vector2D {
      * The {@code x} and {@code y} Coordinates are divided by the current euclidean distance
      */
 
-    public void normalize(){
+    public Vector2D normalize(){
         if(x == 0 && y == 0){
-            return;
+            return this;
         }
         double abs = euclideanDistance();
         this.x /= abs;
         this.y /= abs;
+        return this;
     }
 
     public Vector2D[] splitIntoXY(){

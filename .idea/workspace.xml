@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" afterDir="false" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/Collision.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/Collision.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/Vector2D.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/Vector2D.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,6 +36,146 @@
     </option>
     <expand />
     <select />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file leaf-file-name="GameObjectHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="886">
+              <caret line="77" column="39" lean-forward="false" selection-start-line="77" selection-start-column="39" selection-end-line="77" selection-end-column="39" />
+              <folding>
+                <element signature="e#11505#11506#0" expanded="true" />
+                <element signature="e#11556#11557#0" expanded="true" />
+                <element signature="e#19242#19243#0" expanded="true" />
+                <element signature="e#19292#19293#0" expanded="true" />
+                <element signature="e#19333#19334#0" expanded="true" />
+                <element signature="e#19367#19368#0" expanded="true" />
+                <element signature="e#19408#19409#0" expanded="true" />
+                <element signature="e#19466#19467#0" expanded="true" />
+                <element signature="e#19528#19529#0" expanded="true" />
+                <element signature="e#19576#19577#0" expanded="true" />
+                <element signature="e#19621#19622#0" expanded="true" />
+                <element signature="e#19656#19657#0" expanded="true" />
+                <element signature="e#19698#19699#0" expanded="true" />
+                <element signature="e#19737#19738#0" expanded="true" />
+                <element signature="e#19783#19784#0" expanded="true" />
+                <element signature="e#19843#19844#0" expanded="true" />
+                <element signature="e#19894#19895#0" expanded="true" />
+                <element signature="e#19932#19933#0" expanded="true" />
+                <element signature="e#19983#19984#0" expanded="true" />
+                <element signature="e#20021#20022#0" expanded="true" />
+                <element signature="e#20066#20067#0" expanded="true" />
+                <element signature="e#20101#20102#0" expanded="true" />
+                <element signature="e#20163#20164#0" expanded="true" />
+                <element signature="e#20211#20212#0" expanded="true" />
+                <element signature="e#20282#20283#0" expanded="true" />
+                <element signature="e#20336#20337#0" expanded="true" />
+                <element signature="e#20379#20380#0" expanded="true" />
+                <element signature="e#20423#20424#0" expanded="true" />
+                <element signature="e#20480#20481#0" expanded="true" />
+                <element signature="e#20528#20529#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Collision.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/util/Collision.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="949">
+              <caret line="34" column="12" lean-forward="false" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NPC.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/NPC.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3840">
+              <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameTrie.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/GameTrie.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+              <folding>
+                <element signature="e#2950#2951#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TileMap.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="503">
+              <caret line="456" column="72" lean-forward="false" selection-start-line="456" selection-start-column="72" selection-end-line="456" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskHolder.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1037">
+              <caret line="203" column="58" lean-forward="false" selection-start-line="203" selection-start-column="58" selection-end-line="203" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StatManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/stats/StatManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2957">
+              <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PaintingUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="900">
+              <caret line="33" column="53" lean-forward="true" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Vector2D.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/util/Vector2D.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="780">
+              <caret line="190" column="20" lean-forward="false" selection-start-line="190" selection-start-column="20" selection-end-line="190" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -831,7 +972,35 @@
       <recent name="C:\Users\Lukas\Documents\a_Studium\3. Semester\Software Engineering\Repo\src\de\jspll\graphics\assets\map" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Debug">
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
+        <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -1229,7 +1398,9 @@
       <workItem from="1605814291678" duration="2158000" />
       <workItem from="1606124541152" duration="90000" />
       <workItem from="1606124646296" duration="11169000" />
-      <workItem from="1606931627613" duration="4317000" />
+      <workItem from="1606752130780" duration="9716000" />
+      <workItem from="1607081665286" duration="15558000" />
+      <workItem from="1607110800440" duration="13711000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -1434,7 +1605,28 @@
       <option name="project" value="LOCAL" />
       <updated>1606139922844</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Comment with names">
+      <created>1607104191978</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1607104191978</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Comment with names">
+      <created>1607172848844</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1607172848844</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Comment with names">
+      <created>1607172919705</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1607172919705</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1660,8 +1852,9 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="((TileMap)this).parent" custom="de.jspll.data.objects.game.map.TileMap" />
-        <watch expression="channels[7].tries.get(0).chars" />
+        <watch expression="frame_graphics" language="JAVA" />
+        <watch expression="frame_graphics.getClipBounds()" language="JAVA" />
+        <watch expression="frame_graphics.getClip()" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
