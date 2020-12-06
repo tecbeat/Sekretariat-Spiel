@@ -4,7 +4,6 @@ import de.jspll.graphics.ResourceHandler;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.net.URL;
 import java.util.Random;
 
 /**
@@ -17,7 +16,6 @@ import java.util.Random;
  */
 
 public class AudioHandler {
-    File[] files;
 
     /**
      *
