@@ -30,7 +30,6 @@ public class EOBReaction implements iTaskReaction {
     @Override
     public void taskFinished(StatManager statManager, boolean goodTask) {
         if(goodTask) {
-            System.out.println("Test");
             goh.getGameManager().setRemainingTime(-1);
         }
     }
