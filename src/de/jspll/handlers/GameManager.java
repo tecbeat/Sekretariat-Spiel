@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class GameManager extends TexturedObject {
     //Balancing
-    private final float ROUND_TIME = 10f;
+    private final float ROUND_TIME = 300f;
     private final int NEXT_TASK_TRESHOLD = 30;
     private final int BASE_TASKS = 2;
     private final int TASKS_PER_LEVEL = 4;
@@ -384,6 +384,21 @@ public class GameManager extends TexturedObject {
             g.setColor(Color.BLACK);
             g.drawString(heading, btnStartX + 5, btnStartY + 15);
         }
+
+        if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD){
+            heading = "Hauptmenü";
+            int btnMenuStartX = btnStartX + 150;
+            g.setColor(Color.RED);
+            if (checkHover(btnMenuStartX, btnStartY, buttonSize[0], buttonSize[1])) {
+                g.fillRect(btnMenuStartX, btnStartY, buttonSize[0], buttonSize[1]);
+                g.setColor(Color.BLACK);
+                g.drawString(heading, btnMenuStartX + 5, btnStartY + 15);
+            } else {
+                g.drawRect(btnMenuStartX, btnStartY, buttonSize[0], buttonSize[1]);
+                g.setColor(Color.BLACK);
+                g.drawString(heading, btnMenuStartX + 5, btnStartY + 15);
+            }
+        }
     }
 
      /**
@@ -465,6 +480,12 @@ public class GameManager extends TexturedObject {
                 } else {
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
+
+
+                resultScreen = false;
+            }
+            if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
+                gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
             }
         }
