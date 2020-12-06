@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  * @version 1.0
  */
-
 public class CommonTask implements Task {
     @Expose(deserialize = false, serialize = false)
 
@@ -71,17 +70,15 @@ public class CommonTask implements Task {
     private final String badHeading;
 
     private StatManager statManager;
-
+    private boolean startedInHitbox = false;
 
     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager) {
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
-        //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
     }
 
-   
      /**
      * @param statManager manages the game statistics
      * @param onSelect specific class to handle the button clicks
@@ -113,7 +110,6 @@ public class CommonTask implements Task {
         this.singleChoiceTask = false;
     }
 
-
     private void textBasedRender(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         initTaskScreen(g, camera);
 
@@ -124,13 +120,11 @@ public class CommonTask implements Task {
             setUpButton(g, false);
         }
 
-
         if (!buttonLock) {
             checkClick();
         }
     }
 
-    private boolean startedInHitbox = false;
     private void resetDraggablePos(){
         draggablePos = new Point(boundingX + screenWidth / 4, boundingY + screenHeight / 4);
     }
@@ -145,10 +139,6 @@ public class CommonTask implements Task {
         g2d.drawImage(textures[0], boundingX, boundingY, boundingWidth, boundingHeight, null);
         Rectangle btnGoodHitbox = new Rectangle(btnGoodX,btnStartY,buttonSize[0],buttonSize[1]);
         Rectangle btnBadHitbox = new Rectangle(btnBadX,btnStartY,buttonSize[0],buttonSize[1]);
-        //g2d.setColor(Color.GREEN);
-        //g2d.fill(btnGoodHitbox);
-        //g2d.setColor(Color.RED);
-        //g2d.fill(btnBadHitbox);
 
         if (buttonLock) {
             onButtonClicked(g, camera);
@@ -157,7 +147,6 @@ public class CommonTask implements Task {
             setUpButton(g, true);
             setUpButton(g, false);
         }
-
 
         Rectangle draggableHitbox = new Rectangle(draggablePos.x-draggableDim.width/2,
                 draggablePos.y-draggableDim.height/2,
@@ -190,7 +179,6 @@ public class CommonTask implements Task {
             }
         }
 
-
         PaintingUtil.drawPictureFromCenter(draggablePos, textures[1], g2d, draggableDim);
         if (Main.DEBUG) {
             Stroke s = g2d.getStroke();
@@ -204,7 +192,6 @@ public class CommonTask implements Task {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        //g.setFont(Font.getFont(Font.SANS_SERIF));
         // close task window when countdown is lower than 0
         if(!active) return;
         countTimerDown(elapsedTime);
@@ -227,8 +214,6 @@ public class CommonTask implements Task {
         } else {
             textBasedRender(g, elapsedTime, camera, currStage);
         }
-
-
     }
 
     private void initVars(Graphics g) {
@@ -253,7 +238,6 @@ public class CommonTask implements Task {
             btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
             btnBadX = (boundingX + (screenWidth / 2) / 2) + 85;
         }
-
     }
 
     /**

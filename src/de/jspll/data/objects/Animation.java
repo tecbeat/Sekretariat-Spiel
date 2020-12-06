@@ -15,9 +15,7 @@ import static de.jspll.graphics.ResourceHandler.FileType.PNG;
  *
  * @version 1.0
  */
-
 public class Animation extends Texture {
-
 
     protected AtomicBoolean textureInitialized = new AtomicBoolean(false);
     protected boolean looping = false;
@@ -89,13 +87,11 @@ public class Animation extends Texture {
             selectedTexture++;
 
         }
-
         textures[selectedTexture % textures.length].draw(g2d, elapsedTime, camera);
     }
 
     public void drawFrame(Graphics g, float elapsedTime, Camera camera, Point point) {
         Graphics2D g2d = (Graphics2D) g;
-
     }
 
     public void startAnimation(Boolean start) {
@@ -111,8 +107,6 @@ public class Animation extends Texture {
         current_time = 0;
         selectedTexture = 0;
     }
-
-
 
     public void stopAnimation() {
         active = false;
@@ -131,9 +125,7 @@ public class Animation extends Texture {
         setDuration(duration);
     }
 
-
     protected class KeyPoint {
-
         protected double timestamp;
         protected int selectedImage;
         protected boolean transformations;
@@ -152,5 +144,4 @@ public class Animation extends Texture {
             this.dimension = dimension;
         }
     }
-
 }

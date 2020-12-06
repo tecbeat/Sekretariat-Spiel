@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class TaskHolder extends TexturedObject {
 
     private final int DURATION = 120;
@@ -47,9 +46,9 @@ public class TaskHolder extends TexturedObject {
         this.radius = radius;
         if (task != null)
             task.setHolder(this);
-        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
+        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20,
+                new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
     }
-
 
     @Override
     public void requestTexture() {
@@ -148,13 +147,11 @@ public class TaskHolder extends TexturedObject {
                 return 0;
             } else if (cmd.contentEquals("getTask") && active){
                 getParent().dispatch(ChannelID.INPUT, new Object[]{"activeTask", task.getName(), initTime - DURATION});
-
             }
 
             if (((String) input[0]).contentEquals("input")) {
                 task.call(input);
             }
-
         }
         return 0;
     }
@@ -183,12 +180,7 @@ public class TaskHolder extends TexturedObject {
                 g2d.setStroke(s);
         }
 
-
         if (Main.DEBUG) {
-
-
-
-
             if (inProximity) {
                 g.setColor(Color.CYAN);
                 g.fillRect(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y),
@@ -238,8 +230,9 @@ public class TaskHolder extends TexturedObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        if(!active)
+        if(!active) {
             return;
+        }
 
         super.paint(g, elapsedTime, camera, currStage);
 
@@ -248,8 +241,6 @@ public class TaskHolder extends TexturedObject {
         } else if(currStage.valueOf() == ChannelID.UI.valueOf()){
             paintUI(g, elapsedTime, camera, currStage);
         }
-
-
     }
 
     public void setPos(Point pos) {

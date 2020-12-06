@@ -12,8 +12,10 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class TexturedObject extends GameObject {
+
+    protected Texture texture;
+    private boolean textureLoaded;
 
     public TexturedObject() {
         super();
@@ -32,10 +34,6 @@ public class TexturedObject extends GameObject {
         super(ID, objectID, x, y, dimension, channels);
         this.texture = texture;
     }
-
-
-    protected Texture texture;
-    private boolean textureLoaded;
 
     public boolean isTextureLoaded() {
         return textureLoaded;
@@ -102,8 +100,4 @@ public class TexturedObject extends GameObject {
         }
         return 0;
     }
-
-
-
-
 }

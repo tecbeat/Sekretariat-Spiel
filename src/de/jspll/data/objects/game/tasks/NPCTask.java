@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-
 public class NPCTask extends GameObject implements Task {
     @Expose(deserialize = false, serialize = false)
 
@@ -60,7 +59,6 @@ public class NPCTask extends GameObject implements Task {
     private String[] files;
     private BufferedImage[] textures;
 
-
     public NPCTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, boolean student){
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
@@ -96,9 +94,11 @@ public class NPCTask extends GameObject implements Task {
             return;
         }
 
-        if (files != null)
-            if (isLoaded())
-                g.drawImage(textures[0],50,50, 100, 100, null);
+        if (files != null) {
+            if (isLoaded()) {
+                g.drawImage(textures[0], 50, 50, 100, 100, null);
+            }
+        }
     }
 
     /**
@@ -139,9 +139,11 @@ public class NPCTask extends GameObject implements Task {
     private void paintInteraction(Graphics g, Camera camera) {
         g.setColor(goodInteraction ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255));
         String correctHeading = goodInteraction ? goodHeading : badHeading;
-        g.drawString("Du hast einen " + (isStudent ? "Studenten" : "Professor") + " getroffen!", (screenWidth / 2) - 110, screenHeight / 2 - 30);
+        g.drawString("Du hast einen " + (isStudent ? "Studenten" : "Professor") + " getroffen!",
+                (screenWidth / 2) - 110, screenHeight / 2 - 30);
         g.drawString(correctHeading, (screenWidth / 2) - 110, screenHeight / 2);
-        g.drawString("Verbleibende Zeit: " + String.format("%2.2f",countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
+        g.drawString("Verbleibende Zeit: " + String.format("%2.2f",countDown), camera.getWidth() / 4 + 10,
+                camera.getHeight() / 4 + 20);
     }
 
     @Override
@@ -218,8 +220,6 @@ public class NPCTask extends GameObject implements Task {
         countDown = 10;
         this.active = true;
 
-
-
         if((isStudent && statManager.getKarmaScore() > 0) || (!isStudent && statManager.getKarmaScore() < 0)){
             goodInteraction = true;
         } else {
@@ -228,8 +228,6 @@ public class NPCTask extends GameObject implements Task {
 
         buttonLock = true;
         countDownStarted = true;
-
-
     }
 
     public void deactivate(){

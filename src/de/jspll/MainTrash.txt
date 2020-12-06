@@ -41,7 +41,7 @@ frameHandler.getGameObjectHandler().switchScene(ChannelID.SCENE_2);
         objects.add(mo);
         mo = new SceneSwitchButton("Credits", "de.jspll.data.objects.game.ui.MenuObject", width/2,height/3+50,new Dimension(120,20), "Credits", true, ChannelID.SCENE_3, "/scenes/Credits.json");
         objects.add(mo);
-        semiTransparentBackground stb = new semiTransparentBackground("BG", "de.jspll.data.objects.game.ui.semiTransparentBackground", width/2+100, height/3 -40, new Dimension(450, 200));
+        semiTransparentBackground stb = new semiTransparentBackground("BG", "de.jspll.data.objects.game.ui.SemiTransparentBackground", width/2+100, height/3 -40, new Dimension(450, 200));
         objects.add(stb);
 
 

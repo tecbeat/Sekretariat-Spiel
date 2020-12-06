@@ -15,7 +15,6 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-
 public class JSONSupport {
     private static Gson gson = new GsonBuilder().setExclusionStrategies(new GsonExclusionStrategy()).create();;
 
@@ -33,7 +32,6 @@ public class JSONSupport {
             SUBSTRING_END = type.length()-1;
         }
 
-
         try {
             return Class.forName(type.substring(SUBSTRING_START,SUBSTRING_END));
         } catch (ClassNotFoundException e) {
@@ -41,7 +39,6 @@ public class JSONSupport {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public static String convertObjectToJson(Object o){
@@ -65,8 +62,6 @@ public class JSONSupport {
         }
         res.append("]");
         return res.toString();
-
-
     }
 
     public static String convertToCommonJson(Object o){
@@ -92,7 +87,6 @@ public class JSONSupport {
                 object.append(", ");
             }
         }
-
         object.append("}");
         return "{\"type\": \""+type+"\", \"object\": "+object+"}";
     }

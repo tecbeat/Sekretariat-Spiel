@@ -22,9 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Jonas Sperling, Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class Player extends TexturedObject {
-
 
     //[0] = Forward (W), [1] = Backwards (S), [2] = Left(L), [3] = Right(R)
     private final ArrayList<Animation> movementAnimationList = new ArrayList<>();
@@ -49,7 +47,8 @@ public class Player extends TexturedObject {
         channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.collision_Dim = new Dimension(dimension.width - 2, dimension.height / 2 - 16);
         for (String s : new String[]{"forward", "backward", "left", "right", "idle0", "idle1", "idle2", "idle3"}) {
-            movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/" + s + "_", s.contains("idle") ? 1 : 6, pos, dimension, this, 1F));
+            movementAnimationList.add(new Animation("/assets/player_animation/" + colorScheme + "/" + s + "_",
+                    s.contains("idle") ? 1 : 6, pos, dimension, this, 1F));
         }
     }
 
@@ -381,9 +380,7 @@ public class Player extends TexturedObject {
                 ChannelID targetChannel = (ChannelID) input[1];
                 getParent().dispatch(targetChannel, new Object[]{"playerObj", this});
             }
-
         }
-
         return 0;
     }
 
@@ -473,4 +470,3 @@ public class Player extends TexturedObject {
         for (Animation a : movementAnimationList) a.setPos(pos);
     }
 }
-

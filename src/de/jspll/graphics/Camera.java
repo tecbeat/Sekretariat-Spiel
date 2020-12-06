@@ -13,7 +13,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class Camera {
     private int width;
     private int height;
@@ -113,12 +112,10 @@ public class Camera {
      * @param dimension   Width/Height of the Object
      * @param elapsedTime delta time between frames
      */
-
     public void centerToPos(Point objectPos, Dimension dimension, float elapsedTime) {
         Point halfResolution = new Point(width / 2, height / 2);
         boolean[] OutSideCheck = checkIfCameraStopMovement(objectPos);
         int[] transform = transform(new int[]{objectPos.x + dimension.width / 2, objectPos.y + dimension.height / 2});
-
 
         //moveToBound();
         Point transformedPos = new Point(transform[0], transform[1]);
@@ -151,7 +148,6 @@ public class Camera {
      * @param object      GameObject which will be centred in the Screen Middle
      * @param elapsedTime delta time between frames
      */
-
     public void centerToObject(GameObject object, float elapsedTime) {
         centerToPos(new Point(object.getX(), object.getY()), object.getDimension(), elapsedTime);
     }
@@ -160,13 +156,6 @@ public class Camera {
     private void moveToBound() {
         while (x < 0) increase_x(1);
         while (y < 0) increase_y(1);
-
-        //Use with precaution
-//        while (x > 3552 + width) increase_x(-1);
-//        while (y > 3136 + height*2) increase_y(-1);
-
-        //Breite 3552
-        //Höhe 3136
     }
 
     /**
@@ -175,13 +164,7 @@ public class Camera {
      * @param pos Point of the
      * @return two-dimensional Boolean Array [0] = X-Axis, [1] = Y-Axis
      */
-
     private boolean[] checkIfCameraStopMovement(Point pos) {
-        // TODO remove fixed values: values are relative to zoom
-
-        //it should be a lg function, but idk how :D
-        //https://imgur.com/a/d48dVB1
-
         int x_right = (int) (Math.log(zoom) + 2576);
         int y_down = (int) (Math.log(zoom) + 2564);
         int x_left = (int) (Math.log(zoom) + 944);

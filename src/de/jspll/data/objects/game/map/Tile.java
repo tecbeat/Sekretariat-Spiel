@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
  * @author Laura Schmidt, Philipp Polland
  * @version 1.0
  */
-
 public class Tile {
     private transient TileMap parent;
     private boolean collidable;
@@ -46,10 +45,8 @@ public class Tile {
         if (parent == null)
             parent = gO;
         if (cache == null || tW != width || tH != height) {
-            cache = PaintingUtil.resize(parent.tileSets[textureReference[4]].getSubimage(textureReference[0], textureReference[1], textureReference[2], textureReference[3]), width, height);
-//            Graphics2D g = cache.createGraphics();
-//            g.setColor(Color.RED);
-//            g.drawString("x=" + textureReference[0] + " y=" + textureReference[1],0,10);
+            cache = PaintingUtil.resize(parent.tileSets[textureReference[4]].getSubimage(textureReference[0],
+                    textureReference[1], textureReference[2], textureReference[3]), width, height);
             tW = width;
             tH = height;
         }

@@ -8,7 +8,6 @@ package de.jspll.data;
  *
  * @version 1.0
  */
-
 public enum ChannelID {
     INSTANCE_REGISTER(0),
     INPUT(1),

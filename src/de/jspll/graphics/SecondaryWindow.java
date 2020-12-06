@@ -11,10 +11,9 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
-public class Secondary_window extends JDialog
-{
-    public Secondary_window(String windowTitle, JPanel content, Dimension size) {
+@Deprecated
+public class SecondaryWindow extends JDialog {
+    public SecondaryWindow(String windowTitle, JPanel content, Dimension size) {
         //setting misc. attributes of the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         getContentPane().setPreferredSize(size);
@@ -24,9 +23,6 @@ public class Secondary_window extends JDialog
     }
 
     private void init(JPanel content) {
-        //setLocationRelativeTo(null);
-
-        //I wrote this like 6 years ago, I have no clue what it does. I only know that I needed it...
         setLayout(new GridLayout(1, 1, 0, 0));
 
         getContentPane().add(content);

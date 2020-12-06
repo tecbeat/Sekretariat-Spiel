@@ -20,7 +20,6 @@ import static de.jspll.data.ChannelID.*;
  *
  * @version 1.0
  */
-
 public class GraphicsHandler implements SubHandler {
 
     public GraphicsHandler(String windowTitle, Dimension size, HandlerMode mode){
@@ -31,7 +30,7 @@ public class GraphicsHandler implements SubHandler {
         this.mode = mode;
         switch (mode){
             case DIALOG:
-                dialog = new Secondary_window(windowTitle,slate,size);
+                dialog = new SecondaryWindow(windowTitle,slate,size);
                 cameras[0] = new Camera(0,0,(int) size.getWidth(),(int) size.getHeight(),2);
                 break;
             case MAIN:
@@ -50,7 +49,7 @@ public class GraphicsHandler implements SubHandler {
     private de.jspll.graphics.Window window;
 
     //Dialog mode
-    private Secondary_window dialog;
+    private SecondaryWindow dialog;
 
     //time passed since last drawing call
     private float elapsedTime;
@@ -63,7 +62,7 @@ public class GraphicsHandler implements SubHandler {
     private int selectedCamera = 0;
 
 
-    //gets called according to fps target;
+    // gets called according to fps target;
     // - elapsedTime is the time in seconds that has passed since the finish of last call
     public void execute(float elapsedTime){
         this.elapsedTime = elapsedTime;
@@ -87,22 +86,10 @@ public class GraphicsHandler implements SubHandler {
         if(g == null || frame == null){
             return;
         }
-//        int gWidth = g.getClipBounds().width;
-//        int gHeight = g.getClipBounds().height;
-//        if( frame.getWidth() != gWidth || frame.getHeight() != gHeight){
-//            frame = new BufferedImage(gWidth,gHeight,BufferedImage.TYPE_INT_ARGB);
-//            frame_graphics.dispose();
-//            frame_graphics = frame.createGraphics();
-//            frame_graphics.setClip(0,0,gWidth,gHeight);
-//
-//            cameras[selectedCamera].updateWindowSize(frame_graphics);
-//        }
 
         frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);
-        //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         frame_graphics.setColor(ColorStorage.BACKGROUND_COLOR);
-
 
         //fill background
         frame_graphics.fillRect(0,0,slate.getWidth(),slate.getHeight());
@@ -139,12 +126,10 @@ public class GraphicsHandler implements SubHandler {
     }
 
     public Point getMousePos(){
-        if(window == null)
+        if(window == null) {
             return null;
-        //Point global_mouse = MouseInfo.getPointerInfo().getLocation();
-        //return new Point(global_mouse.x - window.getLocation().x,global_mouse.y  - window.getRootPane().getContentPane().getLocation().y);
-        return  slate.getMousePosition(true);
-
+        }
+        return slate.getMousePosition(true);
     }
 
     public Camera getSelectedCamera() {
@@ -177,7 +162,6 @@ public class GraphicsHandler implements SubHandler {
     public Slate getSlate() {
         return slate;
     }
-
 
     public enum HandlerMode{
         MAIN,

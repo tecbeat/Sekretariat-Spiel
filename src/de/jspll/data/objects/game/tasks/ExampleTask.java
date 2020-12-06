@@ -15,9 +15,17 @@ import java.awt.*;
  */
 @Deprecated
 public class ExampleTask implements Task{
+
+    private Color maskColor = new Color(0, 0, 0, 172);
+    @Expose(deserialize = false, serialize = false)
+    private TaskHolder holder;
+    private boolean active = false;
+
+    //for testing
+    private float countDown = 10;
+
     @Override
     public void requestTexture() {
-
     }
 
     @Override
@@ -27,16 +35,7 @@ public class ExampleTask implements Task{
 
     @Override
     public void loadTextures() {
-
     }
-
-    private Color maskColor = new Color(0, 0, 0, 172);
-    @Expose(deserialize = false, serialize = false)
-    private TaskHolder holder;
-    private boolean active = false;
-
-    //for testing
-    private float countDown = 10;
 
     public boolean isActive() {
         return active;
@@ -64,7 +63,6 @@ public class ExampleTask implements Task{
     }
 
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-
         g.setColor(maskColor);
         g.fillRect(0, 0, camera.getWidth(), camera.getHeight());
         g.setColor(Color.WHITE);

@@ -11,7 +11,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public interface Drawable {
     void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage);
 }

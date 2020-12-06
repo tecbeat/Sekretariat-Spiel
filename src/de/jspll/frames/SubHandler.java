@@ -8,7 +8,6 @@ package de.jspll.frames;
  *
  * @version 1.0
  */
-
 public interface SubHandler {
     void execute(float elapsedTime);
 }

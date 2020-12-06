@@ -105,7 +105,6 @@ public class DisplayMover extends GameObject {
                 if (input[7] instanceof Number) {
                     mwMovement = ((Number) input[7]).floatValue();
                 }
-
             }
         }
         return 0;

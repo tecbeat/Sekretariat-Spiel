@@ -17,7 +17,6 @@ import java.util.HashMap;
  *
  * @version 1.0
  */
-
 public class Texture {
 
     protected Point pos;
@@ -45,7 +44,6 @@ public class Texture {
     public Texture(){
 
     }
-
 
     protected void loadTextures() {
         if(loaded)
@@ -109,7 +107,6 @@ public class Texture {
     public GameObject getParent() {
         return parent;
     }
-
 
     public GameObject getParent(GameObject gO) {
         parent = gO;

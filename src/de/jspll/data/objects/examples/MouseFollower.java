@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-
 public class MouseFollower extends GameObject {
 
     public MouseFollower(String ID){
