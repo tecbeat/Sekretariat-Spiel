@@ -34,7 +34,7 @@ public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 300f;
     private final int NEXT_TASK_TRESHOLD = 30;
-    private final int BASE_TASKS = 2;
+    private final int BASE_TASKS = 20;
     private final int TASKS_PER_LEVEL = 4;
     private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
@@ -634,21 +634,21 @@ public class GameManager extends TexturedObject {
                         new Point(1280, 1760),
                         new Dimension(32, 16),
                         new CommonTask("Studierendenausweise austeilen", "Studierendenausweise schreddern",
-                                new StudentCardReaction(), statManager), 65);
+                                new StudentCardReaction(), statManager, new String[]{"/assets/task/image/id_pic","/assets/task/image/id_drag"}), 65);
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
             case 5:
                 TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2430, 2335),
                         new Dimension(32, 16),
-                        new CommonTask("Feierabend machen", new EOBReaction(), statManager), 65);
+                        new CommonTask("Feierabend machen", new EOBReaction(), statManager, new String[]{"/assets/task/image/eob_pic","/assets/task/image/eob_drag"}), 65);
                 thEOB.setListener(gameObjectHandler);
                 return thEOB;
             case 6:
                 TaskHolder thInternet = new TaskHolder("internet" + instanceCount, "g.dflt.TaskHolder",
                         new Point(750, 656),
                         new Dimension(32, 16),
-                        new CommonTask("Internet löschen", new InternetReaction(), statManager), 65);
+                        new CommonTask("Internet löschen", new InternetReaction(), statManager, new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65);
                 thInternet.setListener(gameObjectHandler);
                 return thInternet;
             case 7:
@@ -663,7 +663,7 @@ public class GameManager extends TexturedObject {
                 TaskHolder thEMail = new TaskHolder("email" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2750, 1536),
                         new Dimension(32, 16),
-                        new CommonTask("Mails löschen", new EMailReaction(), statManager), 65);
+                        new CommonTask("Mails löschen", new EMailReaction(), statManager, new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65);
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
             case 9:

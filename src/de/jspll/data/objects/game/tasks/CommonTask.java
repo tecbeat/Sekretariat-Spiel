@@ -96,6 +96,14 @@ public class CommonTask implements Task {
          this.statManager = statManager;
      }
 
+    public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
+        this.goodHeading = heading;
+        this.badHeading = "";
+        this.onSelect = onSelect;
+        this.statManager = statManager;
+        this.textureKeys = textureKeys;
+    }
+
      public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
