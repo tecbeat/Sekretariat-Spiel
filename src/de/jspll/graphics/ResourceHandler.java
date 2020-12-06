@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Philipp Polland
  *
  * @version 1.0
  */
