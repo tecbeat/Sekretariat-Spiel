@@ -39,6 +39,7 @@ public class TaskHolder extends TexturedObject {
     private HashMap<String, AtomicBoolean> keyMap;
     private BufferedImage texture;
     private final int ArrowOffset = 30;
+    private boolean showBox = true;
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
@@ -50,6 +51,19 @@ public class TaskHolder extends TexturedObject {
             task.setHolder(this);
         taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
     }
+
+    public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius, boolean showBox) {
+        super(ID, objectID, pos.x, pos.y, dimension);
+        this.showBox = showBox;
+        this.channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.OVERLAY, ChannelID.UI};
+        this.pos = pos;
+        this.task = task;
+        this.radius = radius;
+        if (task != null)
+            task.setHolder(this);
+        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
+    }
+
 
     /**
      * Get the {@code ResourceHandler} and request all {@code Textures} needed for the {@code Animation}.<br>
@@ -218,17 +232,19 @@ public class TaskHolder extends TexturedObject {
                 s = g2d.getStroke();
                 g2d.setStroke(new BasicStroke(3));
             }
-            g2d.setColor(Color.RED);
-            g2d.drawRect(camera.applyXTransform(pos.x),
-                    camera.applyYTransform(pos.y),
-                    camera.applyZoom(dimension.width),
-                    camera.applyZoom(dimension.height));
-            if (inProximity && s != null)
-                g2d.setStroke(s);
+            if(showBox) {
+                g2d.setColor(Color.RED);
+                g2d.drawRect(camera.applyXTransform(pos.x),
+                        camera.applyYTransform(pos.y),
+                        camera.applyZoom(dimension.width),
+                        camera.applyZoom(dimension.height));
+                if (inProximity && s != null)
+                    g2d.setStroke(s);
+            }
         }
 
         if (Main.DEBUG) {
-            if (inProximity) {
+            if (inProximity && showBox) {
                 g.setColor(Color.CYAN);
                 g.fillRect(camera.applyXTransform(pos.x), camera.applyYTransform(pos.y),
                         camera.applyZoom(dimension.width), camera.applyZoom(dimension.height));
