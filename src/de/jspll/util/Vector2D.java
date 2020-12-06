@@ -181,7 +181,7 @@ public class Vector2D {
      * The {@code x} and {@code y} Coordinates are divided by the current euclidean distance
      */
 
-    public Vector2D normalize(){
+    public Vector2D instanceNormalize(){
         if(x == 0 && y == 0){
             return this;
         }
@@ -189,6 +189,17 @@ public class Vector2D {
         this.x /= abs;
         this.y /= abs;
         return this;
+    }
+
+    public Vector2D normalize(){
+        Vector2D out = new Vector2D(this);
+        if(x == 0 && y == 0){
+            return out;
+        }
+        double abs = out.euclideanDistance();
+        out.x /= abs;
+        out.y /= abs;
+        return out;
     }
 
     public Vector2D[] splitIntoXY(){
