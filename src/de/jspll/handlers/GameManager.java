@@ -623,10 +623,13 @@ public class GameManager extends TexturedObject {
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case NPC_ID:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1),
+                        new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
-                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung",
+                                new NPCReaction(), statManager, instanceCount % 2 == 0), 65),
+                        NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
@@ -636,21 +639,24 @@ public class GameManager extends TexturedObject {
                         new Point(1280, 1760),
                         new Dimension(32, 16),
                         new CommonTask("Studierendenausweise austeilen", "Studierendenausweise schreddern",
-                                new StudentCardReaction(), statManager, new String[]{"/assets/task/image/id_pic","/assets/task/image/id_drag"}), 65);
+                                new StudentCardReaction(), statManager,
+                                new String[]{"/assets/task/image/id_pic","/assets/task/image/id_drag"}), 65);
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
             case 5:
                 TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2430, 2335),
                         new Dimension(32, 16),
-                        new CommonTask("Feierabend machen", new EOBReaction(), statManager, new String[]{"/assets/task/image/eob_pic","/assets/task/image/eob_drag"}), 65);
+                        new CommonTask("Feierabend machen", new EOBReaction(), statManager,
+                                new String[]{"/assets/task/image/eob_pic","/assets/task/image/eob_drag"}), 65);
                 thEOB.setListener(gameObjectHandler);
                 return thEOB;
             case 6:
                 TaskHolder thInternet = new TaskHolder("internet" + instanceCount, "g.dflt.TaskHolder",
                         new Point(750, 656),
                         new Dimension(32, 16),
-                        new CommonTask("Internet löschen", new InternetReaction(), statManager, new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65);
+                        new CommonTask("Internet löschen", new InternetReaction(), statManager,
+                                new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65);
                 thInternet.setListener(gameObjectHandler);
                 return thInternet;
             case 7:
@@ -665,7 +671,8 @@ public class GameManager extends TexturedObject {
                 TaskHolder thEMail = new TaskHolder("email" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2750, 1536),
                         new Dimension(32, 16),
-                        new CommonTask("Mails löschen", new EMailReaction(), statManager, new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65);
+                        new CommonTask("Mails löschen", new EMailReaction(), statManager,
+                                new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65);
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
             case 9:
