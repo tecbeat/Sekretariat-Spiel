@@ -100,6 +100,7 @@ public class Player extends TexturedObject {
      */
     @Override
     public char update(float elapsedTime) {
+
         Camera c = getParent().getSelectedCamera();
 
         c.centerToObject(this, elapsedTime);
@@ -293,6 +294,7 @@ public class Player extends TexturedObject {
 
     @Override
     protected void drawFrame(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+
         for (Animation animation : movementAnimationList) {
             animation.draw((Graphics2D) g, elapsedTime, camera);
         }

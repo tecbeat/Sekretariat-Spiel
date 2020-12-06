@@ -15,8 +15,8 @@ import java.awt.*;
  */
 
 public class Camera {
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private final double smoothness = 1.5;
     private double x;
     private double y;
@@ -34,8 +34,8 @@ public class Camera {
     }
 
     private void updateXY() {
-        x = xCenter - (width / 2f);
-        y = yCenter - (height / 2f);
+        x = xCenter - (width / 2);
+        y = yCenter - (height / 2);
     }
 
     public void increase_x(float amount) {
@@ -195,7 +195,7 @@ public class Camera {
         int[] out = new int[4];
 
         int[] origin = new int[]{0, 0};
-        int[] maxCoords = new int[]{width, height};
+        int[] maxCoords = new int[]{width + 20, height + 20};
 
         origin = revertTransform(origin);
         maxCoords = revertTransform(maxCoords);
@@ -206,5 +206,12 @@ public class Camera {
         out[3] = maxCoords[1] + 10;
 
         return out;
+    }
+
+    public void updateWindowSize(Graphics2D g){
+        width = (int) Math.round(g.getClipBounds().getWidth());
+        height = width = (int) Math.round(g.getClipBounds().getHeight());
+        updateXY();
+
     }
 }

@@ -139,7 +139,7 @@ public class NPCTask extends GameObject implements Task {
     private void paintInteraction(Graphics g, Camera camera) {
         g.setColor(goodInteraction ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255));
         String correctHeading = goodInteraction ? goodHeading : badHeading;
-        g.drawString("You met a " + (isStudent ? "student" : "professor"), (screenWidth / 2) - 110, screenHeight / 2 - 30);
+        g.drawString("Du hast einen " + (isStudent ? "Studenten" : "Professor") + " getroffen!", (screenWidth / 2) - 110, screenHeight / 2 - 30);
         g.drawString(correctHeading, (screenWidth / 2) - 110, screenHeight / 2);
         g.drawString("Verbleibende Zeit: " + String.format("%2.2f",countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
     }
@@ -262,6 +262,7 @@ public class NPCTask extends GameObject implements Task {
     }
 
     public String getName(){
-        return "NPC";
+        String holderID = getHolder().getID();
+        return holderID.substring(holderID.indexOf(":")+1);
     }
 }

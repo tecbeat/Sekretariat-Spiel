@@ -24,7 +24,7 @@ public class semiTransparentBackground extends GameObject {
         this.posX = x;
         this.posY = y;
         this.dim = dimension;
-        channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.BACKGROUND};
+        channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.PLAYER};
     }
 
     @Override

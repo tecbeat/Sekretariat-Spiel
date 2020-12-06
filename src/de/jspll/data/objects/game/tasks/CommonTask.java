@@ -1,17 +1,20 @@
 package de.jspll.data.objects.game.tasks;
 
 import com.google.gson.annotations.Expose;
+import de.jspll.Main;
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
+import de.jspll.util.Collision;
+import de.jspll.util.PaintingUtil;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -19,10 +22,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Laura Schmidt, Lukas Becker, Samuel Assmann
- *
  * @version 1.0
  */
-public class CommonTask extends GameObject implements Task {
+
+public class CommonTask implements Task {
     @Expose(deserialize = false, serialize = false)
 
     // general properties
@@ -31,6 +34,17 @@ public class CommonTask extends GameObject implements Task {
     private float countDown = 0;
     private boolean countDownStarted = false;
     private iTaskReaction onSelect;
+    private Point draggablePos;
+    private final Color maskColor = new Color(0, 0, 0, 172);
+
+    //texture properties
+    private float draggableSize = 1.6f;
+    private Dimension draggableDim;
+    private String[] textureKeys;
+    private BufferedImage[] textures;
+
+    @Expose(deserialize = false, serialize = false)
+    private boolean texturesLoaded = false;
 
     // mouse properties
     private boolean mousedown;
@@ -41,7 +55,7 @@ public class CommonTask extends GameObject implements Task {
     private int btnStartY = 0;
     private int btnGoodX = 0;
     private int btnBadX = 0;
-    int[] buttonSize = new int[]{70,30};
+    int[] buttonSize = new int[]{80, 30};
     private boolean buttonLock = false;
     private boolean buttonGoodClicked;
 
@@ -50,6 +64,8 @@ public class CommonTask extends GameObject implements Task {
     private int screenHeight;
     private int boundingX;
     private int boundingY;
+    private int boundingWidth;
+    private int boundingHeight;
 
     // headings
     private final String goodHeading;
@@ -57,96 +73,193 @@ public class CommonTask extends GameObject implements Task {
 
     private StatManager statManager;
 
-    // files
-    private String[] files;
-    private BufferedImage[] textures;
 
-
-    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager){
+    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager) {
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
-        channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
+        //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
     }
 
-    /**
-     * Constructor to use if the task only has one option to choose.
-     *
-     * @param heading short description of the task
-     * @param onSelect specific class to handle the button clicks
+   
+     /**
      * @param statManager manages the game statistics
+     * @param onSelect specific class to handle the button clicks
+     * @param heading short description of the task
+     *
      */
-    public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager) {
-        this.goodHeading = heading;
-        this.badHeading = "";
-        this.onSelect = onSelect;
-        this.statManager = statManager;
-        channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
-    }
+     public CommonTask(String heading, iTaskReaction onSelect, StatManager statManager) {
+         this.goodHeading = heading;
+         this.badHeading = "";
+         this.onSelect = onSelect;
+         this.statManager = statManager;
+     }
 
-    public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] files){
+     public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
         this.goodHeading = goodHeading;
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
-        channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
-        this.files = files;
+        //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
+        this.textureKeys = textureKeys;
     }
 
-    @Override
-    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+
+    private void textBasedRender(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         initTaskScreen(g, camera);
 
-        if(buttonLock) {
+        if (buttonLock) {
             onButtonClicked(g, camera);
         } else {
             setUpButton(g, true);
             setUpButton(g, false);
         }
 
-        countTimerDown(elapsedTime);
 
+        if (!buttonLock) {
+            checkClick();
+        }
+    }
+
+    private boolean startedInHitbox = false;
+    private void resetDraggablePos(){
+        draggablePos = new Point(boundingX + screenWidth / 4, boundingY + screenHeight / 4);
+    }
+
+    private void textureBasedRender(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        if (draggablePos == null || draggableDim == null) {
+            draggableDim = new Dimension(Math.round(textures[1].getWidth() * draggableSize), Math.round(textures[1].getHeight() * draggableSize));
+            resetDraggablePos();
+        }
+        g2d.drawImage(textures[0], boundingX, boundingY, boundingWidth, boundingHeight, null);
+        Rectangle btnGoodHitbox = new Rectangle(btnGoodX,btnStartY,buttonSize[0],buttonSize[1]);
+        Rectangle btnBadHitbox = new Rectangle(btnBadX,btnStartY,buttonSize[0],buttonSize[1]);
+        //g2d.setColor(Color.GREEN);
+        //g2d.fill(btnGoodHitbox);
+        //g2d.setColor(Color.RED);
+        //g2d.fill(btnBadHitbox);
+
+        if (buttonLock) {
+            onButtonClicked(g, camera);
+            return;
+        } else {
+            setUpButton(g, true);
+            setUpButton(g, false);
+        }
+
+
+        Rectangle draggableHitbox = new Rectangle(draggablePos.x-draggableDim.width/2,
+                draggablePos.y-draggableDim.height/2,
+                draggableDim.width,
+                draggableDim.height);
+        getMousePos();
+        Point mousePoint = new Point(mousePos[0],mousePos[1]);
+        if(mouseClicked.get()){
+            if(startedInHitbox){
+                draggablePos = mousePoint;
+            } else if(Collision.posInRect(mousePoint,draggableHitbox)){
+                startedInHitbox = true;
+            } else {
+                startedInHitbox = false;
+            }
+        } else {
+            if(startedInHitbox){
+                startedInHitbox = false;
+                if(Collision.posInRect(mousePoint,btnGoodHitbox)){
+                    buttonLock = true;
+                    buttonGoodClicked = true;
+                    countDownStarted = true;
+                } else if(Collision.posInRect(mousePoint,btnBadHitbox)){
+                    buttonLock = true;
+                    buttonGoodClicked = false;
+                    countDownStarted = true;
+                }
+            }
+        }
+
+
+        PaintingUtil.drawPictureFromCenter(draggablePos, textures[1], g2d, draggableDim);
+        if (Main.DEBUG) {
+            Stroke s = g2d.getStroke();
+            g2d.setStroke(new BasicStroke(2));
+            g.setColor(Color.RED);
+            g.drawRect(boundingX, boundingY, boundingWidth, boundingHeight);
+            PaintingUtil.drawRectFromCenter(draggablePos, g2d, draggableDim);
+            g2d.setStroke(s);
+        }
+    }
+
+    @Override
+    public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        //g.setFont(Font.getFont(Font.SANS_SERIF));
         // close task window when countdown is lower than 0
-        if(countDown < 0){
+        if(!active) return;
+        countTimerDown(elapsedTime);
+        if (countDown < 0) {
             closeTask();
             active = false;
             return;
         }
+        initVars(g);
+        g.setColor(maskColor);
+        g.fillRect(0, 0, camera.getWidth(), camera.getHeight());
 
-        if(!buttonLock){
-            checkClick();
+        if (textures != null) {
+            if (texturesLoaded) {
+                textureBasedRender(g, elapsedTime, camera, currStage);
+            } else {
+                texturesLoaded = isLoaded();
+                textBasedRender(g, elapsedTime, camera, currStage);
+            }
+        } else {
+            textBasedRender(g, elapsedTime, camera, currStage);
         }
 
-        if (files != null)
-            if (isLoaded())
-                g.drawImage(textures[0],50,50, 100, 100, null);
+
     }
 
-    /**
-     * Initializes the basic task screen. Background gets darker. White rectangle gets drawn.
-     *
-     * @param g Graphics
-     * @param camera Camera
-     */
-    private void initTaskScreen(Graphics g, Camera camera) {
-        g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+    private void initVars(Graphics g) {
+        if (textures != null) {
+            buttonSize[0] = 200;
+            buttonSize[1] = 100;
+        }
         Graphics2D g2d = (Graphics2D) g;
         screenWidth = (int) g2d.getClipBounds().getWidth();
         screenHeight = (int) g2d.getClipBounds().getHeight();
         boundingX = screenWidth / 4;
         boundingY = screenHeight / 4;
-        btnGoodX = (boundingX + (screenWidth / 2) / 4) + 85;
-        btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
+        boundingWidth = screenWidth / 2;
+        boundingHeight = screenHeight / 2;
 
-        g.setColor(new Color(0, 0, 0, 172));
-        g.fillRect(0, 0, camera.getWidth(), camera.getHeight());
+        if(textures != null){
+            btnGoodX = boundingX;
+            btnBadX = boundingX + boundingWidth - buttonSize[0];
+            btnStartY = boundingY+ boundingHeight;
+        } else {
+            btnGoodX = (boundingX + (screenWidth / 2) / 4) + 85;
+            btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
+            btnBadX = (boundingX + (screenWidth / 2) / 2) + 85;
+        }
+
+    }
+
+    /**
+     * Initializes the basic task screen. Background gets darker. White rectangle gets drawn.
+     *
+     * @param g      Graphics
+     * @param camera Camera
+     */
+    private void initTaskScreen(Graphics g, Camera camera) {
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
 
         //Bounding Box
         g.setColor(Color.WHITE);
         g.fillRect(boundingX, boundingY, screenWidth / 2, screenHeight / 2);
 
-        if(!buttonLock) {
+        if (!buttonLock) {
             g.setColor(Color.BLACK);
             String heading;
             if(!badHeading.equals("")) {
@@ -163,13 +276,11 @@ public class CommonTask extends GameObject implements Task {
      * that when clicked increases the karma score. When goodButton is false a red button gets drawn which
      * triggers an action that when clicked decreases the karma score.
      *
-     * @param g Graphics
+     * @param g          Graphics
      * @param goodButton decides whether a button for good karma or bad karma gets drawn
      */
     private void setUpButton(Graphics g, boolean goodButton) {
-        if(!goodButton) {
-            btnBadX = (boundingX + (screenWidth / 2) / 2) + 85;
-        }
+
         int xCoord = goodButton ? btnGoodX : btnBadX;
         String heading;
         if(!badHeading.equals("")) {
@@ -181,34 +292,38 @@ public class CommonTask extends GameObject implements Task {
         g.setColor(goodButton ? Color.GREEN : Color.RED);
         if (checkHover(xCoord, btnStartY, buttonSize[0], buttonSize[1])) {
             g.fillRect(xCoord, btnStartY, buttonSize[0], buttonSize[1]);
-            g.setColor(Color.BLACK);
+            g.setColor(Color.YELLOW);
             g.drawString(heading, xCoord + 5, btnStartY + 15);
         } else {
             g.drawRect(xCoord, btnStartY, buttonSize[0], buttonSize[1]);
-            g.setColor(Color.BLACK);
+            g.setColor(Color.YELLOW);
             g.drawString(heading, xCoord + 5, btnStartY + 15);
         }
 
-        if(buttonLock) {
-            g.setColor(Color.BLACK);
-            if(badHeading.equals("")) {
-                heading = goodHeading;
-            }
+        if (buttonLock) {
+            g.setColor(Color.YELLOW);
             g.drawString(heading, xCoord + 5, btnStartY + 15);
         }
     }
 
+    private Color highlight_color= new Color(255,255,255,255);
+
     /**
      * Sets the remaining time to finish the task and draws the task name at the screen.
      *
-     * @param g Graphics
+     * @param g      Graphics
      * @param camera Camera
      */
     private void onButtonClicked(Graphics g, Camera camera) {
-        g.setColor(buttonGoodClicked ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255));
+        Color txtColor = buttonGoodClicked ? new Color(48, 170, 0, 255) : new Color(196, 0, 0, 255);
         String correctHeading = buttonGoodClicked ? goodHeading : badHeading;
+        Rectangle2D headingBounds = g.getFont().getStringBounds(correctHeading,new FontRenderContext(null,true,false));
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(highlight_color);
+        g2d.fillRect((screenWidth / 2) - 110,screenHeight / 2 -(int) headingBounds.getHeight(),(int)headingBounds.getWidth(),(int)headingBounds.getHeight());
+        g.setColor(txtColor);
         g.drawString(correctHeading, (screenWidth / 2) - 110, screenHeight / 2);
-        g.drawString("Verbleibende Zeit: " + String.format("%2.2f",countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
+        g.drawString("Verbleibende Zeit: " + String.format("%2.2f", countDown), camera.getWidth() / 4 + 10, camera.getHeight() / 4 + 20);
     }
 
     /**
@@ -216,11 +331,11 @@ public class CommonTask extends GameObject implements Task {
      *
      * @param startX x-coordinate of top left corner of the button
      * @param startY y-coordinate of top left corner of the button
-     * @param width width of the button
+     * @param width  width of the button
      * @param height height of the button
      * @return if mouse is over button
      */
-    protected boolean checkHover(int startX, int startY, int width, int height){
+    protected boolean checkHover(int startX, int startY, int width, int height) {
         getMousePos();
         return mousePos[0] > startX && mousePos[0] < startX + width
                 && mousePos[1] > startY && mousePos[1] < startY + height;
@@ -232,16 +347,16 @@ public class CommonTask extends GameObject implements Task {
      *
      * @see iTaskReaction
      */
-    private void checkClick(){
-        if(getMousePressed()) {
-            if(checkHover(btnGoodX, btnStartY, buttonSize[0], buttonSize[1])){
+    private void checkClick() {
+        if (getMousePressed()) {
+            if (checkHover(btnGoodX, btnStartY, buttonSize[0], buttonSize[1])) {
                 countDown = onSelect.goodSelection(getHolder().getParent());
                 buttonGoodClicked = true;
                 buttonLock = true;
                 countDownStarted = true;
             }
 
-            if(checkHover(btnBadX, btnStartY, buttonSize[0], buttonSize[1])){
+            if (checkHover(btnBadX, btnStartY, buttonSize[0], buttonSize[1])) {
                 countDown = onSelect.badSelection(getHolder().getParent());
                 buttonGoodClicked = false;
                 buttonLock = true;
@@ -255,11 +370,11 @@ public class CommonTask extends GameObject implements Task {
      */
     @Override
     public boolean isLoaded() {
-        if(files == null)
+        if (textureKeys == null)
             return true;
-        if(textures == null)
+        if (textures == null)
             return false;
-        for (BufferedImage i:textures) {
+        for (BufferedImage i : textures) {
             if (i == null)
                 return false;
         }
@@ -272,13 +387,13 @@ public class CommonTask extends GameObject implements Task {
      */
     @Override
     public void loadTextures() {
-        if(files == null)
+        if (textureKeys == null)
             return;
-        if(textures == null)
-            textures = new BufferedImage[files.length];
-        for (int i = 0; i < files.length; i++){
+        if (textures == null)
+            textures = new BufferedImage[textureKeys.length];
+        for (int i = 0; i < textureKeys.length; i++) {
             if (textures[i] == null)
-                textures[i] = getHolder().getParent().getResourceHandler().getTexture(files[i]);
+                textures[i] = getHolder().getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG);
         }
     }
 
@@ -286,11 +401,10 @@ public class CommonTask extends GameObject implements Task {
      * Get the {@code ResourceHandler} and request all {@code Textures} needed for the images.
      * @see ResourceHandler
      */
-    @Override
-    public void requestTexture(){
-        if (files == null)
+    public void requestTexture() {
+        if (textureKeys == null)
             return;
-        for (String s: files){
+        for (String s : textureKeys) {
             getHolder().getParent().getResourceHandler().requestTexture(s, ResourceHandler.FileType.PNG);
         }
     }
@@ -301,7 +415,7 @@ public class CommonTask extends GameObject implements Task {
      * @param elapsedTime time that passed by
      */
     private void countTimerDown(float elapsedTime) {
-        if(countDownStarted) {
+        if (countDownStarted) {
             countDown -= elapsedTime;
         }
     }
@@ -333,8 +447,9 @@ public class CommonTask extends GameObject implements Task {
     /**
      * Determines the mouse position.
      */
-    private void getMousePos(){
-        if(getHolder().getParent().getMousePos() != null) {
+    private void getMousePos() {
+        // TODO: get proper mouse position if possible, siehe ExampleTask (null-check)
+        if (getHolder().getParent().getMousePos() != null) {
             mousePos[0] = (int) getHolder().getParent().getMousePos().getX();
             mousePos[1] = (int) getHolder().getParent().getMousePos().getY();
         }
@@ -377,6 +492,11 @@ public class CommonTask extends GameObject implements Task {
                 mousePos[1] = pos[1];
             }
         }
+        return 0;
+    }
+
+    @Override
+    public char update(float elapsedTime) {
         return 0;
     }
 

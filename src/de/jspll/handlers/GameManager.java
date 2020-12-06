@@ -1,16 +1,18 @@
 package de.jspll.handlers;
 
 import de.jspll.data.ChannelID;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.game.player.ColorScheme;
 import de.jspll.data.objects.game.player.NPC;
+import de.jspll.data.objects.game.player.NPCSpawnPosition;
 import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.*;
 import de.jspll.data.objects.game.tasks.reactions.*;
 import de.jspll.graphics.Camera;
+import de.jspll.graphics.ResourceHandler;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -28,7 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-public class GameManager extends GameObject {
+public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 300f;
     private final int NEXT_TASK_TRESHOLD = 30;
@@ -53,6 +55,7 @@ public class GameManager extends GameObject {
 
     private int level = 0;
     private float time = 0f;
+    private ArrayList<Integer> activeTaskIdentifiers = new ArrayList<>();
     private int taskCount = 0;
     private int completedTasks = 0;
     private float remainingTime;
@@ -71,20 +74,26 @@ public class GameManager extends GameObject {
     // button properties
     private int btnStartY = 0;
     private int btnStartX = 0;
-    int[] buttonSize = new int[]{70,30};
+    int[] buttonSize = new int[]{120,30};
+
+    // screen graphics
+    // 0-2: path to textures for pause-screen, 3-15: path textures for round-screen
+    private String[] textureKeys;
+    private BufferedImage[] textures;
+    private boolean texturesLoaded = false;
 
 
-    public GameManager (GameObjectHandler gameObjectHandler){
+    public GameManager(GameObjectHandler gameObjectHandler){
         this.gameObjectHandler = gameObjectHandler;
+        setTextureKeys();
         channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.UI};
-
     }
 
     /**
      * update overrides game object update
      * Adds tasks and stops game if time over
      *
-     * @param elapsedTime
+     * @param elapsedTime elapsed time
      * @return
      */
     @Override
@@ -99,8 +108,9 @@ public class GameManager extends GameObject {
                 if(keyMap == null){
                     keyMap = gameObjectHandler.getLogicHandler().getInputHandler().getKeyMap();
                 }
-            } catch (Exception e){}
-
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
             time += elapsedTime;
             if (getTimeTillNextTask() <= 0 && taskCount < getTaskCountForCurrentLevel()) {
@@ -168,13 +178,17 @@ public class GameManager extends GameObject {
 
     /**
      * only paints something if the level is over or paused
-     * @param g
-     * @param elapsedTime
-     * @param camera
-     * @param currStage
+     * @param g Graphics
+     * @param elapsedTime elapsed time
+     * @param camera camera
+     * @param currStage current stage
      */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        if(!texturesLoaded) {
+            loadTextures();
+        }
+
         if(resultScreen) {
             initResultScreen(g, camera);
             setUpButton(g);
@@ -214,7 +228,7 @@ public class GameManager extends GameObject {
      */
     public float getTimeTillNextTask(){
         if(taskCount == getTaskCountForCurrentLevel()) return 0;
-        return (NEXT_TASK_TRESHOLD/level) - time;
+        return (NEXT_TASK_TRESHOLD / level) - time;
     }
 
     /**
@@ -243,6 +257,7 @@ public class GameManager extends GameObject {
         this.remainingTime = ROUND_TIME;
         this.taskCount = 0;
         this.completedTasks = 0;
+        this.activeTaskIdentifiers = new ArrayList<>();
         statManager.resetKarma();
         for(int i = 0; i< BASE_TASKS; i++)
             addTaskToCurrentLevel();
@@ -282,33 +297,81 @@ public class GameManager extends GameObject {
      * @param camera Camera
      */
     public void initResultScreen(Graphics g, Camera camera) {
-        g.setFont(new Font("Serif", Font.PLAIN, 14));
+        if(!texturesLoaded){
+            loadTextures();
+        }
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 42));
         Graphics2D g2d = (Graphics2D) g;
-        screenWidth = (int) g2d.getClipBounds().getWidth();
-        screenHeight = (int) g2d.getClipBounds().getHeight();
-        boundingX = screenWidth / 4;
-        boundingY = screenHeight / 4;
-        btnStartX = (boundingX + (screenWidth / 2) / 4) + 85;
-        btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
+        initScreenProperties(g2d);
 
         g.setColor(new Color(46, 49, 49,200));
         g.fillRect(0, 0, camera.getWidth(), camera.getHeight());
 
         //Bounding Box
         g.setColor(Color.WHITE);
-        g.fillRect(boundingX, boundingY, screenWidth / 2, screenHeight / 2);
+        g.fillRect(0, 0, screenWidth, screenHeight);
+
+        g2d.drawImage(getRightPentagram(), 100,
+                (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2),
+                getRightPentagram().getWidth() / 2,
+                getRightPentagram().getWidth() / 2,
+                null);
 
         g.setColor(Color.BLACK);
-//        g.drawString("Level Complete", (screenWidth / 2) - 110, screenHeight / 2);
-        g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Level complete" : "You Failed", (screenWidth / 2) - 110, screenHeight / 2 + 25);
+        g.setFont(new Font("Kristen ITC", Font.BOLD, 42));
+        g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Level erfolgreich" : "Level gescheitert",
+                (boundingX + (screenWidth / 2) / 4) + 85,
+                (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 20);
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 42));
+        g.drawString("Karma-Punkte: " + statManager.getKarmaScore(),
+                (boundingX + (screenWidth / 2) / 4) + 85,
+                (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 100);
+        g.drawString("Spiel-Punkte: " + statManager.getGameScore(),
+                (boundingX + (screenWidth / 2) / 4) + 85,
+                (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 180);
+        g.drawString("Abgeschlossene Aufgaben: " + completedTasks,
+                (boundingX + (screenWidth / 2) / 4) + 85,
+                (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 260);
+    }
+
+    /**
+     * Initializes the basic pause screen. Background gets darker. White rectangle gets drawn.
+     *
+     * @param g Graphics
+     * @param camera Camera
+     */
+    private void pauseScreen(Graphics g, Camera camera, boolean actualPause) {
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 30));
+        Graphics2D g2d = (Graphics2D) g;
+        initScreenProperties(g2d);
+
+        if(actualPause) {
+            g2d.drawImage(textures[2], 0, 0, screenWidth, screenHeight, null);
+            g.setColor(Color.BLACK);
+            g.drawString("Spiel pausiert", (screenWidth / 2), screenHeight / 2);
+            g.drawString("Weiter gehts mit der Taste \"R\"!", (screenWidth / 2), (screenHeight / 2) + 50);
+        } else {
+            g2d.drawImage(textures[0], 0, 0, screenWidth, screenHeight, null);
+        }
+    }
+
+    private void initScreenProperties(Graphics2D g2d) {
+        screenWidth = (int) g2d.getClipBounds().getWidth();
+        screenHeight = (int) g2d.getClipBounds().getHeight();
+        boundingX = screenWidth / 4;
+        boundingY = screenHeight / 4;
+        btnStartX = (boundingX + (screenWidth / 2) / 4) + 85;
+        btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
     }
 
     /**
      * Sets up game ended button
-     * @param g
+     *
+     * @param g Graphics
      */
     private void setUpButton(Graphics g) {
-        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Next Level" : "Main Menu";
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
+        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Nächstes Level" : "Hauptmenu";
 
         g.setColor(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? Color.GREEN : Color.RED);
         if (checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
@@ -319,6 +382,21 @@ public class GameManager extends GameObject {
             g.drawRect(btnStartX, btnStartY, buttonSize[0], buttonSize[1]);
             g.setColor(Color.BLACK);
             g.drawString(heading, btnStartX + 5, btnStartY + 15);
+        }
+
+        if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD){
+            heading = "Hauptmenü";
+            int btnMenuStartX = btnStartX + 150;
+            g.setColor(Color.RED);
+            if (checkHover(btnMenuStartX, btnStartY, buttonSize[0], buttonSize[1])) {
+                g.fillRect(btnMenuStartX, btnStartY, buttonSize[0], buttonSize[1]);
+                g.setColor(Color.BLACK);
+                g.drawString(heading, btnMenuStartX + 5, btnStartY + 15);
+            } else {
+                g.drawRect(btnMenuStartX, btnStartY, buttonSize[0], buttonSize[1]);
+                g.setColor(Color.BLACK);
+                g.drawString(heading, btnMenuStartX + 5, btnStartY + 15);
+            }
         }
     }
 
@@ -348,6 +426,48 @@ public class GameManager extends GameObject {
     }
 
     /**
+     * Returns the right pentagram-image according to the karma-score.
+     *
+     * @return pentagram-image
+     */
+    private BufferedImage getRightPentagram() {
+        int karmaScore = statManager.getKarmaScore();
+        int taskCompleted = getTaskCountForCurrentLevel();
+        float karmaPerTask = (float) karmaScore / taskCompleted;
+        float percentage = (karmaPerTask / 30) * 100;
+
+        if(percentage >= -100 && percentage < -90) {
+            return textures[3];
+        } else if (percentage > -90 && percentage < -70) {
+            return textures[4];
+        } else if (percentage > -70 && percentage < -50) {
+            return textures[5];
+        } else if (percentage > -50 && percentage < -30) {
+            return textures[6];
+        } else if (percentage > -30 && percentage < -15) {
+            return textures[7];
+        } else if (percentage > -15 && percentage < 0) {
+            return textures[8];
+        } else if (percentage == 0) {
+            return textures[9];
+        } else if (percentage > 0 && percentage < 15) {
+            return textures[10];
+        } else if (percentage > 15 && percentage < 30) {
+            return textures[11];
+        } else if (percentage > 30 && percentage < 50) {
+            return textures[12];
+        } else if (percentage > 50 && percentage < 70) {
+            return textures[13];
+        } else if (percentage > 70 && percentage < 90) {
+            return textures[14];
+        } else if (percentage > 90 && percentage <= 100){
+            return textures[15];
+        } else {
+            return textures[9];
+        }
+    }
+
+    /**
      * Checks if a button got clicked and triggers the action that needs to be performed after
      * clicking the button
      */
@@ -359,6 +479,12 @@ public class GameManager extends GameObject {
                 } else {
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
+
+
+                resultScreen = false;
+            }
+            if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
+                gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
             }
         }
@@ -368,37 +494,64 @@ public class GameManager extends GameObject {
         return mouseClicked.get();
     }
 
-    /**
-     * Initializes the basic pause screen. Background gets darker. White rectangle gets drawn.
-     *
-     * @param g Graphics
-     * @param camera Camera
-     */
-    private void pauseScreen(Graphics g, Camera camera, boolean actualPause) {
-        g.setFont(new Font("Serif", Font.PLAIN, 24));
-        Graphics2D g2d = (Graphics2D) g;
-        screenWidth = (int) g2d.getClipBounds().getWidth();
-        screenHeight = (int) g2d.getClipBounds().getHeight();
-        boundingX = screenWidth / 4;
-        boundingY = screenHeight / 4;
-        btnStartX = (boundingX + (screenWidth / 2) / 4) + 85;
-        btnStartY = (int) (boundingY + (screenHeight / 2) * 0.8);
+    private void setTextureKeys() {
+        textureKeys = new String[]{
+                "/assets/screen/pause/KeinePause",
+                "/assets/screen/pause/Pause1",
+                "/assets/screen/pause/Pause2",
+                "/assets/screen/round/penta0",
+                "/assets/screen/round/penta1",
+                "/assets/screen/round/penta2",
+                "/assets/screen/round/penta3",
+                "/assets/screen/round/penta4",
+                "/assets/screen/round/penta5",
+                "/assets/screen/round/penta6",
+                "/assets/screen/round/penta7",
+                "/assets/screen/round/penta8",
+                "/assets/screen/round/penta9",
+                "/assets/screen/round/penta10",
+                "/assets/screen/round/penta11",
+                "/assets/screen/round/penta12",
+        };
+    }
 
-        g.setColor(new Color(46, 49, 49,200));
-        g.fillRect(0, 0, camera.getWidth(), camera.getHeight());
-
-        //Bounding Box
-        g.setColor(Color.WHITE);
-        g.fillRect(boundingX, boundingY, screenWidth / 2, screenHeight / 2);
-
-        if(actualPause) {
-            g.setColor(Color.BLACK);
-            g.drawString("Game Paused, press r to continue", (screenWidth / 2) - 110, screenHeight / 2);
-        } else {
-            g.setColor(Color.RED);
-            g.drawString("There is no break for students", (screenWidth / 2) - 110, screenHeight / 2);
+    public boolean isLoaded() {
+        if (textureKeys == null)
+            return true;
+        if (textures == null)
+            return false;
+        for (BufferedImage i : textures) {
+            if (i == null)
+                return false;
         }
+        return true;
+    }
 
+    public void loadTextures() {
+        if (textureKeys == null)
+            return;
+        if (textures == null)
+            textures = new BufferedImage[textureKeys.length];
+        for (int i = 0; i < textureKeys.length; i++) {
+            if (textures[i] == null)
+                textures[i] = getParent().getResourceHandler().getTexture(textureKeys[i], ResourceHandler.FileType.PNG);
+        }
+        for(BufferedImage currImage : textures) {
+           if(currImage == null) {
+               texturesLoaded = false;
+               return;
+           }
+        }
+        texturesLoaded = true;
+    }
+
+    @Override
+    public void requestTexture() {
+        if (textureKeys == null)
+            return;
+        for (String s : textureKeys) {
+            getParent().getResourceHandler().requestTexture(s, ResourceHandler.FileType.PNG);
+        }
     }
 
     public int getLevel(){
@@ -413,30 +566,9 @@ public class GameManager extends GameObject {
         return this.remainingTime;
     }
 
-    //TODO: Not sure if we need these two
-    public ArrayList<TexturedObject> getTasksforCurrentLevel(){
-        int taskCount = getTaskCountForCurrentLevel();
-        ArrayList<TexturedObject> res = new ArrayList<>();
-        int id;
-        for (int i = 0; i < taskCount ; i++){
-            TexturedObject task = getRandomTask();
-            if(!res.contains(task)){
-                res.add(task);
-            } else {
-                i--;
-            }
-        }
-
-        return res;
+    public void removeTaskFromActiveList(){
+        activeTaskIdentifiers.remove(0);
     }
-
-    private void addAllTasksToCurrentLevel(){
-        ChannelID scene = gameObjectHandler.getActiveScene();
-        for(TexturedObject object : getTasksforCurrentLevel()){
-            gameObjectHandler.loadTask(scene, object);
-        }
-    }
-    //End T O D O
 
     int instanceCount = 0;
 
@@ -444,11 +576,23 @@ public class GameManager extends GameObject {
      * @return one random task
      */
     private TexturedObject getRandomTask(){
-        int id = randomGenerator.nextInt(10);
+        final int NPC_ID = 3;
 
-        if(getParent().isInternetTaskDone()) {
-            id = randomGenerator.nextInt(6);
-        }
+        int attemptCount = 0; //if there are no tasks available add an npc
+
+        int id;
+        do {
+            id = randomGenerator.nextInt(10);
+
+            if (getParent().isInternetTaskDone()) {
+                id = randomGenerator.nextInt(6);
+            }
+            attemptCount++;
+            if(attemptCount > 30)
+                id = NPC_ID;
+        } while (!(!(activeTaskIdentifiers.contains(id)) || id == NPC_ID));
+        if(id != NPC_ID)
+            activeTaskIdentifiers.add(id);
         instanceCount++;
 
         switch (id){
@@ -456,37 +600,40 @@ public class GameManager extends GameObject {
                 TaskHolder thMail = new TaskHolder("mail" + instanceCount, "g.dflt.TaskHolder",
                         new Point(622,2090),
                         new Dimension(32,16),
-                        new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
+                        new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager,
+                                new String[]{"/assets/task/image/mail_pic","/assets/task/image/mail_drag"}), 65);
                 thMail.setListener(gameObjectHandler);
                 return thMail;
             case 1:
+                TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(1638, 2295),
+                        new Dimension(32, 16),
+                        new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager,
+                                new String[]{"/assets/task/image/grades_pic","/assets/task/image/grades_drag"}), 65);
+                thGrades.setListener(gameObjectHandler);
+                return thGrades;
+            case 2:
                 TaskHolder thPhone = new TaskHolder("phone" + instanceCount, "g.dflt.TaskHolder",
                         new Point(3105, 440),
                         new Dimension(32, 16),
-                        new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
+                        new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(),
+                                statManager, new String[]{"/assets/task/image/phone_pic","/assets/task/image/phone_drag"}), 65);
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
-            case 2:
-                TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
-                        new Point(2320, 1778),
-                        new Dimension(32, 16),
-                        new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
-                thCourses.setListener(gameObjectHandler);
-                return thCourses;
-
-            case 3:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", new Point(1100,1120),ColorScheme.PURPLE_MAN, new TaskHolder("NPC" + instanceCount, "g.dflt.TaskHolder",
+            case NPC_ID:
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
-                        new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65));
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;
+
             case 4:
                 TaskHolder thStudentCard = new TaskHolder("studentcard" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1760),
                         new Dimension(32, 16),
-                        new CommonTask("Stundierendenausweise austeilen", "Studierendenausweise schreddern",
+                        new CommonTask("Studierendenausweise austeilen", "Studierendenausweise schreddern",
                                 new StudentCardReaction(), statManager), 65);
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
@@ -508,7 +655,8 @@ public class GameManager extends GameObject {
                 TaskHolder thCoursePlan = new TaskHolder("courseplan" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1818, 455),
                         new Dimension(32, 16),
-                        new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
+                        new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager,
+                                new String[]{"/assets/task/image/courseplan_pic","/assets/task/image/courseplan_drag"}), 65);
                 thCoursePlan.setListener(gameObjectHandler);
                 return thCoursePlan;
             case 8:
@@ -519,12 +667,13 @@ public class GameManager extends GameObject {
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
             case 9:
-                TaskHolder thGrades = new TaskHolder("grades" + instanceCount, "g.dflt.TaskHolder",
-                        new Point(1638, 2295),
+                TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
+                        new Point(2320, 1778),
                         new Dimension(32, 16),
-                        new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
-                thGrades.setListener(gameObjectHandler);
-                return thGrades;
+                        new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager,
+                                new String[]{"/assets/task/image/course_pic","/assets/task/image/course_drag"}), 65);
+                thCourses.setListener(gameObjectHandler);
+                return thCourses;
             default:
                 return null;
         }
@@ -532,52 +681,5 @@ public class GameManager extends GameObject {
 
     public void setRemainingTime(float remainingTime) {
         this.remainingTime = remainingTime;
-    }
-
-    private ArrayList<TexturedObject> tempTaskContainer(){
-
-        ArrayList<TexturedObject> result = new ArrayList<>();
-
-        TaskHolder thMail = new TaskHolder("mail", "g.dflt.TaskHolder",
-                new Point(622,2090),
-                new Dimension(32,16),
-                new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager), 65);
-        thMail.setListener(gameObjectHandler);
-        result.add(thMail);
-
-        TaskHolder thGrades = new TaskHolder("grades", "g.dflt.TaskHolder",
-                new Point(1638, 2295),
-                new Dimension(32, 16),
-                new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager), 65);
-        thGrades.setListener(gameObjectHandler);
-        result.add(thGrades);
-
-        TaskHolder thPhone = new TaskHolder("phone", "g.dflt.TaskHolder",
-                new Point(3105, 440),
-                new Dimension(32, 16),
-                new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(), statManager), 65);
-        thPhone.setListener(gameObjectHandler);
-        result.add(thPhone);
-
-        TaskHolder thCourses = new TaskHolder("courses", "g.dflt.TaskHolder",
-                new Point(2320, 1778),
-                new Dimension(32, 16),
-                new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager), 65);
-        thCourses.setListener(gameObjectHandler);
-        result.add(thCourses);
-
-        TaskHolder thCoursePlan = new TaskHolder("courseplan", "g.dflt.TaskHolder",
-                new Point(1818, 455),
-                new Dimension(32, 16),
-                new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager), 65);
-        thCoursePlan.setListener(gameObjectHandler);
-        result.add(thCoursePlan);
-
-        Player testNPC = new NPC("NPC", "g.ntt.NPC", new Point(1100,1280), ColorScheme.BLUE);
-        testNPC.setListener(gameObjectHandler);
-
-        result.add(testNPC);
-
-        return result;
     }
 }

@@ -30,6 +30,8 @@ public class SceneSwitchButton extends ButtonObject {
             if(this.scene == ChannelID.SCENE_GAME) {
                 getParent().loadNextLevel();
             } else {
+                getParent().clearScene(scene);
+                getParent().clearScene(ChannelID.UI);
                 getParent().loadScene(scene, file);
             }
 

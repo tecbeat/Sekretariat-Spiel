@@ -39,6 +39,14 @@ public class NPC extends Player {
         this.task = task;
     }
 
+    public NPC(String ID, String ObjectID, ColorScheme colorScheme, TaskHolder task, Point spawnPosition) {
+        super(ID, ObjectID, new Point(spawnPosition.x, spawnPosition.y), new Dimension(32, 64), colorScheme);
+        referenceSpeed = 80f;
+        resetKeyMap();
+        this.task = task;
+
+    }
+
     /**
      * Reset the KeyMap.
      * Default: all values are false

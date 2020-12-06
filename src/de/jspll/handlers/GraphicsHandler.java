@@ -87,11 +87,22 @@ public class GraphicsHandler implements SubHandler {
         if(g == null || frame == null){
             return;
         }
+//        int gWidth = g.getClipBounds().width;
+//        int gHeight = g.getClipBounds().height;
+//        if( frame.getWidth() != gWidth || frame.getHeight() != gHeight){
+//            frame = new BufferedImage(gWidth,gHeight,BufferedImage.TYPE_INT_ARGB);
+//            frame_graphics.dispose();
+//            frame_graphics = frame.createGraphics();
+//            frame_graphics.setClip(0,0,gWidth,gHeight);
+//
+//            cameras[selectedCamera].updateWindowSize(frame_graphics);
+//        }
 
         frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);
         //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         frame_graphics.setColor(ColorStorage.BACKGROUND_COLOR);
+
 
         //fill background
         frame_graphics.fillRect(0,0,slate.getWidth(),slate.getHeight());

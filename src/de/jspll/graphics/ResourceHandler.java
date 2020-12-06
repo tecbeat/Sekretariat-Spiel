@@ -5,8 +5,10 @@ import de.jspll.handlers.GameObjectHandler;
 import de.jspll.handlers.JSONSupport;
 import de.jspll.util.Logger;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
@@ -252,6 +254,14 @@ public class ResourceHandler extends Thread {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Clip getAudioByName(String filepath) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        URL url = getClass().getResource(filepath);
+        AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+        Clip clip = AudioSystem.getClip();
+        clip.open(ais);
+        return clip;
     }
 
     public enum FileType{
