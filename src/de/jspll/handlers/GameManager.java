@@ -5,6 +5,7 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.TexturedObject;
 import de.jspll.data.objects.game.player.ColorScheme;
 import de.jspll.data.objects.game.player.NPC;
+import de.jspll.data.objects.game.player.NPCSpawnPosition;
 import de.jspll.data.objects.game.player.Player;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.data.objects.game.tasks.*;
@@ -244,6 +245,7 @@ public class GameManager extends GameObject {
         this.remainingTime = ROUND_TIME;
         this.taskCount = 0;
         this.completedTasks = 0;
+        this.activeTaskIdentifiers = new ArrayList<>();
         statManager.resetKarma();
         for(int i = 0; i< BASE_TASKS; i++)
             addTaskToCurrentLevel();
@@ -466,10 +468,10 @@ public class GameManager extends GameObject {
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case NPC_ID:
-                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.PURPLE_MAN, new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
+                NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(instanceCount % 4 + 1), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 16),
-                        new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65));
+                        new NPCTask("friendly interaction","unfriendly interaction", new NPCReaction(), statManager, instanceCount % 2 == 0), 65), NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 return thNPCTask;

@@ -361,7 +361,7 @@ public class GameObjectHandler{
         clearScene(channel);
         String file = "/scenes/Game.json";
         loadScene(channel, file);
-        gameManager.startGame();
+        //gameManager.startGame();
 
     }
 

@@ -114,7 +114,9 @@ public class StatManager extends TexturedObject {
             for (String key : activeTasks.keySet()) {
                 todoY += 25;
                 if(key.equals("Studierendenausweise austeilen")) {
-                    key = "Ausweise austeilen";
+                    g.drawString("Ausweise austeilen" + ": " + Math.round(remainingTime - activeTasks.get(key)),
+                            camera.getWidth() - 240, todoY);
+                    continue;
                 }
                 g.drawString(key + ": " + Math.round(remainingTime - activeTasks.get(key)),
                         camera.getWidth() - 240, todoY);

@@ -306,7 +306,7 @@ public class CommonTask implements Task {
         }
     }
 
-    private Color highlight_color= new Color(255,255,255,100);
+    private Color highlight_color= new Color(255,255,255,255);
 
     /**
      * Sets the remaining time to finish the task and draws the task name at the screen.

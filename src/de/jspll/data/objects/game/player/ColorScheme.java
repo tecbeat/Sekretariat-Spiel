@@ -16,4 +16,13 @@ public enum ColorScheme {
     public String toString() {
         return ""+id;
     }
+
+    public static ColorScheme getById(int id){
+        for(ColorScheme cs : ColorScheme.values()){
+            if(cs.id == id)
+                return cs;
+        }
+
+        return PURPLE_MAN;
+    }
 }

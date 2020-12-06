@@ -64,6 +64,8 @@ public class Report implements ProgressReporter {
             if(gameObjectHandler != null){
                 gameObjectHandler.switchScene(nextScene);
                 System.out.println("Loaded");
+                if(nextScene == ChannelID.SCENE_GAME)
+                    gameObjectHandler.getGameManager().startGame();
             }
 
         }
