@@ -2,52 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa1524e5-84ed-4ca2-a1ef-fa6af5fbdeb2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/de/jspll/data/ObjectRegister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/de/jspll/data/SceneLoader.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/InstanceLoader.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingCircle.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/Main.java" afterPath="$PROJECT_DIR$/src/de/jspll/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/GameTrie.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/GameTrie.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/LayeredTexture.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/LayeredTexture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/Repeater.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/Repeater.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/Texture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/TexturedObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/AnimatedGameObject.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/AnimatedGameObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/Counter.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/Counter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/DisplayMover.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/DisplayMover.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/MouseFollower.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/MouseFollower.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/Tile.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/Tile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/map/TileMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/NPC.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/NPC.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/NPCTask.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/NPCTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/Task.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/Task.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/LoadingBar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/ProgressReporter.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/ProgressReporter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/Report.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/loading/Report.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/dev/EditorHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/dev/EditorHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/frames/FrameHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/frames/FrameHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/frames/SubHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/frames/SubHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/Camera.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Camera.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/Drawable.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Drawable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/ResourceHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/Secondary_window.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Secondary_window.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/Slate.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Slate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/graphics/Window.java" afterPath="$PROJECT_DIR$/src/de/jspll/graphics/Window.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/handlers/LogicHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/handlers/LogicHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" afterPath="$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/logic/Interactable.java" afterPath="$PROJECT_DIR$/src/de/jspll/logic/Interactable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/Collision.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/Collision.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/ColorStorage.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/ColorStorage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/Logger.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/Logger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java" afterPath="$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/de/jspll/data/objects/game/ui/PaperList.java" afterPath="$PROJECT_DIR$/src/de/jspll/data/objects/examples/PaperList.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -80,11 +37,34 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="Collision.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/de/jspll/util/Collision.java">
+      <file leaf-file-name="CommonTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="743">
-              <caret line="106" column="72" lean-forward="false" selection-start-line="106" selection-start-column="72" selection-end-line="106" selection-end-column="72" />
+            <state relative-caret-position="1020">
+              <caret line="91" column="16" lean-forward="false" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
+              <folding>
+                <element signature="method#resetDraggablePos#0;class#CommonTask#0" expanded="false" />
+                <element signature="method#paint#0;class#CommonTask#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NPCTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/NPCTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2903">
+              <caret line="167" column="80" lean-forward="false" selection-start-line="167" selection-start-column="56" selection-end-line="167" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -95,56 +75,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
               <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JSONSupport.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/JSONSupport.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3000">
-              <caret line="119" column="6" lean-forward="false" selection-start-line="119" selection-start-column="6" selection-end-line="119" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LogicHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/LogicHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InputHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/InputHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="18" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Interactable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/de/jspll/logic/Interactable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PaintingUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -170,11 +100,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Vector2D.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="617" column="80" lean-forward="false" selection-start-line="617" selection-start-column="80" selection-end-line="617" selection-end-column="80" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Vector2D.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/jspll/util/Vector2D.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-3247">
               <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InternetReaction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/reactions/InternetReaction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskHolder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="97">
+              <caret line="174" column="64" lean-forward="true" selection-start-line="174" selection-start-column="64" selection-end-line="174" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -214,7 +174,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/de/jspll/util/Vector2D.java" />
-        <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/ObjectRegister.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/examples/AnimatedGameObject.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/examples/Counter.java" />
@@ -225,7 +184,6 @@
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/player/NPC.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/NPCTask.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/Task.java" />
-        <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/ui/PaperList.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/examples/PaperList.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/data/objects/GameObject.java" />
@@ -247,7 +205,6 @@
         <option value="$PROJECT_DIR$/src/de/jspll/graphics/Secondary_window.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/graphics/Slate.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/graphics/Window.java" />
-        <option value="$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/handlers/GraphicsHandler.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/handlers/LogicHandler.java" />
@@ -258,6 +215,9 @@
         <option value="$PROJECT_DIR$/src/de/jspll/util/Logger.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/util/ColorStorage.java" />
         <option value="$PROJECT_DIR$/src/de/jspll/util/Collision.java" />
+        <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java" />
+        <option value="$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java" />
+        <option value="$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java" />
       </list>
     </option>
   </component>
@@ -684,6 +644,48 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sekretariat-Spiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Sekretariat-Spiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jspll" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="objects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reactions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1368,7 +1370,7 @@
       <workItem from="1606752130780" duration="9716000" />
       <workItem from="1607081665286" duration="15558000" />
       <workItem from="1607110800440" duration="13711000" />
-      <workItem from="1607266722089" duration="4691000" />
+      <workItem from="1607266722089" duration="6618000" />
     </task>
     <task id="LOCAL-00001" summary="added a part of the object interactions&#10;&#10;might be moving logic and graphics back to synchronous method">
       <created>1602459972969</created>
@@ -1601,15 +1603,22 @@
       <option name="project" value="LOCAL" />
       <updated>1607269413986</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="updated @author notations">
+      <created>1607271466620</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1607271466620</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29743000" />
+    <option name="totallyTimeSpent" value="31670000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="3862" height="2122" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1634,7 +1643,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15044248" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25623342" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25623342" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32951587" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1689,7 +1698,8 @@
     <MESSAGE value="tilemap loading debugging" />
     <MESSAGE value="Comment with names" />
     <MESSAGE value="various bugfixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="various bugfixes" />
+    <MESSAGE value="updated @author notations" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated @author notations" />
   </component>
   <component name="WindowStateProjectService">
     <state x="677" y="236" key="#Main" timestamp="1606124754447">
@@ -1839,22 +1849,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/ColorScheme.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3810">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/NPCSpawnPosition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -1879,17 +1873,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-          <folding>
-            <element signature="method#resetDraggablePos#0;class#CommonTask#0" expanded="false" />
-            <element signature="method#paint#0;class#CommonTask#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/ExampleTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1906,26 +1889,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/NPCTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/Task.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="10" column="26" lean-forward="false" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="15" lean-forward="false" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -2146,14 +2113,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="28" column="55" lean-forward="false" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameObjectHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -2202,34 +2161,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/jspll/util/PaintingUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/util/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/jspll/util/ColorStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -2246,6 +2181,81 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3247">
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/reactions/InternetReaction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/CommonTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="91" column="16" lean-forward="false" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
+          <folding>
+            <element signature="method#resetDraggablePos#0;class#CommonTask#0" expanded="false" />
+            <element signature="method#paint#0;class#CommonTask#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/util/ColorStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/util/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/player/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2903">
+          <caret line="167" column="80" lean-forward="false" selection-start-line="167" selection-start-column="56" selection-end-line="167" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/TaskHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="174" column="64" lean-forward="true" selection-start-line="174" selection-start-column="64" selection-end-line="174" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/data/objects/game/tasks/NPCTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/jspll/handlers/GameManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="617" column="80" lean-forward="false" selection-start-line="617" selection-start-column="80" selection-end-line="617" selection-end-column="80" />
           <folding />
         </state>
       </provider>
