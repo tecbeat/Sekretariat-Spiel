@@ -17,7 +17,7 @@ public interface Task {
 
     void activate();
 
-    void deActivate();
+    void deactivate();
 
     boolean isActive();
 

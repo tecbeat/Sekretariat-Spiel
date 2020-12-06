@@ -1,6 +1,7 @@
 package de.jspll.data.objects.game.map;
 
 import de.jspll.util.PaintingUtil;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -8,7 +9,6 @@ import java.awt.image.BufferedImage;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Laura Schmidt
- *
  * @version 1.0
  */
 
@@ -19,22 +19,15 @@ public class Tile {
 
     //Can Be Excluded
     private BufferedImage cache;
+    private int tW, tH;
 
-    public Tile(){
+    public Tile() {
     }
 
     public Tile(boolean collidable, int[] textureReference, TileMap parent) {
         this.collidable = collidable;
         this.textureReference = textureReference;
         this.parent = parent;
-    }
-
-    public void setTextureReference(int[] textureReference) {
-        this.textureReference = textureReference;
-    }
-
-    public void setCollidable(boolean collidable) {
-        this.collidable = collidable;
     }
 
     public void setParent(TileMap parent) {
@@ -45,7 +38,9 @@ public class Tile {
         return collidable;
     }
 
-    private int tW,tH;
+    public void setCollidable(boolean collidable) {
+        this.collidable = collidable;
+    }
 
     public BufferedImage getTexture(TileMap gO, int width, int height) {
         if (parent == null)
@@ -65,17 +60,21 @@ public class Tile {
         return textureReference;
     }
 
+    public void setTextureReference(int[] textureReference) {
+        this.textureReference = textureReference;
+    }
+
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Tile){
-            if( ((Tile) obj).getTextureReference() != null ){
-                if( ((Tile) obj).isCollidable() != collidable )
+        if (obj instanceof Tile) {
+            if (((Tile) obj).getTextureReference() != null) {
+                if (((Tile) obj).isCollidable() != collidable)
                     return false;
                 int[] arr = ((Tile) obj).getTextureReference();
-                if(arr.length != textureReference.length)
+                if (arr.length != textureReference.length)
                     return false;
-                for(int i = 0; i < arr.length; i++){
-                    if( arr[i] != textureReference[i]){
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i] != textureReference[i]) {
                         return false;
                     }
                 }

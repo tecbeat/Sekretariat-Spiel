@@ -232,7 +232,7 @@ public class NPCTask extends GameObject implements Task {
 
     }
 
-    public void deActivate(){
+    public void deactivate(){
         active = false;
     }
 

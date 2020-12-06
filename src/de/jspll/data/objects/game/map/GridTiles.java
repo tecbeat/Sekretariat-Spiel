@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Lukas Becker
- *
  * @version 1.0
  */
 
@@ -22,41 +21,41 @@ public class GridTiles {
         return px;
     }
 
-    public int[] getPxArr(){
+    public void setPx(ArrayList<Double> px) {
+        this.px = px;
+    }
+
+    public int[] getPxArr() {
         int[] res = new int[px.size()];
-        for(int i = 0; i< px.size(); i++){
+        for (int i = 0; i < px.size(); i++) {
             res[i] = px.get(i).intValue();
         }
 
         return res;
     }
 
-    public int[] getSrcArr(Dimension d){
-        int[] res = new int[src.size()+3];
+    public int[] getSrcArr(Dimension d) {
+        int[] res = new int[src.size() + 3];
         int i;
-        for(i = 0; i< src.size(); i++){
+        for (i = 0; i < src.size(); i++) {
             res[i] = src.get(i).intValue();
         }
         res[i] = d.width; //Tile height
-        res[i+1] = d.height; //Tile width
-        res[i+2] = 0; //0, because there is only one texture per layer
+        res[i + 1] = d.height; //Tile width
+        res[i + 2] = 0; //0, because there is only one texture per layer
         return res;
     }
 
-    public int[] getDArr(){
+    public int[] getDArr() {
         int[] res = new int[d.size()];
-        for(int i = 0; i< d.size(); i++){
+        for (int i = 0; i < d.size(); i++) {
             res[i] = d.get(i).intValue();
         }
         return res;
     }
 
-    public int getFInt(){
+    public int getFInt() {
         return f.intValue();
-    }
-
-    public void setPx(ArrayList<Double> px) {
-        this.px = px;
     }
 
     public ArrayList<Double> getSrc() {

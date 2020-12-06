@@ -47,7 +47,7 @@ public class ExampleTask implements Task{
         this.active = true;
     }
 
-    public void deActivate(){
+    public void deactivate(){
         active = false;
     }
 
