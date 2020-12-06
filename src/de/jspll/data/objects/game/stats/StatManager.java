@@ -2,12 +2,10 @@ package de.jspll.data.objects.game.stats;
 
 import de.jspll.data.ChannelID;
 import de.jspll.data.objects.TexturedObject;
-import de.jspll.data.objects.game.tasks.Task;
 import de.jspll.graphics.Camera;
 import de.jspll.handlers.GameManager;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -21,7 +19,7 @@ import java.util.HashMap;
 
 public class StatManager extends TexturedObject {
 
-    private Integer roundScore;
+    private Integer gameScore;
     private Integer karmaScore;
     private float roundTime;
     private float remainingTime;
@@ -31,7 +29,7 @@ public class StatManager extends TexturedObject {
     private HashMap<String, Float> activeTasks;
 
     public StatManager(GameManager gm) {
-        this.roundScore = 0;
+        this.gameScore = 0;
         this.karmaScore = 0;
         this.gameManager = gm;
         roundTime = gm.getRoundTime();
@@ -41,7 +39,7 @@ public class StatManager extends TexturedObject {
     }
 
     /**
-     * <ul>w
+     * <ul>
      *     <li> General format: "statmanager statcommand taskTime remainingTime scoredPoints positive scoredKarma" </li>
      *     <li> Finished task with positve karma: "statmanager 0 taskTime remainingTime scoredPoints 1 scoredKarma" </li>
      *     <li> Finished task with negative karma: "statmanager 0 taskTime remainingTime scoredPoints 0 scoredKarma" </li>
@@ -84,30 +82,25 @@ public class StatManager extends TexturedObject {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 
-        // draw round score
-        g.drawString("Round score: " + roundScore, camera.getWidth() - 240, 45);
+        // draw game score
+        g.drawString("Spiel-Punkte: " + gameScore, camera.getWidth() - 240, 45);
 
         // draw karma score
         setColorForKarmaScore(g);
-        g.drawString("Karma score: " + karmaScore, camera.getWidth() - 240, 20);
+        g.drawString("Karma-Punkte: " + karmaScore, camera.getWidth() - 240, 20);
 
         g.setColor(Color.BLACK);
-        g.drawString("Next Task in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 240, 70);
+        g.drawString("Nächste Aufgabe in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 240, 70);
 
         // draw remaining time
         remainingTime = gameManager.getRemainingTime();
         setColorForRemainingTime(g);
-        g.drawString("Remaining time: " + (remainingTime >= 0 ? (int) remainingTime : 0),
+        g.drawString("Verbleibende Zeit: " + (remainingTime >= 0 ? (int) remainingTime : 0),
                 camera.getWidth() - 240, 95);
-
-        // TODO: implement what should happen if time is over
-        if (remainingTime <= 0) {
-            g.setFont(new Font("Serif", Font.PLAIN, 48));
-            g.drawString("TIME IS UP", camera.getWidth() / 2 - 100, camera.getHeight() / 2);
-        }
 
         int todoY = 120;
 
+        g.setColor(Color.BLACK);
         g.drawString("Todo: ",camera.getWidth() - 240, todoY);
 
         if(activeTasks != null){
@@ -172,7 +165,7 @@ public class StatManager extends TexturedObject {
             int taskDuration = ((Integer) input[2] - (Integer) input[3]);
             roundTime -= taskDuration;
             if(input[4] instanceof Integer && input[5] instanceof Integer && input[6] instanceof Integer) {
-                calculateNewRoundScore(taskDuration, (Integer) input[4], finished);
+                calculateNewGameScore(taskDuration, (Integer) input[4], finished);
                 calculateNewKarmaScore((Integer) input[6], (Integer) input[5] == 1);
             }
         }
@@ -183,7 +176,7 @@ public class StatManager extends TexturedObject {
             int taskDuration = ((Integer) input[2] - (Integer) input[3]);
             roundTime -= taskDuration;
             if(input[4] instanceof Integer && input[5] instanceof Integer) {
-                calculateNewRoundScore(taskDuration, (Integer) input[4], finished);
+                calculateNewGameScore(taskDuration, (Integer) input[4], finished);
                 calculateNewKarmaScore((Integer) input[5], (Integer) input[5] == 1);
             }
         }
@@ -196,9 +189,9 @@ public class StatManager extends TexturedObject {
      * @param scoredPoints scored Point
      * @param finished shows if the task was finshed in time
      */
-    private void calculateNewRoundScore(Integer taskDuration, Integer scoredPoints, boolean finished) {
+    private void calculateNewGameScore(Integer taskDuration, Integer scoredPoints, boolean finished) {
         if(finished) {
-            roundScore = (taskDuration / 2) * scoredPoints;
+            gameScore = (taskDuration / 2) * scoredPoints;
         }
     }
 
@@ -220,16 +213,16 @@ public class StatManager extends TexturedObject {
         this.karmaScore += karmaScore;
     }
 
-    public void updateRoundScore(int roundScore) {
-        this.roundScore += roundScore;
+    public void updateGameScore(int gameScore) {
+        this.gameScore += gameScore;
     }
 
-    public Integer getRoundScore() {
-        return roundScore;
+    public Integer getGameScore() {
+        return gameScore;
     }
 
-    public void setRoundScore(Integer roundScore) {
-        this.roundScore = roundScore;
+    public void setGameScore(Integer gameScore) {
+        this.gameScore = gameScore;
     }
 
     public Integer getKarmaScore() {

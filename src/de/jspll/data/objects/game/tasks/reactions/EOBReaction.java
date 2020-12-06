@@ -35,6 +35,6 @@ public class EOBReaction implements iTaskReaction {
     @Override
     public void taskFailed(StatManager statManager) {
         statManager.updateKarmaScore(-30);
-        statManager.updateRoundScore(-20);
+        statManager.updateGameScore(-20);
     }
 }

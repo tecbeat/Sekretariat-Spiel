@@ -27,15 +27,15 @@ public class NPCReaction implements iTaskReaction {
     @Override
     public void taskFinished(StatManager statManager, boolean goodTask) {
         if(goodTask) {
-            statManager.updateRoundScore(20);
+            statManager.updateGameScore(20);
         } else {
-            statManager.updateRoundScore(-20);
+            statManager.updateGameScore(-20);
         }
     }
 
     @Override
     public void taskFailed(StatManager statManager) {
         statManager.updateKarmaScore(-30);
-        statManager.updateRoundScore(-20);
+        statManager.updateGameScore(-20);
     }
 }
