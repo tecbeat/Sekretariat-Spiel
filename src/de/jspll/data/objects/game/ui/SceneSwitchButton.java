@@ -11,7 +11,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class SceneSwitchButton extends ButtonObject {
     ChannelID scene;
     private String file;
@@ -26,15 +25,15 @@ public class SceneSwitchButton extends ButtonObject {
     public char call(Object[] input) {
         super.call(input);
 
-        if(checkClick())
-            if(this.scene == ChannelID.SCENE_GAME) {
+        if(checkClick()) {
+            if (this.scene == ChannelID.SCENE_GAME) {
                 getParent().loadNextLevel();
             } else {
                 getParent().clearScene(scene);
                 getParent().clearScene(ChannelID.UI);
                 getParent().loadScene(scene, file);
             }
-
+        }
         return 0;
     }
 }

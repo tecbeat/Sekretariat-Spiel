@@ -12,7 +12,6 @@ import static de.jspll.data.ChannelID.DISPATCH;
  *
  * @version 1.0
  */
-
 public class Repeater extends GameObject{
     GameObjectHandler reciever;
     public Repeater(String ID,GameObjectHandler reciever) {

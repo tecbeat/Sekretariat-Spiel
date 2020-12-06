@@ -14,12 +14,11 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
-public class semiTransparentBackground extends GameObject {
+public class SemiTransparentBackground extends GameObject {
     int posX, posY;
     Dimension dim;
 
-    public semiTransparentBackground(String ID, String objectID, int x, int y, Dimension dimension) {
+    public SemiTransparentBackground(String ID, String objectID, int x, int y, Dimension dimension) {
         super(ID, objectID);
         this.posX = x;
         this.posY = y;
@@ -29,11 +28,7 @@ public class semiTransparentBackground extends GameObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-
         g.setColor(new Color(46, 49, 49,200));
         g.fillRect(posX, posY,dim.width,dim.height);
-
-        //super.paint(g, elapsedTime, camera, currStage);
-
     }
 }

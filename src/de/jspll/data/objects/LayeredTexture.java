@@ -13,9 +13,7 @@ import static de.jspll.graphics.ResourceHandler.FileType.PNG;
  *
  * @version 1.0
  */
-
 public class LayeredTexture extends Texture{
-
 
     protected String baseFile;
     protected int cLength = 1;
@@ -28,7 +26,6 @@ public class LayeredTexture extends Texture{
         layerSelection = new boolean[layers];
         init();
         this.baseFile = baseFile;
-
     }
 
     private void init(){

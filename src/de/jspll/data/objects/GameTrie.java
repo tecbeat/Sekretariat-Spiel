@@ -11,7 +11,6 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-
 public class GameTrie {
 
     private GameObject value = null;
@@ -144,7 +143,4 @@ public class GameTrie {
     public synchronized ArrayList<String> findSuffix( String prefix){
         return _findSuffix(prefix,prefix);
     }
-
-
-
 }

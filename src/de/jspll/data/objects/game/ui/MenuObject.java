@@ -13,7 +13,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class MenuObject extends GameObject {
     protected String text;
     protected boolean border;
@@ -21,7 +20,6 @@ public class MenuObject extends GameObject {
     public MenuObject(){
 
     }
-
 
     public MenuObject(String ID, String objectID, int x, int y, Dimension dimension, String text, boolean border) {
         super(ID, objectID, x, y, dimension);
@@ -32,8 +30,6 @@ public class MenuObject extends GameObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        //super.paint(g,elapsedTime,camera,currStage);
-
         if(border){
             g.setColor(Color.BLUE);
             g.drawRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
@@ -43,7 +39,5 @@ public class MenuObject extends GameObject {
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 24));
         g.setColor(Color.WHITE);
         g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
-
-
     }
 }

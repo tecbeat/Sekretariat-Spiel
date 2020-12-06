@@ -162,7 +162,6 @@ public class GameManager extends TexturedObject {
     private void pauseForbiddenEnd() {
         pauseForbiddenScreen = false;
         gameObjectHandler.subscribe(player, ChannelID.LOGIC);
-        //TODO: WHY do I need this??
         gameObjectHandler.loadStatManager(statManager);
     }
 
@@ -295,7 +294,6 @@ public class GameManager extends TexturedObject {
         gameObjectHandler.subscribe(player, ChannelID.LOGIC);
         gameRunning = true;
         pauseScreen = false;
-        //TODO I have no idea why this is needed:
         gameObjectHandler.loadStatManager(statManager);
     }
 
@@ -482,14 +480,12 @@ public class GameManager extends TexturedObject {
      */
     private void checkClick(){
         if(getMousePressed()) {
-            if(checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])){
-                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD){
+            if(checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
+                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD) {
                     gameObjectHandler.loadNextLevel();
                 } else {
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
-
-
                 resultScreen = false;
             }
             if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){

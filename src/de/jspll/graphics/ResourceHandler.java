@@ -24,7 +24,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-
 public class ResourceHandler extends Thread {
 
     private GameObjectHandler parent;
@@ -55,7 +54,6 @@ public class ResourceHandler extends Thread {
             if(!this.textures.containsKey(key))
                 return false;
         }
-
         return true;
     }
 
@@ -68,7 +66,6 @@ public class ResourceHandler extends Thread {
     }
 
     public BufferedImage getTexture(String textureKey, FileType type){
-
         if(textures.containsKey(textureKey + type.fileEnding)){
             return textures.get(textureKey + type.fileEnding);
         }
@@ -83,7 +80,6 @@ public class ResourceHandler extends Thread {
             if(this.textures.containsKey(key))
                 textures[i] = this.textures.get(key);
         }
-
         return textures;
     }
 
@@ -141,27 +137,29 @@ public class ResourceHandler extends Thread {
     }
 
     public void requestTexture(String key){
-        if(key == null)
+        if(key == null) {
             return;
-        if(!textures.containsKey(key) && !loadingQueue.contains(key))
+        }
+        if(!textures.containsKey(key) && !loadingQueue.contains(key)) {
             try {
                 loadingQueue.put(key);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+        }
     }
 
     public void requestTexture(String key, FileType type){
-        if(key == null)
+        if(key == null) {
             return;
-        if(!textures.containsKey(key) && !loadingQueue.contains(key + type.fileEnding))
+        }
+        if(!textures.containsKey(key) && !loadingQueue.contains(key + type.fileEnding)) {
             try {
                 loadingQueue.put(key + type.fileEnding);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+        }
     }
 
     public Map<?,?> readJsonFromFile(String file){
@@ -179,14 +177,14 @@ public class ResourceHandler extends Thread {
         // convert JSON file to map
         Map<?, ?> map = gson.fromJson(reader, Map.class);
         return map;
-
     }
 
     public void requestTextureGroup(String baseFile, int cLength, int count, FileType fileType) {
         for (int i = 0; i < count; i++){
             String key = baseFile + String.format("%0" + cLength + "d",i) + fileType.valueOf();
-            if(!this.textures.containsKey(key))
+            if(!this.textures.containsKey(key)) {
                 requestTexture(key);
+            }
         }
     }
 
@@ -202,9 +200,6 @@ public class ResourceHandler extends Thread {
             File jsonFile = new File(filepath);
             if (jsonFile.createNewFile()) {
                 created = true;
-            } else {
-                //How to handle existing files
-                //Overwrite?
             }
 
             if(created) {
@@ -269,7 +264,7 @@ public class ResourceHandler extends Thread {
              return fileEnding;
          }
 
-        public String getFileEnding() {
+         public String getFileEnding() {
             return fileEnding;
         }
     }

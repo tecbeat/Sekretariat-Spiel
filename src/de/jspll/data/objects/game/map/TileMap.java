@@ -20,7 +20,6 @@ import java.util.HashMap;
  * @author Laura Schmidt, Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class TileMap extends TexturedObject {
 
     protected BufferedImage[] tileSets;
@@ -41,32 +40,6 @@ public class TileMap extends TexturedObject {
 
     private float timeSincePlayPosUpdate = 0;
     private boolean isHalfRes = false;
-
-    //TODO used?
-//    public TileMap(String ID, String objectID, Point playerPos, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
-//        super(ID, objectID, x, y, dimension, null);
-//        this.channels = new ChannelID[]{ChannelID.BACKGROUND, ChannelID.LOGIC};
-//        pos = new Point(x, y);
-//        this.textureKeys = textureKeys;
-//        defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
-//        tileMap = new int[tileColCount][tileRowCount];
-//
-//        initTileMap();
-//        debugInit();
-//    }
-
-//    public TileMap(String ID, String objectID, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys) {
-//        super(ID, objectID, x, y, dimension, null);
-//        this.channels = new ChannelID[]{ChannelID.BACKGROUND, ChannelID.LOGIC};
-//        pos = new Point(x, y);
-//        this.textureKeys = textureKeys;
-//        defaultTileDimension = new Dimension(this.dimension.width / tileColCount, this.dimension.height / tileRowCount);
-//        Logger.d.add("Tilemap: " + ID + " tileWidth=" + defaultTileDimension.width + " tileHeight=" + defaultTileDimension.height);
-//        tileMap = new int[tileColCount][tileRowCount];
-//        tiles = new Tile[0];
-//
-//        initTileMap();
-//    }
 
     public TileMap(String ID, String objectID, int x, int y, Dimension dimension, int tileRowCount, int tileColCount, String[] textureKeys, boolean coveringPlayer) {
         super(ID, objectID, x, y, dimension, null);
@@ -297,7 +270,6 @@ public class TileMap extends TexturedObject {
      * First determine in which way the {@code Tile} will be removed.
      * @param input Object[] same as in call-function
      */
-
     private void callRemove(Object[] input) {
         if (input[2] instanceof String) {
             switch ((String) input[2]) {
@@ -437,8 +409,6 @@ public class TileMap extends TexturedObject {
             AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f);
             g2d.setComposite(ac);
 
-//            for (int x = Math.max(0, playerX / tileWidth); x < tileMap.length && x < (playerX + 2 * playerWidth) / tileWidth; x++) {
-//                for (int y = Math.max(0, (playerY + tileHeight) / tileHeight); y < tileMap[x].length && y < (playerY + 2 * playerHeight) / tileWidth; y++) {
             boolean behindWall = Collision.doesWallOverlap(
                     collisionMap,
                     mapPos_and_metaData,
@@ -494,13 +464,10 @@ public class TileMap extends TexturedObject {
                         continue;
                     }
 
-
                     g2d.drawImage(tiles[tileMap[x][y]].getTexture(this, zoomedTileWidth, zoomedTileHeight),
                             camera.applyXTransform(pos.x + x * defaultTileDimension.width),
                             camera.applyYTransform(pos.y + y * defaultTileDimension.height),
                             null);
-
-
                 }
             }
             g2d.setComposite(c);
@@ -514,7 +481,6 @@ public class TileMap extends TexturedObject {
      * @param elapsedTime unused
      * @param camera Camera
      */
-
     private void drawMap(Graphics g, float elapsedTime, Camera camera) {
         int[] bounds = camera.getRevertedBounds();
         int tileWidth = camera.applyZoom(defaultTileDimension.width);
@@ -522,10 +488,6 @@ public class TileMap extends TexturedObject {
         for (int xCoord = Math.max(bounds[0] / defaultTileDimension.width, 0); xCoord < tileMap.length && xCoord * defaultTileDimension.width < bounds[2]; xCoord++) {
             for (int yCoord = Math.max(bounds[1] / defaultTileDimension.height, 0); yCoord < tileMap[xCoord].length && yCoord * defaultTileDimension.height < bounds[3]; yCoord++) {
                 if (tileMap[xCoord][yCoord] != -1) {
-                    /*g.drawRect(camera.applyXTransform(x + xCoord * defaultTileDimension.width),
-                            camera.applyYTransform(y + yCoord * defaultTileDimension.height),
-                            camera.applyZoom(defaultTileDimension.width),
-                            camera.applyZoom(defaultTileDimension.height));*/
                     if (tileMap[xCoord][yCoord] < 0) {
                         tileMap[xCoord][yCoord] = -1;
                         continue;

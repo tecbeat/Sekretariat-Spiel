@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-
 @Deprecated
 public class AnimatedGameObject extends TexturedObject {
     public AnimatedGameObject(String ID, int x, int y, Dimension dimension, Animation animation) {

@@ -13,7 +13,6 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-
 public class Report implements ProgressReporter {
     private float count;
     private float initalCount;
@@ -61,13 +60,13 @@ public class Report implements ProgressReporter {
 
         if(count<=0) {
             percentage = -1;
-            if(gameObjectHandler != null){
+            if(gameObjectHandler != null) {
                 gameObjectHandler.switchScene(nextScene);
                 System.out.println("Loaded");
-                if(nextScene == ChannelID.SCENE_GAME)
+                if(nextScene == ChannelID.SCENE_GAME) {
                     gameObjectHandler.getGameManager().startGame();
+                }
             }
-
         }
     }
 

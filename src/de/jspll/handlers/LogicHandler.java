@@ -13,7 +13,6 @@ import static de.jspll.data.ChannelID.*;
  *
  * @version 1.0
  */
-
 public class LogicHandler implements SubHandler {
     public String ID = "main";
 

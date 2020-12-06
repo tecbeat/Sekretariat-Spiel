@@ -58,7 +58,6 @@ public class GameObjectHandler{
         loadObject(gameManager);
     }
 
-
     public void switchScene(ChannelID newScene){
         unsubscribeScene(activeScene);
         subscribeScene(newScene);
@@ -186,7 +185,6 @@ public class GameObjectHandler{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -324,7 +322,6 @@ public class GameObjectHandler{
                         out.add(th);
                         th.requestTexture();
                     }
-                    // TODO: Add StatManager and Tasks to JSON
                     statManager.setListener(goh);
                     out.add(statManager);
                 }
@@ -350,8 +347,6 @@ public class GameObjectHandler{
         clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
         loadScene(SCENE_GAME, file);
-        //gameManager.startGame();
-
     }
 
     public TileMap[] loadMap(String mapJson){
@@ -366,7 +361,6 @@ public class GameObjectHandler{
             int mapHeight = ((Double) levels.get("pxHei")).intValue();
 
             ArrayList<TileMap> tileMapsList = new ArrayList<>();
-            //TileMap[] tileMaps = new TileMap[layerInstances.size()-3]; //because of missing files
 
             //layers
             ArrayList<Layer> layerList = new ArrayList<>();
@@ -489,10 +483,13 @@ public class GameObjectHandler{
                     System.out.println("Error with " + l.getId());
                 }
                 TileMap tm;
-                if(l.getId().contains("Ausstattung") || l.getId().contains("Ausstatung") || l.getId().contentEquals("Boden2") || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
-                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(),true);
+                if(l.getId().contains("Ausstattung") || l.getId().contains("Ausstatung") || l.getId().contentEquals("Boden2")
+                        || l.getId().contentEquals("Boden3") || l.getId().contentEquals("Door") ){
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight),
+                            l.getHeight(), l.getWidth(), l.getTextures(),true);
                 } else {
-                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight), l.getHeight(), l.getWidth(), l.getTextures(), false);
+                    tm = new TileMap(l.getId(), "g.dflt.TileMap", 0,0,new Dimension(mapWidth, mapHeight),
+                            l.getHeight(), l.getWidth(), l.getTextures(), false);
                 }
 
                 HashMap<String, Tile> tileCache = new HashMap<>();
@@ -506,7 +503,8 @@ public class GameObjectHandler{
                         tm.addTile(t);
                     }
                     int[] cord = gt.getPxArr();
-                    tm.setTileToMap(tileCache.get(key), cord[0]/tm.getDefaultTileDimension().width, cord[1]/tm.getDefaultTileDimension().height);
+                    tm.setTileToMap(tileCache.get(key), cord[0]/tm.getDefaultTileDimension().width,
+                            cord[1]/tm.getDefaultTileDimension().height);
                 }
                 tileMaps[i] = tm;
             }

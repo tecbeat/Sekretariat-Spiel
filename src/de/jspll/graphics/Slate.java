@@ -12,8 +12,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
-//used for rerouting drawing method
 public class Slate extends JPanel {
     private GraphicsHandler parent;
     public Slate(GraphicsHandler parent){

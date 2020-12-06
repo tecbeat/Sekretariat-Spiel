@@ -10,7 +10,6 @@ import de.jspll.handlers.GameObjectHandler;
  *
  * @version 1.0
  */
-
 public interface Interactable {
     /**
      * @return default return value 0x00

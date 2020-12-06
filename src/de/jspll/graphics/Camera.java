@@ -14,7 +14,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class Camera {
     private final double smoothness = 1.5;
     private int width;
@@ -114,12 +113,10 @@ public class Camera {
      * @param dimension   Width/Height of the Object
      * @param elapsedTime delta time between frames
      */
-
     public void centerToPos(Point objectPos, Dimension dimension, float elapsedTime) {
         Point halfResolution = new Point(width / 2, height / 2);
         boolean[] OutSideCheck = checkIfCameraStopMovement(objectPos);
         int[] transform = transform(new int[]{objectPos.x + dimension.width / 2, objectPos.y + dimension.height / 2});
-
 
         //moveToBound();
         Point transformedPos = new Point(transform[0], transform[1]);
@@ -152,7 +149,6 @@ public class Camera {
      * @param object      GameObject which will be centred in the Screen Middle
      * @param elapsedTime delta time between frames
      */
-
     public void centerToObject(GameObject object, float elapsedTime) {
         centerToPos(new Point(object.getX(), object.getY()), object.getDimension(), elapsedTime);
     }
@@ -164,7 +160,6 @@ public class Camera {
      * @param pos Point of the
      * @return two-dimensional Boolean Array [0] = X-Axis, [1] = Y-Axis
      */
-
     private boolean[] checkIfCameraStopMovement(Point pos) {
         //it should be a lg function
         //https://imgur.com/a/d48dVB1

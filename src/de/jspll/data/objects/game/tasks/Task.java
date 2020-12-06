@@ -12,7 +12,6 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public interface Task {
 
     void activate();

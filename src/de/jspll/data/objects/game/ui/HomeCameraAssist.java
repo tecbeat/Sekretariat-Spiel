@@ -14,14 +14,12 @@ import java.awt.*;
  *
  * @version 1.0
  */
-
 public class HomeCameraAssist extends GameObject {
     int mapWidth;
     int mapHeight;
     float zoom;
 
     public HomeCameraAssist(int mw, int mh, float z){
-
         super("hca", "homeCameraAssist", 0, 0, new Dimension(0,0));
 
         mapHeight = mh;

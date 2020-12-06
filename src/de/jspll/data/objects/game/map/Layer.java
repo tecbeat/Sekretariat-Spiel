@@ -10,7 +10,6 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-
 public class Layer {
     String id;
     String[] textures = new String[1];

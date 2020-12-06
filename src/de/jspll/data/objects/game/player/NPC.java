@@ -15,9 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Jonas Sperling, Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class NPC extends Player {
-
 
     private final String[] keyList = new String[]{"w", "a", "s", "d", "q", "SHIFT"};
     double sumTime = 0;
@@ -44,7 +42,6 @@ public class NPC extends Player {
         referenceSpeed = 80f;
         resetKeyMap();
         this.task = task;
-
     }
 
     /**

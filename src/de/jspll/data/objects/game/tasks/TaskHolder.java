@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Lukas Becker, Philipp Polland
  * @version 1.0
  */
-
 public class TaskHolder extends TexturedObject {
 
     private final int DURATION = 120;
@@ -49,7 +48,8 @@ public class TaskHolder extends TexturedObject {
         this.radius = radius;
         if (task != null)
             task.setHolder(this);
-        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
+        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20,
+                new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
     }
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius, boolean showBox) {
@@ -293,8 +293,9 @@ public class TaskHolder extends TexturedObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        if(!active)
+        if(!active) {
             return;
+        }
 
         super.paint(g, elapsedTime, camera, currStage);
 
@@ -303,8 +304,6 @@ public class TaskHolder extends TexturedObject {
         } else if(currStage.valueOf() == ChannelID.UI.valueOf()){
             paintUI(g, elapsedTime, camera, currStage);
         }
-
-
     }
 
     public void setPos(Point pos) {
