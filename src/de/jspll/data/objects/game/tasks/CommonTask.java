@@ -3,7 +3,6 @@ package de.jspll.data.objects.game.tasks;
 import com.google.gson.annotations.Expose;
 import de.jspll.Main;
 import de.jspll.data.ChannelID;
-import de.jspll.data.objects.GameObject;
 import de.jspll.data.objects.game.stats.StatManager;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
@@ -14,7 +13,6 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -36,6 +34,7 @@ public class CommonTask implements Task {
     private iTaskReaction onSelect;
     private Point draggablePos;
     private final Color maskColor = new Color(0, 0, 0, 172);
+    private boolean singleChoiceTask;
 
     //texture properties
     private float draggableSize = 1.6f;
@@ -102,6 +101,7 @@ public class CommonTask implements Task {
         this.onSelect = onSelect;
         this.statManager = statManager;
         this.textureKeys = textureKeys;
+        this.singleChoiceTask = true;
     }
 
      public CommonTask(String goodHeading, String badHeading, iTaskReaction onSelect, StatManager statManager, String[] textureKeys) {
@@ -109,8 +109,8 @@ public class CommonTask implements Task {
         this.badHeading = badHeading;
         this.onSelect = onSelect;
         this.statManager = statManager;
-        //channels = new ChannelID[]{ChannelID.PLAYER, ChannelID.LOGIC};
         this.textureKeys = textureKeys;
+        this.singleChoiceTask = false;
     }
 
 
@@ -272,7 +272,7 @@ public class CommonTask implements Task {
         if (!buttonLock) {
             g.setColor(Color.BLACK);
             String heading;
-            if(!badHeading.equals("")) {
+            if(!singleChoiceTask) {
                 heading = goodHeading + " oder " + badHeading;
             } else {
                 heading = goodHeading;
@@ -293,10 +293,10 @@ public class CommonTask implements Task {
 
         int xCoord = goodButton ? btnGoodX : btnBadX;
         String heading;
-        if(!badHeading.equals("")) {
+        if(!singleChoiceTask) {
             heading = goodButton ? goodHeading.split(" ")[1] : badHeading.split(" ")[1];
         } else {
-            heading = goodButton ? "Ja" : "Nein";
+            heading = goodButton ? goodHeading : "Abbruch";
         }
 
         g.setColor(goodButton ? Color.GREEN : Color.RED);
