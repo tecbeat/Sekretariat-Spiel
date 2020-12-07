@@ -341,9 +341,14 @@ public class GameObjectHandler{
         channels[scene.valueOf()].dropAll();
     }
 
-    public void loadNextLevel(){
+    public void clearInteractionLayers(){
         clearScene(UI);
         clearScene(PLAYER);
+        clearScene(INPUT);
+    }
+
+    public void loadNextLevel(){
+        clearInteractionLayers();
         clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
         loadScene(SCENE_GAME, file);
