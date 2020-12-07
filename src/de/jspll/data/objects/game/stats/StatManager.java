@@ -71,9 +71,9 @@ public class StatManager extends TexturedObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        int height = 130;
+        int height = 155;
         if(activeTasks != null)
-            height = 130 + activeTasks.size() * 25;
+            height = 155 + activeTasks.size() * 25;
 
         g.setColor(Color.WHITE);
         g.fillRect(camera.getWidth() - 250, 0, camera.getWidth(), height);
@@ -81,23 +81,28 @@ public class StatManager extends TexturedObject {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 
-        // draw game score
-        g.drawString("Spiel-Punkte: " + gameScore, camera.getWidth() - 240, 45);
+        // draw Level
+        int completionPercentage = Math.round((gameManager.getTaskCompletionPercentage()/gameManager.getLEVEL_COMPLETION_TRESHOLD())*100);
+        g.drawString("Level " + gameManager.getLevel() + " - " + (Math.min(completionPercentage, 100)) + "%", camera.getWidth() - 240, 20);
 
         // draw karma score
         setColorForKarmaScore(g);
-        g.drawString("Karma-Punkte: " + karmaScore, camera.getWidth() - 240, 20);
+        g.drawString("Karma-Punkte: " + karmaScore, camera.getWidth() - 240, 45);
+
+        // draw game score
+        g.drawString("Spiel-Punkte: " + gameScore, camera.getWidth() - 240, 70);
+
 
         g.setColor(Color.BLACK);
-        g.drawString("Nächste Aufgabe in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 240, 70);
+        g.drawString("Nächste Aufgabe in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 240, 95);
 
         // draw remaining time
         remainingTime = gameManager.getRemainingTime();
         setColorForRemainingTime(g);
         g.drawString("Verbleibende Zeit: " + (remainingTime >= 0 ? (int) remainingTime : 0),
-                camera.getWidth() - 240, 95);
+                camera.getWidth() - 240, 120);
 
-        int todoY = 120;
+        int todoY = 145;
 
         g.setColor(Color.BLACK);
         g.drawString("Todo: ",camera.getWidth() - 240, todoY);

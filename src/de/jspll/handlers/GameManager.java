@@ -102,7 +102,7 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public char update(float elapsedTime) {
-        if(firstUpdate && ROUND_TIME - remainingTime > 5){
+        if(firstUpdate && ROUND_TIME - remainingTime > 3){
             for(int i = 0; i< BASE_TASKS; i++)
                 addTaskToCurrentLevel();
             firstUpdate = false;
@@ -228,7 +228,7 @@ public class GameManager extends TexturedObject {
     /**
      * @return Completion Percentage
      */
-    private float getTaskCompletionPercentage(){
+    public float getTaskCompletionPercentage(){
         return (float)completedTasks/getTaskCountForCurrentLevel();
     }
 
@@ -267,6 +267,7 @@ public class GameManager extends TexturedObject {
         this.taskCount = 0;
         this.completedTasks = 0;
         this.activeTaskIdentifiers = new ArrayList<>();
+        this.time = 0;
         firstUpdate = true;
         statManager.resetKarma();
         //Level Loading resets the ui channel, so the statManager needs to get loaded again
@@ -484,11 +485,13 @@ public class GameManager extends TexturedObject {
                 if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD) {
                     gameObjectHandler.loadNextLevel();
                 } else {
+                    this.level = 0;
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
                 resultScreen = false;
             }
             if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
+                this.level = 0;
                 gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
             }
@@ -691,5 +694,9 @@ public class GameManager extends TexturedObject {
 
     public void setRemainingTime(float remainingTime) {
         this.remainingTime = remainingTime;
+    }
+
+    public float getLEVEL_COMPLETION_TRESHOLD(){
+        return LEVEL_COMPLETION_TRESHOLD;
     }
 }

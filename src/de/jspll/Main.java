@@ -30,8 +30,6 @@ public class Main {
         Logger logger = new Logger();
         logger.start();
 
-        MouseFollower mf = new MouseFollower("Follow");
-
         new AudioHandler().playMusic(frameHandler.getGameObjectHandler());
 
         frameHandler.getGameObjectHandler().loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
