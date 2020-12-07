@@ -217,8 +217,9 @@ public class NPCTask extends GameObject implements Task {
      */
     private void closeTask() {
         onSelect.taskFinished(statManager, goodInteraction);
-        getHolder().getParent().getGameManager().taskCompleted();
         getHolder().getParent().unsubscribe(getHolder());
+        //NPC Tasks are not required for finishing and thus automatically completed
+        //getHolder().getParent().getGameManager().taskCompleted();
     }
 
     @Override
@@ -245,10 +246,12 @@ public class NPCTask extends GameObject implements Task {
         countDown = 10;
         this.active = true;
 
-        if((isStudent && statManager.getKarmaScore() > 0) || (!isStudent && statManager.getKarmaScore() < 0)){
+        if((isStudent && statManager.getKarmaScore() >= 0) || (!isStudent && statManager.getKarmaScore() <= 0)){
             goodInteraction = true;
+            countDown = 2;
         } else {
             goodInteraction = false;
+            countDown = 5;
         }
 
         buttonLock = true;

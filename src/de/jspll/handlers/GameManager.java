@@ -32,10 +32,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class GameManager extends TexturedObject {
     //Balancing
-    private final float ROUND_TIME = 300f;
+    private final float ROUND_TIME = 240f; //4 Minutes
     private final int NEXT_TASK_TRESHOLD = 30;
     private final int BASE_TASKS = 2;
-    private final int TASKS_PER_LEVEL = 4;
+    private final int TASKS_PER_LEVEL = 5;
     private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
     //Game interruptions
@@ -102,9 +102,11 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public char update(float elapsedTime) {
-        if(firstUpdate && ROUND_TIME - remainingTime > 5){
-            for(int i = 0; i< BASE_TASKS; i++)
+        if(firstUpdate && ROUND_TIME - remainingTime > 3){
+            for(int i = 0; i < BASE_TASKS; i++) {
+                taskCount++;
                 addTaskToCurrentLevel();
+            }
             firstUpdate = false;
         }
 
@@ -228,7 +230,7 @@ public class GameManager extends TexturedObject {
     /**
      * @return Completion Percentage
      */
-    private float getTaskCompletionPercentage(){
+    public float getTaskCompletionPercentage(){
         return (float)completedTasks/getTaskCountForCurrentLevel();
     }
 
@@ -267,10 +269,19 @@ public class GameManager extends TexturedObject {
         this.taskCount = 0;
         this.completedTasks = 0;
         this.activeTaskIdentifiers = new ArrayList<>();
+        this.time = 0;
         firstUpdate = true;
         statManager.resetKarma();
         //Level Loading resets the ui channel, so the statManager needs to get loaded again
         gameObjectHandler.loadStatManager(statManager);
+
+        TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
+                new Point(2430, 2335),
+                new Dimension(32, 16),
+                new CommonTask("Feierabend machen", new EOBReaction(), statManager,
+                        new String[]{"/assets/task/image/eob_pic","/assets/task/image/eob_drag"}), 65, true, false);
+        thEOB.setListener(gameObjectHandler);
+        gameObjectHandler.loadTask(ChannelID.SCENE_GAME, thEOB);
     }
 
     /**
@@ -484,11 +495,13 @@ public class GameManager extends TexturedObject {
                 if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD) {
                     gameObjectHandler.loadNextLevel();
                 } else {
+                    this.level = 0;
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
                 resultScreen = false;
             }
             if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
+                this.level = 0;
                 gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
             }
@@ -587,7 +600,7 @@ public class GameManager extends TexturedObject {
 
         int id;
         do {
-            id = randomGenerator.nextInt(10);
+            id = randomGenerator.nextInt(9);
 
             if (getParent().isInternetTaskDone()) {
                 id = randomGenerator.nextInt(6);
@@ -633,6 +646,7 @@ public class GameManager extends TexturedObject {
                         NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
+                this.completedTasks++; //NPC tasks are not needed to end the Level
                 return thNPCTask;
 
             case 4:
@@ -645,14 +659,6 @@ public class GameManager extends TexturedObject {
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
             case 5:
-                TaskHolder thEOB = new TaskHolder("eob" + instanceCount, "g.dflt.TaskHolder",
-                        new Point(2430, 2335),
-                        new Dimension(32, 16),
-                        new CommonTask("Feierabend machen", new EOBReaction(), statManager,
-                                new String[]{"/assets/task/image/eob_pic","/assets/task/image/eob_drag"}), 65);
-                thEOB.setListener(gameObjectHandler);
-                return thEOB;
-            case 6:
                 TaskHolder thInternet = new TaskHolder("internet" + instanceCount, "g.dflt.TaskHolder",
                         new Point(750, 656),
                         new Dimension(32, 16),
@@ -660,7 +666,7 @@ public class GameManager extends TexturedObject {
                                 new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65);
                 thInternet.setListener(gameObjectHandler);
                 return thInternet;
-            case 7:
+            case 6:
                 TaskHolder thCoursePlan = new TaskHolder("courseplan" + instanceCount, "g.dflt.TaskHolder",
                         new Point(1818, 455),
                         new Dimension(32, 16),
@@ -668,7 +674,7 @@ public class GameManager extends TexturedObject {
                                 new String[]{"/assets/task/image/courseplan_pic","/assets/task/image/courseplan_drag"}), 65);
                 thCoursePlan.setListener(gameObjectHandler);
                 return thCoursePlan;
-            case 8:
+            case 7:
                 TaskHolder thEMail = new TaskHolder("email" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2750, 1536),
                         new Dimension(32, 16),
@@ -676,7 +682,7 @@ public class GameManager extends TexturedObject {
                                 new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65);
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
-            case 9:
+            case 8:
                 TaskHolder thCourses = new TaskHolder("courses" + instanceCount, "g.dflt.TaskHolder",
                         new Point(2320, 1778),
                         new Dimension(32, 16),
@@ -691,5 +697,9 @@ public class GameManager extends TexturedObject {
 
     public void setRemainingTime(float remainingTime) {
         this.remainingTime = remainingTime;
+    }
+
+    public float getLEVEL_COMPLETION_TRESHOLD(){
+        return LEVEL_COMPLETION_TRESHOLD;
     }
 }
