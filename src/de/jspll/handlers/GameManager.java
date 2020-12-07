@@ -34,7 +34,7 @@ public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 240f; //4 Minutes
     private final int NEXT_TASK_TRESHOLD = 30;
-    private final int BASE_TASKS = 2;
+    private final int BASE_TASKS = 3;
     private final int TASKS_PER_LEVEL = 5;
     private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
@@ -86,6 +86,7 @@ public class GameManager extends TexturedObject {
 
 
     private boolean texturesLoaded = false;
+    private int npcTask = 0;
 
     public GameManager(GameObjectHandler gameObjectHandler){
         this.gameObjectHandler = gameObjectHandler;
@@ -347,7 +348,7 @@ public class GameManager extends TexturedObject {
         g.drawString("Spiel-Punkte: " + statManager.getGameScore(),
                 (boundingX + (screenWidth / 2) / 4) + 85,
                 (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 180);
-        g.drawString("Abgeschlossene Aufgaben: " + completedTasks,
+        g.drawString("Abgeschlossene Aufgaben: " + (completedTasks - npcTask),
                 (boundingX + (screenWidth / 2) / 4) + 85,
                 (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 260);
     }
@@ -449,37 +450,24 @@ public class GameManager extends TexturedObject {
      * @return pentagram-image
      */
     private BufferedImage getRightPentagram() {
-        int karmaScore = statManager.getKarmaScore();
+        boolean positiveKarma = statManager.getKarmaScore() >= 0;
+        int karmaScore = Math.abs(statManager.getKarmaScore());
         int taskCompleted = getTaskCountForCurrentLevel();
-        float karmaPerTask = (float) karmaScore / taskCompleted;
-        float percentage = (karmaPerTask / 30) * 100;
+        float karmaPerTask = (float) karmaScore / (taskCompleted-npcTask);
+        int percentage = (int) ((karmaPerTask / 30) * 100);
 
-        if(percentage >= -100 && percentage < -90) {
-            return textures[3];
-        } else if (percentage > -90 && percentage < -70) {
-            return textures[4];
-        } else if (percentage > -70 && percentage < -50) {
-            return textures[5];
-        } else if (percentage > -50 && percentage < -30) {
-            return textures[6];
-        } else if (percentage > -30 && percentage < -15) {
-            return textures[7];
-        } else if (percentage > -15 && percentage < 0) {
-            return textures[8];
-        } else if (percentage == 0) {
-            return textures[9];
-        } else if (percentage > 0 && percentage < 15) {
-            return textures[10];
-        } else if (percentage > 15 && percentage < 30) {
-            return textures[11];
-        } else if (percentage > 30 && percentage < 50) {
-            return textures[12];
-        } else if (percentage > 50 && percentage < 70) {
-            return textures[13];
-        } else if (percentage > 70 && percentage < 90) {
-            return textures[14];
-        } else if (percentage > 90 && percentage <= 100){
-            return textures[15];
+        if (percentage > 0 && percentage < 15) {
+            return positiveKarma ? textures[10] : textures[8];
+        } else if (percentage >= 15 && percentage < 30) {
+            return positiveKarma ? textures[11] : textures[7];
+        } else if (percentage >= 30 && percentage < 50) {
+            return positiveKarma ? textures[12] : textures[6];
+        } else if (percentage >= 50 && percentage < 70) {
+            return positiveKarma ? textures[13] : textures[5];
+        } else if (percentage >= 70 && percentage < 90) {
+            return positiveKarma ? textures[14] : textures[4];
+        } else if (percentage >= 90 && percentage <= 100){
+            return positiveKarma ? textures[15] : textures[3];
         } else {
             return textures[9];
         }
@@ -647,6 +635,7 @@ public class GameManager extends TexturedObject {
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 this.completedTasks++; //NPC tasks are not needed to end the Level
+                this.npcTask++;
                 return thNPCTask;
 
             case 4:
