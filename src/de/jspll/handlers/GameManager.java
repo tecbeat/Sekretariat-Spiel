@@ -34,8 +34,8 @@ public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 240f; //4 Minutes
     private final int NEXT_TASK_TRESHOLD = 30;
-    private final int BASE_TASKS = 3;
-    private final int TASKS_PER_LEVEL = 4;
+    private final int BASE_TASKS = 2;
+    private final int TASKS_PER_LEVEL = 5;
     private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
     //Game interruptions
@@ -103,9 +103,10 @@ public class GameManager extends TexturedObject {
     @Override
     public char update(float elapsedTime) {
         if(firstUpdate && ROUND_TIME - remainingTime > 3){
-            for(int i = 0; i< BASE_TASKS; i++)
+            for(int i = 0; i < BASE_TASKS; i++) {
                 taskCount++;
                 addTaskToCurrentLevel();
+            }
             firstUpdate = false;
         }
 
