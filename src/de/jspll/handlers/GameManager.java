@@ -36,7 +36,7 @@ public class GameManager extends TexturedObject {
     private final int NEXT_TASK_TRESHOLD = 30;
     private final int BASE_TASKS = 2;
     private final int TASKS_PER_LEVEL = 5;
-    private final float LEVEL_COMPLETION_TRESHOLD = -0.7f;
+    private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
 
     //Game interruptions
     private boolean resultScreen = false;
@@ -642,7 +642,7 @@ public class GameManager extends TexturedObject {
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(randomGenerator.nextInt(3)+2), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 48),
-                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager,instanceCount % 2 == 0 , npc_textures[instanceCount%2]), 65),
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager,instanceCount % 2 == 0 , npc_textures[instanceCount%2]), 65, false),
                         NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
