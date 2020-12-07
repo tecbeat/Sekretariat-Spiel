@@ -90,10 +90,9 @@ public class StatManager extends TexturedObject {
         g.drawString("Karma-Punkte: " + karmaScore, camera.getWidth() - 240, 45);
 
         // draw game score
+        g.setColor(Color.BLACK);
         g.drawString("Spiel-Punkte: " + gameScore, camera.getWidth() - 240, 70);
 
-
-        g.setColor(Color.BLACK);
         g.drawString("Nächste Aufgabe in: " + Math.round(getParent().getGameManager().getTimeTillNextTask()), camera.getWidth() - 240, 95);
 
         // draw remaining time
