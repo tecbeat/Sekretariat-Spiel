@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class GameManager extends TexturedObject {
     //Balancing
-    private final float ROUND_TIME = 300f;
+    private final float ROUND_TIME = 240f; //4 Minutes
     private final int NEXT_TASK_TRESHOLD = 30;
     private final int BASE_TASKS = 2;
     private final int TASKS_PER_LEVEL = 4;

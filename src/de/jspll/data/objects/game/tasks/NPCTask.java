@@ -245,10 +245,12 @@ public class NPCTask extends GameObject implements Task {
         countDown = 10;
         this.active = true;
 
-        if((isStudent && statManager.getKarmaScore() > 0) || (!isStudent && statManager.getKarmaScore() < 0)){
+        if((isStudent && statManager.getKarmaScore() >= 0) || (!isStudent && statManager.getKarmaScore() <= 0)){
             goodInteraction = true;
+            countDown = 2;
         } else {
             goodInteraction = false;
+            countDown = 5;
         }
 
         buttonLock = true;
