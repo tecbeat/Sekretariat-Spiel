@@ -17,7 +17,7 @@ import java.util.HashMap;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Laura Schmidt, Lukas Becker, Philipp Polland
+ * @author Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  * @version 1.0
  */
 public class TileMap extends TexturedObject {

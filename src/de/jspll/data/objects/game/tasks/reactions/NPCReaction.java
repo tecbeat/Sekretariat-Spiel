@@ -8,7 +8,7 @@ import de.jspll.handlers.GameObjectHandler;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Lukas Becker
+ * @author Lukas Becker, Samuel Assmann
  *
  * @version 1.0
  */

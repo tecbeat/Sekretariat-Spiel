@@ -4,7 +4,7 @@ package de.jspll.util.json;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author
+ * @author Philipp Polland, Samuel Assmann
  *
  * @version 1.0
  */
