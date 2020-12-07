@@ -22,7 +22,7 @@ import static de.jspll.data.ChannelID.LOGIC;
  *
  * @version 1.0
  */
-
+@Deprecated
 public class EditorHandler extends GameObject{
 
     private boolean test = true;
