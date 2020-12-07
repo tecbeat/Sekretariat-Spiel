@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * © Sekretariat-Spiel
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
- * @author Philipp Polland
+ * @author Jonas Sperling, Philipp Polland
  * @version 1.0
  */
 public class GameTrie {

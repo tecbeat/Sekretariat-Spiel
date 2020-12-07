@@ -98,8 +98,8 @@ public class GameManager extends TexturedObject {
      * update overrides game object update
      * Adds tasks and stops game if time over
      *
-     * @param elapsedTime elapsed time
-     * @return
+     * @param elapsedTime delta time between frames
+     * @return exit code - similar to program exit codes in Java/C
      */
     @Override
     public char update(float elapsedTime) {
@@ -175,6 +175,13 @@ public class GameManager extends TexturedObject {
         gameObjectHandler.loadObject(this);
     }
 
+    /**
+     * Implement how to response when {@code GameManager} is getting called. <br>
+     * 1. The {@code Player} get transmitted to the {@code GameManager}. <br>
+     *
+     * @param input Array of Objects
+     * @return exit code - similar to program exit codes in Java/C
+     */
     @Override
     public char call(Object[] input) {
         if (input == null || input.length < 1) {
@@ -189,11 +196,12 @@ public class GameManager extends TexturedObject {
     }
 
     /**
-     * only paints something if the level is over or paused
-     * @param g Graphics
-     * @param elapsedTime elapsed time
-     * @param camera camera
-     * @param currStage current stage
+     * Only paints something if the level is over or paused
+     *
+     * @param g           Graphics for drawing
+     * @param elapsedTime delta time between frames
+     * @param camera      selected Camera
+     * @param currStage   current active ChannelID
      */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
@@ -312,8 +320,8 @@ public class GameManager extends TexturedObject {
     /**
      * Initializes the basic task screen. Background gets darker. White rectangle gets drawn.
      *
-     * @param g Graphics
-     * @param camera Camera
+     * @param g      Graphics for drawing
+     * @param camera current Camera
      */
     public void initResultScreen(Graphics g, Camera camera) {
         if(!texturesLoaded){
@@ -356,8 +364,9 @@ public class GameManager extends TexturedObject {
     /**
      * Initializes the basic pause screen. Background gets darker. White rectangle gets drawn.
      *
-     * @param g Graphics
-     * @param camera Camera
+     * @param g           Graphics for drawing
+     * @param camera      current Camera
+     * @param actualPause boolean if game is paused with "p"
      */
     private void pauseScreen(Graphics g, Camera camera, boolean actualPause) {
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 30));

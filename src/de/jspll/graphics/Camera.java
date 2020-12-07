@@ -38,16 +38,28 @@ public class Camera {
         y = yCenter - (height / 2);
     }
 
+    /**
+     * Increase the position of the camera in x-direction by {@code amount}.
+     * @param amount float
+     */
     public void increase_x(float amount) {
         xCenter += amount;
         updateXY();
     }
 
+    /**
+     * Increase the position of the camera in y-direction by {@code amount}.
+     * @param amount float
+     */
     public void increase_y(float amount) {
         yCenter += amount;
         updateXY();
     }
 
+    /**
+     * Increase the zoom of the camera by {@code amount}.
+     * @param amount float
+     */
     public void increase_zoom(float amount) {
         double xCenter = (this.xCenter / this.zoom) * (amount + this.zoom);
         double yCenter = (this.yCenter / this.zoom) * (amount + this.zoom);
@@ -62,10 +74,26 @@ public class Camera {
         updateXY();
     }
 
+    /**
+     * The Camera and Player use different forms of coordinate-systems. <br>
+     * Camera: (0,0) is in the centre. <br>
+     * Player: (0,0) is on the top left corner. <br>
+     *
+     * @param in 2-dimensional int array in the Camera-Coordinate-System
+     * @return 2-dimensional int array of reverted values
+     */
     public int[] revertTransform(int[] in) {
         return new int[]{revertXTransform(in[0]), revertYTransform(in[1])};
     }
 
+    /**
+     * The Camera and Player use different forms of coordinate-systems. <br>
+     * Camera: (0,0) is in the centre. <br>
+     * Player: (0,0) is on the top left corner. <br>
+     *
+     * @param in 2-dimensional int array in the Player-Coordinate-System
+     * @return 2-dimensional int array of transformed values
+     */
     public int[] transform(int[] in) {
         return new int[]{applyXTransform(in[0]), applyYTransform(in[1])};
     }
@@ -78,10 +106,26 @@ public class Camera {
         return out;
     }
 
+    /**
+     * The Camera and Player use different forms of coordinate-systems.<br>
+     * Camera: (0,0) is in the centre.<br>
+     * Player: (0,0) is on the top left corner.<br>
+     *
+     * @param in x coordinate in Camera-Coordinate-System
+     * @return transformed value
+     */
     public int revertXTransform(int in) {
         return (int) Math.round((in + x) / zoom);
     }
 
+    /**
+     * The Camera and Player use different forms of coordinate-systems.<br>
+     * Camera: (0,0) is in the centre.<br>
+     * Player: (0,0) is on the top left corner.<br>
+     *
+     * @param in y coordinate in Camera-Coordinate-System
+     * @return transformed value
+     */
     public int revertYTransform(int in) {
         return (int) Math.round((in + y) / zoom);
     }
@@ -90,10 +134,26 @@ public class Camera {
         return Math.round((float) in * zoom);
     }
 
+    /**
+     * The Camera and Player use different forms of coordinate-systems.<br>
+     * Camera: (0,0) is in the centre.<br>
+     * Player: (0,0) is on the top left corner.<br>
+     *
+     * @param in y coordinate in Player-Coordinate-System
+     * @return transformed value
+     */
     public int applyXTransform(int in) {
         return (int) Math.round((in * zoom) - x);
     }
 
+    /**
+     * The Camera and Player use different forms of coordinate-systems.<br>
+     * Camera: (0,0) is in the centre.<br>
+     * Player: (0,0) is on the top left corner.<br>
+     *
+     * @param in y coordinate in Player-Coordinate-System
+     * @return transformed value
+     */
     public int applyYTransform(int in) {
         return (int) Math.round((in * zoom) - y);
     }
@@ -134,6 +194,14 @@ public class Camera {
 
     }
 
+    /**
+     * Center the camera to the given x- and y- coordinates.
+     * The camera gets centred to it instantly.
+     * For a smooth transition to a {@code GameObject} use {@code centreToPos()}
+     *
+     * @param x coordinate
+     * @param y coordinate
+     */
     public void instantlyCenterToPos(int x, int y) {
         this.x = x;
         this.y = y;
@@ -155,7 +223,7 @@ public class Camera {
 
 
     /**
-     * This function is used to determine if the camera should stop moving
+     * This function is used to determine if the camera should stop moving.
      *
      * @param pos Point of the
      * @return two-dimensional Boolean Array [0] = X-Axis, [1] = Y-Axis

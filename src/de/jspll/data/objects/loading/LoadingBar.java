@@ -27,7 +27,7 @@ public class LoadingBar extends GameObject {
     float progress = 0;
 
     /**
-     * Unsubscribe/delete the {@code LoadingBar}
+     * Unsubscribe/delete the {@code LoadingBar} when the progress is set to -1.
      *
      * @param elapsedTime delta time between frames
      * @return exit code - similar to program exit codes in Java/C
