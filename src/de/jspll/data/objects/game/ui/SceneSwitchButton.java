@@ -30,7 +30,7 @@ public class SceneSwitchButton extends ButtonObject {
                 getParent().loadNextLevel();
             } else {
                 getParent().clearScene(scene);
-                getParent().clearScene(ChannelID.UI);
+                getParent().clearInteractionLayers();
                 getParent().loadScene(scene, file);
             }
         }

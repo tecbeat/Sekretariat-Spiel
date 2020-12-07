@@ -19,7 +19,7 @@ public class EOBReaction implements iTaskReaction {
     @Override
     public int goodSelection(GameObjectHandler gOH) {
         this.goh = gOH;
-        return 10;
+        return 5;
     }
 
     @Override

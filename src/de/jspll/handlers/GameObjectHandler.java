@@ -18,6 +18,7 @@ import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
 import java.awt.*;
+import java.nio.channels.OverlappingFileLockException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -219,7 +220,7 @@ public class GameObjectHandler{
         pRpt.setNextScene(scene);
         pRpt.setGameObjectHandler(this);
         LoadingBar lb = new LoadingBar(pRpt);
-        lb.setMessage("loading objects...");
+        lb.setMessage("Objekte werden geladen...");
         this.subscribe(lb);
         final GameObjectHandler goh = this;
 
@@ -238,7 +239,7 @@ public class GameObjectHandler{
                     pRpt.update();
                 }
 
-                lb.setMessage("loading textures...");
+                lb.setMessage("Texturen werden geladen...");
                 boolean waitingForTexture = true;
                 while(waitingForTexture){
                     waitingForTexture = false;
@@ -341,9 +342,15 @@ public class GameObjectHandler{
         channels[scene.valueOf()].dropAll();
     }
 
-    public void loadNextLevel(){
+    public void clearInteractionLayers(){
         clearScene(UI);
         clearScene(PLAYER);
+        clearScene(INPUT);
+        clearScene(OVERLAY);
+    }
+
+    public void loadNextLevel(){
+        clearInteractionLayers();
         clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
         loadScene(SCENE_GAME, file);

@@ -24,7 +24,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class TaskHolder extends TexturedObject {
 
-    private final int DURATION = 120;
+    private int DURATION = 120;
+    private boolean firstUpdate = true;
     private float initTime = 0;
     private boolean active = true;
 
@@ -39,6 +40,7 @@ public class TaskHolder extends TexturedObject {
     private BufferedImage texture;
     private final int ArrowOffset = 30;
     private boolean showBox = true;
+    private boolean canEnd = true;
 
     public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius) {
         super(ID, objectID, pos.x, pos.y, dimension);
@@ -62,6 +64,21 @@ public class TaskHolder extends TexturedObject {
         if (task != null)
             task.setHolder(this);
         taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20, new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
+    }
+
+    public TaskHolder(String ID, String objectID, Point pos, Dimension dimension, Task task, double radius, boolean showBox, boolean canEnd) {
+        super(ID, objectID, pos.x, pos.y, dimension);
+        this.channels = new ChannelID[]{ChannelID.LOGIC, ChannelID.OVERLAY, ChannelID.UI};
+        this.pos = pos;
+        this.showBox = showBox;
+        this.task = task;
+        this.radius = radius;
+        if (task != null)
+            task.setHolder(this);
+        taskIndicationArrow = new Animation("/assets/task/indication_arrow_", 20,
+                new Point(this.pos.x, this.pos.y - ArrowOffset), new Dimension(32, 32), this, 3F);
+
+        this.canEnd = canEnd;
     }
 
 
@@ -129,6 +146,9 @@ public class TaskHolder extends TexturedObject {
     @Override
     public char update(float elapsedTime) {
 
+        if(firstUpdate)
+            DURATION = Math.round((float)60 / ((float)(getParent().getGameManager().getLevel()) * 0.5f));
+
         if (task != null && task.isActive()) {
             task.update(elapsedTime);
             return 0;
@@ -151,7 +171,7 @@ public class TaskHolder extends TexturedObject {
         if(initTime == 0){
             initTime = getParent().getGameManager().getRemainingTime();
         }
-        if((initTime - DURATION) > getParent().getGameManager().getRemainingTime() && active){
+        if(canEnd && (initTime - DURATION) > getParent().getGameManager().getRemainingTime() && active){
             task.deactivate();
             active = false;
             if(!(task instanceof NPCTask))
@@ -199,7 +219,7 @@ public class TaskHolder extends TexturedObject {
                 task.call(input);
                 return 0;
             } else if (cmd.contentEquals("getTask") && active){
-                getParent().dispatch(ChannelID.INPUT, new Object[]{"activeTask", task.getName(), initTime - DURATION});
+                getParent().dispatch(ChannelID.INPUT, new Object[]{"activeTask", task.getName(), (canEnd ? initTime - DURATION : 0)});
             }
             if (((String) input[0]).contentEquals("input")) {
                 task.call(input);

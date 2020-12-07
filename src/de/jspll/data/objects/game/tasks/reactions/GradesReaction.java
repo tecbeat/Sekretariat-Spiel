@@ -16,12 +16,12 @@ public class GradesReaction implements iTaskReaction {
 
     @Override
     public int goodSelection(GameObjectHandler gOH) {
-        return 10;
+        return 5;
     }
 
     @Override
     public int badSelection(GameObjectHandler gOH) {
-        return 5;
+        return 2;
     }
 
     @Override
