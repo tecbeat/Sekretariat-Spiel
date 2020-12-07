@@ -636,6 +636,7 @@ public class GameManager extends TexturedObject {
                         NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
+                this.completedTasks++; //NPC tasks are not needed to end the Level
                 return thNPCTask;
 
             case 4:
