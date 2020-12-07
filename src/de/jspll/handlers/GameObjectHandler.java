@@ -220,7 +220,7 @@ public class GameObjectHandler{
         pRpt.setNextScene(scene);
         pRpt.setGameObjectHandler(this);
         LoadingBar lb = new LoadingBar(pRpt);
-        lb.setMessage("loading objects...");
+        lb.setMessage("Objekte werden geladen...");
         this.subscribe(lb);
         final GameObjectHandler goh = this;
 
@@ -239,7 +239,7 @@ public class GameObjectHandler{
                     pRpt.update();
                 }
 
-                lb.setMessage("loading textures...");
+                lb.setMessage("Texturen werden geladen...");
                 boolean waitingForTexture = true;
                 while(waitingForTexture){
                     waitingForTexture = false;
