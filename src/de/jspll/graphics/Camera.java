@@ -107,7 +107,7 @@ public class Camera {
     }
 
     /**
-     * This Function centers the camera to the given Object.
+     * Center the camera to the given {@code GameObject}s position.
      *
      * @param objectPos   Point of the Object
      * @param dimension   Width/Height of the Object

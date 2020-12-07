@@ -97,15 +97,16 @@ public class Animation extends Texture {
     }
 
     /**
-     * Restart the animation in the next frame.
-     * The animation continues with the last used parameters
+     * Restart the animation. This is achieved by setting {@code active} to true.
+     * Then on the next frame the {@code textures} will be painted.
      */
     public void restartAnimation() {
         active = true;
     }
 
     /**
-     * Start the animation in the next frame.
+     * Start the animation. This is achieved by setting {@code active} to true.
+     * Then on the next frame the {@code textures} will be painted.
      * Reset the {@code current_time} and {@code selectedTexture} to 0.
      */
     public void startAnimation() {
@@ -114,6 +115,10 @@ public class Animation extends Texture {
         selectedTexture = 0;
     }
 
+    /**
+     * Stop the animation. This is achieved by setting {@code active} to false.
+     * {@code textures} will not be painted while {@code active} is false.
+     */
     public void stopAnimation() {
         active = false;
     }
@@ -126,6 +131,10 @@ public class Animation extends Texture {
         this.duration = duration;
     }
 
+    /**
+     * Update the time the animation takes to cycle through all {@code textures}.
+     * @param duration float how long the animation takes
+     */
     public void updateDuration(float duration) {
         current_time *= duration/ this.duration ;
         setDuration(duration);
