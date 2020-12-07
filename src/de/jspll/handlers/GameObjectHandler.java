@@ -18,6 +18,7 @@ import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
 import java.awt.*;
+import java.nio.channels.OverlappingFileLockException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -345,6 +346,7 @@ public class GameObjectHandler{
         clearScene(UI);
         clearScene(PLAYER);
         clearScene(INPUT);
+        clearScene(OVERLAY);
     }
 
     public void loadNextLevel(){
