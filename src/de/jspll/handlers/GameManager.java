@@ -453,13 +453,8 @@ public class GameManager extends TexturedObject {
         boolean positiveKarma = statManager.getKarmaScore() >= 0;
         int karmaScore = Math.abs(statManager.getKarmaScore());
         int taskCompleted = getTaskCountForCurrentLevel();
-        float karmaPerTask = (float) karmaScore / taskCompleted;
+        float karmaPerTask = (float) karmaScore / (taskCompleted-npcTask);
         int percentage = (int) ((karmaPerTask / 30) * 100);
-
-        System.out.println("Karma-Score: " + karmaScore);
-        System.out.println("taskCompleted: " + taskCompleted);
-        System.out.println("Karma per Task: " + karmaPerTask);
-        System.out.println("Percentage: " + percentage);
 
         if (percentage > 0 && percentage < 15) {
             return positiveKarma ? textures[10] : textures[8];
