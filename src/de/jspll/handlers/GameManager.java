@@ -86,6 +86,7 @@ public class GameManager extends TexturedObject {
 
 
     private boolean texturesLoaded = false;
+    private int npcTask = 0;
 
     public GameManager(GameObjectHandler gameObjectHandler){
         this.gameObjectHandler = gameObjectHandler;
@@ -347,7 +348,7 @@ public class GameManager extends TexturedObject {
         g.drawString("Spiel-Punkte: " + statManager.getGameScore(),
                 (boundingX + (screenWidth / 2) / 4) + 85,
                 (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 180);
-        g.drawString("Abgeschlossene Aufgaben: " + completedTasks,
+        g.drawString("Abgeschlossene Aufgaben: " + (completedTasks - npcTask),
                 (boundingX + (screenWidth / 2) / 4) + 85,
                 (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 260);
     }
@@ -639,6 +640,7 @@ public class GameManager extends TexturedObject {
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
                 this.completedTasks++; //NPC tasks are not needed to end the Level
+                this.npcTask++;
                 return thNPCTask;
 
             case 4:
