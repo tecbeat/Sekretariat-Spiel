@@ -75,14 +75,14 @@ public class StatManager extends TexturedObject {
         if(activeTasks != null)
             height = 155 + activeTasks.size() * 25;
 
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(255,255,255,200));
         g.fillRect(camera.getWidth() - 250, 0, camera.getWidth(), height);
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 18));
 
         // draw Level
-        int completionPercentage = Math.round((gameManager.getTaskCompletionPercentage()/gameManager.getLEVEL_COMPLETION_TRESHOLD())*100);
+        int completionPercentage = Math.round((gameManager.getTaskCompletionPercentage()/gameManager.getLEVEL_COMPLETION_THRESHOLD())*100);
         g.drawString("Level " + gameManager.getLevel() + " - " + (Math.min(completionPercentage, 100)) + "%", camera.getWidth() - 240, 20);
 
         // draw karma score

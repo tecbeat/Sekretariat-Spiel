@@ -254,7 +254,7 @@ public class Camera {
 
     public void updateWindowSize(Graphics2D g) {
         width = (int) Math.round(g.getClipBounds().getWidth());
-        height = width = (int) Math.round(g.getClipBounds().getHeight());
+        height = (int) Math.round(g.getClipBounds().getHeight());
         updateXY();
 
     }

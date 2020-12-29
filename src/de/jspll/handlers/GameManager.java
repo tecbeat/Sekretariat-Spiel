@@ -33,10 +33,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 240f; //4 Minutes
-    private final int NEXT_TASK_TRESHOLD = 30;
+    private final int NEXT_TASK_THRESHOLD = 30;
     private final int BASE_TASKS = 3;
     private final int TASKS_PER_LEVEL = 5;
-    private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
+    private final float LEVEL_COMPLETION_THRESHOLD = 0.7f;
 
     //Game interruptions
     private boolean resultScreen = false;
@@ -172,7 +172,7 @@ public class GameManager extends TexturedObject {
         pauseForbiddenScreen = true;
         pauseForbiddenTime = time + 2;
         gameObjectHandler.unsubscribe(player, ChannelID.LOGIC);
-        gameObjectHandler.loadObject(this);
+        //gameObjectHandler.loadObject(this);
     }
 
     /**
@@ -209,19 +209,18 @@ public class GameManager extends TexturedObject {
             loadTextures();
         }
 
+        if(pauseScreen) {
+            pauseScreen(g,camera, true);
+        } else if(pauseForbiddenScreen){
+            pauseScreen(g,camera,false);
+        }
+
         if(resultScreen) {
             initResultScreen(g, camera);
             setUpButton(g);
             checkClick();
         }
 
-        if(pauseScreen) {
-            pauseScreen(g,camera, true);
-        }
-
-        if(pauseForbiddenScreen){
-            pauseScreen(g,camera,false);
-        }
     }
 
     public StatManager getStatManager() {
@@ -248,7 +247,7 @@ public class GameManager extends TexturedObject {
      */
     public float getTimeTillNextTask(){
         if(taskCount == getTaskCountForCurrentLevel()) return 0;
-        return (NEXT_TASK_TRESHOLD / level) - time;
+        return (NEXT_TASK_THRESHOLD / level) - time;
     }
 
     /**
@@ -346,7 +345,7 @@ public class GameManager extends TexturedObject {
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.BOLD, 42));
-        g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Level erfolgreich" : "Level gescheitert",
+        g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD ? "Level erfolgreich" : "Level gescheitert",
                 (boundingX + (screenWidth / 2) / 4) + 85,
                 (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 20);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 42));
@@ -399,9 +398,9 @@ public class GameManager extends TexturedObject {
      */
     private void setUpButton(Graphics g) {
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
-        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Nächstes Level" : "Hauptmenu";
+        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD ? "Nächstes Level" : "Hauptmenu";
 
-        g.setColor(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? Color.GREEN : Color.RED);
+        g.setColor(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD ? Color.GREEN : Color.RED);
         if (checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
             g.fillRect(btnStartX, btnStartY, buttonSize[0], buttonSize[1]);
             g.setColor(Color.BLACK);
@@ -412,7 +411,7 @@ public class GameManager extends TexturedObject {
             g.drawString(heading, btnStartX + 5, btnStartY + 15);
         }
 
-        if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD){
+        if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD){
             heading = "Hauptmenü";
             int btnMenuStartX = btnStartX + 150;
             g.setColor(Color.RED);
@@ -489,7 +488,7 @@ public class GameManager extends TexturedObject {
     private void checkClick(){
         if(getMousePressed()) {
             if(checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
-                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD) {
+                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD) {
                     gameObjectHandler.loadNextLevel();
                 } else {
                     this.level = 0;
@@ -497,7 +496,7 @@ public class GameManager extends TexturedObject {
                 }
                 resultScreen = false;
             }
-            if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
+            if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
                 this.level = 0;
                 gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
@@ -697,7 +696,7 @@ public class GameManager extends TexturedObject {
         this.remainingTime = remainingTime;
     }
 
-    public float getLEVEL_COMPLETION_TRESHOLD(){
-        return LEVEL_COMPLETION_TRESHOLD;
+    public float getLEVEL_COMPLETION_THRESHOLD(){
+        return LEVEL_COMPLETION_THRESHOLD;
     }
 }
