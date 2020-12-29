@@ -77,7 +77,7 @@ public class StatManager extends TexturedObject {
         if(activeTasks != null)
             height = 180 + activeTasks.size() * 25;
 
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(255,255,255,200));
         g.fillRect(camera.getWidth() - 250, 0, camera.getWidth(), height);
 
         g.setColor(Color.BLACK);

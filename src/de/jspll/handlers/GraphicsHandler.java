@@ -24,6 +24,8 @@ public class GraphicsHandler implements SubHandler {
 
     public GraphicsHandler(String windowTitle, Dimension size, HandlerMode mode){
         slate = new Slate(this);
+        this.width = size.width;
+        this.height = size.height;
         frame = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_ARGB);
         frame_graphics = frame.createGraphics();
         frame_graphics.setClip(0,0,size.width,size.height);
@@ -44,6 +46,7 @@ public class GraphicsHandler implements SubHandler {
     private HandlerMode mode;
     private String windowTitle;
 
+
     //Main mode
     private Slate slate;
     private de.jspll.graphics.Window window;
@@ -60,11 +63,29 @@ public class GraphicsHandler implements SubHandler {
     private BufferedImage frame = null;
     private Graphics2D frame_graphics;
     private int selectedCamera = 0;
+    private int width;
+    private int height;
+
+    private boolean sizeHasChanged(){
+        int jWidth = slate.getWidth();
+        int jHeight = slate.getHeight();
+        Camera c = getSelectedCamera();
+        if(width != jWidth || height != jHeight)
+            return true;
+        return false;
+    }
+
+    private void createFrameToSlateDim(){
+        frame = new BufferedImage(slate.getWidth(),slate.getHeight(),BufferedImage.TYPE_INT_ARGB);
+    }
 
 
     // gets called according to fps target;
     // - elapsedTime is the time in seconds that has passed since the finish of last call
     public void execute(float elapsedTime){
+        if(sizeHasChanged()){
+            createFrameToSlateDim();
+        }
         this.elapsedTime = elapsedTime;
         switch (mode){
             case MAIN:
@@ -87,11 +108,11 @@ public class GraphicsHandler implements SubHandler {
             return;
         }
 
-        if(true || frame_graphics == null){
-            frame_graphics.dispose();
-            frame_graphics = frame.createGraphics();
-            frame_graphics.setClip(0,0,slate.getWidth(),slate.getHeight());
-        }
+        frame_graphics.dispose();
+        frame_graphics = frame.createGraphics();
+        frame_graphics.setClip(0,0,slate.getWidth(),slate.getHeight());
+        getSelectedCamera().updateWindowSize(frame_graphics);
+
 
         frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);

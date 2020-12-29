@@ -7,7 +7,7 @@ import java.awt.*;
  * By Jonas Sperling, Laura Schmidt, Lukas Becker, Philipp Polland, Samuel Assmann
  *
  * @author Lukas Becker
- * @version 1.0 Samuel Assmann
+ * @version 1.0
  */
 public enum NPCSpawnPosition {
     POS_1(0,new Point(1100, 1120)),

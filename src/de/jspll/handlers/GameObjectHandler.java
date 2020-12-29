@@ -18,7 +18,6 @@ import de.jspll.data.objects.loading.Report;
 import de.jspll.graphics.Camera;
 import de.jspll.graphics.ResourceHandler;
 import java.awt.*;
-import java.nio.channels.OverlappingFileLockException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,24 +58,44 @@ public class GameObjectHandler{
         loadObject(gameManager);
     }
 
+    /**
+     * Switch the {@code ChanelID} to a new scene.
+     * Unsubscribe the {@code activeScene} and subscribe {@code newScene}.
+     *
+     * @param newScene ChannelID of the new scene
+     */
     public void switchScene(ChannelID newScene){
         unsubscribeScene(activeScene);
         subscribeScene(newScene);
         activeScene = newScene;
     }
 
+    /**
+     * Subscribe all {@code GameObject} to the {@code GameTrie} depending on the {@code scene}.
+     *
+     * @param scene ChannelID of a scene
+     */
     public void subscribeScene(ChannelID scene){
         for(GameObject obj: channels[scene.valueOf()].allValues()){
             subscribe(obj);
         }
     }
-
+    /**
+     * Unsubscribe all {@code GameObject} from the {@code GameTrie} depending on the {@code scene}.
+     *
+     * @param scene ChannelID of a scene
+     */
     public void unsubscribeScene(ChannelID scene){
         for(GameObject obj: channels[scene.valueOf()].allValues()){
             unsubscribe(obj);
         }
     }
 
+    /**
+     * Delete all {@code GameObject} from the {@code GameTrie} depending on the {@code scene}.
+     *
+     * @param scene ChannelID of a scene
+     */
     public void deleteScene(ChannelID scene){
         for(GameObject obj: channels[scene.valueOf()].allValues()){
             delete(obj);
@@ -100,6 +119,11 @@ public class GameObjectHandler{
         item.setListener(this);
     }
 
+    /**
+     * Add the {@code item} to the {@code GameTrie}.
+     *
+     * @param item GameObject
+     */
     public void subscribe(GameObject item) {
         if(item == null) return;
         if (item.getChannels() != null && item.getChannels().length > 0) {
@@ -111,18 +135,36 @@ public class GameObjectHandler{
         }
     }
 
+    /**
+     * Add the {@code item} to the {@code GameTrie} depending on the {@code channel}.
+     *
+     * @param item    GameObject
+     * @param channel target ChannelID
+     */
     public void subscribe(GameObject item, ChannelID channel) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].insert(item.getID(), item);
     }
 
+    /**
+     * Add the {@code item} to the {@code GameTrie} depending on the {@code channel}.
+     *
+     * @param item    GameObject
+     * @param channel target ChannelID
+     * @param id      key
+     */
     public void subscribe(GameObject item, ChannelID channel, String id) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].insert(id, item);
     }
 
+    /**
+     * Unsubscribe the {@code item}. By deleting the {@code item} from {@code GameTrie}.
+     *
+     * @param item GameObject
+     */
     public void unsubscribe(GameObject item) {
         for (ChannelID id : item.getChannels()) {
             if (id == INSTANCE_REGISTER)
@@ -131,29 +173,60 @@ public class GameObjectHandler{
         }
     }
 
+    /**
+     * Unsubscribe the {@code item}. By deleting the corresponding {@code GameObject} from {@code GameTrie}.
+     *
+     * @param item    GameObject
+     * @param channel target ChannelID
+     */
     public void unsubscribe(GameObject item, ChannelID channel) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].delete(item.getID());
     }
 
+    /**
+     * Unsubscribe the {@code id} from the {@code GameTrie} by removing depending on the {@code channel}.
+     *
+     * @param channel target ChannelID
+     * @param id key
+     */
     public void unsubscribe(ChannelID channel, String id) {
         if (channel == INSTANCE_REGISTER)
             return;
         channels[channel.valueOf()].delete(id);
     }
 
+    /**
+     * Delete the {@code item} by unsubscribing it.
+     *
+     * @param item GameObject
+     */
     public void delete(GameObject item) {
         unsubscribe(item);
         channels[INSTANCE_REGISTER.valueOf()].delete(item.getID());
     }
 
+    /**
+     * Dispatch a message to the {@code targets}.
+     *
+     * @param targets Array of ChannelID to which the message will be send.
+     * @param scope   scope in the {@code GameTrie}.
+     * @param input   the Message
+     */
     public void dispatch(ChannelID[] targets, String scope, Object[] input) {
         for (ChannelID target : targets) {
             dispatch(target, scope, input);
         }
     }
 
+    /**
+     * Dispatch a message to all {@code GameObjects} within the {@code targets}.
+     *
+     * @param target ChannelID to which the message will be send.
+     * @param scope  scope in the {@code GameTrie}.
+     * @param input  the Message
+     */
     public void dispatch(ChannelID target, String scope, Object[] input) {
         ArrayList<GameObject> targets = channels[target.valueOf()].allValuesAfter(scope);
         if(targets == null)
@@ -163,12 +236,23 @@ public class GameObjectHandler{
         }
     }
 
+        /**
+         * Dispatch a message to all {@code GameObjects} within the {@code targets}.
+         *
+         * @param target ChannelID to which the message will be send.
+         * @param input  the Message
+         */
     public void dispatch(ChannelID target, Object[] input) {
         for (GameObject object : channels[target.valueOf()].allValues()) {
             object.call(input);
         }
     }
 
+    /**
+     * Load all
+     *
+     * @param objects ArrayList of {@code GameObject}
+     */
     public void loadObjects(ArrayList<GameObject> objects) {
         for (GameObject object : objects) {
             loadObject(object);

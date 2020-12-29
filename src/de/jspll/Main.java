@@ -19,7 +19,7 @@ public class Main {
     public static boolean DEBUG = false;
 
     //handles Frame Drawing and game logic
-    private static FrameHandler frameHandler = new FrameHandler("Sekreteriat Spiel", new Dimension(1920, 1080));
+    private static FrameHandler frameHandler = new FrameHandler("Sekretariat Spiel", new Dimension(1920, 1080));
 
     public static void main(String[] args) {
         for(String s: args){
