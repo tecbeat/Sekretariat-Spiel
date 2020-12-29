@@ -28,16 +28,16 @@ public class CoursesReaction implements iTaskReaction {
     public void taskFinished(StatManager statManager, boolean goodTask) {
         if(goodTask) {
             statManager.updateKarmaScore(30);
-            statManager.updateGameScore(20);
+            statManager.updateRoundScore(20);
         } else {
             statManager.updateKarmaScore(-30);
-            statManager.updateGameScore(20);
+            statManager.updateRoundScore(20);
         }
     }
 
     @Override
     public void taskFailed(StatManager statManager) {
         statManager.updateKarmaScore(-30);
-        statManager.updateGameScore(-20);
+        statManager.updateRoundScore(-20);
     }
 }

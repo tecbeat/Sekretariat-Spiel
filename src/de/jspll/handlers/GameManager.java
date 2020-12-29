@@ -33,10 +33,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameManager extends TexturedObject {
     //Balancing
     private final float ROUND_TIME = 240f; //4 Minutes
-    private final int NEXT_TASK_TRESHOLD = 30;
+    private final int NEXT_TASK_THRESHOLD = 30;
     private final int BASE_TASKS = 3;
     private final int TASKS_PER_LEVEL = 5;
-    private final float LEVEL_COMPLETION_TRESHOLD = 0.7f;
+    private final float LEVEL_COMPLETION_THRESHOLD = 0.7f;
 
     //Game interruptions
     private boolean resultScreen = false;
@@ -240,7 +240,7 @@ public class GameManager extends TexturedObject {
      */
     public float getTimeTillNextTask(){
         if(taskCount == getTaskCountForCurrentLevel()) return 0;
-        return (NEXT_TASK_TRESHOLD / level) - time;
+        return (NEXT_TASK_THRESHOLD / level) - time;
     }
 
     /**
@@ -272,7 +272,6 @@ public class GameManager extends TexturedObject {
         this.activeTaskIdentifiers = new ArrayList<>();
         this.time = 0;
         firstUpdate = true;
-        statManager.resetKarma();
         //Level Loading resets the ui channel, so the statManager needs to get loaded again
         gameObjectHandler.loadStatManager(statManager);
 
@@ -292,6 +291,7 @@ public class GameManager extends TexturedObject {
         this.gameRunning = false;
         gameObjectHandler.clearScene(ChannelID.LOGIC);
         gameObjectHandler.loadObject(this);
+        statManager.resetScore();
         this.resultScreen = true;
     }
 
@@ -338,7 +338,7 @@ public class GameManager extends TexturedObject {
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Kristen ITC", Font.BOLD, 42));
-        g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Level erfolgreich" : "Level gescheitert",
+        g.drawString(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD ? "Level erfolgreich" : "Level gescheitert",
                 (boundingX + (screenWidth / 2) / 4) + 85,
                 (screenHeight / 2) - ((getRightPentagram().getHeight() / 2) / 2) + 20);
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 42));
@@ -390,9 +390,9 @@ public class GameManager extends TexturedObject {
      */
     private void setUpButton(Graphics g) {
         g.setFont(new Font("Kristen ITC", Font.PLAIN, 14));
-        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? "Nächstes Level" : "Hauptmenu";
+        String heading = getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD ? "Nächstes Level" : "Hauptmenu";
 
-        g.setColor(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD ? Color.GREEN : Color.RED);
+        g.setColor(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD ? Color.GREEN : Color.RED);
         if (checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
             g.fillRect(btnStartX, btnStartY, buttonSize[0], buttonSize[1]);
             g.setColor(Color.BLACK);
@@ -403,7 +403,7 @@ public class GameManager extends TexturedObject {
             g.drawString(heading, btnStartX + 5, btnStartY + 15);
         }
 
-        if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD){
+        if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD){
             heading = "Hauptmenü";
             int btnMenuStartX = btnStartX + 150;
             g.setColor(Color.RED);
@@ -480,7 +480,7 @@ public class GameManager extends TexturedObject {
     private void checkClick(){
         if(getMousePressed()) {
             if(checkHover(btnStartX, btnStartY, buttonSize[0], buttonSize[1])) {
-                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD) {
+                if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD) {
                     gameObjectHandler.loadNextLevel();
                 } else {
                     this.level = 0;
@@ -488,7 +488,7 @@ public class GameManager extends TexturedObject {
                 }
                 resultScreen = false;
             }
-            if(getTaskCompletionPercentage() > LEVEL_COMPLETION_TRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
+            if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
                 this.level = 0;
                 gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
@@ -607,7 +607,7 @@ public class GameManager extends TexturedObject {
                         new Point(622,2090),
                         new Dimension(32,16),
                         new CommonTask("Post sortieren", "Post schreddern", new MailReaction(), statManager,
-                                new String[]{"/assets/task/image/mail_pic","/assets/task/image/mail_drag"}), 65);
+                                new String[]{"/assets/task/image/mail_pic","/assets/task/image/mail_drag"}), 65, true, false);
                 thMail.setListener(gameObjectHandler);
                 return thMail;
             case 1:
@@ -615,7 +615,7 @@ public class GameManager extends TexturedObject {
                         new Point(1638, 2295),
                         new Dimension(32, 16),
                         new CommonTask("Noten eintragen", "Noten verwerfen", new GradesReaction(), statManager,
-                                new String[]{"/assets/task/image/grades_pic","/assets/task/image/grades_drag"}), 65);
+                                new String[]{"/assets/task/image/grades_pic","/assets/task/image/grades_drag"}), 65, true, false);
                 thGrades.setListener(gameObjectHandler);
                 return thGrades;
             case 2:
@@ -623,14 +623,14 @@ public class GameManager extends TexturedObject {
                         new Point(3105, 440),
                         new Dimension(32, 16),
                         new CommonTask("Telefonat annehmen", "Telefonat ablehnen", new PhoneReaction(),
-                                statManager, new String[]{"/assets/task/image/phone_pic","/assets/task/image/phone_drag"}), 65);
+                                statManager, new String[]{"/assets/task/image/phone_pic","/assets/task/image/phone_drag"}), 65, true, false);
                 thPhone.setListener(gameObjectHandler);
                 return thPhone;
             case NPC_ID:
                 NPC thNPCTask = new NPC("TaskNPC" + instanceCount, "g.ntt.NPC", ColorScheme.getById(randomGenerator.nextInt(3)+2), new TaskHolder("NPC " + instanceCount, "g.dflt.TaskHolder",
                         new Point(1280, 1120),
                         new Dimension(32, 48),
-                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager,instanceCount % 2 == 0 , npc_textures[instanceCount%2]), 65, false),
+                        new NPCTask("freundliche Unterhaltung","unfreundliche Unterhaltung", new NPCReaction(), statManager,instanceCount % 2 == 0 , npc_textures[instanceCount%2]), 65, false, false),
                         NPCSpawnPosition.getPointById(instanceCount % NPCSpawnPosition.length()));
                 thNPCTask.setListener(gameObjectHandler);
                 thNPCTask.requestTexture();
@@ -644,7 +644,7 @@ public class GameManager extends TexturedObject {
                         new Dimension(32, 16),
                         new CommonTask("Studierendenausweise austeilen", "Studierendenausweise schreddern",
                                 new StudentCardReaction(), statManager,
-                                new String[]{"/assets/task/image/id_pic","/assets/task/image/id_drag"}), 65);
+                                new String[]{"/assets/task/image/id_pic","/assets/task/image/id_drag"}), 65,true, false);
                 thStudentCard.setListener(gameObjectHandler);
                 return thStudentCard;
             case 5:
@@ -652,7 +652,7 @@ public class GameManager extends TexturedObject {
                         new Point(750, 656),
                         new Dimension(32, 16),
                         new CommonTask("Internet löschen", new InternetReaction(), statManager,
-                                new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65);
+                                new String[]{"/assets/task/image/internet_pic","/assets/task/image/internet_drag"}), 65, true, false);
                 thInternet.setListener(gameObjectHandler);
                 return thInternet;
             case 6:
@@ -660,7 +660,7 @@ public class GameManager extends TexturedObject {
                         new Point(1818, 455),
                         new Dimension(32, 16),
                         new CommonTask("Kursplan eintragen", "Kursplan verwerfen", new CoursePlanReaction(), statManager,
-                                new String[]{"/assets/task/image/courseplan_pic","/assets/task/image/courseplan_drag"}), 65);
+                                new String[]{"/assets/task/image/courseplan_pic","/assets/task/image/courseplan_drag"}), 65,true, false);
                 thCoursePlan.setListener(gameObjectHandler);
                 return thCoursePlan;
             case 7:
@@ -668,7 +668,7 @@ public class GameManager extends TexturedObject {
                         new Point(2750, 1536),
                         new Dimension(32, 16),
                         new CommonTask("Mails löschen", new EMailReaction(), statManager,
-                                new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65);
+                                new String[]{"/assets/task/image/email_pic","/assets/task/image/email_drag"}), 65, true, false);
                 thEMail.setListener(gameObjectHandler);
                 return thEMail;
             case 8:
@@ -676,7 +676,7 @@ public class GameManager extends TexturedObject {
                         new Point(2320, 1778),
                         new Dimension(32, 16),
                         new CommonTask("Kurse zuordnen", "Kurse löschen", new CoursesReaction(), statManager,
-                                new String[]{"/assets/task/image/course_pic","/assets/task/image/course_drag"}), 65);
+                                new String[]{"/assets/task/image/course_pic","/assets/task/image/course_drag"}), 65, true, false);
                 thCourses.setListener(gameObjectHandler);
                 return thCourses;
             default:
@@ -688,7 +688,7 @@ public class GameManager extends TexturedObject {
         this.remainingTime = remainingTime;
     }
 
-    public float getLEVEL_COMPLETION_TRESHOLD(){
-        return LEVEL_COMPLETION_TRESHOLD;
+    public float getLEVEL_COMPLETION_THRESHOLD(){
+        return LEVEL_COMPLETION_THRESHOLD;
     }
 }

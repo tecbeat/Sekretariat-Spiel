@@ -31,7 +31,7 @@ public class InternetReaction implements iTaskReaction {
     public void taskFinished(StatManager statManager, boolean goodTask) {
         if(goodTask) {
             statManager.updateKarmaScore(-30);
-            statManager.updateGameScore(-20);
+            statManager.updateRoundScore(-20);
             goh.setInternetTaskDone(true);
 
         }
@@ -40,6 +40,6 @@ public class InternetReaction implements iTaskReaction {
     @Override
     public void taskFailed(StatManager statManager) {
         statManager.updateKarmaScore(-30);
-        statManager.updateGameScore(-20);
+        statManager.updateRoundScore(-20);
     }
 }
