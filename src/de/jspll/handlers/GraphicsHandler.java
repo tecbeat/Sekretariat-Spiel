@@ -87,6 +87,12 @@ public class GraphicsHandler implements SubHandler {
             return;
         }
 
+        if(true || frame_graphics == null){
+            frame_graphics.dispose();
+            frame_graphics = frame.createGraphics();
+            frame_graphics.setClip(0,0,slate.getWidth(),slate.getHeight());
+        }
+
         frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);
         frame_graphics.setColor(ColorStorage.BACKGROUND_COLOR);
