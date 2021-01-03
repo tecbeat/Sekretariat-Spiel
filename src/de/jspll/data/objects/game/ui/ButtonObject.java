@@ -13,6 +13,7 @@ import java.awt.*;
  * @version 1.0
  */
 public class ButtonObject extends MenuObject {
+    //mouse variables
     private boolean mousedown;
     private int[] mousePos = new int[2];
     private boolean lockButton = false;
@@ -26,6 +27,7 @@ public class ButtonObject extends MenuObject {
         super(ID, objectID, x, y, dimension, text, border);
     }
 
+    //Reads mouse position and clicks
     @Override
     public char call(Object[] input) {
         super.call(input);
@@ -46,6 +48,7 @@ public class ButtonObject extends MenuObject {
         return 0;
     }
 
+    //paints the buttons
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
         int xCenter = camera.getCenter()[0];
