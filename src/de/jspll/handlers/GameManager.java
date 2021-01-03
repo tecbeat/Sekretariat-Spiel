@@ -184,9 +184,6 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public char call(Object[] input) {
-        if(gameRunning){
-            getParent().getGraphicsHandler().getSelectedCamera().instantlyZoom(2.5f);
-        }
 
         if (input == null || input.length < 1) {
             return 0;

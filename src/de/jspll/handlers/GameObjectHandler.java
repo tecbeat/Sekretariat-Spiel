@@ -436,9 +436,11 @@ public class GameObjectHandler{
 
     public void loadNextLevel(){
         clearInteractionLayers();
+        loadObject(gameManager);
         clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
         loadScene(SCENE_GAME, file);
+        getGraphicsHandler().getSelectedCamera().instantlyZoom(2.5f);
     }
 
     public TileMap[] loadMap(String mapJson){
