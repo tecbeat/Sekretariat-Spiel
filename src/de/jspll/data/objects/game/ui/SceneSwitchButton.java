@@ -25,9 +25,12 @@ public class SceneSwitchButton extends ButtonObject {
     public char call(Object[] input) {
         super.call(input);
 
+        //If clicked
         if(checkClick()) {
+            //When in game, load next level
             if (this.scene == ChannelID.SCENE_GAME) {
                 getParent().loadNextLevel();
+            //When in menu, clear everything, load specified scene
             } else {
                 getParent().clearScene(scene);
                 getParent().clearInteractionLayers();

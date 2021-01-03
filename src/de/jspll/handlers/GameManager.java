@@ -184,6 +184,11 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public char call(Object[] input) {
+        if(gameRunning){
+            System.out.println("here");
+            getParent().getGraphicsHandler().getSelectedCamera().instantlyZoom(2.5f);
+        }
+
         if (input == null || input.length < 1) {
             return 0;
         } else if (input[0] instanceof String) {
@@ -205,6 +210,7 @@ public class GameManager extends TexturedObject {
      */
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+
         if(!texturesLoaded) {
             loadTextures();
         }

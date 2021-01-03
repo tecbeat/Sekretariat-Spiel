@@ -16,6 +16,7 @@ import java.awt.*;
 public class MenuObject extends GameObject {
     protected String text;
     protected boolean border;
+    //the "how maniest" element below the others this is
     protected int offset;
 
     public MenuObject(){
@@ -34,6 +35,7 @@ public class MenuObject extends GameObject {
         int xCenter = camera.getCenter()[0];
         int yCenter = camera.getCenter()[1];
 
+        //Center the object (and place multiple below each other by offset)
         x = xCenter - (camera.applyZoom(dimension.width) / 2);
         y = yCenter - camera.applyZoom (40) - ((camera.applyZoom(dimension.height) - offset * camera.applyZoom(50)) / 2);
 
