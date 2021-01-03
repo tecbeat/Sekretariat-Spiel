@@ -440,7 +440,7 @@ public class GameObjectHandler{
         clearScene(SCENE_GAME);
         String file = "/scenes/Game.json";
         loadScene(SCENE_GAME, file);
-        getGraphicsHandler().getSelectedCamera().instantlyZoom(2.5f);
+        getGraphicsHandler().getSelectedCamera().instantlyZoom(1.8f);
     }
 
     public TileMap[] loadMap(String mapJson){
