@@ -249,6 +249,7 @@ public class GameManager extends TexturedObject {
      */
     public float getTimeTillNextTask(){
         if(taskCount == getTaskCountForCurrentLevel()) return 0;
+        if(level == 0) return 0;
         return (NEXT_TASK_THRESHOLD / level) - time;
     }
 
@@ -494,12 +495,14 @@ public class GameManager extends TexturedObject {
                     gameObjectHandler.loadNextLevel();
                 } else {
                     this.level = 0;
+                    statManager.setKarmaScore(0);
                     gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 }
                 resultScreen = false;
             }
             if(getTaskCompletionPercentage() > LEVEL_COMPLETION_THRESHOLD && checkHover(btnStartX + 150, btnStartY, buttonSize[0], buttonSize[1])){
                 this.level = 0;
+                statManager.setKarmaScore(0);
                 gameObjectHandler.loadScene(ChannelID.SCENE_1, "/scenes/MainMenu.json");
                 resultScreen = false;
             }
