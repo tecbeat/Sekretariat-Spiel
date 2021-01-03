@@ -431,6 +431,7 @@ public class GameObjectHandler{
         clearScene(PLAYER);
         clearScene(INPUT);
         clearScene(OVERLAY);
+        clearScene(LOGIC);
     }
 
     public void loadNextLevel(){
