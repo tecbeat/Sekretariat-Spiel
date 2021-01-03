@@ -203,12 +203,18 @@ public class Camera {
      * @param y coordinate
      */
     public void instantlyCenterToPos(int x, int y) {
-        this.x = x;
-        this.y = y;
+        xCenter = x;
+        yCenter = y;
+
+        updateXY();
     }
 
     public void instantlyZoom(float level) {
         this.zoom = level;
+    }
+
+    public int[] getCenter(){
+        return new int[]{(int)xCenter, (int)yCenter};
     }
 
     /**
@@ -255,6 +261,7 @@ public class Camera {
     public void updateWindowSize(Graphics2D g) {
         width = (int) Math.round(g.getClipBounds().getWidth());
         height = (int) Math.round(g.getClipBounds().getHeight());
+
         updateXY();
 
     }

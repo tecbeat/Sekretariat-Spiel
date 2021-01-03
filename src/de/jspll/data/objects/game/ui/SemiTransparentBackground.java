@@ -28,7 +28,11 @@ public class SemiTransparentBackground extends GameObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        posX = camera.getCenter()[0] - camera.applyZoom(dim.width / 2);
+        posY = camera.getCenter()[1] - camera.applyZoom(dim.height / 2);
+
+
         g.setColor(new Color(46, 49, 49,200));
-        g.fillRect(posX, posY,dim.width,dim.height);
+        g.fillRect(posX,posY,camera.applyZoom(dim.width),camera.applyZoom(dim.height));
     }
 }

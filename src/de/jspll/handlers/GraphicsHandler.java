@@ -163,6 +163,28 @@ public class GraphicsHandler implements SubHandler {
         return cameras[selectedCamera];
     }
 
+    public void addCamera(Camera c){
+        int i = 0;
+        for(Camera cam : cameras){
+            i++;
+        }
+        cameras[i+1] = c;
+    }
+
+    public void switchCamera(Camera c){
+        int i = 0;
+        for(Camera cam : cameras){
+            i++;
+            if(cam == c)
+                break;
+        }
+        selectedCamera = i;
+    }
+
+    public void firstCamera(){
+        selectedCamera = 0;
+    }
+
     public void setInputListener(InputHandler inputHandler){
         slate.addMouseListener(inputHandler);
         slate.addMouseWheelListener(inputHandler);

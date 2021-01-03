@@ -18,6 +18,8 @@ public class HomeCameraAssist extends GameObject {
     int mapWidth;
     int mapHeight;
     float zoom;
+    private Camera cam;
+    Dimension windowDim;
 
     public HomeCameraAssist(int mw, int mh, float z){
         super("hca", "homeCameraAssist", 0, 0, new Dimension(0,0));
@@ -32,7 +34,22 @@ public class HomeCameraAssist extends GameObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
-        camera.instantlyCenterToPos(mapWidth/3, mapHeight/3);
+        //getParent().getGraphicsHandler().addCamera(cam);
+        //getParent().getGraphicsHandler().switchCamera(cam);
+        //System.out.println("w: " + mapWidth + " h: " + mapHeight + " z: " + zoom);
+
+        windowDim = getParent().getGraphicsHandler().getWindow().getSize();
+
+        //System.out.println(windowDim);
+
+        System.out.println(((float)windowDim.width / (float)mapWidth));
+        zoom = Math.max(((float)windowDim.width / (float)mapWidth), ((float)windowDim.height / (float)mapHeight));
+        //System.out.println("new Zoom: " + zoom);
+
+        int posX = Math.min(camera.getWidth() / 2, (int)(mapWidth/2 * zoom));
+        int posY = Math.min(camera.getHeight() / 2, (int)(mapHeight/2 * zoom));
+
+        camera.instantlyCenterToPos(posX, posY);
         camera.instantlyZoom(zoom);
     }
 }

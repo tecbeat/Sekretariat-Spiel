@@ -57,11 +57,6 @@ enum AudioFileName {
     File_3(2, "/assets/audio/Dag_Reinbott-Hopeful_Beginning.wav"),
     File_4(3, "/assets/audio/Dag_Reinbott-Melancholic_Sunday.wav"),
     File_5(4, "/assets/audio/Dag_Reinbott-Criminal_Cat.wav"),
-//    File_6(5, "/assets/audio/Dag_Reinbott-A_brilliant_Idea.wav"),
-//    File_7(6, "/assets/audio/Dag_Reinbott-Accelerator.wav"),
-//    File_8(7, "/assets/audio/Dag_Reinbott-Bad_Habit.wav"),
-//    File_9(8, "/assets/audio/Dag_Reinbott-Basic_Motion.wav"),
-//    File_10(9, "/assets/audio/Dag_Reinbott-Hardstyle.wav"),
     ;
 
     private int id;

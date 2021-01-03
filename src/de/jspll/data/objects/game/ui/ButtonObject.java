@@ -17,6 +17,7 @@ public class ButtonObject extends MenuObject {
     private int[] mousePos = new int[2];
     private boolean lockButton = false;
 
+
     public ButtonObject(){
 
     }
@@ -47,27 +48,34 @@ public class ButtonObject extends MenuObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        int xCenter = camera.getCenter()[0];
+        int yCenter = camera.getCenter()[1];
+
+        x = xCenter - (camera.applyZoom(dimension.width) / 2);
+        y = yCenter - camera.applyZoom(40) - ((camera.applyZoom(dimension.height) - offset * camera.applyZoom(50)) / 2);
+
         g.setColor(Color.BLUE);
         if(border){
             if(checkHover()){
-                g.fillRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
+                g.fillRect(x, y, camera.applyZoom((int) dimension.getWidth()),
                         camera.applyZoom((int) dimension.getHeight()));
             } else {
-                g.drawRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
+                g.drawRect(x,y, camera.applyZoom((int) dimension.getWidth()),
                         camera.applyZoom((int) dimension.getHeight()));
             }
         }
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Kristen ITC", Font.PLAIN, 22));
-        g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, camera.applyZoom(14)));
+        g.drawString(text, x+camera.applyZoom(5), y+camera.applyZoom(14));
     }
 
     protected boolean checkHover(){
-        int xMin = getParent().getSelectedCamera().applyXTransform(x);
-        int xMax = getParent().getSelectedCamera().applyXTransform(x+dimension.width);
-        int yMin = getParent().getSelectedCamera().applyYTransform(y);
-        int yMax = getParent().getSelectedCamera().applyYTransform(y + dimension.height);
+        int xMin = x;
+        int xMax = x + getParent().getSelectedCamera().applyZoom(x);
+        int yMin = y;
+        int yMax = y +
+                getParent().getSelectedCamera().applyZoom( dimension.height);
 
         return mousePos[0] > xMin && mousePos[0] < xMax && mousePos[1] > yMin && mousePos[1] < yMax && !lockButton;
     }

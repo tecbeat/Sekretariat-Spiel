@@ -16,6 +16,7 @@ import java.awt.*;
 public class MenuObject extends GameObject {
     protected String text;
     protected boolean border;
+    protected int offset;
 
     public MenuObject(){
 
@@ -30,14 +31,20 @@ public class MenuObject extends GameObject {
 
     @Override
     public void paint(Graphics g, float elapsedTime, Camera camera, ChannelID currStage) {
+        int xCenter = camera.getCenter()[0];
+        int yCenter = camera.getCenter()[1];
+
+        x = xCenter - (camera.applyZoom(dimension.width) / 2);
+        y = yCenter - camera.applyZoom (40) - ((camera.applyZoom(dimension.height) - offset * camera.applyZoom(50)) / 2);
+
         if(border){
             g.setColor(Color.BLUE);
-            g.drawRect(camera.applyXTransform(x), camera.applyYTransform(y), camera.applyZoom((int) dimension.getWidth()),
+            g.drawRect(x, y, camera.applyZoom((int) dimension.getWidth()),
                     camera.applyZoom((int) dimension.getHeight()));
         }
 
-        g.setFont(new Font("Kristen ITC", Font.PLAIN, 24));
+        g.setFont(new Font("Kristen ITC", Font.PLAIN, camera.applyZoom(18)));
         g.setColor(Color.WHITE);
-        g.drawString(text, camera.applyXTransform(x+5), camera.applyYTransform(y+13));
+        g.drawString(text, x+camera.applyZoom(5), y+camera.applyZoom(13));
     }
 }
