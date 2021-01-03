@@ -5,7 +5,7 @@ import de.jspll.data.objects.GameObject;
 import de.jspll.frames.SubHandler;
 import de.jspll.graphics.*;
 import de.jspll.logic.InputHandler;
-import de.jspll.util.ColorStorage;
+
 import java.awt.*;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -65,6 +65,7 @@ public class GraphicsHandler implements SubHandler {
     private int selectedCamera = 0;
     private int width;
     private int height;
+    private static Color BACKGROUND_COLOR = new Color(62, 62, 62);
 
     private boolean sizeHasChanged(){
         int jWidth = slate.getWidth();
@@ -116,7 +117,7 @@ public class GraphicsHandler implements SubHandler {
 
         frame_graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         frame_graphics.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_SPEED);
-        frame_graphics.setColor(ColorStorage.BACKGROUND_COLOR);
+        frame_graphics.setColor(BACKGROUND_COLOR);
 
         //fill background
         frame_graphics.fillRect(0,0,slate.getWidth(),slate.getHeight());

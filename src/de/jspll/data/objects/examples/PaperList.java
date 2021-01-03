@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
+@Deprecated
 public class PaperList extends TexturedObject {
     public PaperList(String ID, Dimension size, Point pos) {
         super(ID, "g.ui.PaperList", pos.x, pos.y, size,new LayeredTexture("assets\\clipboard\\clipboard_",3,10,pos,size,null));

@@ -28,7 +28,7 @@ public class HomeCameraAssist extends GameObject {
         mapWidth = mw;
         zoom = z;
 
-        channels = new ChannelID[]{ChannelID.UI};
+        channels = new ChannelID[]{ChannelID.FIRST_LAYER};
     }
 
 

@@ -172,7 +172,7 @@ public class GameManager extends TexturedObject {
         pauseForbiddenScreen = true;
         pauseForbiddenTime = time + 2;
         gameObjectHandler.unsubscribe(player, ChannelID.LOGIC);
-        //gameObjectHandler.loadObject(this);
+        gameObjectHandler.loadObject(this);
     }
 
     /**
